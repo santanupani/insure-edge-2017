@@ -7,3 +7,5 @@ import za.co.polygon.domain.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 }
+
+
