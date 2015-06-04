@@ -1,4 +1,3 @@
-# Table : login
 create table login (
     id integer not null, 
     user_name varchar(32) not null, 
@@ -12,7 +11,6 @@ create sequence login_id_seq start with 1 increment by 1 ;
 
 create trigger login_id_trigger before insert on login referencing new row as new for each row set new.id = next value for login_id_seq;
 
-# Table : product 
 
 create table product(
     product_id integer not null, 
