@@ -1,1 +1,2 @@
 insert into login (user_name, password, enabled, role) values('admin', 'secret', true, 'ROLE_ADMIN');
+insert into login (user_name, password, enabled, role) values('manmay', 'secret', true, 'ROLE_ADMIN');
