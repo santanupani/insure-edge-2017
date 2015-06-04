@@ -1,7 +1,6 @@
 
 package za.co.polygon.service.command;
 
-import java.sql.Blob;
 
 /**
  *
