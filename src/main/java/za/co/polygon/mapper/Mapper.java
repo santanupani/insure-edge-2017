@@ -28,9 +28,9 @@ public class Mapper {
 
     public static ProductQueryModel toProductQueryModel(Product from) {
         ProductQueryModel productQueryModel = new ProductQueryModel();
-        productQueryModel.setId(from.getProduct_id());
-        productQueryModel.setName(from.getProductname());
-        productQueryModel.setDescription(from.getProductDescription());
+        productQueryModel.setId(from.getId());
+        productQueryModel.setName(from.getName());
+        productQueryModel.setDescription(from.getDescription());
         return productQueryModel;
     }
 
