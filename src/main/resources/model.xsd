@@ -35,5 +35,22 @@
     </element>
     
    
-     
+      <element name="ProductDetailsQuestionnaries">
+        <complexType>
+            <sequence>
+                <element name="id" type="long"></element>
+                <element name="name" type="string"></element>
+                <element name="maxAmount" type="string"></element>
+                <element name="totalFullValue" type="boolean"></element>
+                <element name="additionalPremium" type="boolean"></element>
+                <element name="professionalvaluableService" type="boolean"></element>
+                <element name="numbersOfTransit" type="boolean"></element>
+                <element name="vaultDetails" type="string"></element>
+                <element name="safetyCategory" type="string"></element>
+                <element name="vaultStorage" type="boolean"></element>
+                <element name="sasriaCover" type="boolean"></element>
+            </sequence>
+        </complexType>
+    </element>
+    
 </schema>
