@@ -19,7 +19,7 @@ create table product(
     id integer not null, 
     name varchar(70) not null, 
     description varchar(250), 
-    constraint product_pk primary key (product_id)
+    constraint product_pk primary key (id)
 );
 
 create sequence product_id_seq start with 1 increment by 1 ;
