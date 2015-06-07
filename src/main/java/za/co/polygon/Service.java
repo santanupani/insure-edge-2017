@@ -24,7 +24,7 @@ public class Service {
     @Autowired
     private ProductRepository productRepository;
 
-    @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/users/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
         List<za.co.polygon.domain.User> users = userRepository.findAll();
         return toUserQueryModel(users);

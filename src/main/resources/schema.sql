@@ -25,3 +25,4 @@ create table product(
 create sequence product_id_seq start with 1 increment by 1 ;
 
 create trigger product_id_trigger before insert on product referencing new row as new for each row set new.id = next value for product_id_seq;
+

@@ -18,3 +18,5 @@ insert into product(name, description)
 values('Static and In Transit Cover Cash and Valuables', 
 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery – as per standard policy wording.');
 
+
+

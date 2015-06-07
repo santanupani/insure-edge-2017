@@ -3,7 +3,6 @@ package za.co.polygon.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import za.co.polygon.domain.Product;
-
 import za.co.polygon.domain.User;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.UserQueryModel;

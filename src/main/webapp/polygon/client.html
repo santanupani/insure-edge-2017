@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Welcome</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="css/styles.css" type="text/css">
+
+        <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/lib/bootstrap/js/angular.min.js"></script>
+        <script src="/js/client.js"></script>
+    </head>
+    <body ng-controller="productListController">
+
+
+        <form>
+            <div class="page-header" style='width:100%;height:5%'>
+                <img src="/img/polygon-logo.jpg">
+            </div>
+
+            <div style="margin: 100px auto;">
+                <div ng-repeat="product in products">
+                    <div style="width: 500px; float: left;margin:  auto;">
+                        <div>
+                            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                            <h2>{{product.name}}</h2>
+                            <p>{{product.description}}</p>
+                            <p><a class="btn btn-default" ng-click="viewDetails(product.id)" role="button">View details</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer" style='width:100%;height:5%'>
+                <img src="/img/polygon-footer.jpg">
+            </div>
+        </form>
+
+    </body>
+</html>
