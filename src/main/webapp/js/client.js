@@ -1,8 +1,8 @@
 var myApp = angular.module('myApp', []);
 
-myApp.controller('productListController', function ($scope, $http) {
+myApp.controller('client', function ($scope, $http) {
     $scope.products = [];
-    
+    $scope.error;
 
     $http({
         url: 'http://localhost:8080/api/products',
@@ -17,7 +17,9 @@ myApp.controller('productListController', function ($scope, $http) {
                 }
             })
             .error(function (error) {
-                console.log(error);
+                
+                $scope.error = "No Data Base Connection";
+                
             });
 
 });
