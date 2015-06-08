@@ -1,5 +1,8 @@
 {
     "attributes": {
+        "width": {
+            "context": "form"
+        },
         "rel": {
             "context": "script"
         }
