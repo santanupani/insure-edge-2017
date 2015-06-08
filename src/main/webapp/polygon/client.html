@@ -1,50 +1,33 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="polygon">
     <head lang="en">
-        <link rel="stylesheet" href="../lib/angular/docs/components/bootstrap-3.1.1/css/bootstrap.css" type="text/css"/>
-        <link rel="stylesheet" href="../lib/angular/docs/components/bootstrap-3.1.1/css/bootstrap-theme.min.css" type="text/css">
-        <link rel="stylesheet" href="../lib/angular/docs/examples/example-example77/app.css" type="text/css"/>
-
-
-
         <meta charset="UTF-8">
-        <title>Client</title>
-
-        <script  type="text/css" src="/lib/bootstrap/css/styles.css"></script>
-        <script  type="text/css" src="/lib/bootstrap/css/bootstrap.css"></script>
-        <script  type="text/css" src="/lib/bootstrap/css/bootstrap.min.css"></script>
-        <script  type="text/css" src="/lib/bootstrap/css/bootstrap-theme.min.css"></script>
+        <title>Polygon</title>
+        <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script type="text/javascript"  src="/lib/jquery/jquery.min.js"></script>
         <script  type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
-        <script  type="text/javascript" src="/lib/bootstrap/js/angular.min.js"></script>
+        <script  type="text/javascript" src="/lib/angular/angular.min.js"></script>
         <script  type="text/javascript" src="/js/client.js"></script>
-
     </head>
 
-    <body ng-controller="clientCtrl">
+    <body ng-controller="clientCtrl" ng-init="init()" >
 
-
-        <div class="container" style="width:100%"> 
-
-            <div class="container" style="width:100%">
-                <img src="/img/ploygon-logo.JPG">
+        <div class="container-fluid"> 
+            <div class="row alert-error" ng-if="error">
+                 <div class="col-md-12">{{error}}</div>
             </div>
-
-            <div class="container" align="center">
-                <div class="container" class="row">
-                    <div class="col-xs-2 col-lg-3"  ng-repeat="product in products">
-                        <div class="container" style="width:250px">
-                            <img class="img-circle" src="/img/cash_in_transit.png" alt="Generic placeholder image" width="140" height="140">
-                            <h2>{{product.name}}</h2>
-                            <p>{{product.description}}</p>
-                            <p><a  class="btn btn-default" ng-click="viewDetails(product.id)" role="button">View details</a></p>
-                        </div>
+            <div class="row">
+                <div class="col-md-3" ng-repeat="product in products" >
+                    <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-circle" src="/img/cash_in_transit.png" alt="Generic placeholder image" width="140" height="140">
+                        <h3>{{product.name}}</h3>
+                        <p>{{product.description}}</p>
+                        <p><a  class="btn btn-default" ng-click="viewDetails(product.id)" role="button">Quote</a></p>
+                    </div>
                     </div>
                 </div>
             </div>
-            <div class="container" style="width:100%">
-                <img src="/img/ploygon-footer.JPG">
-            </div>
         </div>
-
     </body>
 </html>

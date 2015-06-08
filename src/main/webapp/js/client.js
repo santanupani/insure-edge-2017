@@ -1,26 +1,34 @@
-var myApp = angular.module('myApp', []);
+var polygon = angular.module('polygon', []);
 
-myApp.controller('clientCtrl', function ($scope, $http) {
+polygon.controller('clientCtrl', function ($scope, $http) {
+    
     $scope.products = [];
+    
     $scope.error;
+    
+    $scope.init = function(){
+        $scope.getProducts();
+    };
 
-    $http({
-        url: 'http://localhost:8080/api/products',
-        method: 'get'
-    }).
-            success(function (data, status) {
-                if (status == 200) {
-                    console.log('retrived successfully');
-                    $scope.products = data;
-                } else {
-                    console.log('status:' + status);
-                }
-            })
-            .error(function (error) {
-                
-                $scope.error = "No Data Base Connection";
-                
-            });
+    $scope.getProducts = function () {
+        //log here
+        $http({
+            url: '/api/products',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('retrived successfully');
+                $scope.products = data;
+            } else {
+                console.log('status:' + status);
+            }
+        }).error(function (error) {
+            // log here
+            $scope.error = "No Data Base Connection";
+        });
+    };
+
+
 
 });
 

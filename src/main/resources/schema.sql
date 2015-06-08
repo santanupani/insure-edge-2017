@@ -18,7 +18,8 @@ create trigger login_id_trigger before insert on login referencing new row as ne
 create table product(
     id integer not null, 
     name varchar(70) not null, 
-    description varchar(250), 
+    description varchar(250),
+    image varchar(128), 
     constraint product_pk primary key (id)
 );
 
