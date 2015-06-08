@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', []);
 
-myApp.controller('client', function ($scope, $http) {
+myApp.controller('clientCtrl', function ($scope, $http) {
     $scope.products = [];
     $scope.error;
 
