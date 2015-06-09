@@ -27,32 +27,54 @@ create sequence product_id_seq start with 1 increment by 1 ;
 
 create trigger product_id_trigger before insert on product referencing new row as new for each row set new.id = next value for product_id_seq;
 
-create table quotequestion(
+
+/* Table questionnaires */
+create table questionnaires(
     id integer not null, 
-    maxamount varchar(100) not null, 
-    totalvalue varchar(100) not null,
-    additionalpremium varchar(100) not null, 
-    professionalcarriers varchar(100) not null,
-    timeperweek varchar(100) not null,
-    location varchar(100) not null,
-    distanceinkms varchar(100) not null,
-    goodsdescription varchar(100) not null,
-    vaultdetails varchar(100) not null,
-    sabs varchar(100) not null,
-    goodstorage varchar(100) not null,
-    reenforcedconcrete varchar(100) not null,
-    seismicconductors varchar(100) not null,
-    cctvfootgae varchar(100) not null,
-    alarmresponse varchar(100) not null,
-    physicaladdresscode varchar(100) not null,
-    postaladdresscode varchar(100) not null,
-    insuredstatus varchar(100) not null,
-    insureddetails varchar(100) not null,
-    requiressasria varchar(100) not null,
-    constraint quotequestion_pk primary key (id)
+    product_id integer not null,
+    seq_uence integer not null,
+    question varchar(250) not null,
+    answer_type varchar(10) not null,
+    depends_on integer,
+    if_answer varchar(128),
+    constraint questionnaires_pk primary key (id),
+    constraint questionnaires_fk foreign key (product_id) references product (id)
+
 );
 
-create sequence quotequestion_id_seq start with 1 increment by 1 ;
+create sequence questionnaires_id_seq start with 1 increment by 1 ;
 
-create trigger quotequestion_id_trigger before insert on quotequestion referencing new row as new for each row set new.id = next value for quotequestion_id_seq;
+create trigger questionnaires_id_trigger before insert on questionnaires referencing new row as new for each row set new.id = next value for questionnaires_id_seq;
+
+
+/* Table questionnaires_options */
+create table questionnaires_options(
+    id integer not null, 
+    questionnaires_id integer not null,
+    constraint questionnaires_options_pk primary key (id),
+    constraint questionnaires_fk_oprions foreign key (questionnaires_id) references questionnaires (id)
+
+);
+
+create sequence questionnaires_options_id_seq start with 1 increment by 1 ;
+
+create trigger questionnaires_options_id_trigger before insert on questionnaires_options referencing new row as new for each row set new.id = next value for questionnaires_options_id_seq;
+
+
+/* Table answer_types */
+create table answer_types(
+    id integer not null,
+    questionnaires_id integer not null,
+    answer_type varchar(8) not null,
+    constraint answer_id_pk primary key (id),
+    constraint questionnaires_fk_answers foreign key (questionnaires_id) references questionnaires (id)
+
+);
+
+create sequence answer_id_seq start with 1 increment by 1 ;
+
+create trigger answer_id_trigger before insert on answer_types referencing new row as new for each row set new.id = next value for answer_id_seq;
+
+
+
 
