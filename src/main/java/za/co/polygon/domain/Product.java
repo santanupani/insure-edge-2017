@@ -1,14 +1,10 @@
 package za.co.polygon.domain;
 
-
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,8 +21,8 @@ public class Product {
     private String name;
     @Column(name = "description")
     private String description;
-    
-	
+    @Column (name="image")
+    private String image;
 
     public Long getId() {
         return id;
@@ -52,14 +48,14 @@ public class Product {
         this.description = description;
     }
 
-    
+    public String getImage() {
+        return image;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
     
-
-    
-
-    
-
     
 
 }

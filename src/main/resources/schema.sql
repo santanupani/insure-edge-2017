@@ -19,7 +19,7 @@ create table product(
     id integer not null, 
     name varchar(70) not null, 
     description varchar(250),
-    image varchar(128), 
+    image varchar(150), 
     constraint product_pk primary key (id)
 );
 

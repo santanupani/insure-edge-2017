@@ -30,6 +30,7 @@ public class Mapper {
         productQueryModel.setId(from.getId());
         productQueryModel.setName(from.getName());
         productQueryModel.setDescription(from.getDescription());
+        productQueryModel.setImage(from.getImage());
         return productQueryModel;
     }
 

@@ -20,7 +20,7 @@
                 <div class="col-md-3" ng-repeat="product in products" >
                     <div class="panel panel-default">
                     <div class="panel-body">
-                        <img class="img-circle" src="/img/cash_in_transit.png" alt="Generic placeholder image" width="140" height="140">
+                        <img class="img-circle" src="{{product.image}}" alt="Generic placeholder image" width="140" height="140">
                         <h3>{{product.name}}</h3>
                         <p>{{product.description}}</p>
                         <p><a  class="btn btn-default" ng-click="viewDetails(product.id)" role="button">Quote</a></p>
