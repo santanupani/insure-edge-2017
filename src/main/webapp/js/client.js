@@ -2,12 +2,15 @@ var polygon = angular.module('polygon', ['ngRoute']);
 
 polygon.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-        .when('/list-products', {
-            'templateUrl': '/html/list-products.html',
-            'controller': 'listProductsCtrl'
+        .when('/products', {
+            'templateUrl': '/html/products.html',
+            'controller': 'productsCtrl'
+        }).when('/products/:id/questionnaires', {
+            'templateUrl': '/html/questionnaires.html',
+            'controller': 'questionnairesCtrl'
         })
         .otherwise({
-        	redirectTo: '/list-products'
+        	redirectTo: '/products'
         });
 }]);
 
@@ -22,7 +25,7 @@ polygon.controller('clientCtrl', function ($scope) {
 
 
 
-polygon.controller('listProductsCtrl', function ($scope, $rootScope, $http) {
+polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 	
 	$scope.products = [];
      
@@ -31,6 +34,7 @@ polygon.controller('listProductsCtrl', function ($scope, $rootScope, $http) {
     };
 
     $scope.getProducts = function () {
+    	// TODO : Add log 
         $http({
             url: '/api/products',
             method: 'get'
@@ -40,15 +44,19 @@ polygon.controller('listProductsCtrl', function ($scope, $rootScope, $http) {
                 $scope.products = data;
             } else {
                 console.log('status:' + status);
+                // TODO : set error value
             }
         }).error(function (error) {
-            // log here
+            // TODO : log here
         	$rootScope.error = "No Data Base Connection";
         });
     };
 });
 
 
+polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams) {
+	
+	console.log($routeParams['id']);
+	
 
-
-
+});
