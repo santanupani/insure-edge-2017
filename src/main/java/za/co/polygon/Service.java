@@ -29,9 +29,12 @@ public class Service {
 
     @RequestMapping(value = "api/users/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
+        log.info("find user");
         List<za.co.polygon.domain.User> users = userRepository.findAll();
+        List<UserQueryModel> result = toUserQueryModel(users);
+        log.info("found user, size:{}", result.size());
         log.info("this service to get all users");
-        return toUserQueryModel(users);
+        return result;
     }
 
     @RequestMapping(value = "api/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

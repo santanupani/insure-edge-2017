@@ -35,6 +35,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
     $scope.getProducts = function () {
     	// TODO : Add log 
+        console.log('get products' + $scope.getProducts );
         $http({
             url: '/api/products',
             method: 'get'
@@ -45,10 +46,13 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
             } else {
                 console.log('status:' + status);
                 // TODO : set error value
+                console.log('OOPs!!! product list could not be fetched');
             }
         }).error(function (error) {
             // TODO : log here
+                console.log(error);
         	$rootScope.error = "No Data Base Connection";
+                
         });
     };
 });
