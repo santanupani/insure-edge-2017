@@ -14,17 +14,17 @@
 
         <div class="container-fluid"> 
             <div class="row alert-error" ng-if="error">
-                 <div class="col-md-12">{{error}}</div>
+                <div class="col-md-12">{{error}}</div>
             </div>
             <div class="row">
-                <div class="col-md-3" ng-repeat="product in products" >
+                <div class="col-xs-2 col-lg-3" ng-repeat="product in products">
                     <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img class="img-circle" src="{{product.image}}" alt="Generic placeholder image" width="140" height="140">
-                        <h3>{{product.name}}</h3>
-                        <p>{{product.description}}</p>
-                        <p><a  class="btn btn-default" ng-click="viewDetails(product.id)" role="button">Quote</a></p>
-                    </div>
+                        <div class="panel-body" align="center">
+                            <img class="img-circle" src="{{product.image}}" alt="Generic placeholder image" width="140" height="140">
+                            <h3>{{product.name}}</h3>
+                            <p>{{product.description}}</p>
+                            <p><a  class="btn btn-default" ng-click="Quote(product.id)" role="button">Quote</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
