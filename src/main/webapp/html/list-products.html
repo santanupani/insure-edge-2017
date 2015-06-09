@@ -1,0 +1,16 @@
+<div class="row" style="padding: 25px;" ng-init="init()">
+	<div class="col-md-3" ng-repeat="product in products">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-body" align="center" style="height: 300px;">
+				<img class="img-circle" ng-src="{{product.image}}"  width="140" height="140">
+				<h3>{{product.name}}</h3>
+				<p>{{product.description}}</p>
+			</div>
+			<div class="panel-footer text-right">
+				<p>
+					<a class="btn btn-default" ng-click="Quote(product.id)"	role="button">Get Quote</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

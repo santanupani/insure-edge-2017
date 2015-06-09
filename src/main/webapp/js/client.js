@@ -1,17 +1,36 @@
-var polygon = angular.module('polygon', []);
+var polygon = angular.module('polygon', ['ngRoute']);
 
-polygon.controller('clientCtrl', function ($scope, $http) {
-    
-    $scope.products = [];
+polygon.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider
+        .when('/list-products', {
+            'templateUrl': '/html/list-products.html',
+            'controller': 'listProductsCtrl'
+        })
+        .otherwise({
+        	redirectTo: '/list-products'
+        });
+}]);
+
+polygon.controller('clientCtrl', function ($scope) {
     
     $scope.error;
     
+    $scope.init = function(){
+        
+    };
+});
+
+
+
+polygon.controller('listProductsCtrl', function ($scope, $rootScope, $http) {
+	
+	$scope.products = [];
+     
     $scope.init = function(){
         $scope.getProducts();
     };
 
     $scope.getProducts = function () {
-        //log here
         $http({
             url: '/api/products',
             method: 'get'
@@ -24,12 +43,9 @@ polygon.controller('clientCtrl', function ($scope, $http) {
             }
         }).error(function (error) {
             // log here
-            $scope.error = "No Data Base Connection";
+        	$rootScope.error = "No Data Base Connection";
         });
     };
-
-
-
 });
 
 

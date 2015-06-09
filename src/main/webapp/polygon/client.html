@@ -4,39 +4,20 @@
         <meta charset="UTF-8">
         <title>Polygon</title>
         <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
         <script type="text/javascript"  src="/lib/jquery/jquery.min.js"></script>
         <script  type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
         <script  type="text/javascript" src="/lib/angular/angular.min.js"></script>
+        <script  type="text/javascript" src="/lib/angular/angular-route.min.js"></script>
         <script  type="text/javascript" src="/js/client.js"></script>
     </head>
 
     <body ng-controller="clientCtrl" ng-init="init()" style="background: silver;">
 
-        <div class="container-fluid"> 
-            <div class="row" style="background: silver; ">
-            	<div class="col-md-12" style="color: white; padding-top: 10px; padding-bottom: 10px;">
-            	  <div style="font: bold; font-size: 5ex; font-family:cursive;"><font style="color: black;">Polygon</font> <font style="color: darkred;">Underwriting</font></div>
-            	  <div style="font: bold; font-size: 2ex; font-family:cursive;">Specialist Specie Underwriters</div>
-            	</div>
-            </div>
-            <div class="row alert-error" ng-if="error">
-                <div class="col-md-12">{{error}}</div>
-            </div>
-            <div class="row" style="padding: 25px;">
-                <div class="col-md-3" ng-repeat="product in products" >
-                    <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-                        <div class="panel-body" align="center" style="height: 300px;">
-                            <img class="img-circle" ng-src="{{product.image}}" alt="Generic placeholder image" width="140" height="140">
-                            <h3>{{product.name}}</h3>
-                            <p>{{product.description}}</p>
-                           
-                        </div>
-                         <div class="panel-footer text-right">
-                         	 <p><a  class="btn btn-default" ng-click="Quote(product.id)" role="button">Get Quote</a></p>
-                         </div>
-                    </div>
-                </div>
-            </div>
+        <div id="wrapper" class="container-fluid" > 
+            <div id="header" ng-include="'/html/client-header.html'"></div>
+            <div id="content" ng-view>Loading....</div>
+            <div id="footer" ng-include="'/html/client-footer.html'"></div>
         </div>
     </body>
 </html>
