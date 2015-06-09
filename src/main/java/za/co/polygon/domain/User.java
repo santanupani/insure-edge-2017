@@ -13,9 +13,8 @@ import javax.persistence.Table;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@SequenceGenerator(name="login_id_seq", sequenceName="login_id_seq")
-	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="login_id")
 	private Long id;
 	@Column(name="user_name")
 	private String userName;
