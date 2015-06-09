@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
  
     <http use-expressions="true" create-session="stateless">
-        <intercept-url pattern="/api/**"     access="isAuthenticated()" />
+        <intercept-url pattern="/api/private/**"     access="isAuthenticated()" />
         <http-basic />
     </http>
  
