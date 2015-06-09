@@ -13,8 +13,11 @@
     <body ng-controller="clientCtrl" ng-init="init()" >
 
         <div class="container-fluid"> 
-            <div class="row">
-            	<div class="col-md-12"><img src="/img/polygon-logo.jpg" height="200px;" width="100%"/></div>
+            <div class="row" style="background:teal;">
+            	<div class="col-md-12" style="color: white; padding-top: 10px; padding-bottom: 10px;">
+            	  <div style="font: bold; font-size: 5ex; font-family:cursive;">Polygon Underwriting</div>
+            	  <div style="font: bold; font-size: 2ex; font-family:cursive;">Specialist Specie Underwriters</div>
+            	</div>
             </div>
             <div class="row alert-error" ng-if="error">
                 <div class="col-md-12">{{error}}</div>
