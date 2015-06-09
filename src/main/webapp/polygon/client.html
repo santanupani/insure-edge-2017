@@ -13,18 +13,24 @@
     <body ng-controller="clientCtrl" ng-init="init()" >
 
         <div class="container-fluid"> 
+            <div class="row">
+            	<div class="col-md-12"><img src="/img/polygon-logo.jpg" height="200px;" width="100%"/></div>
+            </div>
             <div class="row alert-error" ng-if="error">
                 <div class="col-md-12">{{error}}</div>
             </div>
-            <div class="row">
-                <div class="col-xs-2 col-lg-3" ng-repeat="product in products">
-                    <div class="panel panel-default">
-                        <div class="panel-body" align="center">
+            <div class="row" style="padding: 25px;">
+                <div class="col-md-3" ng-repeat="product in products">
+                    <div class="panel panel-default" >
+                        <div class="panel-body" align="center" style="height: 300px;">
                             <img class="img-circle" ng-src="{{product.image}}" alt="Generic placeholder image" width="140" height="140">
                             <h3>{{product.name}}</h3>
                             <p>{{product.description}}</p>
-                            <p><a  class="btn btn-default" ng-click="Quote(product.id)" role="button">Quote</a></p>
+                           
                         </div>
+                         <div class="panel-footer text-right">
+                         	 <p><a  class="btn btn-default" ng-click="Quote(product.id)" role="button">Get Quote</a></p>
+                         </div>
                     </div>
                 </div>
             </div>
