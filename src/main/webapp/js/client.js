@@ -14,20 +14,9 @@ polygon.config(['$routeProvider', function ($routeProvider) {
         });
 }]);
 
-polygon.controller('clientCtrl', function ($scope) {
-    
-    $scope.error;
-    
-    $scope.init = function(){
-        
-    };
-});
-
 
 
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
-	
-	$scope.products = [];
      
     $scope.init = function(){
         $scope.getProducts();
@@ -41,7 +30,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('retrived successfully');
-                $scope.products = data;
+                $rootScope.products = data;
             } else {
                 console.log('status:' + status);
                 // TODO : set error value
@@ -57,6 +46,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams) {
 	
 	console.log($routeParams['id']);
+	console.log($rootScope.products);
 	
 
 });
