@@ -23,7 +23,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
     };
 
     $scope.getProducts = function () {
-    	// TODO : Add log 
+        console.log('get products');
         $http({
             url: '/api/products',
             method: 'get'
@@ -33,11 +33,12 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
                 $rootScope.products = data;
             } else {
                 console.log('status:' + status);
-                // TODO : set error value
+                $rootScope.error = "error status code : " + status;;
             }
         }).error(function (error) {
-            // TODO : log here
-        	$rootScope.error = "No Data Base Connection";
+            console.log(error);
+        	$rootScope.error = error;;
+                
         });
     };
 });
