@@ -1,3 +1,71 @@
-<div class="row">
-  get questionnaires
+
+<div class="row" style="padding: 25px;" ng-init="init()">
+	<div class="col-md-3">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-body" align="center" style="height: 300px;">
+				<img class="img-circle" ng-src="{{product.image}}"  width="140" height="140">
+				<h3>{{product.name}}</h3>
+				<p>{{product.description}}</p>
+			</div>
+			<div class="panel-footer text-right">
+				<p>
+					<a class="btn btn-default" ng-href="#/products" role="button">All Products</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-9">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+		   <div class="panel-heading">
+		    <h4>Please answer the following questionnaires</h4>
+		   </div>
+			<div class="panel-body" align="left">
+				<form role="form">
+				    <div ng-repeat="questionnaire in questionnaires">
+					    
+					    <div ng-if="questionnaires[questionnaire.dependsOn].answer.toString()==questionnaire.onAnswer.toString()">		  				  
+			  				  
+			  				  <div  ng-if="questionnaire.answerType=='text'" class="form-group">
+							    <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+							    <input type="text" class="form-control" id="q_{{questionnaire.id}}"
+							    	ng-model="questionnaire.answer"/>
+							  </div>
+							 
+							  <div ng-if="questionnaire.answerType=='number'"  class="form-group">
+							    <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+							    <input type="number" class="form-control" id="q_{{questionnaire.id}}"
+							    	ng-model="questionnaire.answer"/>
+							  </div>
+							   
+							  <div ng-if="questionnaire.answerType=='checkbox'" class="checkbox">
+							    <label><input type="checkbox" 
+							    	ng-model="questionnaire.answer">{{questionnaire.question}}</label>
+							  </div>
+							  
+							  <div ng-if="questionnaire.answerType=='select'" class="form-group">
+							    <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+					            <select class="form-control" id="q_{{questionnaire.id}}" 
+					                ng-model="questionnaire.answer"
+					                ng-options="answerValue for answerValue in questionnaire.answerValues"></select>
+					          </div>
+					          
+					          <div  ng-if="questionnaire.answerType=='textarea'" class="form-group">
+							    <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+							    <textarea class="form-control" id="q_{{questionnaire.id}}" 
+							    ng-model="questionnaire.answer"></textarea>
+							  </div>
+					          
+					    </div>
+					    
+				    </div>
+				</form>
+			</div>
+			<div class="panel-footer text-right">
+				<p>
+					<a class="btn btn-default" role="button">Request Quote</a>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
