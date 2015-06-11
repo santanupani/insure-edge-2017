@@ -22,46 +22,37 @@ values('Static and In Transit Cover Cash and Valuables',
 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery – as per standard policy wording.'
 ,'/img/products/Static and In Transit Cover Cash and Valuables1.jpg'); 
 
-insert into answer_types(answer_type)
+insert into answertypes(answertype)
 values('number');
 
-insert into answer_types(answer_type)
+insert into answertypes(answertype)
 values('text');
 
-insert into answer_types(answer_type)
+insert into answertypes(answertype)
 values('select');
 
-insert into answer_types(answer_type)
+insert into answertypes(answertype)
 values('checkbox');
 
-insert into answer_types(answer_type)
+insert into answertypes(answertype)
 values('textarea');
 
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, if_answer)
-values('1',
-'1',
-'Maximum amount you wish to insure:',
-'1',
-'1',
-'null'
-);
+insert into answervalues(question, answervalue)
+values('Maximum amount you wish to insure:','1000000');
 
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, if_answer)
-values('1',
-'2',
-'Is the above amount the Total Full Value of the goods being moved:',
-'3',
-'1',
-'text'
-);
+insert into answervalues(question, answervalue)
+values('Is the above amount the Total Full Value of the goods being moved:','Yes');
 
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, if_answer)
-values('1',
-'3',
-'Do you use the services of a professional valuables carrier:',
-'3',
-'1',
-'text'
-);
+insert into answervalues(question, answervalue)
+values('Do you use the services of a professional valuables carrier:','No');
+
+insert into questionnaires(productid, sequencenumber, questionid, answertypeid, dependson, ifanswer)
+values('1','1','1','2','1','true');
+
+insert into questionnaires(productid, sequencenumber, questionid, answertypeid, dependson, ifanswer)
+values('1','2','2','3','2','true');
+
+insert into questionnaires(productid, sequencenumber, questionid, answertypeid, dependson, ifanswer)
+values('1','3','3','3','3','true');
 
 

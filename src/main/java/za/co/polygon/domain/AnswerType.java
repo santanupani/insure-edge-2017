@@ -1,4 +1,3 @@
-
 package za.co.polygon.domain;
 
 import javax.persistence.Column;
@@ -9,9 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "answer_types")
+@Table(name = "answertypes")
 public class AnswerType {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,20 +18,4 @@ public class AnswerType {
     @Column(name = "answer_type")
     private String answerType;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAnswerType() {
-        return answerType;
-    }
-
-    public void setAnswerType(String answerType) {
-        this.answerType = answerType;
-    }  
-    
 }

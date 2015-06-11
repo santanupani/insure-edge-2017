@@ -19,7 +19,7 @@ public class Product {
     private String name;
     @Column(name = "description")
     private String description;
-    @Column (name="image")
+    @Column(name = "image")
     private String image;
 
     public Long getId() {
@@ -53,5 +53,4 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
-    
 }
