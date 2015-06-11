@@ -12,17 +12,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "answertypes")
-public class AnswerType {
+@Table(name = "answervalues")
+public class AnswerValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "answertype")
-    private String answerType;
+    @Column(name = "question")
+    private String question;
+    @Column(name = "answervalue")
+    private String answervalue;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "answertype")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "answervalue")
     private List<Questionnaire> questionnaire;
 
     public Long getId() {
@@ -33,12 +35,20 @@ public class AnswerType {
         this.id = id;
     }
 
-    public String getAnswerType() {
-        return answerType;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setAnswerType(String answerType) {
-        this.answerType = answerType;
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswervalue() {
+        return answervalue;
+    }
+
+    public void setAnswervalue(String answervalue) {
+        this.answervalue = answervalue;
     }
 
     public List<Questionnaire> getQuestionnaire() {
@@ -50,5 +60,4 @@ public class AnswerType {
     }
     
     
-
 }

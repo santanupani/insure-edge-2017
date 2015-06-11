@@ -6,14 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.polygon.domain.Product;
+import za.co.polygon.domain.Questionnaire;
 import static za.co.polygon.mapper.Mapper.*;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.ProductRepository;
+import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.UserRepository;
 
 @RestController
@@ -26,6 +29,9 @@ public class Service {
 
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private QuestionnaireRepository questionnaireRepository;
 
     @RequestMapping(value = "api/users/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -44,6 +50,18 @@ public class Service {
         List<ProductQueryModel> result = toProductQueryModel(products);
         log.info("found all products, size:{}", result.size());
         return result;
+    }
+    
+    @RequestMapping(value = "api/questions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Questionnaire> findQuestionnaire() {
+        List<Questionnaire> questionnaire = questionnaireRepository.findAll();
+         return questionnaire;
+    }
+    
+    @RequestMapping(value = "api/questions/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Questionnaire findProductsById(@PathVariable("id") Long id) {
+         Questionnaire questionnaire = questionnaireRepository.findOne(id);
+         return questionnaire;
     }
 
 }

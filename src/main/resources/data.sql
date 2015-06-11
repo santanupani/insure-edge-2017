@@ -23,10 +23,10 @@ values('Static and In Transit Cover Cash and Valuables',
 ,'/img/products/Static and In Transit Cover Cash and Valuables1.jpg'); 
 
 insert into answertypes(answertype)
-values('number');
+values('text');
 
 insert into answertypes(answertype)
-values('text');
+values('number');
 
 insert into answertypes(answertype)
 values('select');

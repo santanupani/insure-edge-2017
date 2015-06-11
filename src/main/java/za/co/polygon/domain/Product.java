@@ -1,10 +1,14 @@
 package za.co.polygon.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +25,9 @@ public class Product {
     private String description;
     @Column(name = "image")
     private String image;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+    private List<Questionnaire> questionnaire;
 
     public Long getId() {
         return id;
@@ -53,4 +60,14 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public List<Questionnaire> getQuestionnaire() {
+        return questionnaire;
+    }
+
+    public void setQuestionnaire(List<Questionnaire> questionnaire) {
+        this.questionnaire = questionnaire;
+    }
+
+    
 }
