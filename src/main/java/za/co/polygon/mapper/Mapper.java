@@ -2,9 +2,13 @@ package za.co.polygon.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Product;
+import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.ProductQueryModel;
+import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.UserQueryModel;
 
 public class Mapper {
@@ -41,6 +45,29 @@ public class Mapper {
 
         }
         return productQueryModels;
+    }
+    
+    public static QuestionnaireQuery toQuestionnaireQueryModel(Questionnaire from){
+    	QuestionnaireQuery questionnaireQuery = new QuestionnaireQuery();
+    	questionnaireQuery.setId(from.getId());
+    	questionnaireQuery.setQuestion(from.getQuestion());
+    	questionnaireQuery.setSequenceNumber(from.getSequenceNumber());
+    	questionnaireQuery.setAnswerType(from.getAnswertype().getAnswerType());
+    	questionnaireQuery.setDependsOn(from.getDependsOn());
+    	questionnaireQuery.setOnAnswer(from.getIfAnswer());
+    	List<String> answerValues = new ArrayList<String>();
+    	for(AnswerValue answerValue : from.getAnswerValues()){
+    		answerValues.add(answerValue.getAnswerValue());
+    	}
+    	return questionnaireQuery;
+    }
+    
+    public static List<QuestionnaireQuery> toQuestionnaireQueryModel(List<Questionnaire> fromList){
+    	List<QuestionnaireQuery> questionnaireQueries = new ArrayList<QuestionnaireQuery>();
+    	for(Questionnaire questionnaire : fromList){
+    		questionnaireQueries.add(toQuestionnaireQueryModel(questionnaire));
+    	}
+    	return questionnaireQueries;
     }
 
 }

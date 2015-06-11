@@ -12,43 +12,34 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "answertypes")
+@Table(name = "answer_types")
 public class AnswerType {
-
-    @Id
+    
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "answertype")
-    private String answerType;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "answertype")
-    private List<Questionnaire> questionnaire;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAnswerType() {
-        return answerType;
-    }
-
-    public void setAnswerType(String answerType) {
-        this.answerType = answerType;
-    }
-
-    public List<Questionnaire> getQuestionnaire() {
-        return questionnaire;
-    }
-
-    public void setQuestionnaire(List<Questionnaire> questionnaire) {
-        this.questionnaire = questionnaire;
-    }
     
+    @Column(name = "answer_type")
+    private String answerType;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getAnswerType() {
+		return answerType;
+	}
+
+	public void setAnswerType(String answerType) {
+		this.answerType = answerType;
+	}
+    
+        
     
 
 }
