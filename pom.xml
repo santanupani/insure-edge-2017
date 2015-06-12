@@ -65,7 +65,12 @@
             <version>1.0.1.RELEASE</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>za.co.polygon</groupId>
+            <artifactId>polygon</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
