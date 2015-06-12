@@ -83,7 +83,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     
     $scope.getQuestionnaires = function(productId){
     	 $http({
-             url: '/api/questions',
+             url: '/api/products/'+productId+'/questionnaires',
              method: 'get'
          }).success(function (data, status) {
              if (status == 200) {
@@ -95,7 +95,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
              }
          }).error(function (error) {
              console.log(error);
-         	$rootScope.error = error;;
+         	 $rootScope.error = error;;
                  
          });
     };

@@ -50,7 +50,5 @@ public class AnswerValue {
 	public void setAnswerValue(String answerValue) {
 		this.answerValue = answerValue;
 	}
-
-
        
 }

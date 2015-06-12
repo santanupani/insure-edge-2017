@@ -1,5 +1,6 @@
 package za.co.polygon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class Service {
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
 
-    @RequestMapping(value = "api/users/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
         log.info("find user");
         List<za.co.polygon.domain.User> users = userRepository.findAll();
@@ -48,20 +49,19 @@ public class Service {
     public List<ProductQueryModel> findAllProducts() {
         log.info("find all products");
         List<Product> products = productRepository.findAll();
-        List<ProductQueryModel> result = toProductQueryModel(products);
-        log.info("found all products, size:{}", result.size());
-        return result;
+        log.info("found all products - size:{}", products.size());
+        return toProductQueryModel(products);
     }
 
-    @RequestMapping(value = "api/questions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<QuestionnaireQuery> findQuestionnaire() {
-        log.info("find questions for a product");
-        List<Questionnaire> questionnaires = questionnaireRepository.findAll();
-        for (Questionnaire q : questionnaires) {
-            System.out.println(q.getAnswerValues());
+    @RequestMapping(value = "api/products/{productId}/questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<QuestionnaireQuery> findQuestionnaires(@PathVariable("productId") Long productId) {
+        log.info("find questionnaires for product - productId:{}", productId);
+        List<Questionnaire> questionnaires = new ArrayList<Questionnaire>();
+        Product product  = productRepository.findOne(productId);
+        if(product != null){
+        	 questionnaires = questionnaireRepository.findByProduct(product);
         }
-        log.info("found questions for product, size:{}", questionnaires.size());
-        log.info("this service to get all questions for a particular product");
+        log.info("found questionnaires for product - productId:{}, size:{}", productId, questionnaires.size());
         return toQuestionnaireQueryModel(questionnaires);
     }
 

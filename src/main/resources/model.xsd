@@ -34,7 +34,20 @@
             </sequence>
         </complexType>
     </element>
-    
-     
+
+
+	<element name="QuestionnaireQuery">
+        <complexType>
+            <sequence>
+                <element name="id" type="long"></element>
+                <element name="sequenceNumber" type="long"></element>
+                <element name="question"   type="string"></element>
+                <element name="answerType" type="string"></element>
+                <element name="dependsOn"  type="long"     minOccurs="0"></element>
+                <element name="onAnswer"   type="string"   minOccurs="0"></element>
+                <element name="answerValues" type="string" minOccurs="0" maxOccurs="unbounded"></element>                
+            </sequence>
+        </complexType>
+    </element>  
     
 </schema>

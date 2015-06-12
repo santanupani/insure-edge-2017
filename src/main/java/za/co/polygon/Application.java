@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource("classpath:security-context.xml")
+@ImportResource("classpath:security.xml")
 public class Application {
 	
 	public static void main(String args[]){
