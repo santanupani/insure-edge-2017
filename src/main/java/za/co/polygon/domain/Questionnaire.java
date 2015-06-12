@@ -37,7 +37,7 @@ public class Questionnaire {
     @JoinColumn(name = "answer_type_id")
     private AnswerType answertype;
     
-    @OneToMany(mappedBy = "answerValue", targetEntity = AnswerValue.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "questionnaire")
     private List<AnswerValue> answerValues;
     
     @Column(name = "depends_on")

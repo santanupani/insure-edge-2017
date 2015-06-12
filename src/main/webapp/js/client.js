@@ -79,45 +79,25 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         });
     };
     
+    
+    
     $scope.getQuestionnaires = function(productId){
-    	$scope.questionnaires = 
-    		 [{
-   			  "id": "0",
-   			  "question" : "What is your name ?",
-   			  "answerType" : "text"
-   			},
-   			{
-   			  "id": "1",
-   			  "question" : "What is your gender ?",
-   			  "answerType" : "select",
-   			  "answerValues" : ["Female", "Male"]
-   			},
-   			{
-   			  "id": "2",
-   			  "question" : "What is your age ?",
-   			  "answerType" : "number",
-   			  "dependsOn" : 1,
-   			  "onAnswer"  : "Male"
-   			},
-   			{
-   			  "id": "3",
-   			  "question" : "What is your salary ?",
-   			  "answerType" : "number",
-   			  "dependsOn" : 1,
-   			  "onAnswer" : "Female"
-   			},
-   			{
-   			    "id" : "4",
-   			    "question" : "Do you have any criminal record ?",
-   			    "answerType" : "checkbox"
-   			},
-   			{
-   			    "id" : "5",
-   			    "question" : "Please provide details of your crime",
-   			    "answerType" : "textarea",
-   			    "dependsOn" : 4,
-   			    "onAnswer" : "true"
-   			}];
+    	 $http({
+             url: '/api/questions',
+             method: 'get'
+         }).success(function (data, status) {
+             if (status == 200) {
+                 console.log('retrived successfully');
+                 $scope.questionnaires = data;
+             } else {
+                 console.log('status:' + status);
+                 $rootScope.error = "error status code : " + status;;
+             }
+         }).error(function (error) {
+             console.log(error);
+         	$rootScope.error = error;;
+                 
+         });
     };
 	
 

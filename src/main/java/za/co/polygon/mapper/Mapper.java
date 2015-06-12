@@ -57,8 +57,10 @@ public class Mapper {
     	questionnaireQuery.setOnAnswer(from.getIfAnswer());
     	List<String> answerValues = new ArrayList<String>();
     	for(AnswerValue answerValue : from.getAnswerValues()){
+    		System.out.println(answerValue.getAnswerValue());
     		answerValues.add(answerValue.getAnswerValue());
     	}
+    	questionnaireQuery.setAnswerValues(answerValues);
     	return questionnaireQuery;
     }
     
