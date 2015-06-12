@@ -22,6 +22,45 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '6', 'Please provide details of your crime', 	5, 	5,     'true');*/
 
 
+
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '1', 'What is the maximum amount you wish to insure ?',                      2, 	null, 	null);
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '2', 'Is the above amount the total full value of the goods being moved ?',  4,	null, 	null);
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '3', 'What is the total full value of the goods being moved ?',              2,   2, 		'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '4', 'For Additional Premium, Do you want first loss cover ?',               4,   null,	null);
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '5', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null);
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '6', 'What is the name of the professional valuables carriers ?',            3,   5,	  	'true');
+insert into answer_values(questionnaire_id, answer_value) values(6, 'Protea Coin Service');
+insert into answer_values(questionnaire_id, answer_value) values(6, 'G4S Service');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '7', 'By whom and how are the valuables carried ?',                           5,	5, 		'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '8', 'How many times per week are the valuables carried ?',                   3,  null,  	null);
+insert into answer_values(questionnaire_id, answer_value) values(8, '1 time /week');
+insert into answer_values(questionnaire_id, answer_value) values(8, '2 times/week');
+insert into answer_values(questionnaire_id, answer_value) values(8, '3 times/week');
+insert into answer_values(questionnaire_id, answer_value) values(8, '4 times/week');
+insert into answer_values(questionnaire_id, answer_value) values(8, '5 times/week');
+insert into answer_values(questionnaire_id, answer_value) values(8, '6 times/week');
+insert into answer_values(questionnaire_id, answer_value) values(8, '7 times/week');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '9', 'From where and to where are the valuables carried ?',                    3,    null,  null);
+insert into answer_values(questionnaire_id, answer_value) values(9, 'Port Elizabeth to Bloemfontein');
+insert into answer_values(questionnaire_id, answer_value) values(9, 'Johannesburg to Durban');
+insert into answer_values(questionnaire_id, answer_value) values(9, 'Polokwane to Mbombela');
+insert into answer_values(questionnaire_id, answer_value) values(9, 'Rustenburg to Kimberley');
+insert into answer_values(questionnaire_id, answer_value) values(9, 'Kimberley to Cape Town');
+insert into answer_values(questionnaire_id, answer_value) values(9, 'Cape Town to Johannesburg ');
+insert into answer_values(questionnaire_id, answer_value) values(9, 'Durban to Bloemfontein');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '10', 'What is the approximate distant?'                 ,                    3,    null,  null);
+insert into answer_values(questionnaire_id, answer_value) values(10, '0km to 100km');
+insert into answer_values(questionnaire_id, answer_value) values(10, '100km to 200km');
+insert into answer_values(questionnaire_id, answer_value) values(10, '200km to 300km');
+insert into answer_values(questionnaire_id, answer_value) values(10, '300km to 400km');
+insert into answer_values(questionnaire_id, answer_value) values(10, '400km to 500km');
+insert into answer_values(questionnaire_id, answer_value) values(10, '500km to 600km');
+insert into answer_values(questionnaire_id, answer_value) values(10, '600km to 700km');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('1', '11', 'Do you require SASRIA cover?'                     ,                    4,    null,  null);
+
+
+
+
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('2', '1', 'Maximum amount you wish to insure ?', 				    2, 	null,    null);
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('2', '2', 'Is the above amount the Total Full Value of the goods being stored ?', 4,  null,    null);
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer)  values('2', '3', 'What is the Total Full Value of the goods being stored ?',             2,  2,  'false');
