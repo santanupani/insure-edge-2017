@@ -22,7 +22,7 @@ import za.co.polygon.repository.UserRepository;
 
 @RestController
 public class Service {
-    
+
     private static final Logger log = LoggerFactory.getLogger(Service.class);
 
     @Autowired
@@ -30,7 +30,7 @@ public class Service {
 
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
 
@@ -46,21 +46,23 @@ public class Service {
 
     @RequestMapping(value = "api/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductQueryModel> findAllProducts() {
-    	log.info("find all products");
+        log.info("find all products");
         List<Product> products = productRepository.findAll();
         List<ProductQueryModel> result = toProductQueryModel(products);
         log.info("found all products, size:{}", result.size());
         return result;
     }
-    
+
     @RequestMapping(value = "api/questions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<QuestionnaireQuery> findQuestionnaire() {
-         List<Questionnaire> questionnaires = questionnaireRepository.findAll();
-         for(Questionnaire q: questionnaires){
-        	 System.out.println(q.getAnswerValues());
-         }
-         return toQuestionnaireQueryModel(questionnaires);
+        log.info("find questions for a product");
+        List<Questionnaire> questionnaires = questionnaireRepository.findAll();
+        for (Questionnaire q : questionnaires) {
+            System.out.println(q.getAnswerValues());
+        }
+        log.info("found questions for product, size:{}", questionnaires.size());
+        log.info("this service to get all questions for a particular product");
+        return toQuestionnaireQueryModel(questionnaires);
     }
-    
- 
+
 }

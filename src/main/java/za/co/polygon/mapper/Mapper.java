@@ -54,7 +54,7 @@ public class Mapper {
     	questionnaireQuery.setSequenceNumber(from.getSequenceNumber());
     	questionnaireQuery.setAnswerType(from.getAnswertype().getAnswerType());
     	questionnaireQuery.setDependsOn(from.getDependsOn());
-    	questionnaireQuery.setOnAnswer(from.getIfAnswer());
+    	questionnaireQuery.setOnAnswer(from.getOnAnswer());
     	List<String> answerValues = new ArrayList<String>();
     	for(AnswerValue answerValue : from.getAnswerValues()){
     		System.out.println(answerValue.getAnswerValue());
