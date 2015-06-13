@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import za.co.polygon.domain.AnswerValue;
+import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.User;
+import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.UserQueryModel;
@@ -70,5 +72,24 @@ public class Mapper {
     	}
     	return questionnaireQueries;
     }
+    
+    public static BrokerQueryModel toBrokerQueryModel(Broker from) {
+        BrokerQueryModel brokerQueryModel = new BrokerQueryModel();
+        brokerQueryModel.setBrokerCode(from.getBrokerCode());
+        brokerQueryModel.setBrokerName(from.getBrokerName());
+        brokerQueryModel.setBrokerEmail(from.getBrokerEmail());
+        return brokerQueryModel;
+    }
+
+    public static List<BrokerQueryModel> toBrokerQueryModel(List<Broker> fromList) {
+        List<BrokerQueryModel> brokerQueryModels = new ArrayList<BrokerQueryModel>();
+        for (Broker broker : fromList) {
+            brokerQueryModels.add(toBrokerQueryModel(broker));
+
+        }
+        return brokerQueryModels;
+    }
+    
+    
 
 }

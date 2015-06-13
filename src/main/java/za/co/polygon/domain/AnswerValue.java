@@ -20,8 +20,8 @@ public class AnswerValue {
     private Long id;
     
     
-    @ManyToOne(optional=false,fetch=FetchType.LAZY)
-    @JoinColumn(name = "questionnaire_id", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "questionnaire_id")
     private Questionnaire questionnaire;
     
     @Column(name = "answer_value")

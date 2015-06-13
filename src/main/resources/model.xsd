@@ -50,4 +50,15 @@
         </complexType>
     </element>  
     
+    <element name="BrokerQueryModel">
+        <complexType>
+            <sequence>
+                <element name="id" type="long"></element>
+                <element name="brokerCode" type="string"></element>
+                <element name="brokerName"   type="string"></element>
+                <element name="brokerEmail" type="string"></element>  
+            </sequence>
+        </complexType>
+    </element>  
+    
 </schema>
