@@ -7,17 +7,17 @@ insert into products(name, description, image) values('Static and In Transit Cov
 
 
 /*broker*/
-insert into brokers(broker_code, broker_name, broker_email) values ('00001', 'Coin Risk Management', 'risk@coin.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00002', 'Admin Focus (Pty) Ltd', 'fanie@adminfocus.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00003', 'Optimum Financial Services Group', 'bertus@optimum-inc.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00004', 'Status Insurance Brokers (Pty) Ltd', 'info@statusib.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00005', 'Van Zyl Conradie Makelaars', 'elana@vzcon.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00006', 'Safari & Tourism Insurance Brokers (Pty) Ltd', 'yvonne@satib.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00007', 'Rens Kontant in Transito', 'renscit@vodamail.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00008', 'Multi Risk Admin (Pty) Ltd', 'queries@multirisk.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00009', 'Lazarus Dash and Associates (Pty) Ltd', 'Brian@lazdash.co.za');
-insert into brokers(broker_code, broker_name, broker_email) values ('00010', 'Willem Jacobus Nienaber', 'wjnienaber@telkomsa.net');
-insert into brokers(broker_code, broker_name, broker_email) values ('00011', 'Deposita Systems (Pty) Ltd', 'jennifer@bib.co.za');
+insert into brokers(code, name, email) values ('00001', 'Coin Risk Management', 'risk@coin.co.za');
+insert into brokers(code, name, email) values ('00002', 'Admin Focus (Pty) Ltd', 'fanie@adminfocus.co.za');
+insert into brokers(code, name, email) values ('00003', 'Optimum Financial Services Group', 'bertus@optimum-inc.co.za');
+insert into brokers(code, name, email) values ('00004', 'Status Insurance Brokers (Pty) Ltd', 'info@statusib.co.za');
+insert into brokers(code, name, email) values ('00005', 'Van Zyl Conradie Makelaars', 'elana@vzcon.co.za');
+insert into brokers(code, name, email) values ('00006', 'Safari & Tourism Insurance Brokers (Pty) Ltd', 'yvonne@satib.co.za');
+insert into brokers(code, name, email) values ('00007', 'Rens Kontant in Transito', 'renscit@vodamail.co.za');
+insert into brokers(code, name, email) values ('00008', 'Multi Risk Admin (Pty) Ltd', 'queries@multirisk.co.za');
+insert into brokers(code, name, email) values ('00009', 'Lazarus Dash and Associates (Pty) Ltd', 'Brian@lazdash.co.za');
+insert into brokers(code, name, email) values ('00010', 'Willem Jacobus Nienaber', 'wjnienaber@telkomsa.net');
+insert into brokers(code, name, email) values ('00011', 'Deposita Systems (Pty) Ltd', 'jennifer@bib.co.za');
 
 
 /*answer_type*/

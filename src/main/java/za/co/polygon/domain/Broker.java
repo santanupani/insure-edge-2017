@@ -16,12 +16,12 @@ public class Broker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "broker_code")
-    private String brokerCode;
-    @Column(name = "broker_name")
-    private String brokerName;
-    @Column(name = "broker_email")
-    private String brokerEmail;
+    @Column(name = "code")
+    private String code;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "email")
+    private String email;
 
     public Long getId() {
         return id;
@@ -31,29 +31,30 @@ public class Broker {
         this.id = id;
     }
 
-    public String getBrokerCode() {
-        return brokerCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setBrokerCode(String brokerCode) {
-        this.brokerCode = brokerCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getBrokerName() {
-        return brokerName;
+    public String getName() {
+        return name;
     }
 
-    public void setBrokerName(String brokerName) {
-        this.brokerName = brokerName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getBrokerEmail() {
-        return brokerEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setBrokerEmail(String brokerEmail) {
-        this.brokerEmail = brokerEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
     
     
 }
