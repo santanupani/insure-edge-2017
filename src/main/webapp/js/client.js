@@ -89,6 +89,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
              if (status == 200) {
                  console.log('retrived successfully');
                  $scope.questionnaires = data;
+                 $scope.getBrokers();
              } else {
                  console.log('status:' + status);
                  $rootScope.error = "error status code : " + status;;
@@ -98,6 +99,27 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
          	 $rootScope.error = error;;
                  
          });
+    };
+    
+    $scope.getBrokers = function (){
+        $http({
+             url: '/api/brokers',
+             method: 'get'
+         }).success(function (data, status) {
+             if (status == 200) {
+                 console.log('brokers retrived successfully');
+                 $scope.brokers = data;
+                 console.log($scope.brokers);
+             } else {
+                 console.log('status:' + status);
+                 $rootScope.error = "error status code : " + status;;
+             }
+         }).error(function (error) {
+             console.log(error);
+         	 $rootScope.error = error;;
+                 
+         });
+        
     };
 	
 
