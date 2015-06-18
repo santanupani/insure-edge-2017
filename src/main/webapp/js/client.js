@@ -49,34 +49,34 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 	$scope.questionnaires = [];
 	
 	$scope.init = function(){
-		console.log($rootScope.products);
-		if($rootScope.products==undefined) {
-			$scope.getProducts();
-		} else {
-			$scope.product = $rootScope.products[$routeParams['id']-1];
-			$scope.getQuestionnaires($routeParams['id']);
-		}
+            console.log($rootScope.products);
+            if($rootScope.products == undefined) {
+                 $scope.getProducts();
+            } else {
+		$scope.product = $rootScope.products[$routeParams['id']-1];
+		$scope.getQuestionnaires($routeParams['id']);
+            }
 	};
 	
 	$scope.getProducts = function () {
-        console.log('get products');
-        $http({
-            url: '/api/products',
-            method: 'get'
-        }).success(function (data, status) {
-            if (status == 200) {
-                console.log('retrived successfully');
-                $rootScope.products = data;
-                $scope.init();
-            } else {
-                console.log('status:' + status);
-                $rootScope.error = "error status code : " + status;;
-            }
-        }).error(function (error) {
-            console.log(error);
+            console.log('get products');
+            $http({
+                url: '/api/products',
+                method: 'get'
+            }).success(function (data, status) {
+                if (status == 200) {
+                    console.log('retrived successfully');
+                    $rootScope.products = data;
+                    $scope.init();
+                } else {
+                    console.log('status:' + status);
+                    $rootScope.error = "error status code : " + status;;
+                }
+            }).error(function (error) {
+                console.log(error);
         	$rootScope.error = error;;
                 
-        });
+            });
     };
     
     
@@ -89,6 +89,11 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
              if (status == 200) {
                  console.log('retrived successfully');
                  $scope.questionnaires = data;
+                 for(var i=0; i<$scope.questionnaires.length; i++){
+                     if($scope.questionnaires[i].answerType == 'checkbox'){
+                         $scope.questionnaires[i].answer = 'false';
+                     }
+                 }
                  $scope.getBrokers();
              } else {
                  console.log('status:' + status);
@@ -115,9 +120,8 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                  $rootScope.error = "error status code : " + status;;
              }
          }).error(function (error) {
-             console.log(error);
-         	 $rootScope.error = error;;
-                 
+            console.log(error);
+            $rootScope.error = error;     
          });
         
     };

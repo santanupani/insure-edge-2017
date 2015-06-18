@@ -18,21 +18,19 @@
                 <h4>Please fill your details</h4>
             </div>
             <div class="panel-body" align="center" style="height: 190px;">
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input type="text" class="form-control" placeholder="Yourname">
-                </div><br>
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input type="text" class="form-control" placeholder="YourEmail">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Your Full Name">
                 </div>
-                <br>
-                <div class="dropdown">
-                    <label>Choose Broker:</label>
-                    <select ng-options="broker.code as broker.name for broker in brokers" ng-model="broker">
-                        <option value="">Select Broker</option>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Your Email">
+                </div>
+                
+                <div class="form-group">
+                    <select class="form-control" ng-options="broker.code as broker.name for broker in brokers" ng-model="broker">
+                        <option>Select Broker</option>
                     </select>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -44,6 +42,7 @@
             </div>
             <div class="panel-body" align="left">
                 <form role="form">
+                    
                     <div ng-repeat="questionnaire in questionnaires">
 
                         <div ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">		  				  
