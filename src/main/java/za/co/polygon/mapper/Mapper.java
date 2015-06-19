@@ -57,7 +57,8 @@ public class Mapper {
     	questionnaireQuery.setAnswerType(from.getAnswertype().getAnswerType());
     	questionnaireQuery.setDependsOn(from.getDependsOn());
     	questionnaireQuery.setOnAnswer(from.getOnAnswer());
-    	
+    	questionnaireQuery.setIsRequired(from.getIsRequired());
+        
     	for(AnswerValue answerValue : from.getAnswerValues()){
     		questionnaireQuery.getAnswerValues().add(answerValue.getAnswerValue());
     	}

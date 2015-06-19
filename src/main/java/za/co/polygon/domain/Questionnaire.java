@@ -43,6 +43,9 @@ public class Questionnaire {
 
     @Column(name = "on_answer")
     private String onAnswer;
+    
+    @Column(name = "is_required")
+    private Boolean isRequired;
 
     public Long getId() {
         return id;
@@ -107,5 +110,17 @@ public class Questionnaire {
     public void setAnswerValues(List<AnswerValue> answerValues) {
         this.answerValues = answerValues;
     }
+
+    public Boolean getIsRequired() {
+        return isRequired;
+    }
+
+    public void setIsRequired(Boolean isRequired) {
+        this.isRequired = isRequired;
+    }
+
+    
+    
+    
 
 }
