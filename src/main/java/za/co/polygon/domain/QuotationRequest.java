@@ -3,11 +3,15 @@ package za.co.polygon.domain;
 
 
 import java.sql.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +40,9 @@ public class QuotationRequest {
     
     @Column(name = "status")
     private String status;
+    
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "quotationRequest")
+    private List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire;
 
     public Long getId() {
         return id;
@@ -93,5 +100,14 @@ public class QuotationRequest {
         this.status = status;
     }
 
+    public List<QuotationRequestQuestionnaires> getQuotationRequestQuestionnaire() {
+        return quotationRequestQuestionnaire;
+    }
+
+    public void setQuotationRequestQuestionnaire(List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire) {
+        this.quotationRequestQuestionnaire = quotationRequestQuestionnaire;
+    }
+
+    
       
 }

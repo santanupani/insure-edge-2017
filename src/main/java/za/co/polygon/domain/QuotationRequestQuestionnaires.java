@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,8 +19,9 @@ public class QuotationRequestQuestionnaires {
     @Column(name = "id")
     private Long id;
     
-    @Column(name = "quotation_requests_id")
-    private Long quotationRequestsId;
+    @ManyToOne
+    @JoinColumn(name = "quotation_requests_id")
+    QuotationRequest quotationRequest;
     
     @Column(name = "question")
     private String question;
@@ -34,12 +37,12 @@ public class QuotationRequestQuestionnaires {
         this.id = id;
     }
 
-    public Long getQuotationRequestsId() {
-        return quotationRequestsId;
+    public QuotationRequest getQuotationRequest() {
+        return quotationRequest;
     }
 
-    public void setQuotationRequestsId(Long quotationRequestsId) {
-        this.quotationRequestsId = quotationRequestsId;
+    public void setQuotationRequest(QuotationRequest quotationRequest) {
+        this.quotationRequest = quotationRequest;
     }
 
     public String getQuestion() {

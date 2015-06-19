@@ -136,9 +136,11 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
              console.log("invalid form");
              $scope.message="Error:Please Fill The Mandatory Fields"
         }
+        console.log(questionnaires);
         
     };
     
+     
  
     });
     
