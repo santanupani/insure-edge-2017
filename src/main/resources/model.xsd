@@ -36,7 +36,7 @@
     </element>
 
 
-	<element name="QuestionnaireQuery">
+    <element name="QuestionnaireQuery">
         <complexType>
             <sequence>
                 <element name="id" type="long"></element>
@@ -58,6 +58,29 @@
                 <element name="code" type="string"></element>
                 <element name="name"   type="string"></element>
                 <element name="email" type="string"></element>  
+            </sequence>
+        </complexType>
+    </element>
+    
+    <element name="QuotationRequestQuestionnaireCommandModel">
+        <complexType>
+            <sequence>
+                <element name="quotaionRequestsId" type="long"></element>
+                <element name="question" type="string"></element>
+                <element name="answer" type="string"></element>
+            </sequence>
+        </complexType>
+    </element> 
+    
+     <element name="QuotationRequestCommandModel">
+        <complexType>
+            <sequence>
+                <element name="referrence" type="long"></element>
+                <element name="applicantName" type="string"></element>
+                <element name="applicantEmail" type="string"></element>
+                <element name="brokerId" type="long"></element>
+                <element name="createdOn" type="date"></element>
+                <element name="status" type="string"></element>
             </sequence>
         </complexType>
     </element>  
