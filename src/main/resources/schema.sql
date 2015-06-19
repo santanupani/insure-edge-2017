@@ -32,6 +32,7 @@ create table questionnaires(
     answer_type_id integer not null,
     depends_on integer,
     on_answer varchar(128),
+    is_required boolean not null,
     constraint questionnaires_fk1 foreign key (product_id) references products (id),
     constraint questionnaires_fk2 foreign key (answer_type_id) references answer_types (id)
 );

@@ -16,6 +16,8 @@ polygon.config(['$routeProvider', function ($routeProvider) {
 
 
 
+
+
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
      
     $scope.init = function(){
@@ -45,6 +47,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
 
 polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams) {
+    
 	
 	$scope.questionnaires = [];
 	
@@ -125,6 +128,18 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
          });
         
     };
-	
-
-});
+    
+    
+    
+    $scope.validate=function(questionsform){
+        if(questionsform.$invalid){
+             console.log("invalid form");
+             $scope.message="Error:Please Fill The Mandatory Fields"
+        }
+        
+    };
+    
+ 
+    });
+    
+ 
