@@ -108,6 +108,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                  
          });
     };
+  
     
     $scope.getBrokers = function (){
         $http({
@@ -131,8 +132,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     
     
     
-    $scope.submit = function(form){
-        
+    $scope.submit = function(form){        
     	if(form.$invalid){
              console.log("Form Validation Failure");
              alert('Form Validation Failure');
@@ -140,8 +140,5 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         	console.log("Service Call Here");
         }
     };
-    
- 
-    });
-    
- 
+       
+}; 

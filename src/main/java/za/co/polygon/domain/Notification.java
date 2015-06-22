@@ -4,9 +4,9 @@ public class Notification {
 
     private String Message;
     private String to;
-    final private String from = "thabothulare68@gmail.com";
+    private String from; //= "thabothulare68@gmail.com";
     private String subject;
-    final private String password = "Ndivhu@tee1";
+    //final private String password = "Ndivhu@tee1";
 
 
    
@@ -37,13 +37,13 @@ public class Notification {
     public String getSubject() {
         return subject;
     }
-    
-    public String getPassword() {
-        return password;
-    }
-
+   
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 
   
