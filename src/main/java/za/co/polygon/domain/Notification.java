@@ -2,50 +2,34 @@ package za.co.polygon.domain;
 
 public class Notification {
 
-    private String Message;
     private String to;
-    private String from; //= "thabothulare68@gmail.com";
     private String subject;
-    //final private String password = "Ndivhu@tee1";
-
-
-   
+    private String message;
     
-
-    public String getMessage() {
-        return Message;
+    public Notification(String to, String subject, String message){
+    	this.to = to;
+    	this.subject = subject;
+    	this.message = message;
     }
+    
+	public String getTo() {
+		return to;
+	}
+	public void setTo(String to) {
+		this.to = to;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public void setMessage(String Message) {
-        this.Message = Message;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-  
-
-    public String getSubject() {
-        return subject;
-    }
-   
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-  
-
+    
 }

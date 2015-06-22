@@ -39,7 +39,7 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 
 
 /*Product1*/
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '1', 'What do you wish to insure ?',                 3,  null,    null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '1', 'What do you wish to insure ?',                 3,  null,    null, 'false');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash and Coins ');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash Coins and Valuables');
@@ -54,9 +54,9 @@ insert into answer_values(questionnaire_id, answer_value) values(1, 'Gold and Ca
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Bullion');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '2', 'What is the maximum amount you wish to insure ?',                      2, 	null, 	null, 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '3', 'Is the above amount the total full value of the goods being moved ?',  4,	null, 	null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '4', 'What is the total full value of the goods being moved ?',              2,   3, 		'false', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '4', 'What is the total full value of the goods being moved ?',              2,   3, 		'false', 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '5', 'For additional premium, do you want first loss cover ?',               4,   null,	null, 'false');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '6', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '6', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '7', 'What is the name of the professional valuables carriers ?',            3,   6,	  	'true', 'true');
 insert into answer_values(questionnaire_id, answer_value) values(7, 'Protea Coin Service');
 insert into answer_values(questionnaire_id, answer_value) values(7, 'G4S Service');
@@ -87,7 +87,7 @@ insert into answer_values(questionnaire_id, answer_value) values(11, '300km to 4
 insert into answer_values(questionnaire_id, answer_value) values(11, '400km to 500km');
 insert into answer_values(questionnaire_id, answer_value) values(11, '500km to 600km');
 insert into answer_values(questionnaire_id, answer_value) values(11, '600km to 700km');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '12', 'Do you require SASRIA cover ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '12', 'Do you require SASRIA cover ?'                     ,                    4,    null,  null, 'false');
 
 
 
