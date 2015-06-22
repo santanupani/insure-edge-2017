@@ -55,7 +55,7 @@
                             <div ng-if="questionnaire.answerType == 'number'"  class="form-group">
                                 <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
                                 <input type="number" class="form-control" id="q_{{questionnaire.id}}"
-                                       ng-model="questionnaire.answer" numbers-only="numbers-only" required="required"/>                                      
+                                       ng-model="questionnaire.answer" required/>                                      
                             </div>
 
                             <div ng-if="questionnaire.answerType == 'checkbox'" class="checkbox">
@@ -89,7 +89,9 @@
                     </span>
                 </div>
                 
-                <a class="btn btn-default" role="button" id="RequestQuote" ng-click="validate(questionsform)">Request Quote</a>
+             
+                
+                <a class="btn btn-default" role="button" id="RequestQuote" ng-click="validate({{questionnaire.question}})">Request Quote</a>
                 </p>
             </div>
         </div>
