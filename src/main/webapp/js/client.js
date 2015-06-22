@@ -94,7 +94,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                  $scope.questionnaires = data;
                  for(var i=0; i<$scope.questionnaires.length; i++){
                      if($scope.questionnaires[i].answerType == 'checkbox'){
-                         $scope.questionnaires[i].answer = 'false';
+                         $scope.questionnaires[i].answer = 'false' ;
                      }
                  }
                  $scope.getBrokers();
@@ -131,12 +131,14 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     
     
     
-    $scope.validate=function(questionsform){
-        if(questionsform.$invalid){
-             console.log("invalid form");
-             $scope.message="Error:Please Fill The Mandatory Fields"
-        }
+    $scope.submit = function(form){
         
+    	if(form.$invalid){
+             console.log("Form Validation Failure");
+             alert('Form Validation Failure');
+        } else {
+        	console.log("Service Call Here");
+        }
     };
     
  
