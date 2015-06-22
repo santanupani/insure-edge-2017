@@ -16,13 +16,13 @@ import za.co.polygon.domain.Notification;
 
 public class NotificationRepository {
 
-	private static final String username = "thabothulare68@gmail.com";
-	private static final String password = "Ndivhu@tee1";
-	private static final String hostName = "smtp.gmail.com";
-	private static final int    portNumber = 587; 
-	
+    private static final String username = "YourGmail@gmail.com"; //Enter your gmail here to test the code
+    private static final String password = "YourPassword"; //Enter your gmail password here
+    private static final String hostName = "smtp.gmail.com";
+    private static final int portNumber = 587;
+
     private Session session;
-    
+
     public NotificationRepository() {
         Properties props = new Properties();
         props.put("mail.smtp.host", hostName);
@@ -38,17 +38,17 @@ public class NotificationRepository {
             }
         };
 
-       session = Session.getDefaultInstance(props, auth);
-        
+        session = Session.getDefaultInstance(props, auth);
+
     }
 
-     public void send(Notification notification) throws AddressException, MessagingException {  
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(notification.getTo()));
-            message.setSubject(notification.getSubject());
-            message.setText(notification.getMessage());
-            Transport.send(message);
+    public void send(Notification notification) throws AddressException, MessagingException {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(username));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(notification.getTo()));
+        message.setSubject(notification.getSubject());
+        message.setText(notification.getMessage());
+        Transport.send(message);
     }
-     
+
 }

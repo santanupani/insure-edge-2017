@@ -6,15 +6,15 @@ import za.co.polygon.domain.Notification;
 
 public class NotificationRepositoryIT {
 
-	@Test
+    @Test
     public void testSend() {
-        Notification notification = new Notification("manmay.mohanty@reverside.co.za", "Polygon Notification Test", "This is a test notification");
+        Notification notification = new Notification("thabo.thulare@reverside.co.za", "Polygon Notification Test", "This is a test notification");
         try {
-        	NotificationRepository notificationRepository = new NotificationRepository();
-			notificationRepository.send(notification);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            NotificationRepository notificationRepository = new NotificationRepository();
+            notificationRepository.send(notification);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
