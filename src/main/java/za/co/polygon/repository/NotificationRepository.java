@@ -44,7 +44,7 @@ public class NotificationRepository {
 
      public void send(Notification notification) throws AddressException, MessagingException {  
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(notification.getFrom()));
+            message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(notification.getTo()));
             message.setSubject(notification.getSubject());
             message.setText(notification.getMessage());
