@@ -81,4 +81,25 @@
         </complexType>
     </element>  
     
+    <element name="QuotationRequestQueryModel">
+        <complexType>
+            <sequence>
+                <element name="reference" type="string"></element>
+                <element name="applicantName" type="string"></element>
+                <element name="applicantEmail" type="string"></element>
+                <element name="brokerId" minOccurs="0" maxOccurs="1"></element>
+                <element name="productId" minOccurs="0" maxOccurs="1"></element>
+                <element name="createdOn" type="date"></element>
+                <element name="status" type="string"></element>
+                <element name="questionnaires" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <sequence>
+                            <element name="question" type= "string" />
+                            <element name="answer"   type= "string" />
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
 </schema>
