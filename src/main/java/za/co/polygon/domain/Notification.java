@@ -1,6 +1,8 @@
 package za.co.polygon.domain;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
 
     private String to;
     private String subject;
