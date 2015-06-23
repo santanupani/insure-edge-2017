@@ -62,7 +62,7 @@
         </complexType>
     </element>
     
-     <element name="QuotationRequestCommandModel">
+    <element name="QuotationRequestCommandModel">
         <complexType>
             <sequence>
                 <element name="applicantName" type="string"></element>
@@ -85,10 +85,33 @@
         <complexType>
             <sequence>
                 <element name="reference" type="string"></element>
-                <element name="applicantName" type="string"></element>
-                <element name="applicantEmail" type="string"></element>
-                <element name="brokerId" minOccurs="0" maxOccurs="1"></element>
-                <element name="productId" minOccurs="0" maxOccurs="1"></element>
+                <element name="applicant" minOccurs="0" maxOccurs="1">
+                    <complexType>
+                        <sequence>
+                            <element name="applicantName" type="string"/>
+                            <element name="applicantEmail" type="string"/>
+                        </sequence>
+                    </complexType>
+                </element>
+                <element name="product" minOccurs="0" maxOccurs="1">
+                    <complexType>
+                        <sequence>
+                            <element name="productId" type="long"/>
+                            <element name="productName" type="string"/>
+                            <element name="productDesc" type="string"/>
+                            <element name="productImage" type="string"/>
+                        </sequence>
+                    </complexType>
+                </element>
+                <element name="broker" minOccurs="0" maxOccurs="1">
+                    <complexType>
+                        <sequence>
+                            <element name="brokerId" type="long"/>
+                            <element name="brokerName" type="string"/>
+                            <element name="brokerEmail" type="string"/>
+                        </sequence>
+                    </complexType>
+                </element>
                 <element name="createdOn" type="date"></element>
                 <element name="status" type="string"></element>
                 <element name="questionnaires" minOccurs="0" maxOccurs="unbounded">
