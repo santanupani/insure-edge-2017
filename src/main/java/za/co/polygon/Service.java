@@ -1,5 +1,10 @@
 package za.co.polygon;
 
+import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
+import static za.co.polygon.mapper.Mapper.toProductQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +32,6 @@ import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
-import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
 
@@ -51,11 +55,11 @@ public class Service {
     @Autowired
     private QuotationRequestRepository quotationRequestRepository;
 
-    @Autowired
-    private QuotationRequestQuestionnaireRepository quotaionRequestQuestionnaireRepository;
+
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
+    	
         log.info("find user");
         List<za.co.polygon.domain.User> users = userRepository.findAll();
         List<UserQueryModel> result = toUserQueryModel(users);
@@ -91,6 +95,7 @@ public class Service {
         log.info("found all products - size:{}", brokers.size());
         return toBrokerQueryModel(brokers);
     }
+
 
     @RequestMapping(value = "api/quotation-request", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequest) {

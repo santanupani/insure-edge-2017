@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themes>
+	
+	<theme name="base">
+		<element name="uuid" type="string" min-coocurs="1" max-occurs="1" column="uuid"/>
+	</theme>
+	
+	<theme name="procurement" extends="base" table="cd_procurement" repository="train" operation="POST">
+		<element name="customerName"    type="string" min-occurs="1" max-occurs="1"  column="customer_name"/>
+		<element name="customerAge"     type="number" min-occurs="1" max-occurs="1"  column="customer_age"/>
+		<element name="customerNumber"  type="ucn"    min-occurs="1" max-occurs="1"  column="ucn"/>
+		<element name="customerContact" type="phone"  min-occurs="0" max-occurs="5"  column="contact"/>
+	</theme>
+	
+</themes>
