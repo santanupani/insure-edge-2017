@@ -50,6 +50,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     
 	
 	$scope.questionnaires = [];
+        $scope.modelData={};
 	
 	$scope.init = function(){
             console.log($rootScope.products);
@@ -131,14 +132,41 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     };
     
     
-    
-    $scope.submit = function(form){        
-    	if(form.$invalid){
+     
+    $scope.submit = function(form){ 
+       $scope.modelData.applicantName=$scope.applicantName;
+       $scope.modelData.applicantEmail=$scope.applicantEmail;
+       $scope.modelData.brokerId=$scope.brokerId;
+       $scope.modelData.productId=$routeParams['id'];
+       $scope.modelData.questionnaires=$scope.questionnaires;
+        
+     	if(form.$invalid){
              console.log("Form Validation Failure");
              alert('Form Validation Failure');
         } else {
         	console.log("Service Call Here");
+                console.log($scope.questionnaires);
+                
+                $http({
+            url: 'http://localhost:8080/api/quotation-request',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',   
+            },
+            data: $scope.modelData
+        }).success(function (data, status) {
+                if (status == 200) {
+                    console.log('I am here');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+
+        
         }
     };
        
-}; 
+}); 
