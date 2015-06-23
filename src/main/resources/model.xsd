@@ -96,7 +96,7 @@
                 <element name="product" minOccurs="0" maxOccurs="1">
                     <complexType>
                         <sequence>
-                            <element name="productId" type="long"/>
+                            <element name="id" type="long"/>
                             <element name="productName" type="string"/>
                             <element name="productDesc" type="string"/>
                             <element name="productImage" type="string"/>
@@ -106,7 +106,7 @@
                 <element name="broker" minOccurs="0" maxOccurs="1">
                     <complexType>
                         <sequence>
-                            <element name="brokerId" type="long"/>
+                            <element name="id" type="long"/>
                             <element name="brokerName" type="string"/>
                             <element name="brokerEmail" type="string"/>
                         </sequence>
