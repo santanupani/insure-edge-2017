@@ -253,7 +253,6 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 
 
 
-
-
+insert into quotation_requests(reference, applicant_name, applicant_email, broker_id, product_id, created_on, status) values('100', 'Thabo', 'thabothulare68@gmail.com', '3', '1', '2015-01-22', 'pending');
 
 
