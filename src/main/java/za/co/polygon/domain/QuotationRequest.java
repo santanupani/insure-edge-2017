@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,8 +24,8 @@ public class QuotationRequest {
     @Column(name = "id")
     private Long id;
     
-    @Column(name = "referrence")
-    private Long referrence;
+    @Column(name = "reference")
+    private Long reference;
     
     @Column(name = "applicant_name")
     private String applicantName;
@@ -32,8 +33,13 @@ public class QuotationRequest {
     @Column(name = "applicant_email")
     private String applicantEmail;
     
-    @Column(name = "broker_id")
-    private Long brokerId;
+    @ManyToOne
+    @JoinColumn(name = "broker_id")
+    private Broker broker;
+    
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
     
     @Column(name = "created_on")
     private Date date;
@@ -41,7 +47,7 @@ public class QuotationRequest {
     @Column(name = "status")
     private String status;
     
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "quotationRequest")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationRequest")
     private List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire;
 
     public Long getId() {
@@ -52,12 +58,12 @@ public class QuotationRequest {
         this.id = id;
     }
 
-    public Long getReferrence() {
-        return referrence;
+    public Long getReference() {
+        return reference;
     }
 
-    public void setReferrence(Long referrence) {
-        this.referrence = referrence;
+    public void setReference(Long referrence) {
+        this.reference = referrence;
     }
 
     public String getApplicantName() {
@@ -76,14 +82,22 @@ public class QuotationRequest {
         this.applicantEmail = applicantEmail;
     }
 
-    public Long getBrokerId() {
-        return brokerId;
+    public Broker getBroker() {
+        return broker;
     }
 
-    public void setBrokerId(Long brokerId) {
-        this.brokerId = brokerId;
+    public void setBroker(Broker broker) {
+        this.broker = broker;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+    
     public Date getDate() {
         return date;
     }
@@ -107,7 +121,5 @@ public class QuotationRequest {
     public void setQuotationRequestQuestionnaire(List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire) {
         this.quotationRequestQuestionnaire = quotationRequestQuestionnaire;
     }
-
     
-      
 }

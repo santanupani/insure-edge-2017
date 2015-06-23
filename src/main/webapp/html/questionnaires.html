@@ -18,14 +18,14 @@
             </div>
             <div class="panel-body" align="center" style="height: 190px;">
                 <div class="form-group">
-                    <input type="text" class="form-control"  placeholder="Your Full Name">
+                    <input type="text" class="form-control"  placeholder="Your Full Name" ng-model="applicantName">
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Your Email">
+                    <input type="email" class="form-control" placeholder="Your Email" ng-model="applicantEmail">
                 </div>
 
                 <div class="form-group">
-                    <select class="form-control" ng-options="broker.code as broker.name for broker in brokers" ng-model="broker">
+                    <select class="form-control" ng-options="broker.id as broker.name for broker in brokers" ng-model="brokerId">
                         <option>Select Broker</option>
                     </select>
                 </div>

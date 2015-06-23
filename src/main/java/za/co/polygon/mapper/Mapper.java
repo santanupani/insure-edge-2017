@@ -76,6 +76,7 @@ public class Mapper {
     
     public static BrokerQueryModel toBrokerQueryModel(Broker from) {
         BrokerQueryModel brokerQueryModel = new BrokerQueryModel();
+        brokerQueryModel.setId(from.getId());
         brokerQueryModel.setCode(from.getCode());
         brokerQueryModel.setName(from.getName());
         brokerQueryModel.setEmail(from.getEmail());
