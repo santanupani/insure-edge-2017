@@ -105,7 +105,7 @@ public class Mapper {
         QuotationRequest quotationRequest = new QuotationRequest();
         quotationRequest.setApplicantName(from.getApplicantName());
         quotationRequest.setApplicantEmail(from.getApplicantEmail());
-        quotationRequest.setDate(new java.sql.Date(new Date().getTime()));
+        quotationRequest.setCreateDate(new Date());
         quotationRequest.setReference(UUID.randomUUID().toString());
         quotationRequest.setStatus("Pending");
         quotationRequest.setBroker(broker);
@@ -130,7 +130,7 @@ public class Mapper {
     	
     	result.setReference(quotationRequest.getReference());
     	result.setStatus(quotationRequest.getStatus());
-    	result.setCreateDate(new Date().toString());
+    	result.setCreateDate(quotationRequest.getCreateDate().toString());
     	result.setApplicantName(quotationRequest.getApplicantName());
     	result.setApplicantEmail(quotationRequest.getApplicantEmail());
     	

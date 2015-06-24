@@ -43,8 +43,8 @@ public class QuotationRequest {
     @JoinColumn(name = "product_id")
     private Product product;
     
-    @Column(name = "created_on")
-    private Date date;
+    @Column(name = "create_date")
+    private Date createDate;
     
     @Column(name = "status")
     private String status;
@@ -100,13 +100,7 @@ public class QuotationRequest {
         this.product = product;
     }
     
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
+   
 
     public String getStatus() {
         return status;
@@ -125,6 +119,14 @@ public class QuotationRequest {
 
     public void setQuotationRequestQuestionnaire(List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire) {
         this.quotationRequestQuestionnaire = quotationRequestQuestionnaire;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
     
 }

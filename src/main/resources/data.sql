@@ -261,8 +261,8 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 
 
 
-insert into quotation_requests(reference, applicant_name, applicant_email, broker_id, product_id, created_on, status) values('100', 'Thabo', 'thabothulare68@gmail.com', '3', '1', '2015-01-22', 'pending');
-insert into quotation_request_questionnaires(quotation_requests_id, question, answer) values('1', 'What is the maximum amount you wish to insure', '10000000');
-insert into quotation_request_questionnaires(quotation_requests_id, question, answer) values('1', 'Are you using professional valuable carriers', 'true');
+insert into quotation_requests(reference, applicant_name, applicant_email, broker_id, product_id, create_date, status) values('100', 'Thabo', 'thabothulare68@gmail.com', '3', '1', '2015-01-22', 'pending');
+insert into quotation_questionnaires(quotation_requests_id, question, answer) values('1', 'What is the maximum amount you wish to insure', '10000000');
+insert into quotation_questionnaires(quotation_requests_id, question, answer) values('1', 'Are you using professional valuable carriers', 'true');
 
 

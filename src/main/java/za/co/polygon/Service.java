@@ -115,7 +115,7 @@ public class Service {
     	quotationRequestModel.setApplicantName(quotationRequest.getApplicantName());
     	quotationRequestModel.setBroker(broker);
     	quotationRequestModel.setProduct(product);
-    	quotationRequestModel.setDate(new Date());
+    	quotationRequestModel.setCreateDate(quotationRequestModel.getCreateDate());
     	quotationRequestModel.setStatus("APPLIED");
     	quotationRequestModel.setReference(UUID.randomUUID().toString());    	
     	quotationRequestModel = quotationRequestRepository.save(quotationRequestModel);
