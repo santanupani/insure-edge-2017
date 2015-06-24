@@ -1,23 +1,33 @@
 package za.co.polygon;
 
 
+import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
+import static za.co.polygon.mapper.Mapper.toProductQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
-import za.co.polygon.mapper.Mapper;
-import static za.co.polygon.mapper.Mapper.*;
+import za.co.polygon.domain.QuotationRequestQuestionnaires;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
@@ -28,6 +38,7 @@ import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
+import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
 
@@ -51,16 +62,12 @@ public class Service {
     @Autowired
     private QuotationRequestRepository quotationRequestRepository;
 
-    
-    @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserQueryModel> findAllUsers() {
-        
+    @Autowired
+    private QuotationRequestQuestionnaireRepository quotationRequestQuestionnaireRepository;
 
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
-
-
         log.info("find user");
         List<za.co.polygon.domain.User> users = userRepository.findAll();
         List<UserQueryModel> result = toUserQueryModel(users);
@@ -96,36 +103,44 @@ public class Service {
         log.info("found all products - size:{}", brokers.size());
         return toBrokerQueryModel(brokers);
     }
-
-    @RequestMapping(value = "api/quotation-request", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequest) {
-        Product product = productRepository.findOne(quotationRequest.getProductId());
-        Broker broker = brokerRepository.findOne(quotationRequest.getBrokerId());
-        List<Questionnaires> questions = quotationRequest.getQuestionnaires();
-        for (Questionnaires questionnaires : questions) {           
-        }
-
-        QuotationRequest request = Mapper.toQuotationRequest(quotationRequest, broker, product);
-        
-
-        QuotationRequest request = Mapper.toQuotationRequest(quotationRequest);
-        request.setApplicantName(quotationRequest.getApplicantName());
-        request.setApplicantEmail(quotationRequest.getApplicantEmail());
-
-        quotationRequestRepository.save(request);
+    
+    @Transactional
+    @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequest){
+    	Broker  broker  = brokerRepository.findOne(quotationRequest.getBrokerId());
+    	Product product = productRepository.findOne(quotationRequest.getProductId());
+    	
+    	QuotationRequest quotationRequestModel = new QuotationRequest();
+    	quotationRequestModel.setApplicantEmail(quotationRequest.getApplicantEmail());
+    	quotationRequestModel.setApplicantName(quotationRequest.getApplicantName());
+    	quotationRequestModel.setBroker(broker);
+    	quotationRequestModel.setProduct(product);
+    	quotationRequestModel.setDate(new Date());
+    	quotationRequestModel.setStatus("APPLIED");
+    	quotationRequestModel.setReference(UUID.randomUUID().toString());    	
+    	quotationRequestModel = quotationRequestRepository.save(quotationRequestModel);
+    	
+    	for(Questionnaires questionnaires : quotationRequest.getQuestionnaires()){
+    		QuotationRequestQuestionnaires quotationRequestQuestionnaires = new QuotationRequestQuestionnaires();
+    		quotationRequestQuestionnaires.setQuestion(questionnaires.getQuestion());
+    		quotationRequestQuestionnaires.setAnswer(questionnaires.getAnswer());
+    		quotationRequestQuestionnaires.setQuotationRequest(quotationRequestModel);
+    		quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
+    	}
+    	
+    	quotationRequestModel= quotationRequestRepository.findOne(quotationRequestModel.getId());
+    	System.out.println(quotationRequestModel.getReference() + "<<<<" );
+    	
+    	System.out.println(quotationRequestModel.getQuotationRequestQuestionnaire().size());  	
+    	System.out.println(quotationRequestQuestionnaireRepository.count());
     }
     
-    public void getQuotationRequests() {
-        quotationRequestRepository.findAll();
+    
+    @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) {    	
+    	QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+    	return toQuotationRequestQueryModel(quotationRequest);
     }
 
-
-    @RequestMapping(value = "api/viewQuote", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<QuotationRequestQueryModel> findAllQuoteInfo() {
-        log.info("find all QuoteInfo");
-        List<QuotationRequest> quotationRequests = quotationRequestRepository.findAll();
-        log.info("found all products - size:{}", quotationRequests.size());
-        return toQuotationRequestQueryModel(quotationRequests);
-    }
 
 }

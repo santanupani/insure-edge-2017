@@ -8,4 +8,5 @@ import za.co.polygon.domain.QuotationRequest;
 @Repository
 public interface QuotationRequestRepository extends JpaRepository<QuotationRequest, Long> {
     
+	public QuotationRequest findByReference(String reference);
 }

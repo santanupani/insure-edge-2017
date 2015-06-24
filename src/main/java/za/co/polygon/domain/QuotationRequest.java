@@ -2,11 +2,13 @@
 package za.co.polygon.domain;
 
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +49,7 @@ public class QuotationRequest {
     @Column(name = "status")
     private String status;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationRequest")
+    @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
     private List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire;
 
     public Long getId() {
@@ -115,7 +117,10 @@ public class QuotationRequest {
     }
 
     public List<QuotationRequestQuestionnaires> getQuotationRequestQuestionnaire() {
-        return quotationRequestQuestionnaire;
+    	if(quotationRequestQuestionnaire== null) 
+    		return new ArrayList<QuotationRequestQuestionnaires>();
+    	else
+    		return quotationRequestQuestionnaire;
     }
 
     public void setQuotationRequestQuestionnaire(List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire) {
