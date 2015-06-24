@@ -249,7 +249,15 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '71', 'If secured by any other means not noted, please provide details in the adjacent fields ?',                 5,  null,    null, 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '72', 'Are you currently insured ?'                     ,                    4,    null,  null, 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '73', 'Please provide details of your previous insurance company ?'                     ,                    5,    26,  'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '74', 'Do you require SASRIA cover ?',                 4,  null,    null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '75', 'Please provide details previous of valuable goods and losses over the past 5 years ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '76', 'Please provide details of date ?'                     ,                    1,    28,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '77', 'Please provide details of value ?'                     ,                    1,    28,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '78', 'Please provide details of type of loss ?'                     ,                    1,    28,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '79', 'Do you wish to provide more history details'                     ,                    4,    null,  null, 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '80', 'Please provide details of date ?'                     ,                    1,    32,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '81', 'Please provide details of value ?'                     ,                    1,    32,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '82', 'Please provide details of type of loss ?'                     ,                    1,    32,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '83', 'Do you require SASRIA cover ?',                 4,  null,    null, 'true');
 
 
 

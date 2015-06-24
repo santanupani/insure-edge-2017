@@ -1,8 +1,9 @@
 package za.co.polygon.mapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
+import java.util.UUID;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
@@ -14,9 +15,12 @@ import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
+import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.UserQueryModel;
 
 public class Mapper {
+    
+     
 
     public static UserQueryModel toUserQueryModel(User from) {
         UserQueryModel user = new UserQueryModel();
@@ -95,15 +99,26 @@ public class Mapper {
         return brokerQueryModels;
     }
     
-     public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel from) {
+    public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel from,Broker broker,Product product) {
         QuotationRequest quotationRequest = new QuotationRequest();
         quotationRequest.setApplicantName(from.getApplicantName());
         quotationRequest.setApplicantEmail(from.getApplicantEmail());
-        
-        
+        quotationRequest.setDate(new java.sql.Date(new Date().getTime()));
+        quotationRequest.setReference(UUID.randomUUID().toString());
+        quotationRequest.setStatus("Pending");
+        quotationRequest.setBroker(broker);
+        quotationRequest.setProduct(product);
+        List<Questionnaires> list=from.getQuestionnaires();
+        List<QuotationRequestQuestionnaires> quotationRequestQuestionnaireses = new ArrayList<QuotationRequestQuestionnaires>();
+        for(Questionnaires questionnaires : list) {
+            QuotationRequestQuestionnaires quotationRequestQuestionnaires = new QuotationRequestQuestionnaires();
+            quotationRequestQuestionnaires.setQuestion(questionnaires.getQuestion());
+            quotationRequestQuestionnaires.setAnswer(questionnaires.getAnswer());
+            quotationRequestQuestionnaireses.add(quotationRequestQuestionnaires);   
+            
+        }
+        quotationRequest.setQuotationRequestQuestionnaire(quotationRequestQuestionnaireses);
         return quotationRequest;
     }
-    
-    
 
 }

@@ -37,29 +37,27 @@ import za.co.polygon.repository.UserRepository;
 
 @RestController
 public class Service {
-
+    
     private static final Logger log = LoggerFactory.getLogger(Service.class);
-
+    
     @Autowired
     private UserRepository userRepository;
-
+    
     @Autowired
     private ProductRepository productRepository;
-
+    
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
-
+    
     @Autowired
     private BrokerRepository brokerRepository;
-
+    
     @Autowired
     private QuotationRequestRepository quotationRequestRepository;
-
-
-
+    
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
-    	
+        
         log.info("find user");
         List<za.co.polygon.domain.User> users = userRepository.findAll();
         List<UserQueryModel> result = toUserQueryModel(users);
@@ -67,7 +65,7 @@ public class Service {
         log.info("this service to get all users");
         return result;
     }
-
+    
     @RequestMapping(value = "api/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductQueryModel> findAllProducts() {
         log.info("find all products");
@@ -75,7 +73,7 @@ public class Service {
         log.info("found all products - size:{}", products.size());
         return toProductQueryModel(products);
     }
-
+    
     @RequestMapping(value = "api/products/{productId}/questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<QuestionnaireQuery> findQuestionnaires(@PathVariable("productId") Long productId) {
         log.info("find questionnaires for product - productId:{}", productId);
@@ -87,7 +85,7 @@ public class Service {
         log.info("found questionnaires for product - productId:{}, size:{}", productId, questionnaires.size());
         return toQuestionnaireQueryModel(questionnaires);
     }
-
+    
     @RequestMapping(value = "api/brokers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BrokerQueryModel> findAllBrokers() {
         log.info("find all brokers");
@@ -95,29 +93,21 @@ public class Service {
         log.info("found all products - size:{}", brokers.size());
         return toBrokerQueryModel(brokers);
     }
-
-
+    
     @RequestMapping(value = "api/quotation-request", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequest) {
         Product product = productRepository.findOne(quotationRequest.getProductId());
         Broker broker = brokerRepository.findOne(quotationRequest.getBrokerId());
-        log.info("Application name::" + quotationRequest.getApplicantName());
-        log.info("Application email::" + quotationRequest.getApplicantEmail());
-        log.info("Broker ID::" + quotationRequest.getBrokerId());
         List<Questionnaires> questions = quotationRequest.getQuestionnaires();
-        for (Questionnaires questionnaires : questions) {
-            log.info("Question::" + questionnaires.getQuestion());
-            log.info("Answer::" + questionnaires.getAnswer());
-
+        for (Questionnaires questionnaires : questions) {           
         }
-       QuotationRequest request=Mapper.toQuotationRequest(quotationRequest);
-       request.setApplicantName(quotationRequest.getApplicantName());
-       request.setApplicantEmail(quotationRequest.getApplicantEmail());
-       quotationRequestRepository.save(request);
+        QuotationRequest request = Mapper.toQuotationRequest(quotationRequest, broker, product);
+        
+        quotationRequestRepository.save(request);
     }
-
+    
     public void getQuotationRequests() {
         quotationRequestRepository.findAll();
     }
-
+    
 }
