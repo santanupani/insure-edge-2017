@@ -12,8 +12,11 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.stereotype.Repository;
+
 import za.co.polygon.domain.Notification;
 
+@Repository
 public class NotificationRepository {
 
     private static final String username = "YourGmail@gmail.com"; //Enter your gmail here to test the code
