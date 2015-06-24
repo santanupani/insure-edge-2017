@@ -1,7 +1,10 @@
 package za.co.polygon.mapper;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
@@ -13,6 +16,8 @@ import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
+import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.QuotationRequestQueryModel.Applicant;
 import za.co.polygon.model.UserQueryModel;
 
 public class Mapper {
@@ -103,6 +108,36 @@ public class Mapper {
         return quotationRequest;
     }
     
+    public static QuotationRequestQueryModel toQuotationRequestQueryModel(QuotationRequest from,Broker broker){
+           QuotationRequestQueryModel quotationRequestQueryModel = new QuotationRequestQueryModel();
+           quotationRequestQueryModel.setReference(from.getReference());
+           quotationRequestQueryModel.setStatus(from.getStatus());
+           
+           quotationRequestQueryModel.getBroker(broker);
+           //quotationRequestQueryModel.setDate(new java.sql.Date(new Date().getTime()));
+           // System.out.println("Applicant Name" + quotationRequestQueryModel.getApplicant());
+//           quotationRequestQueryModel.getApplicant().setApplicantEmail(from.getApplicantEmail());
+//           quotationRequestQueryModel.getProduct().setId(from.getId());
+//           System.out.println(from.getId() + "Received");
+//           quotationRequestQueryModel.getBroker().setId(from.getId());
+//           quotationRequestQueryModel.getBroker().setBrokerName(from.getBroker().getName());
+//           quotationRequestQueryModel.getBroker().setBrokerEmail(from.getBroker().getEmail());
+//            quotationRequestQueryModel.getProduct().setId(from.getId());
+//            quotationRequestQueryModel.getProduct().setProductName(from.getProduct().getName());
+//            quotationRequestQueryModel.getProduct().setProductDesc(from.getProduct().getDescription());
+//            quotationRequestQueryModel.getProduct().setProductImage(from.getProduct().getImage());
+            
+           
+           return quotationRequestQueryModel;
+    }
     
-
+    public static List<QuotationRequestQueryModel> toQuotationRequestQueryModel(List<QuotationRequest> fromList){
+        List<QuotationRequestQueryModel> quotationRequestQueryModel = new ArrayList<QuotationRequestQueryModel>();
+        
+        for ( QuotationRequest quotationRequest : fromList){
+            quotationRequestQueryModel.add(toQuotationRequestQueryModel(quotationRequest));
+        }
+        return quotationRequestQueryModel;
+    }
+    
 }
