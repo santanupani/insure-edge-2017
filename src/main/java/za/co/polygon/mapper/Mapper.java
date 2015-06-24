@@ -15,7 +15,11 @@ import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
+
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
+
+import za.co.polygon.model.QuotationRequestQueryModel;
+
 import za.co.polygon.model.UserQueryModel;
 
 public class Mapper {
@@ -121,4 +125,7 @@ public class Mapper {
         return quotationRequest;
     }
 
+    
+
+    
 }
