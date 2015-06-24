@@ -25,7 +25,7 @@ public class QuotationRequest {
     private Long id;
     
     @Column(name = "reference")
-    private Long reference;
+    private String reference;
     
     @Column(name = "applicant_name")
     private String applicantName;
@@ -58,12 +58,12 @@ public class QuotationRequest {
         this.id = id;
     }
 
-    public Long getReference() {
+    public String getReference() {
         return reference;
     }
 
-    public void setReference(Long referrence) {
-        this.reference = referrence;
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public String getApplicantName() {
