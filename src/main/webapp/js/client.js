@@ -154,6 +154,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             console.log("Form Validation Failure");
             alert('Form Validation Failure');
         } else {
+
             console.log("Service Call Here");
             console.log($scope.questionnaires);
 
@@ -167,6 +168,20 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             }).success(function (data, status) {
                 if (status == 200) {
                     console.log('I am here');
+        	console.log("Service gets Called Here");
+                console.log($scope.questionnaires);
+                
+                $http({
+            url: 'http://localhost:8080/api/quotation-requests',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',  
+            },
+            data: $scope.modelData
+        }).success(function (data, status) {
+                if (status === 200) {
+                    console.log('All the questions and answers saved succesfullly');
+
                 } else {
                     console.log('status:' + status);
                 }
@@ -177,11 +192,9 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 
 
         }
-    };
+    });
 
-});
-
-
+};
 polygon.controller('viewQuotationRequestCtrl', function ($scope) {
 
     

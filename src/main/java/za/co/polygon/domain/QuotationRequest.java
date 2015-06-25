@@ -5,7 +5,6 @@ package za.co.polygon.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +44,7 @@ public class QuotationRequest {
     
     @Column(name = "create_date")
     private Date createDate;
-    
+   
     @Column(name = "status")
     private String status;
     
@@ -99,9 +98,15 @@ public class QuotationRequest {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
-   
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createdDate) {
+        this.createDate = createdDate;
+    }
+    
     public String getStatus() {
         return status;
     }
@@ -120,13 +125,5 @@ public class QuotationRequest {
     public void setQuotationRequestQuestionnaire(List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire) {
         this.quotationRequestQuestionnaire = quotationRequestQuestionnaire;
     }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-    
+ 
 }
