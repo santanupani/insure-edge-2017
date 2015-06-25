@@ -102,7 +102,7 @@ public class Mapper {
         quotationRequest.setId(from.getId());
         quotationRequest.setApplicantName(from.getApplicantName());
         quotationRequest.setApplicantEmail(from.getApplicantEmail());
-        quotationRequest.setCreatedDate(new Date());
+        quotationRequest.setCreateDate(new Date());
         quotationRequest.setReference(UUID.randomUUID().toString());
         quotationRequest.setStatus("APPLIED");
         quotationRequest.setBroker(broker);
@@ -116,37 +116,37 @@ public class Mapper {
         return quotationRequest;
     }
 
-    public static QuotationRequestQueryModel toQuotationRequestQueryModel(QuotationRequest quotationRequest){
-    	
-    	QuotationRequestQueryModel result = new QuotationRequestQueryModel();
-    	
-    	result.setReference(quotationRequest.getReference());
-    	result.setStatus(quotationRequest.getStatus());
-    	result.setCreateDate(new Date().toString());
-    	result.setApplicantName(quotationRequest.getApplicantName());
-    	result.setApplicantEmail(quotationRequest.getApplicantEmail());
-    	
-    	BrokerQueryModel broker = new BrokerQueryModel();
-    	broker.setId(quotationRequest.getBroker().getId());
-    	broker.setCode(quotationRequest.getBroker().getCode());
-    	broker.setName(quotationRequest.getBroker().getName());
-    	broker.setEmail(quotationRequest.getBroker().getEmail());
-    	result.setBroker(broker);
-    	
-    	ProductQueryModel product = new ProductQueryModel();
-    	product.setId(quotationRequest.getProduct().getId());
-    	product.setDescription(quotationRequest.getProduct().getDescription());
-    	product.setName(quotationRequest.getProduct().getName());
-    	product.setImage(quotationRequest.getProduct().getImage());
-    	result.setProduct(product);
-    	
-    	for(QuotationRequestQuestionnaires quotationRequestQuestionnaires : quotationRequest.getQuotationRequestQuestionnaire()){
-    		za.co.polygon.model.QuotationRequestQueryModel.Questionnaire questionnaire = new za.co.polygon.model.QuotationRequestQueryModel.Questionnaire();
-    		questionnaire.setQuestion(quotationRequestQuestionnaires.getQuestion());
-    		questionnaire.setAnswer(quotationRequestQuestionnaires.getAnswer());
-    		result.getQuestionnaire().add(questionnaire);
-    	}
-    	
-    	return result;
+    public static QuotationRequestQueryModel toQuotationRequestQueryModel(QuotationRequest quotationRequest) {
+
+        QuotationRequestQueryModel result = new QuotationRequestQueryModel();
+
+        result.setReference(quotationRequest.getReference());
+        result.setStatus(quotationRequest.getStatus());
+        result.setCreateDate(quotationRequest.getCreateDate().toString());
+        result.setApplicantName(quotationRequest.getApplicantName());
+        result.setApplicantEmail(quotationRequest.getApplicantEmail());
+
+        BrokerQueryModel broker = new BrokerQueryModel();
+        broker.setId(quotationRequest.getBroker().getId());
+        broker.setCode(quotationRequest.getBroker().getCode());
+        broker.setName(quotationRequest.getBroker().getName());
+        broker.setEmail(quotationRequest.getBroker().getEmail());
+        result.setBroker(broker);
+
+        ProductQueryModel product = new ProductQueryModel();
+        product.setId(quotationRequest.getProduct().getId());
+        product.setDescription(quotationRequest.getProduct().getDescription());
+        product.setName(quotationRequest.getProduct().getName());
+        product.setImage(quotationRequest.getProduct().getImage());
+        result.setProduct(product);
+
+        for (QuotationRequestQuestionnaires quotationRequestQuestionnaires : quotationRequest.getQuotationRequestQuestionnaire()) {
+            za.co.polygon.model.QuotationRequestQueryModel.Questionnaire questionnaire = new za.co.polygon.model.QuotationRequestQueryModel.Questionnaire();
+            questionnaire.setQuestion(quotationRequestQuestionnaires.getQuestion());
+            questionnaire.setAnswer(quotationRequestQuestionnaires.getAnswer());
+            result.getQuestionnaire().add(questionnaire);
+        }
+
+        return result;
     }
 }

@@ -101,6 +101,7 @@ public class Service {
 
     @Transactional
     @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+
     public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequest) {
         Broker broker = brokerRepository.findOne(quotationRequest.getBrokerId());
         Product product = productRepository.findOne(quotationRequest.getProductId());
@@ -109,7 +110,7 @@ public class Service {
         quotationRequestModel.setApplicantName(quotationRequest.getApplicantName());
         quotationRequestModel.setBroker(broker);
         quotationRequestModel.setProduct(product);
-        quotationRequestModel.setCreatedDate(new Date());
+        quotationRequestModel.setCreateDate(new Date());
         quotationRequestModel.setStatus("APPLIED");
         quotationRequestModel.setReference(UUID.randomUUID().toString());
         quotationRequestModel = quotationRequestRepository.save(quotationRequestModel);
@@ -127,6 +128,8 @@ public class Service {
         log.info("Size of the Questionnaires of Quotation_Requests:" + quotationRequestModel.getQuotationRequestQuestionnaire().size());
         log.info("No of Questions of Quotation_Requests:" + quotationRequestQuestionnaireRepository.count());
     }
+    
+    
 
     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) {

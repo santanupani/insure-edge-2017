@@ -11,10 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "quotation_request_questionnaires")
+@Table(name = "quotation_questionnaires")
 public class QuotationRequestQuestionnaires {
     
-    @Id
+    @Id   
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
