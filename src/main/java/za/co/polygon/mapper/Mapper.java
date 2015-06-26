@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
@@ -18,6 +19,9 @@ import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserQueryModel;
+import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.ProductRepository;
+import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 
 public class Mapper {
 
@@ -97,22 +101,29 @@ public class Mapper {
         return brokerQueryModels;
     }
 
-    public static QuotationRequest toQuotationRequestModel(QuotationRequestCommandModel from, Broker broker, Product product) {
+    public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product) {
+
         QuotationRequest quotationRequest = new QuotationRequest();
-        quotationRequest.setId(from.getId());
-        quotationRequest.setApplicantName(from.getApplicantName());
-        quotationRequest.setApplicantEmail(from.getApplicantEmail());
-        quotationRequest.setCreateDate(new Date());
+        quotationRequest.setApplicantName(quotationRequestCommandModel.getApplicantName());
+        quotationRequest.setApplicantEmail(quotationRequestCommandModel.getApplicantEmail());
         quotationRequest.setReference(UUID.randomUUID().toString());
         quotationRequest.setStatus("APPLIED");
-        quotationRequest.setBroker(broker);
+        quotationRequest.setCreateDate(new Date());
         quotationRequest.setProduct(product);
-        for (Questionnaires questionnaires : from.getQuestionnaires()) {
+        quotationRequest.setBroker(broker);
+
+        List<QuotationRequestQuestionnaires> quotationRequestQuestionnairesList = new ArrayList<QuotationRequestQuestionnaires>();
+
+        for (Questionnaires questionnaires : quotationRequestCommandModel.getQuestionnaires()) {
             QuotationRequestQuestionnaires quotationRequestQuestionnaires = new QuotationRequestQuestionnaires();
             quotationRequestQuestionnaires.setQuestion(questionnaires.getQuestion());
             quotationRequestQuestionnaires.setAnswer(questionnaires.getAnswer());
-            quotationRequest.getQuotationRequestQuestionnaire().add(quotationRequestQuestionnaires);
+            quotationRequestQuestionnaires.setQuotationRequest(quotationRequest);
+            quotationRequestQuestionnairesList.add(quotationRequestQuestionnaires);
+
         }
+        quotationRequest.setQuotationRequestQuestionnaire(quotationRequestQuestionnairesList);
+
         return quotationRequest;
     }
 

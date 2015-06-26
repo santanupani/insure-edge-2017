@@ -60,7 +60,5 @@ public class QuotationRequestQuestionnaires {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-    
-    
-    
+  
 }

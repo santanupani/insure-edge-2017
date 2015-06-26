@@ -23,6 +23,7 @@ import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.QuotationRequestQuestionnaires;
+import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
@@ -101,41 +102,27 @@ public class Service {
 
     @Transactional
     @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-
-    public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequest) {
-        Broker broker = brokerRepository.findOne(quotationRequest.getBrokerId());
-        Product product = productRepository.findOne(quotationRequest.getProductId());
-        QuotationRequest quotationRequestModel = new QuotationRequest();
-        quotationRequestModel.setApplicantEmail(quotationRequest.getApplicantEmail());
-        quotationRequestModel.setApplicantName(quotationRequest.getApplicantName());
-        quotationRequestModel.setBroker(broker);
-        quotationRequestModel.setProduct(product);
-        quotationRequestModel.setCreateDate(new Date());
-        quotationRequestModel.setStatus("APPLIED");
-        quotationRequestModel.setReference(UUID.randomUUID().toString());
-        quotationRequestModel = quotationRequestRepository.save(quotationRequestModel);
-        for (Questionnaires questionnaires : quotationRequest.getQuestionnaires()) {
-            QuotationRequestQuestionnaires quotationRequestQuestionnaires = new QuotationRequestQuestionnaires();
-            quotationRequestQuestionnaires.setQuestion(questionnaires.getQuestion());
-            quotationRequestQuestionnaires.setAnswer(questionnaires.getAnswer());
-            quotationRequestQuestionnaires.setQuotationRequest(quotationRequestModel);
-            quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
-        }
-
-        quotationRequestModel = quotationRequestRepository.findOne(quotationRequestModel.getId());
-        log.info("Reference of the Quotation_Requests:" + quotationRequestModel.getReference());
+    public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {
         
-        log.info("Size of the Questionnaires of Quotation_Requests:" + quotationRequestModel.getQuotationRequestQuestionnaire().size());
-        log.info("No of Questions of Quotation_Requests:" + quotationRequestQuestionnaireRepository.count());
+      Broker broker=brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
+      Product product=productRepository.findOne(quotationRequestCommandModel.getProductId());
+      QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel,broker,product);
+
+      quotationRequestRepository.save(quotationRequest);
+      for(QuotationRequestQuestionnaires quotationRequestQuestionnaires : quotationRequest.getQuotationRequestQuestionnaire()) {
+         
+          quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
+      }
+      System.out.println("Reference number::"+quotationRequest.getReference());
+
     }
-    
-    
+
 
     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) {
-        log.info("find all the questions and answers inserted for a product");        
-    	QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-         log.info("find all the questions and answers inserted for a product using the referrence");
-    	return toQuotationRequestQueryModel(quotationRequest);
+        log.info("find all the questions and answers inserted for a product");
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+        log.info("find all the questions and answers inserted for a product using the referrence");
+        return toQuotationRequestQueryModel(quotationRequest);
     }
 }

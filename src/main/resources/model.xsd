@@ -65,6 +65,9 @@
 		<complexType>
 			<sequence>
                                 <element name="id" type="long"></element>
+                                <element name="reference" type="string"></element>
+				<element name="status" type="string"></element>
+				<element name="createDate" type="string"></element>
 				<element name="applicantName" type="string" />
 				<element name="applicantEmail" type="string" />
 				<element name="brokerId" type="long" />
