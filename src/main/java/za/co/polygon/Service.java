@@ -1,9 +1,6 @@
 package za.co.polygon;
 
-import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
-import static za.co.polygon.mapper.Mapper.toProductQueryModel;
-import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
-import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+import static za.co.polygon.mapper.Mapper.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -102,18 +99,17 @@ public class Service {
 
     @Transactional
     @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {
-        
+    public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {        
       Broker broker=brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
       Product product=productRepository.findOne(quotationRequestCommandModel.getProductId());
       QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel,broker,product);
-
-      quotationRequestRepository.save(quotationRequest);
-      for(QuotationRequestQuestionnaires quotationRequestQuestionnaires : quotationRequest.getQuotationRequestQuestionnaire()) {
-         
-          quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
-      }
-      System.out.println("Reference number::"+quotationRequest.getReference());
+      quotationRequest = quotationRequestRepository.save(quotationRequest);
+      
+      List<QuotationRequestQuestionnaires> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
+      System.out.println(quotationRequestQuestionnaires.size());
+      quotationRequestQuestionnaires = quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
+      
+      log.info("Quotation Request Created. reference : {} " , quotationRequest.getReference());
 
     }
 

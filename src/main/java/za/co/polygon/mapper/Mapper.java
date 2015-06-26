@@ -150,14 +150,28 @@ public class Mapper {
         product.setName(quotationRequest.getProduct().getName());
         product.setImage(quotationRequest.getProduct().getImage());
         result.setProduct(product);
-
-        for (QuotationRequestQuestionnaires quotationRequestQuestionnaires : quotationRequest.getQuotationRequestQuestionnaire()) {
-            za.co.polygon.model.QuotationRequestQueryModel.Questionnaire questionnaire = new za.co.polygon.model.QuotationRequestQueryModel.Questionnaire();
-            questionnaire.setQuestion(quotationRequestQuestionnaires.getQuestion());
-            questionnaire.setAnswer(quotationRequestQuestionnaires.getAnswer());
-            result.getQuestionnaire().add(questionnaire);
+        
+        for(QuotationRequestQuestionnaires qrq : quotationRequest.getQuotationRequestQuestionnaire()){
+        	QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
+        	q.setQuestion(qrq.getQuestion());
+        	q.setAnswer(qrq.getAnswer());
+        	result.getQuestionnaire().add(q);
         }
+        
+       
 
         return result;
+    }
+    
+    public static List<QuotationRequestQuestionnaires> fromQuotationRequestCommandModel(QuotationRequestCommandModel quotationRequestQueryModel, QuotationRequest quotationRequest){
+    	List<QuotationRequestQuestionnaires> result = new ArrayList<QuotationRequestQuestionnaires>();
+    	for(QuotationRequestCommandModel.Questionnaires questionnaire : quotationRequestQueryModel.getQuestionnaires()){
+    		QuotationRequestQuestionnaires q = new QuotationRequestQuestionnaires();
+    		q.setQuestion(questionnaire.getQuestion());
+    		q.setAnswer(questionnaire.getAnswer());
+    		q.setQuotationRequest(quotationRequest);
+    		result.add(q);    		
+    	}
+    	return result;
     }
 }
