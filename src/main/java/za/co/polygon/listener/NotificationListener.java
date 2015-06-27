@@ -18,7 +18,7 @@ public class NotificationListener {
 	private NotificationRepository notificationRepository;
 	
 	@Transactional
-	@JmsListener(destination="q.test")
+	@JmsListener(destination="q.notification")
 	public void receive(Notification notification) throws AddressException, MessagingException{
 		notificationRepository.send(notification);
 	}

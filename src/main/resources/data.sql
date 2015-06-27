@@ -1,13 +1,13 @@
 insert into login (user_name, password, enabled, role) values('admin', 'secret', true, 'ROLE_ADMIN');
 
-insert into products(name, description, image) values('Cash and Valuables in Transit', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery – as per standard policy wording.', '/img/products/Cash and Valuables in Transit.jpg');
-insert into products(name, description, image) values('Static Cover Cash and Valuables', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery – as per standard policy wording.','/img/products/Static Cover Cash and Valuables1.jpg');
-insert into products(name, description, image) values('Fine Art and Collectables', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery – as per standard policy wording.', '/img/products/Fine Art and Collectables.jpg');
-insert into products(name, description, image) values('Static and In Transit Cover Cash and Valuables', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery – as per standard policy wording.', '/img/products/Static and In Transit Cover Cash and Valuables.jpg'); 
+insert into products(name, description, image) values('Cash and Valuables in Transit', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery ï¿½ as per standard policy wording.', '/img/products/Cash and Valuables in Transit.jpg');
+insert into products(name, description, image) values('Static Cover Cash and Valuables', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery ï¿½ as per standard policy wording.','/img/products/Static Cover Cash and Valuables1.jpg');
+insert into products(name, description, image) values('Fine Art and Collectables', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery ï¿½ as per standard policy wording.', '/img/products/Fine Art and Collectables.jpg');
+insert into products(name, description, image) values('Static and In Transit Cover Cash and Valuables', 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery ï¿½ as per standard policy wording.', '/img/products/Static and In Transit Cover Cash and Valuables.jpg'); 
 
 
 /*broker*/
-insert into brokers(code, name, email) values ('00001', 'Coin Risk Management', 'risk@coin.co.za');
+insert into brokers(code, name, email) values ('00001', 'Coin Risk Management', 'manmay.e.mohanty@gmail.com');
 insert into brokers(code, name, email) values ('00002', 'Admin Focus (Pty) Ltd', 'fanie@adminfocus.co.za');
 insert into brokers(code, name, email) values ('00003', 'Optimum Financial Services Group', 'bertus@optimum-inc.co.za');
 insert into brokers(code, name, email) values ('00004', 'Status Insurance Brokers (Pty) Ltd', 'info@statusib.co.za');
@@ -42,7 +42,7 @@ insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash and Va
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Gold and Cash');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Bullion');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '2', 'What is the maximum amount you wish to insure ?',                      2, 	null, 	null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '3', 'Is the above amount the total full value of the goods being moved ?',  4,	null, 	null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '3', 'Is the above amount the total full value of the goods being moved ?',  4,	null, 	null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '4', 'What is the total full value of the goods being moved ?',              2,   3, 		'false', 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '5', 'For additional premium, do you want first loss cover ?',               4,   null,	null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '6', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null, 'false');
@@ -76,9 +76,9 @@ insert into answer_values(questionnaire_id, answer_value) values(11, '300km to 4
 insert into answer_values(questionnaire_id, answer_value) values(11, '400km to 500km');
 insert into answer_values(questionnaire_id, answer_value) values(11, '500km to 600km');
 insert into answer_values(questionnaire_id, answer_value) values(11, '600km to 700km');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '12', 'Are you currently insured ?'                     ,                    4,    null,  null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '13', 'Please provide details of your previous insurance company ?'                     ,                    5,    12,  'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '14', 'Do you require SASRIA cover ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '12', 'Are you currently insured ?'                     ,                      4,    null,  null, 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '13', 'Please provide details of your previous insurance company ?',           5,    12,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '14', 'Do you require SASRIA cover ?'                     ,                    4,    null,  null, 'false');
 
 
 /*Product2*/
@@ -96,15 +96,15 @@ insert into answer_values(questionnaire_id, answer_value) values(15, 'Cash and V
 insert into answer_values(questionnaire_id, answer_value) values(15, 'Gold and Cash');
 insert into answer_values(questionnaire_id, answer_value) values(15, 'Bullion');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '16', 'What is the maximum amount you wish to insure ?', 				    2, 	null,    null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '17', 'Is the above amount the total full value of the goods being stored ?',  4,  null,    null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '17', 'Is the above amount the total full value of the goods being stored ?',  4,  null,    null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '18', 'What is the total full value of the goods being stored ?',             2,  3,  'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '19', 'Please give a full description of the goods to be insured ?',          1,  null,    null, 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '20', 'Please provide details of vault/safe ?',                                      4,  null,    null, 'false');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '21', 'Are the goods going to be stored in vault ?',                                       4,  null,    null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '22', 'Is the vault secured with reinforced concrete on all sides as well as top and bottom ?',                 4,  7,    'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '23', 'Is vault fitted with interior seismic detectors inside the vault ?',                 4,  7,    'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '24', 'Is vault equipped with 24 hour infra-red cameras and normal CCTV 24 hours recording ?',                 4,  7,    'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '25', 'Does the vault have an alarm and is it linked to an external response company ?',                 4,  7,    'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '21', 'Are the goods going to be stored in vault ?',                                       4,  null,    null, 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '22', 'Is the vault secured with reinforced concrete on all sides as well as top and bottom ?',                 4,  7,    'true', 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '23', 'Is vault fitted with interior seismic detectors inside the vault ?',                 4,  7,    'true', 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '24', 'Is vault equipped with 24 hour infra-red cameras and normal CCTV 24 hours recording ?',                 4,  7,    'true', 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '25', 'Does the vault have an alarm and is it linked to an external response company ?',                 4,  7,    'true', 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '26', 'What is the type of storage of vault ?',                 5,  7,    'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '27', 'What is the address of the stored vault ?',                 5,  7,    'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '28', 'What is the SABS safety category of the vault, if any ?',              3,  null,   null, 'true');
@@ -117,9 +117,9 @@ insert into answer_values(questionnaire_id, answer_value) values(28, 'SABS Categ
 insert into answer_values(questionnaire_id, answer_value) values(28, 'SABS Category III grading');
 insert into answer_values(questionnaire_id, answer_value) values(28, 'SABS Category IV grading');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '29', 'If secured by any other means not noted, please provide details in the adjacent fields ?',                 5,  null,    null, 'false');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '30', 'Are you currently insured ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '30', 'Are you currently insured ?'                     ,                    4,    null,  null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '31', 'Please provide details of your previous insurance company ?'                     ,                    5,    16,  'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '32', 'Do you require SASRIA cover ?',                 4,  null,    null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '32', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 
 
 /*Product3*/
@@ -137,10 +137,10 @@ insert into answer_values(questionnaire_id, answer_value) values(33, 'Cash and V
 insert into answer_values(questionnaire_id, answer_value) values(33, 'Gold and Cash');
 insert into answer_values(questionnaire_id, answer_value) values(33, 'Bullion');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '34', 'What is the maximum amount you wish to insure ?',                      2, 	null, 	null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '35', 'Is the above amount the total full value of the goods being moved ?',  4,	null, 	null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '35', 'Is the above amount the total full value of the goods being moved ?',  4,	null, 	null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '36', 'What is the total full value of the goods being moved ?',              2,   3, 		'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '37', 'For additional premium, do you want first loss cover ?',               4,   null,	null, 'false');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '38', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '38', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '39', 'What is the name of the professional valuables carriers ?',            3,   6,	  	'true', 'true');
 insert into answer_values(questionnaire_id, answer_value) values(39, 'Protea Coin Service');
 insert into answer_values(questionnaire_id, answer_value) values(39, 'G4S Service');
@@ -171,9 +171,9 @@ insert into answer_values(questionnaire_id, answer_value) values(43, '300km to 4
 insert into answer_values(questionnaire_id, answer_value) values(43, '400km to 500km');
 insert into answer_values(questionnaire_id, answer_value) values(43, '500km to 600km');
 insert into answer_values(questionnaire_id, answer_value) values(43, '600km to 700km');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '44', 'Are you currently insured ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '44', 'Are you currently insured ?'                     ,                    4,    null,  null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '45', 'Please provide details of your previous insurance company ?'                     ,                    5,    12,  'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '46', 'Do you require SASRIA cover ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '46', 'Do you require SASRIA cover ?'                     ,                    4,    null,  null, 'false');
 
 
 /*product4*/
@@ -191,10 +191,10 @@ insert into answer_values(questionnaire_id, answer_value) values(47, 'Cash and V
 insert into answer_values(questionnaire_id, answer_value) values(47, 'Gold and Cash');
 insert into answer_values(questionnaire_id, answer_value) values(47, 'Bullion');;
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '48', 'What is the maximum amount you wish to insure in Cash in transit ?',                      2, 	null, 	null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '49', 'Is the above amount the total full value of the goods being moved in  Cash in transit ?',  4,	null, 	null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '49', 'Is the above amount the total full value of the goods being moved in  Cash in transit ?',  4,	null, 	null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '50', 'What is the total full value of the goods being moved in Cash in transit ?',              2,   3, 		'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '51', 'For additional premium, do you want first loss cover ?',               4,   null,	null, 'false');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '52', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '52', 'Do you use the service of a professional valuables carriers ?',        4,   null,	null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '53', 'What is the name of the professional valuables carriers ?',            3,   6,	  	'true', 'true');
 insert into answer_values(questionnaire_id, answer_value) values(53, 'Protea Coin Service');
 insert into answer_values(questionnaire_id, answer_value) values(53, 'G4S Service');
@@ -226,7 +226,7 @@ insert into answer_values(questionnaire_id, answer_value) values(57, '400km to 5
 insert into answer_values(questionnaire_id, answer_value) values(57, '500km to 600km');
 insert into answer_values(questionnaire_id, answer_value) values(57, '600km to 700km');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '58', 'What is the maximum amount you wish to insure in Static ?', 				    2, 	null,    null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '59', 'Is the above amount the total full value of the goods being stored in Static ?',  4,  null,    null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '59', 'Is the above amount the total full value of the goods being stored in Static ?',  4,  null,    null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '60', 'What is the Total Full Value of the goods being stored in Static ?',             2,  13,  'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '61', 'Please give a full description of the goods to be insured ?',          1,  null,    null, 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '62', 'Please provide details of vault/safe ?',                                      4,  null,    null, 'true');
@@ -240,16 +240,16 @@ insert into answer_values(questionnaire_id, answer_value) values(63, 'SABS Categ
 insert into answer_values(questionnaire_id, answer_value) values(63, 'SABS Category III grading');
 insert into answer_values(questionnaire_id, answer_value) values(63, 'SABS Category IV grading');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '64', 'Are the goods going to be stored in vault ?',                                       4,  null,    null, 'false');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '65', 'Is the vault secured with reinforced concrete on all sides as well as top and bottom ?',                 4,  18,    'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '66', 'Is vault fitted with interior seismic detectors inside the vault ?',                 4,  18,    'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '67', 'Is vault equipped with 24 hour infra-red cameras and normal CCTV 24 hours recording ?',                 4,  18,    'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '68', 'Does the vault have an alarm and is it linked to an external response company ?',                 4,  18,    'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '65', 'Is the vault secured with reinforced concrete on all sides as well as top and bottom ?',                 4,  18,    'true', 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '66', 'Is vault fitted with interior seismic detectors inside the vault ?',                 4,  18,    'true', 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '67', 'Is vault equipped with 24 hour infra-red cameras and normal CCTV 24 hours recording ?',                 4,  18,    'true', 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '68', 'Does the vault have an alarm and is it linked to an external response company ?',                 4,  18,    'true', 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '69', 'What is the type of storage of vault ?',                 5,  18,    'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '70', 'What is the address of the stored vault?',                 5,  18,    'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '71', 'If secured by any other means not noted, please provide details in the adjacent fields ?',                 5,  null,    null, 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '72', 'Are you currently insured ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '72', 'Are you currently insured ?'                     ,                    4,    null,  null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '73', 'Please provide details of your previous insurance company ?'                     ,                    5,    26,  'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '75', 'Please provide details previous of valuable goods and losses over the past 5 years ?'                     ,                    4,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '75', 'Please provide details previous of valuable goods and losses over the past 5 years ?'                     ,                    4,    null,  null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '76', 'Please provide details of date ?'                     ,                    1,    28,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '77', 'Please provide details of value ?'                     ,                    1,    28,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '78', 'Please provide details of type of loss ?'                     ,                    1,    28,  'true', 'true');
@@ -257,6 +257,6 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '80', 'Please provide details of date ?'                     ,                    1,    32,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '81', 'Please provide details of value ?'                     ,                    1,    32,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '82', 'Please provide details of type of loss ?'                     ,                    1,    32,  'true', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '83', 'Do you require SASRIA cover ?',                 4,  null,    null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '83', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 
 
