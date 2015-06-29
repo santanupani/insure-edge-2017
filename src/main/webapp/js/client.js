@@ -12,7 +12,10 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 }).when('/quotation-requests/:reference', {
             'templateUrl': '/html/viewQuotationRequest.html',
             'controller': 'viewQuotationRequestCtrl'
-        })
+                }).when('/viewQuotes', {
+                    'templateUrl': '/html/viewQuotationRequest.html',
+                    'controller': 'viewQuotationRequestCtrl'
+                })
                 .otherwise({
                     redirectTo: '/products'
                 });
