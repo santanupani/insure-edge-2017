@@ -9,7 +9,7 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 .when('/products/:id/questionnaires', {
                     'templateUrl': '/html/questionnaires.html',
                     'controller': 'questionnairesCtrl'
-                }).when('/viewQuotes', {
+                }).when('/quotation-requests/:reference', {
             'templateUrl': '/html/viewQuotationRequest.html',
             'controller': 'viewQuotationRequestCtrl'
         })
@@ -163,17 +163,27 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     };
 });
 
-polygon.controller('viewQuotationRequestCtrl', function ($scope) {
+polygon.controller('viewQuotationRequestCtrl', function ($scope, $routeParams, $http) {
 
 
-    $scope.name = 'Cash and Valuables in Transit';
-    $scope.image = '/img/products/Cash and Valuables in Transit.jpg';
-    $scope.description = 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery as per standard policy wording';
-    $scope.applicantName = 'Thabo';
-    $scope.applicantEmail = 'thabothulare68@gmail.com';
-    $scope.reference = '100';
-    $scope.questionAnswers = [{question: 'What do you wish to insure ?'}, {answer: 'Cash and Coins'},
-        {question: 'What is the maximum amount you wish to insure ?'}, {answer: '100000'},
-        {question: 'Is the above amount the total full value of the goods being moved ?'}, {answer: 'true'}];
+    $scope.viewQuotationdetail;
+    $scope.ref = $routeParams.reference;
+    
+    $http({
+        url: '/api/quotation-requests/' + $scope.ref,
+        method: 'get',
+    }).
+            success(function (data, status) {
+                console.log('get success code::' + status);
+                if (status == 200) {
+                    $scope.viewQuotationdetail = data;
+                    console.log('Quotationdetail Detail::' + $scope.viewQuotationdetail);
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
 });
 
