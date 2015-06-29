@@ -1,5 +1,6 @@
 package za.co.polygon.mapper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -109,6 +110,7 @@ public class Mapper {
         quotationRequest.setReference(UUID.randomUUID().toString());
         quotationRequest.setStatus("APPLIED");
         quotationRequest.setCreateDate(new Date());
+        System.out.println(quotationRequest.getCreateDate().toString());
         quotationRequest.setProduct(product);
         quotationRequest.setBroker(broker);
 
@@ -133,7 +135,8 @@ public class Mapper {
 
         result.setReference(quotationRequest.getReference());
         result.setStatus(quotationRequest.getStatus());
-        result.setCreateDate(quotationRequest.getCreateDate().toString());
+        result.setCreateDate(new SimpleDateFormat("dd/MM/YYYY").format(quotationRequest.getCreateDate()));
+        System.out.println("<<" + quotationRequest.getCreateDate());
         result.setApplicantName(quotationRequest.getApplicantName());
         result.setApplicantEmail(quotationRequest.getApplicantEmail());
 

@@ -2,6 +2,7 @@ package za.co.polygon.repository;
 
 import java.util.Properties;
 
+import javax.jms.JMSException;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -12,6 +13,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Repository;
 
 import za.co.polygon.domain.Notification;
@@ -19,12 +23,15 @@ import za.co.polygon.domain.Notification;
 @Repository
 public class NotificationRepository {
 
-    private static final String username = "YourGmail@gmail.com"; //Enter your gmail here to test the code
-    private static final String password = "YourPassword"; //Enter your gmail password here
+    private static final String username = ""; //Enter your gmail here to test the code
+    private static final String password = ""; //Enter your gmail password here
     private static final String hostName = "smtp.gmail.com";
     private static final int portNumber = 587;
 
     private Session session;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
     public NotificationRepository() {
         Properties props = new Properties();
@@ -52,6 +59,17 @@ public class NotificationRepository {
         message.setSubject(notification.getSubject());
         message.setText(notification.getMessage());
         Transport.send(message);
+    }
+
+    public void publish(final Notification notification){
+
+        jmsTemplate.send("q.notification", new MessageCreator() {
+            @Override
+            public javax.jms.Message createMessage(javax.jms.Session session) throws JMSException {
+                return session.createObjectMessage(notification);
+            }
+        });
+
     }
 
 }

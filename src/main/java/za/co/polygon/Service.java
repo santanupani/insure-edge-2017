@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.polygon.domain.Broker;
-import za.co.polygon.domain.Product;
-import za.co.polygon.domain.Questionnaire;
-import za.co.polygon.domain.QuotationRequest;
-import za.co.polygon.domain.QuotationRequestQuestionnaires;
+import za.co.polygon.domain.*;
+
 import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
@@ -29,12 +26,7 @@ import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserQueryModel;
-import za.co.polygon.repository.BrokerRepository;
-import za.co.polygon.repository.ProductRepository;
-import za.co.polygon.repository.QuestionnaireRepository;
-import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
-import za.co.polygon.repository.QuotationRequestRepository;
-import za.co.polygon.repository.UserRepository;
+import za.co.polygon.repository.*;
 
 @RestController
 public class Service {
@@ -58,6 +50,9 @@ public class Service {
 
     @Autowired
     private QuotationRequestQuestionnaireRepository quotationRequestQuestionnaireRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -100,15 +95,20 @@ public class Service {
     @Transactional
     @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {        
-      Broker broker=brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
-      Product product=productRepository.findOne(quotationRequestCommandModel.getProductId());
-      QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel,broker,product);
+      Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
+      Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
+      QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
       quotationRequest = quotationRequestRepository.save(quotationRequest);
       
       List<QuotationRequestQuestionnaires> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
-      System.out.println(quotationRequestQuestionnaires.size());
-      quotationRequestQuestionnaires = quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
-      
+      quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
+
+      Notification notification = new Notification(
+              broker.getEmail(),
+              "Notification" ,
+              "Ref : " + quotationRequest.getReference());
+      notificationRepository.publish(notification);
+
       log.info("Quotation Request Created. reference : {} " , quotationRequest.getReference());
 
     }
@@ -118,7 +118,8 @@ public class Service {
     public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) {
         log.info("find all the questions and answers inserted for a product");
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-        log.info("find all the questions and answers inserted for a product using the referrence");
+        log.info("find all the questions and answers inserted for a product using the reference");
         return toQuotationRequestQueryModel(quotationRequest);
     }
+
 }
