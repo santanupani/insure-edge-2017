@@ -16,6 +16,7 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/viewQuotationRequest.html',
                     'controller': 'viewQuotationRequestCtrl'
                 })
+
                 .otherwise({
                     redirectTo: '/products'
                 });
