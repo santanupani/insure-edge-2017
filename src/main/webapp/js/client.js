@@ -10,9 +10,9 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/questionnaires.html',
                     'controller': 'questionnairesCtrl'
                 }).when('/viewQuotes', {
-            'templateUrl': '/html/viewQuotationRequest.html',
-            'controller': 'viewQuotationRequestCtrl'
-        })
+                    'templateUrl': '/html/viewQuotationRequest.html',
+                    'controller': 'viewQuotationRequestCtrl'
+                })
                 .otherwise({
                     redirectTo: '/products'
                 });
