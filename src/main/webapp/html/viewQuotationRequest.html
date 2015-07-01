@@ -34,8 +34,10 @@
             </div>
             <div class="row" style="padding: 25px;">
                 <div class="col-md-6" ng-repeat="viewQuotationdetails in viewQuotationdetail.questionnaire">
-                    <p>{{viewQuotationdetails.question}}</p> 
-                    <p>{{viewQuotationdetails.answer}}</p>
+                    <div ng-if="viewQuotationdetails.answer != null">
+                        <p>{{viewQuotationdetails.question}}</p> 
+                        <p style="color: #0f6ab4">{{viewQuotationdetails.answer}}</p>
+                    </div>
                 </div>
             </div> 
         </div>

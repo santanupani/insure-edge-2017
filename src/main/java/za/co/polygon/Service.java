@@ -107,8 +107,8 @@ public class Service {
               broker.getEmail(),
               "Notification" ,
               "Ref : " + quotationRequest.getReference() +
-              "\n Click here to view quote :  http://localhost:8080/polygon/client.html#/quotation-requests/"+ quotationRequest.getReference());
-      //notificationRepository.publish(notification);
+              "\n Click here to view quote :  http://localhost:8080/polygon/broker.html#/quotation-requests/"+ quotationRequest.getReference());
+      notificationRepository.publish(notification);
 
       log.info("Quotation Request Created. reference : {} " , quotationRequest.getReference());
       return quotationRequest.getReference();
