@@ -1,4 +1,12 @@
-<div class="row" style="padding: 25px;" ng-init="init()">
+<div class="row" style="padding: 25px;" ng-init="init()"> 
+    
+    <div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
+  			<span aria-hidden="true">&times;</span>
+  		</button>
+  		 <strong>Success ! </strong>{{message}}
+	</div>
+	
 	<div class="col-md-3" ng-repeat="product in products">
 		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 			<div class="panel-body" align="center" style="height: 300px;">
@@ -8,9 +16,10 @@
 			</div>
 			<div class="panel-footer text-right">
 				<p>
-                                    <a class="btn btn-default" ng-href="#/products/{{product.id}}/questionnaires" role="button">Get Quote</a>
+                    <a class="btn btn-default" ng-href="#/products/{{product.id}}/questionnaires" role="button">Get Quote</a>
 				</p>
 			</div>
 		</div>
 	</div>
+	
 </div>

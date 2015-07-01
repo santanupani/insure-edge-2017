@@ -93,8 +93,8 @@ public class Service {
     }
 
     @Transactional
-    @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {        
+    @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+    public String createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {        
       Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
       Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
       QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
@@ -108,10 +108,10 @@ public class Service {
               "Notification" ,
               "Ref : " + quotationRequest.getReference() +
               "\n Click here to view quote :  http://localhost:8080/polygon/client.html#/quotation-requests/"+ quotationRequest.getReference());
-      notificationRepository.publish(notification);
+      //notificationRepository.publish(notification);
 
       log.info("Quotation Request Created. reference : {} " , quotationRequest.getReference());
-
+      return quotationRequest.getReference();
     }
 
 

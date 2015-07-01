@@ -14,22 +14,20 @@
         </div>
         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
             <div class="panel-heading">
-                <h4>Please fill up the necessary details </h4>
+                <h4>Please provide us following details </h4>
             </div>
             <div class="panel-body" align="center" style="height: 190px;">
                 <div class="form-group">
-                    <input type="text" class="form-control"  placeholder="Your Full Name" ng-model="applicantName">
+                    <input type="text" class="form-control"  placeholder="Your Full Name" ng-model="quotationRequest.applicantName" form="form" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Your Email" ng-model="applicantEmail">
+                    <input type="email" class="form-control" placeholder="Your Email" ng-model="quotationRequest.applicantEmail" form="form" required>
                 </div>
-
                 <div class="form-group">
-                    <select class="form-control" ng-options="broker.id as broker.name for broker in brokers" ng-model="brokerId">
-                    <option value="" disabled selected>Select Broker</option>
+                    <select class="form-control" ng-options="broker.id as broker.name for broker in brokers" ng-model="quotationRequest.brokerId" form="form" required>
+                    	<option value="">Select Broker</option>
                     </select>
                 </div>
-
             </div>
         </div>
     </div>
@@ -98,16 +96,11 @@
             </div>
             
             <div class="panel-footer text-right">
-                <p>
-                <div style="text-align: left;">
-                    <span style="background-color: red">
-                        {{message}}
-                    </span>
-                </div>                
+                            
                 <div class="form-group">
-    					<button type="submit" class="btn btn-primary" form="form" ng-click="submit(form)">Request Quote</button>
+    					<button type="submit" class="btn btn-primary" form="form" ng-click="submitQuotationRequest(form)">Request Quote</button>
   				</div>
-                </p>
+               
             </div>
             
         </div>

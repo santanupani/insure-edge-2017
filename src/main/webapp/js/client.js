@@ -1,7 +1,7 @@
 var polygon = angular.module('polygon', ['ngRoute']);
+
 polygon.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-
                 .when('/products', {
                     'templateUrl': '/html/products.html',
                     'controller': 'productsCtrl'
@@ -10,14 +10,12 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/questionnaires.html',
                     'controller': 'questionnairesCtrl'
                 }).when('/quotation-requests/:reference', {
-            'templateUrl': '/html/viewQuotationRequest.html',
-            'controller': 'viewQuotationRequestCtrl'
+                	'templateUrl': '/html/viewQuotationRequest.html',
+                	'controller': 'viewQuotationRequestCtrl'
                 }).when('/viewQuotes', {
                     'templateUrl': '/html/viewQuotationRequest.html',
                     'controller': 'viewQuotationRequestCtrl'
-                })
-
-                .otherwise({
+                }).otherwise({
                     redirectTo: '/products'
                 });
     }]);
@@ -48,19 +46,27 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
             ;
         });
     };
+    
+    $scope.closeNotification = function(){
+    	$rootScope.message = undefined;
+    };
 });
 
-polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams) {
+polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
 
+	$scope.product ;
+	
     $scope.questionnaires = [];
-    $scope.modelData = {};
+    
+    $scope.quotationRequest = {};
 
     $scope.init = function () {
-        console.log($rootScope.products);
+               
         if ($rootScope.products == undefined) {
             $scope.getProducts();
         } else {
             $scope.product = $rootScope.products[$routeParams['id'] - 1];
+            $scope.quotationRequest.productId = $scope.product.id;
             $scope.getQuestionnaires($routeParams['id']);
         }
     };
@@ -104,7 +110,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
-                ;
+                
             }
         }).error(function (error) {
             console.log(error);
@@ -125,7 +131,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
-                ;
+                
             }
         }).error(function (error) {
             console.log(error);
@@ -133,38 +139,37 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         });
     };
 
-    $scope.submit = function (form) {
+    $scope.submitQuotationRequest = function (form) {
+    	
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
-        	alert('Form Validation Success');
-        	console.log(form.validate());
-        	$scope.modelData.applicantName = $scope.applicantName;
-            $scope.modelData.applicantEmail = $scope.applicantEmail;
-            $scope.modelData.brokerId = $scope.brokerId;
-            $scope.modelData.productId = $routeParams['id'];
-            $scope.modelData.questionnaires = $scope.questionnaires;
-            console.log("Service gets Called Here");
-            console.log($scope.questionnaires);
-
+        	console.log("Form Validation Success");
+            $scope.quotationRequest.questionnaires = [];
+            for(var i=0; i< $scope.questionnaires.length; i++) {
+            	$scope.quotationRequest.questionnaires[i]= {};
+            	$scope.quotationRequest.questionnaires[i].question =  $scope.questionnaires[i].question;
+            	$scope.quotationRequest.questionnaires[i].answer = $scope.questionnaires[i].answer;
+            }            
+            console.log($scope.quotationRequest);
             $http({
-                url: 'http://localhost:8080/api/quotation-requests',
+                url: '/api/quotation-requests',
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                data: $scope.modelData
+                data: $scope.quotationRequest
             }).success(function (data, status) {
-
                 if (status === 200) {
                     console.log('All the questions and answers saved succesfullly');
+                    $rootScope.message = "Reference Number : " + data;
+                    $location.path("/products");
                 } else {
                     console.log('status:' + status);
                 }
-            })
-                    .error(function (error) {
-                        console.log(error);
-                    });*/
+            }).error(function (error) {
+                console.log(error);
+            });
         }
 
     };
@@ -172,8 +177,8 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 
 polygon.controller('viewQuotationRequestCtrl', function ($scope, $routeParams, $http) {
 
-
     $scope.viewQuotationdetail;
+    
     $scope.ref = $routeParams.reference;
     
     $http({
