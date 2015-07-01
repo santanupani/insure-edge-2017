@@ -21,11 +21,13 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                     redirectTo: '/products'
                 });
     }]);
+
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
     $scope.init = function () {
         $scope.getProducts();
     };
+    
     $scope.getProducts = function () {
         console.log('get products');
         $http({
@@ -47,11 +49,12 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
         });
     };
 });
-polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams) {
 
+polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams) {
 
     $scope.questionnaires = [];
     $scope.modelData = {};
+
     $scope.init = function () {
         console.log($rootScope.products);
         if ($rootScope.products == undefined) {
@@ -131,16 +134,16 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     };
 
     $scope.submit = function (form) {
-        $scope.modelData.applicantName = $scope.applicantName;
-        $scope.modelData.applicantEmail = $scope.applicantEmail;
-        $scope.modelData.brokerId = $scope.brokerId;
-        $scope.modelData.productId = $routeParams['id'];
-        $scope.modelData.questionnaires = $scope.questionnaires;
         if (form.$invalid) {
             console.log("Form Validation Failure");
-            alert('Form Validation Failure');
         } else {
-
+        	alert('Form Validation Success');
+        	console.log(form.validate());
+        	$scope.modelData.applicantName = $scope.applicantName;
+            $scope.modelData.applicantEmail = $scope.applicantEmail;
+            $scope.modelData.brokerId = $scope.brokerId;
+            $scope.modelData.productId = $routeParams['id'];
+            $scope.modelData.questionnaires = $scope.questionnaires;
             console.log("Service gets Called Here");
             console.log($scope.questionnaires);
 
@@ -161,7 +164,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             })
                     .error(function (error) {
                         console.log(error);
-                    });
+                    });*/
         }
 
     };

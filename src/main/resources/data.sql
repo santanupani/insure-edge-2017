@@ -28,7 +28,7 @@ insert into answer_types(answer_type) values('checkbox');
 insert into answer_types(answer_type) values('textarea');
 
 /*Product1*/
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '1', 'What do you wish to insure ?',                 3,  null,    null, 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '1', 'What do you wish to insure ?',                 3,  null,    null, 'true');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash and Coins ');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash Coins and Valuables');
