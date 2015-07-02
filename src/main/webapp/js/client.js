@@ -160,7 +160,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                 },
                 data: $scope.quotationRequest
             }).success(function (data, status) {
-                if (status === 200) {
+                if (status == 200) {
                     console.log('All the questions and answers saved succesfullly');
                     $rootScope.message = "Reference Number : " + data;
                     $location.path("/products");

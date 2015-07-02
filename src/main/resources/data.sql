@@ -17,7 +17,7 @@ insert into brokers(code, name, email) values ('00007', 'Rens Kontant in Transit
 insert into brokers(code, name, email) values ('00008', 'Multi Risk Admin (Pty) Ltd', 'queries@multirisk.co.za');
 insert into brokers(code, name, email) values ('00009', 'Lazarus Dash and Associates (Pty) Ltd', 'Brian@lazdash.co.za');
 insert into brokers(code, name, email) values ('00010', 'Willem Jacobus Nienaber', 'wjnienaber@telkomsa.net');
-insert into brokers(code, name, email) values ('00011', 'Deposita Systems (Pty) Ltd', 'jennifer@bib.co.za');
+insert into brokers(code, name, email) values ('00011', 'Deposita Systems (Pty) Ltd', 'lizaan.botha@reverside.co.za');
 
 
 /*answer_type*/

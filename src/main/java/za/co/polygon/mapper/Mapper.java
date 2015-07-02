@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
@@ -19,10 +18,8 @@ import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
-import za.co.polygon.repository.BrokerRepository;
-import za.co.polygon.repository.ProductRepository;
-import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 
 public class Mapper {
 
@@ -177,4 +174,22 @@ public class Mapper {
     	}
     	return result;
     }
+    
+    public static User fromUserCommandModel(UserCommandModel userCommandModel) {       
+        User user = new User();      
+        user.setUserName(userCommandModel.getUserName());
+        user.setPassword(userCommandModel.getPassword());
+        user.setRole(userCommandModel.getRole());
+        user.setEnabled(true);
+        return user;
+        
+    }
+    
+//    public static List<User> fromUserommandModel(List<UserCommandModel> fromList) {
+//        List<User> user = new ArrayList<User>();
+//        for (UserCommandModel userCommandModel : fromList) {
+//            user.add(fromUserommandModel(userCommandModel));
+//        }
+//        return user;
+//    }
 }

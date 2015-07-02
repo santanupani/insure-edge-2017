@@ -2,9 +2,7 @@ package za.co.polygon;
 
 import static za.co.polygon.mapper.Mapper.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,8 @@ import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
-import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.*;
 
@@ -121,6 +119,13 @@ public class Service {
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
         log.info("find all the questions and answers inserted for a product using the reference");
         return toQuotationRequestQueryModel(quotationRequest);
+    }
+    
+    @RequestMapping(value = "api/createuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+    public void fromcreateUser(@RequestBody UserCommandModel userCommandModel) {
+        User user = fromUserCommandModel(userCommandModel);
+        log.info("request received to create guest : " + user);
+        userRepository.save(user);
     }
 
 }

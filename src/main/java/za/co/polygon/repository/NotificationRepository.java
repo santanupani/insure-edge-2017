@@ -23,8 +23,8 @@ import za.co.polygon.domain.Notification;
 @Repository
 public class NotificationRepository {
 
-    private static final String username = "thabothulare68@gmail.com"; //Enter your gmail here to test the code
-    private static final String password = "Ndivhu@tee1"; //Enter your gmail password here
+    private static final String username = "binod.polygon@gmail.com"; //Enter your gmail here to test the code
+    private static final String password = "polygonmidrand"; //Enter your gmail password here
     private static final String hostName = "smtp.gmail.com";
     private static final int portNumber = 587;
 
