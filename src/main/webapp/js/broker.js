@@ -3,35 +3,41 @@ var broker = angular.module('broker', ['ngRoute']);
 broker.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
                     .when('/quotation-requests/:reference', {
-                	'templateUrl': '/html/viewQuotationRequest.html',
-                	'controller': 'viewQuotationRequestCtrl'
+                	'templateUrl': '/html/quotation-requests.html',
+                	'controller' : 'quotationRequestsCtrl'
                 }).otherwise({
                     redirectTo: '/products'
                 });
     }]);
 
-broker.controller('viewQuotationRequestCtrl', function ($scope, $routeParams, $http) {
+broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http) {
 
-    $scope.viewQuotationdetail;
+    $scope.quotationRequest;
     
-    $scope.ref = $routeParams.reference;
+    $scope.init = function(){
+    	 $scope.getQuotationRequest($routeParams.reference);
+    };
     
-    $http({
-        url: '/api/quotation-requests/' + $scope.ref,
-        method: 'get',
-    }).
-            success(function (data, status) {
-                console.log('get success code::' + status);
-                if (status == 200) {
-                    $scope.viewQuotationdetail = data;
-                    console.log('Quotationdetail Detail::' + $scope.viewQuotationdetail);
-                } else {
-                    console.log('status:' + status);
-                }
-            })
-            .error(function (error) {
-                console.log(error);
-            });
+    $scope.getQuotationRequest = function(reference){
+    	$http({
+            url: '/api/quotation-requests/' + reference,
+            method: 'get',
+        }).
+                success(function (data, status) {
+                    console.log('get success code::' + status);
+                    if (status == 200) {
+                        $scope.quotationRequest = data;
+                        console.log('Quotationdetail Detail::' + $scope.quotationRequest);
+                    } else {
+                        console.log('status:' + status);
+                    }
+                })
+                .error(function (error) {
+                    console.log(error);
+                });	
+    };
+    
+    
 });
 
 

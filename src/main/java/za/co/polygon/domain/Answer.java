@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "quotation_questionnaires")
-public class QuotationRequestQuestionnaires {
+public class Answer {
     
     @Id   
     @GeneratedValue(strategy = GenerationType.IDENTITY)

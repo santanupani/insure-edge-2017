@@ -49,7 +49,7 @@ public class QuotationRequest {
     private String status;
     
     @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
-    private List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire;
+    private List<Answer> answers;
 
     public Long getId() {
         return id;
@@ -115,15 +115,15 @@ public class QuotationRequest {
         this.status = status;
     }
 
-    public List<QuotationRequestQuestionnaires> getQuotationRequestQuestionnaire() {
-    	if(quotationRequestQuestionnaire== null) 
-    		return new ArrayList<QuotationRequestQuestionnaires>();
+    public List<Answer> getAnswers() {
+    	if(answers== null) 
+    		return new ArrayList<Answer>();
     	else
-    		return quotationRequestQuestionnaire;
+    		return answers;
     }
 
-    public void setQuotationRequestQuestionnaire(List<QuotationRequestQuestionnaires> quotationRequestQuestionnaire) {
-        this.quotationRequestQuestionnaire = quotationRequestQuestionnaire;
+    public void setAnswers(List<Answer> quotationRequestQuestionnaire) {
+        this.answers = quotationRequestQuestionnaire;
     }
  
 }

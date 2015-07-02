@@ -1,0 +1,15 @@
+﻿/* 
+   Google Analytics Module
+   Copyright 2007 iFinity
+*/
+
+.GoogleAnalyticsSettings
+{
+	/* contains the settings */
+}
+
+.GoogleAnalyticsSettingsTable
+{
+	/* table to hold the settings */
+	font-size:smaller;
+}
