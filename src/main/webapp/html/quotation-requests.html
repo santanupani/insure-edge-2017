@@ -1,37 +1,67 @@
 <div class="row" style="padding: 25px;" ng-init="init()"> 
 
-	 <div  class="col-md-12">
-	 
-	 	<div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Quotation Request</h4>
-                </div>
-                <div class="panel-body">
-                	
-                	<div class="text-center">
-	                	<img class="img-circle" ng-src="{{quotationRequest.product.image}}"  width="160" height="160">
-						<h2>{{quotationRequest.product.name}}</h2>
-						<h4>{{quotationRequest.reference}}</h4>
-	                    <h4>{{quotationRequest.applicantName}}</h4>
-	                    <h5>{{quotationRequest.createDate}}</h5>
-                    </div>
-                    
-                    <div>
-                      	<form role="form">
-                      	<div class="form-group" ng-repeat="questionnaire in quotationRequest.questionnaire">
-                                <label class="control-label" for="q_{{index}}">Q: {{questionnaire.question}}</label>                               
-                                <textarea class="form-control"  id="q_{{index}}" ng-model="questionnaire.answer" readonly="readonly"></textarea>
-                        </div>
-                        </form>
-                    </div>  
-                                      
-                </div>
-                
-                
-                
+	<div class="col-md-3">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+                <h4>Product</h4>
             </div>
-	 
-	 </div>
+			<div class="panel-body" align="center" style="height: 300px;">
+				<img class="img-circle" ng-src="{{quotationRequest.product.image}}"  width="140" height="140">
+				<h3>{{quotationRequest.product.name}}</h3>
+				<p>{{quotationRequest.product.description}}</p>
+			</div>
+		</div>
+		
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+		 	<div class="panel-heading">
+                <h4>Quotation Request</h4>
+            </div>
+			<div class="panel-body">
+				<form role="form">
+					<div class="form-group">
+                          <label class="control-label" for="reference">Reference</label>                               
+                          <input type="text" class="form-control"  id="reference" ng-model="quotationRequest.reference" readonly="readonly"></input>
+                    </div>
+                    <div class="form-group">
+                          <label class="control-label" for="companyName">Company</label>                               
+                          <input type="text" class="form-control"  id="companyName"  value="Reverside Software Solutions" readonly="readonly"></input>
+                    </div>
+                    <div class="form-group">
+                          <label class="control-label" for="applicant">Applicant</label>                               
+                          <input type="text" class="form-control"  id="applicant" ng-model="quotationRequest.applicantName" readonly="readonly"></input>
+                    </div>
+                    <div class="form-group">
+                          <label class="control-label" for="appliedOn">Applied On</label>                               
+                          <input type="text" class="form-control"  id="appliedOn" ng-model="quotationRequest.createDate" readonly="readonly"></input>
+                    </div>
+                    <div class="form-group">
+                          <label class="control-label" for="status">Status</label>                               
+                          <input type="text" class="form-control"  id="status"   ng-model="quotationRequest.status" readonly="readonly"></input>
+                    </div>
+                 </form>
+			</div>
+		</div>
+	</div>
+	
+	<div  class="col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			    <h4>Questionnaires</h4>
+			</div>
+			<div class="panel-body">                
+			    <form role="form">
+			      	<div class="form-group" ng-repeat="questionnaire in quotationRequest.questionnaire">
+			                <label class="control-label" for="q_{{index}}">Q: {{questionnaire.question}}</label>                               
+			                <textarea class="form-control"  id="q_{{index}}" ng-model="questionnaire.answer" readonly="readonly"></textarea>
+			        </div>
+			    </form>                                     
+			</div>
+			<div class="panel-footer text-right">
+				<button  class="btn btn-success" >Accept</button> 
+				<button class="btn btn-danger">Reject</button>
+			</div>
+    	</div>
+	</div>
    
    <!--  <div class="row" style="padding: 25px;">
         
