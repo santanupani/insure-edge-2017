@@ -43,7 +43,6 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
         }).error(function (error) {
             console.log(error);
             $rootScope.error = error;
-            ;
         });
     };
     
