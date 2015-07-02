@@ -1,0 +1,84 @@
+<div class="row" style="padding: 25px;" ng-init="init()"> 
+
+	 <div  class="col-md-12">
+	 
+	 	<div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Quotation Request</h4>
+                </div>
+                <div class="panel-body">
+                	
+                	<div class="text-center">
+	                	<img class="img-circle" ng-src="{{quotationRequest.product.image}}"  width="160" height="160">
+						<h2>{{quotationRequest.product.name}}</h2>
+						<h4>{{quotationRequest.reference}}</h4>
+	                    <h4>{{quotationRequest.applicantName}}</h4>
+	                    <h5>{{quotationRequest.createDate}}</h5>
+                    </div>
+                    
+                    <div>
+                      	<form role="form">
+                      	<div class="form-group" ng-repeat="questionnaire in quotationRequest.questionnaire">
+                                <label class="control-label" for="q_{{index}}">Q: {{questionnaire.question}}</label>                               
+                                <textarea class="form-control"  id="q_{{index}}" ng-model="questionnaire.answer" readonly="readonly"></textarea>
+                        </div>
+                        </form>
+                    </div>  
+                                      
+                </div>
+                
+                
+                
+            </div>
+	 
+	 </div>
+   
+   <!--  <div class="row" style="padding: 25px;">
+        
+        <div style="text-align: left;" class="col-md-6">
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black; height: 300px">
+                <div class="panel-heading">
+                    <h4>Product details</h4>
+                </div>
+                <div class="panel-body" align="center" style="height: 190px;">
+                    <img class="img-circle" ng-src="{{viewQuotationdetail.product.image}}" width="140" height="140">
+                    <h4>{{viewQuotationdetail.product.name}}</h4>
+                    <p>{{viewQuotationdetail.product.description}}</p>                
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: left;" class="col-md-6">
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black; height: 300px">
+                <div class="panel-heading">
+                    <h4>Applicant details</h4>
+                </div>
+                <div class="panel-body" align="center" style="height: 190px;">
+                    <h4> Applicant Name     :   {{viewQuotationdetail.applicantName}}</h4>
+                    <h4> Applicant Email    :   {{viewQuotationdetail.applicantEmail}}</h4>
+                    <h4> Reference Number   :   {{viewQuotationdetail.reference}} </h4>
+                    <h4> Date                :   {{viewQuotationdetail.createDate}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding: 25px;">
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Quotation Request questions and answers</h4>
+            </div>
+            <div class="row" style="padding: 25px;">
+                <div class="col-md-6" ng-repeat="viewQuotationdetails in viewQuotationdetail.questionnaire">
+                    <div ng-if="viewQuotationdetails.answer != null">
+                        <p>{{viewQuotationdetails.question}}</p> 
+                        <p style="color: #0f6ab4">{{viewQuotationdetails.answer}}</p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div align="center" class="container">
+            <button  class="btn btn-success" >Accept</button> <button class="btn btn-danger">Reject</button>
+        </div>
+    </div> -->
+</div>
