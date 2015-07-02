@@ -1,10 +1,16 @@
 package za.co.polygon;
 
-import static za.co.polygon.mapper.Mapper.*;
+import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
+import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
+import static za.co.polygon.mapper.Mapper.toProductQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuotationRequest;
+import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
+import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +21,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.polygon.domain.*;
 
-import static za.co.polygon.mapper.Mapper.toQuotationRequest;
-import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
+import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.Product;
+import za.co.polygon.domain.Questionnaire;
+import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.Answer;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
-import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserQueryModel;
-import za.co.polygon.repository.*;
+import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.ProductRepository;
+import za.co.polygon.repository.QuestionnaireRepository;
+import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
+import za.co.polygon.repository.QuotationRequestRepository;
+import za.co.polygon.repository.UserRepository;
+import za.co.polygon.service.NotificationService;
 
 @RestController
 public class Service {
@@ -52,7 +65,7 @@ public class Service {
     private QuotationRequestQuestionnaireRepository quotationRequestQuestionnaireRepository;
 
     @Autowired
-    private NotificationRepository notificationRepository;
+    private NotificationService notificationService;
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -96,19 +109,16 @@ public class Service {
     @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
     public String createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {        
       Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
+      
       Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
+      
       QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
       quotationRequest = quotationRequestRepository.save(quotationRequest);
       
-      List<QuotationRequestQuestionnaires> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
+      List<Answer> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
       quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
 
-      Notification notification = new Notification(
-              broker.getEmail(),
-              "Notification" ,
-              "Ref : " + quotationRequest.getReference() +
-              "\n Click here to view quote :  http://localhost:8080/polygon/broker.html#/quotation-requests/"+ quotationRequest.getReference());
-      notificationRepository.publish(notification);
+      notificationService.sendNotificationForNewQuotationRequest(quotationRequest, broker);
 
       log.info("Quotation Request Created. reference : {} " , quotationRequest.getReference());
       return quotationRequest.getReference();

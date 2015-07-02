@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
-import za.co.polygon.domain.QuotationRequestQuestionnaires;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
@@ -20,9 +20,6 @@ import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserQueryModel;
-import za.co.polygon.repository.BrokerRepository;
-import za.co.polygon.repository.ProductRepository;
-import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 
 public class Mapper {
 
@@ -103,28 +100,26 @@ public class Mapper {
     }
 
     public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product) {
-
         QuotationRequest quotationRequest = new QuotationRequest();
         quotationRequest.setApplicantName(quotationRequestCommandModel.getApplicantName());
         quotationRequest.setApplicantEmail(quotationRequestCommandModel.getApplicantEmail());
         quotationRequest.setReference(UUID.randomUUID().toString());
         quotationRequest.setStatus("APPLIED");
         quotationRequest.setCreateDate(new Date());
-        System.out.println(quotationRequest.getCreateDate().toString());
         quotationRequest.setProduct(product);
         quotationRequest.setBroker(broker);
 
-        List<QuotationRequestQuestionnaires> quotationRequestQuestionnairesList = new ArrayList<QuotationRequestQuestionnaires>();
+        List<Answer> answerList = new ArrayList<Answer>();
 
         for (Questionnaires questionnaires : quotationRequestCommandModel.getQuestionnaires()) {
-            QuotationRequestQuestionnaires quotationRequestQuestionnaires = new QuotationRequestQuestionnaires();
-            quotationRequestQuestionnaires.setQuestion(questionnaires.getQuestion());
-            quotationRequestQuestionnaires.setAnswer(questionnaires.getAnswer());
-            quotationRequestQuestionnaires.setQuotationRequest(quotationRequest);
-            quotationRequestQuestionnairesList.add(quotationRequestQuestionnaires);
+            Answer answer = new Answer();
+            answer.setQuestion(questionnaires.getQuestion());
+            answer.setAnswer(questionnaires.getAnswer());
+            answer.setQuotationRequest(quotationRequest);
+            answerList.add(answer);
 
         }
-        quotationRequest.setQuotationRequestQuestionnaire(quotationRequestQuestionnairesList);
+        quotationRequest.setAnswers(answerList);
 
         return quotationRequest;
     }
@@ -136,7 +131,6 @@ public class Mapper {
         result.setReference(quotationRequest.getReference());
         result.setStatus(quotationRequest.getStatus());
         result.setCreateDate(new SimpleDateFormat("dd/MM/YYYY").format(quotationRequest.getCreateDate()));
-        System.out.println("<<" + quotationRequest.getCreateDate());
         result.setApplicantName(quotationRequest.getApplicantName());
         result.setApplicantEmail(quotationRequest.getApplicantEmail());
 
@@ -154,26 +148,23 @@ public class Mapper {
         product.setImage(quotationRequest.getProduct().getImage());
         result.setProduct(product);
         
-        for(QuotationRequestQuestionnaires qrq : quotationRequest.getQuotationRequestQuestionnaire()){
+        for(Answer answer : quotationRequest.getAnswers()){
         	QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
-        	q.setQuestion(qrq.getQuestion());
-        	q.setAnswer(qrq.getAnswer());
+        	q.setQuestion(answer.getQuestion());
+        	q.setAnswer(answer.getAnswer());
         	result.getQuestionnaire().add(q);
         }
-        
-       
-
         return result;
     }
     
-    public static List<QuotationRequestQuestionnaires> fromQuotationRequestCommandModel(QuotationRequestCommandModel quotationRequestQueryModel, QuotationRequest quotationRequest){
-    	List<QuotationRequestQuestionnaires> result = new ArrayList<QuotationRequestQuestionnaires>();
+    public static List<Answer> fromQuotationRequestCommandModel(QuotationRequestCommandModel quotationRequestQueryModel, QuotationRequest quotationRequest){
+    	List<Answer> result = new ArrayList<Answer>();
     	for(QuotationRequestCommandModel.Questionnaires questionnaire : quotationRequestQueryModel.getQuestionnaires()){
-    		QuotationRequestQuestionnaires q = new QuotationRequestQuestionnaires();
-    		q.setQuestion(questionnaire.getQuestion());
-    		q.setAnswer(questionnaire.getAnswer());
-    		q.setQuotationRequest(quotationRequest);
-    		result.add(q);    		
+    		Answer answer = new Answer();
+    		answer.setQuestion(questionnaire.getQuestion());
+    		answer.setAnswer(questionnaire.getAnswer());
+    		answer.setQuotationRequest(quotationRequest);
+    		result.add(answer);    		
     	}
     	return result;
     }
