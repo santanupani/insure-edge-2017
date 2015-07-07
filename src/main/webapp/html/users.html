@@ -1,0 +1,22 @@
+
+<div class="row" style="padding: 25px;" ng-init="init()"> 
+    
+    <div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
+  			<span aria-hidden="true">&times;</span>
+  		</button>
+  		 <strong>Success ! </strong>{{message}}
+	</div>
+	
+    <div class="col-md-3" ng-model="user in login">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-body" align="center" style="height: 300px;">
+				<h3>{{user.userName}}</h3>
+				<h3>{{user.password}}</h3>
+                                <h3>{{user.role}}</h3>
+			</div>
+			
+		</div>
+	</div>
+	
+</div>

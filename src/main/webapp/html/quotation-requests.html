@@ -1,83 +1,127 @@
 <div class="row" style="padding: 25px;" ng-init="init()"> 
 
-	<div class="col-md-3">
-	
-		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-			<div class="panel-heading">
+    <div class="col-md-3">
+
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
                 <h4>Product</h4>
             </div>
-			<div class="panel-body" align="center" style="height: 300px;">
-				<img class="img-circle" ng-src="{{quotationRequest.product.image}}"  width="140" height="140">
-				<h3>{{quotationRequest.product.name}}</h3>
-				<p>{{quotationRequest.product.description}}</p>
-			</div>
-		</div>
-		
-		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-		 	<div class="panel-heading">
+            <div class="panel-body" align="center" style="height: 300px;">
+                <img class="img-circle" ng-src="{{quotationRequest.product.image}}"  width="140" height="140">
+                <h3>{{quotationRequest.product.name}}</h3>
+                <p>{{quotationRequest.product.description}}</p>
+            </div>
+        </div>
+
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
                 <h4>Quotation Request</h4>
             </div>
-			<div class="panel-body">
-				<div>
-					<div class="form-group">
-                          <label class="control-label" for="reference">Reference</label>                               
-                          <input type="text" class="form-control"  id="reference" ng-model="quotationRequest.reference" readonly="readonly"></input>
+            <div class="panel-body">
+                <div>
+                    <div class="form-group">
+                        <label class="control-label" for="reference">Reference</label>                               
+                        <input type="text" class="form-control"  id="reference" ng-model="quotationRequest.reference" readonly="readonly"></input>
                     </div>
                     <div class="form-group">
-                          <label class="control-label" for="companyName">Company</label>                               
-                          <input type="text" class="form-control"  id="companyName"  value="Reverside Software Solutions" readonly="readonly"></input>
+                        <label class="control-label" for="companyName">Company</label>                               
+                        <input type="text" class="form-control"  id="companyName"  value="Reverside Software Solutions" readonly="readonly"></input>
                     </div>
                     <div class="form-group">
-                          <label class="control-label" for="applicant">Applicant</label>                               
-                          <input type="text" class="form-control"  id="applicant" ng-model="quotationRequest.applicantName" readonly="readonly"></input>
+                        <label class="control-label" for="applicant">Applicant</label>                               
+                        <input type="text" class="form-control"  id="applicant" ng-model="quotationRequest.applicantName" readonly="readonly"></input>
                     </div>
                     <div class="form-group">
-                          <label class="control-label" for="appliedOn">Applied On</label>                               
-                          <input type="text" class="form-control"  id="appliedOn" ng-model="quotationRequest.createDate" readonly="readonly"></input>
+                        <label class="control-label" for="appliedOn">Applied On</label>                               
+                        <input type="text" class="form-control"  id="appliedOn" ng-model="quotationRequest.createDate" readonly="readonly"></input>
                     </div>
                     <div class="form-group">
-                          <label class="control-label" for="status">Status</label>                               
-                          <input type="text" class="form-control"  id="status"   ng-model="quotationRequest.status" readonly="readonly"></input>
+                        <label class="control-label" for="status">Status</label>                               
+                        <input type="text" class="form-control"  id="status"   ng-model="quotationRequest.status" readonly="readonly"></input>
                     </div>
-                 </div>
-			</div>
-		</div>
-	</div>
-	
-	<div  class="col-md-9" >
-		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-			<div class="panel-heading">
-			    <h4>Questionnaires</h4>
-			</div>
-			<div class="panel-body">                
-			    <div>
-			      	<div class="form-group" ng-repeat="questionnaire in quotationRequest.questionnaire">
-			                <label class="control-label" for="q_{{index}}">Q: {{questionnaire.question}}</label>                               
-			                <textarea class="form-control"  id="q_{{index}}" ng-model="questionnaire.answer" readonly="readonly"></textarea>
-			        </div>
-			    </div>                                     
-			</div>
-			<div class="panel-footer text-right">
-				<button  class="btn btn-success" >Accept</button> 
-                                <button class="btn btn-danger" ng-click="toggle = !toggle">Reject</button>
-			</div>
-                      <div ng-hide="toggle">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div  class="col-md-9" >
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Questionnaires</h4>
+            </div>
+            <div class="panel-body">                
+                <div>
+                    <div class="form-group" ng-repeat="questionnaire in quotationRequest.questionnaire">
+                        <label class="control-label" for="q_{{index}}">Q: {{questionnaire.question}}</label>
+                        <textarea class="form-control"  id="q_{{index}}" ng-model="questionnaire.answer" readonly="readonly"></textarea>
+                    </div>
+
+                </div>                                     
+            </div>
+            <div class="panel-footer text-right">
+                <button class="btn btn-success" ng-click="accept()">Accept</button> 
+                <button class="btn btn-danger" ng-click="toggle = !toggle">Reject</button>
+            </div>
+            <div ng-hide="toggle">
                           <div class="panel-heading">
                                 <h4>Please fill in reason for rejection</h4>
                           </div>
                           <div class="panel-body">
                               <div>
                                 <div class="form-group">
-                                         <textarea class="form-control" type="text" class="form-control" ng-model="reason"></textarea>
+                                         <textarea class="form-control" type="text" ng-model="reason"></textarea>
                                       </div>
                                   </div>
                            </div>
                           <div class="panel-footer text-right">
-                                <button type="submit"  class="btn btn-danger" form="rejectform" role="button" ng-click="rejectQuotationRequest(quotationRequest.reference, reason)">Reject</button>
+                                <button type="submit"  class="btn btn-danger" role="button" ng-click="rejectQuotationRequest(quotationRequest.reference, reason);toggle = !toggle">Reject</button>
                                 </div>
                          </div>
-             
-    	</div> 
+
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">               
+                <div class="panel-body" align="center" ng-repeat="category in categories">
+                    <div ng-if="category.status">
+                        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                            <div class="panel-heading">
+                                <h3 align="left">To:  <font color="darkblue">Reverside Software Solutions</font></h3>
+                                <h3 align="left">Dear  <font size="3" color="darkblue">{{quotationRequest.applicantName}}</font></h3> 
+                                <h3 align="right"><font color="darkblue">{{quotationRequest.createDate}}</font></h3> 
+                                <div class="form-group">
+                                    <label class="control-label"><font  color="darkblack">{{category.name}}</font></label>                               
+                                </div>
+                                <h3><font  color="darkred">{{quotationRequest.product.name}}</font></h3>
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <input type="text" class="form-control"  placeholder="Location" ng-model="category.location"  required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control"  placeholder="Limit" ng-model="category.limit"  required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Commodity" ng-model="category.commodity"  required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Cover" ng-model="category.cover"  required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Duration/peroid" ng-model="category.period"  required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Excess" ng-model="category.excess"  required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Premium" ng-model="category.premium"  required>
+                        </div>
+                        <div class="form-group">
+                            <button  class="btn btn-success" ng-click="add()">Add</button> 
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
-</div>
+    </div>

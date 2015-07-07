@@ -13,7 +13,6 @@ broker.config(['$routeProvider', function ($routeProvider) {
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http) {
 
     $scope.quotationRequest;
-
     $scope.toggle = true;
 
 
@@ -22,9 +21,16 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
     };
 
+    //call the service and get all categories(make status false in database)
+    $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
+    $scope.categories = [];
+    $scope.categoryNumber = 0;
+    $scope.models=[];
+     $scope.init = function () {
+        $scope.getQuotationRequest($routeParams.reference);
+    };
+
     $scope.getQuotationRequest = function (reference) {
-
-
         $http({
             url: '/api/quotation-requests/' + reference,
             method: 'get',
@@ -46,17 +52,19 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
     $scope.rejectQuotationRequest = function (reference, reason) {
 
-
-        $scope.reason;
         $http({
             url: '/api/reject-quotation/' + reference + '/' + reason,
             method: 'put',
+            headers: {
+                    'Content-Type': 'application/json',
+                },
             data: $scope.reason,
         }).
-                success(function (status) {
+            success(function (data, status) {
                     console.log('get success code:' + status);
                     if (status == 200) {
                         $scope.reason = reason;
+                        console.log(data);
                         console.log('Rejection Reason:' + reason);
                         $scope.getQuotationRequest($routeParams.reference)
                     } else {
@@ -67,11 +75,22 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     console.log(error);
                 });
     }
+    
+    
+    
+    $scope.accept = function () {
+        $scope.categories.push($scope.categorieslist[0]);
+    };
+
+    $scope.add = function () {
+        $scope.categoryNumber++;
+        $scope.categorieslist[$scope.categoryNumber].status = true;
+        $scope.categories.push($scope.categorieslist[$scope.categoryNumber]);
+    };
+    
+    $scope.save=function(){
+        console.log($scope.categories);
+    };
 
 
 });
-
-
-
-
-
