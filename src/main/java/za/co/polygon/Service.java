@@ -132,5 +132,18 @@ public class Service {
         log.info("find all the questions and answers inserted for a product using the reference");
         return toQuotationRequestQueryModel(quotationRequest);
     }
-
+    
+    
+     @RequestMapping(value = "api/reject-quotation/{reference}/{reason}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+      public void rejectQuotation(@PathVariable("reference") String reference,@PathVariable("reason")String reason){
+           
+          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+          log.info("Meesage :"+ reason);
+          
+          quotationRequest.setStatus("Rejected");
+          log.info("New status :"+ quotationRequest.getStatus());
+          notificationService.sendApplicantRejectMessage(quotationRequest, reason);
+          quotationRequestRepository.save(quotationRequest);
+          
+      }
 }
