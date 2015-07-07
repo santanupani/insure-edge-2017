@@ -101,4 +101,14 @@
 			</sequence>
 		</complexType>
 	</element>
+        <element name="CategoryQueryModel">
+		<complexType>
+			<sequence>
+				<element name="id" type="long"></element>
+				<element name="name" type="string"></element>
+				<element name="status" type="string"></element>
+			</sequence>
+		</complexType>
+	</element>
+        
 </schema>

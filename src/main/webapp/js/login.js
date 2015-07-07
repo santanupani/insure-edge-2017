@@ -16,32 +16,28 @@ login.config(['$routeProvider', function ($routeProvider) {
     }]);
 
 login.controller('loginCtrl', function ($scope, $http, $location) {
-    
-    $scope.init = function () {
-        $scope.getUsers();
-    };
-    
+
     $scope.modelData = {};
-    
-     $scope.submitLogin = function (loginform) {
-         
-         $scope.modelData.user_Name = $scope.userName;
-         $scope.modelData.password = $scope.password;
-         $scope.modelData.role = $scope.role;
-         
-         if (loginform.$invalid) {
+
+    $scope.submitLogin = function (loginform) {
+
+        $scope.modelData.user_Name = $scope.userName;
+        $scope.modelData.password = $scope.password;
+        $scope.modelData.role = $scope.role;
+
+        if (loginform.$invalid) {
             console.log("Form Validation is Failled");
         } else {
-        	console.log("Form Validation is Successfull");
-                      
-    $http({
-            url: '/api/createuser',
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: $scope.modelData
-        }).success(function (data, status) {
+            console.log("Form Validation is Successfull");
+
+            $http({
+                url: '/api/createuser',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: $scope.modelData
+            }).success(function (data, status) {
                 if (status == 200) {
                     console.log('user creation invoked successfully');
                     $location.path("/users");
@@ -49,33 +45,15 @@ login.controller('loginCtrl', function ($scope, $http, $location) {
                     console.log('status:' + status);
                 }
             })
-            .error(function (error) {
-                console.log(error);
-            });
+                    .error(function (error) {
+                        console.log(error);
+                    });
         }
-     };
+    };
 });
 
 login.controller('userCtrl', function ($scope, $http) {
-    $scope.getUsers = function () {
-        
-        $http({
-            url: '/api/users',
-            method: 'get'
-        }).success(function (data, status) {
-            if (status == 200) {
-                console.log('users retrived successfully');
-                $scope.user = data;
-            } else {
-                console.log('status:' + status);
-                $scope.error = "error status code : " + status;
-                
-            }
-        }).error(function (error) {
-            console.log(error);
-            $scope.error = error;
-        });
-    };
+
 
 });
 

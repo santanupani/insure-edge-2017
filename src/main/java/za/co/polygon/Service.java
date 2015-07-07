@@ -22,6 +22,7 @@ import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.CategoryQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
@@ -29,6 +30,7 @@ import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.CategoryRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
@@ -61,6 +63,9 @@ public class Service {
 
     @Autowired
     private NotificationService notificationService;
+    
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -133,6 +138,16 @@ public class Service {
         User user = fromUserCommandModel(userCommandModel);
         log.info("request received to create guest : " + user);
         userRepository.save(user);
+    }
+    
+    @RequestMapping(value = "api/categories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CategoryQueryModel> findAllCategories() {
+        log.info("find categories");
+        List<za.co.polygon.domain.Category> category = categoryRepository.findAll();
+        List<CategoryQueryModel> result = toCategoryQueryModel(category);
+        log.info("found category, size:{}", result.size());
+        log.info("this service to get all category list of broker");
+        return result;
     }
 
 }

@@ -1,5 +1,5 @@
 <div style="width: 20%; margin-left: auto;margin-right: auto;margin-top: 10%;" ng-init="init()">
-
+    
     <form role="form" name="loginform" id="loginform">
         <fieldset>
             <legend>Login</legend>
@@ -12,10 +12,14 @@
                        ng-model="password"
                        required>
             </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="roleid" placeholder="Role" ng-model="role"
+                       required>
+            </div>
             <button type="submit" class="btn btn-primary" ng-href="#/user" ng-click="submitLogin(loginform)">Login
             </button>
             <h4 style="color:#ff6464;text-align: center;flex-grow:inherit">{{error}}</h4>
         </fieldset>
     </form>
-
+       
 </div>

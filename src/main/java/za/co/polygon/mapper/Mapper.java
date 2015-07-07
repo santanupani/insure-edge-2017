@@ -10,11 +10,13 @@ import za.co.polygon.domain.Answer;
 
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.Category;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.CategoryQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
@@ -179,6 +181,22 @@ public class Mapper {
         user.setEnabled(true);
         return user;
         
+    }
+    
+    public static CategoryQueryModel toCategoryQueryModel(Category from) {
+        CategoryQueryModel category = new CategoryQueryModel();
+        category.setId(from.getId());
+        category.setName(from.getName());
+        category.setStatus(from.getStatus());
+        return category;
+    }
+
+    public static List<CategoryQueryModel> toCategoryQueryModel(List<Category> fromList) {
+        List<CategoryQueryModel> categoryList = new ArrayList<CategoryQueryModel>();
+        for (Category category : fromList) {
+            categoryList.add(toCategoryQueryModel(category));
+        }
+        return categoryList;
     }
     
 }

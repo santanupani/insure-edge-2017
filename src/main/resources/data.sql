@@ -7,7 +7,7 @@ insert into products(name, description, image) values('Static and In Transit Cov
 
 
 /*broker*/
-insert into brokers(code, name, email) values ('00001', 'Coin Risk Management', 'manmay.mohanty@reverside.co.za');
+insert into brokers(code, name, email) values ('00001', 'Coin Risk Management', 'binod.sethi@reverside.co.za');
 insert into brokers(code, name, email) values ('00002', 'Admin Focus (Pty) Ltd', 'thabo.thulare@reverside.co.za');
 insert into brokers(code, name, email) values ('00003', 'Optimum Financial Services Group', 'bertus@optimum-inc.co.za');
 insert into brokers(code, name, email) values ('00004', 'Status Insurance Brokers (Pty) Ltd', 'info@statusib.co.za');
