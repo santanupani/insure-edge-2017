@@ -10,7 +10,7 @@ broker.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
-broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http) {
+broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location) {
 
     $scope.quotationRequest;
     $scope.toggle = true;
@@ -66,7 +66,8 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                         $scope.reason = reason;
                         console.log(data);
                         console.log('Rejection Reason:' + reason);
-                        $scope.getQuotationRequest($routeParams.reference)
+                        $scope.getQuotationRequest($routeParams.reference);
+                        $location.path("/quotation-requests/"+ reference);
                     } else {
                         console.log('status:' + status);
                     }
