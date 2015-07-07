@@ -65,16 +65,18 @@
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">               
                 <div class="panel-body" align="center" ng-repeat="category in categories">
                     <div ng-if="category.status">
-                        
-                       
-                        <h3 align="left">To:Reverside Software Solutions</h3>
-                        <h3 align="left">Dear {{quotationRequest.applicantName}}</h3> 
-                         <h3 align="right">{{quotationRequest.createDate}}</h3> 
-                        
-                        <div class="form-group">
-                            <label class="control-label">{{category.name}}</label>                               
+                        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                            <div class="panel-heading">
+                                <h3 align="left">To:  <font color="darkblue">Reverside Software Solutions</font></h3>
+                                <h3 align="left">Dear  </font><font size="3" color="darkblue">{{quotationRequest.applicantName}}</font></h3> 
+                                <h3 align="right"><font color="darkblue">{{quotationRequest.createDate}}</font></h3> 
+                                <div class="form-group">
+                                    <label class="control-label"><font  color="darkblack">{{category.name}}</font></label>                               
+                                </div>
+                                <h3><font  color="darkred">{{quotationRequest.product.name}}</font></h3>
+                            </div>
                         </div>
-                         <h3>{{quotationRequest.product.name}}</h3>
+
                         <div class="form-group">
                             <input type="text" class="form-control"  placeholder="Location" ng-model="category.location"  required>
                         </div>
