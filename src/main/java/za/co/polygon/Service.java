@@ -21,10 +21,8 @@ import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.Answer;
-import za.co.polygon.domain.Premium;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
-import za.co.polygon.model.PremiumCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
@@ -32,7 +30,6 @@ import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
-import za.co.polygon.repository.PremiumRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
@@ -66,8 +63,6 @@ public class Service {
     @Autowired
     private NotificationService notificationService;
     
-    @Autowired
-    private PremiumRepository premiumRepository;
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -156,13 +151,4 @@ public class Service {
         userRepository.save(user);
     }
     
-    
-    
-    @RequestMapping(value = "api/createPolicy", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-    public void fromcreatePolicy(@RequestBody PremiumCommandModel premiumCommandModel) {
-        Premium premium = toPremiumRequest(premiumCommandModel);       
-        premium = premiumRepository.save(premium);
-        log.info("saved all the premium values premium table");
-    }
-
 }

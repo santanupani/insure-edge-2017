@@ -10,13 +10,11 @@ import za.co.polygon.domain.Answer;
 
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
-import za.co.polygon.domain.Premium;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
-import za.co.polygon.model.PremiumCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
@@ -185,23 +183,7 @@ public class Mapper {
     
     
     
-   public static Premium toPremiumRequest(PremiumCommandModel premiumCommandModel) {
-       
-        Premium premium = new Premium();
-        
-        premium.setId(premiumCommandModel.getId());
-        premium.setLocation(premiumCommandModel.getLocation());
-        premium.setCompanyName(premiumCommandModel.getCompanyName());
-        premium.setCommodity(premiumCommandModel.getCommodity());
-        premium.setLimit(premiumCommandModel.getLimit());
-        premium.setCover(premiumCommandModel.getCover());
-        premium.setAcceptedDate(premiumCommandModel.getCreatedDate());
-        premium.setPeroid(premiumCommandModel.getPeroid());
-        premium.setExcess(premiumCommandModel.getExcess());
-        premium.setPremium(premiumCommandModel.getPremium());
-        
-        return premium;
-    }
+   
 
     
     

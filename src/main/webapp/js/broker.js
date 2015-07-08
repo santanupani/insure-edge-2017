@@ -25,7 +25,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
     $scope.categories = [];
     $scope.categoryNumber = 0;
-    $scope.models=[];
+    
      $scope.init = function () {
         $scope.getQuotationRequest($routeParams.reference);
     };
@@ -87,21 +87,15 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
         $scope.categories.push($scope.categorieslist[$scope.categoryNumber]);
     };
     
-    $scope.save=function(){
+    $scope.save=function(form){
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
         	console.log("Form Validation Success");
                 
-                $scope.models.location = $scope.category.location;
-                $scope.models.limit = $scope.category.limit;
-                $scope.models.commodity = $scope.category.commodity;
-                $scope.models.cover = $scope.category.cover;
-                $scope.models.period = $scope.category.period;
-                $scope.models.excess = $scope.category.excess;
-                $scope.models.premium = $scope.category.premium;
+               
                 
-                 $scope.models = [];
+                 
                      
             console.log($scope.models.category);
             $http({

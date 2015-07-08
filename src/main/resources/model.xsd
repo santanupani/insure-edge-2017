@@ -111,19 +111,27 @@
 		</complexType>
 	</element>
         
-        <element name="PremiumCommandModel">
+        <element name="QuotationCommandModel">
 		<complexType>
 			<sequence>
                                 <element name="id" type="long" />
 				<element name="location" type="string" />
                                 <element name="commodity" type="string" />
-                                <element name="companyName" type="string" />
-                                <element name="createdDate" type="string" />
                                 <element name="limit" type="string" />
                                 <element name="cover" type="string" />
                                 <element name="peroid" type="string" />
                                 <element name="excess" type="string" />
 				<element name="premium" type="string" />
+                                <element name="questionrequests" minOccurs="0" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+                                                        <element name="productId" type="long" />
+							<element name="createDate" type="string"/>
+                                                        <element name="applicantName" type="string"/>
+						</sequence>
+					</complexType>
+				</element>
+                                
 			</sequence>
 		</complexType>
 	</element>
