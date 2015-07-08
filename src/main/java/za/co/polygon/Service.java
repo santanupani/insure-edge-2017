@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import za.co.polygon.domain.Broker;
@@ -134,6 +135,20 @@ public class Service {
         return toQuotationRequestQueryModel(quotationRequest);
     }
     
+    
+     @RequestMapping(value = "api/reject-quotation/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+      public void rejectQuotation(@PathVariable("reference") String reference,@RequestParam(value="reason")String reason){
+           
+          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+          log.info("Meesage :"+ reason);
+          
+          quotationRequest.setStatus("Rejected");
+          log.info("New status :"+ quotationRequest.getStatus());
+          notificationService.sendApplicantRejectMessage(quotationRequest, reason);
+          quotationRequestRepository.save(quotationRequest);
+          
+      }
+
     @RequestMapping(value = "api/createuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
     public void fromcreateUser(@RequestBody UserCommandModel userCommandModel) {
         User user = fromUserCommandModel(userCommandModel);

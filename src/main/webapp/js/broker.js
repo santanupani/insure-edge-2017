@@ -10,9 +10,16 @@ broker.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
-broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http) {
+broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location) {
 
     $scope.quotationRequest;
+    $scope.toggle = true;
+
+
+    $scope.init = function () {
+        $scope.getQuotationRequest($routeParams.reference);
+
+    };
 
    
     $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
@@ -41,6 +48,34 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     console.log(error);
                 });
     };
+
+    $scope.rejectQuotationRequest = function (reference, reason) {
+
+        $http({
+            url: '/api/reject-quotation/' + reference+'?reason='+reason,
+            method: 'put',
+            headers: {
+                    'Content-Type': 'application/json',
+                },
+            data: $scope.reason,
+        }).
+            success(function (data, status) {
+                    console.log('get success code:' + status);
+                    if (status == 200) {
+                        $scope.reason = reason;
+                        console.log(data);
+                        console.log('Rejection Reason:' + reason);
+                        $scope.getQuotationRequest($routeParams.reference);
+                        $location.path("/quotation-requests/"+ reference);
+                    } else {
+                        console.log('status:' + status);
+                    }
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+    }
+    
 
     $scope.accept = function () {
         $scope.categories.push($scope.categorieslist[0]);
@@ -91,6 +126,3 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
 
 });
-
-
-

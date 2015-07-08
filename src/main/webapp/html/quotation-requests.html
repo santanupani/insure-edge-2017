@@ -55,12 +55,29 @@
                         <label class="control-label" for="q_{{index}}">Q: {{questionnaire.question}}</label>
                         <textarea class="form-control"  id="q_{{index}}" ng-model="questionnaire.answer" readonly="readonly"></textarea>
                     </div>
+
                 </div>                                     
             </div>
             <div class="panel-footer text-right">
                 <button class="btn btn-success" ng-click="accept()">Accept</button> 
-                <button class="btn btn-danger">Reject</button>
+                <button class="btn btn-danger" ng-click="toggle = !toggle">Reject</button>
             </div>
+            <div ng-hide="toggle">
+                          <div class="panel-heading">
+                                <h4>Please fill in reason for rejection</h4>
+                          </div>
+                          <div class="panel-body">
+                              <div>
+                                <div class="form-group">
+                                         <textarea class="form-control" type="text" ng-model="reason"></textarea>
+                                      </div>
+                                  </div>
+                           </div>
+                          <div class="panel-footer text-right">
+                                <button type="submit"  class="btn btn-danger" role="button" ng-click="rejectQuotationRequest(quotationRequest.reference, reason);toggle = !toggle">Reject</button>
+                                </div>
+                         </div>
+
 
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">    
                 <form data-toggle="validator" role="form" name="form" id="form">
@@ -75,8 +92,10 @@
                                         <label class="control-label"><font  color="darkblack">{{category.name}}</font></label>                               
                                     </div>
                                     <h3><font  color="darkred">{{quotationRequest.product.name}}</font></h3>
-                                </div>
-                            </div>
+
+            
+                        
+
 
                             <div class="form-group">
                                 <input type="text" class="form-control"  placeholder="Location" ng-model="category.location"  required>
@@ -111,6 +130,5 @@
                  <button class="btn btn-success" id="save" ng-click="save()">Create Policy</button> 
             </div>
         </div>
-
 
     </div>
