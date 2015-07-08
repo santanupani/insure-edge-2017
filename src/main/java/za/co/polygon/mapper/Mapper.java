@@ -5,22 +5,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 import za.co.polygon.domain.Answer;
-
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.MessageBody;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
-import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.MessageBodyCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
-import za.co.polygon.model.QuotationCommandModel.Quotations;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
@@ -104,6 +102,8 @@ public class Mapper {
         }
         return brokerQueryModels;
     }
+    
+    
 
     public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product) {
         QuotationRequest quotationRequest = new QuotationRequest();
@@ -199,10 +199,15 @@ public class Mapper {
         quotationOption.setQuotation(toCreateQuotation(quotationCommandModel).getQuotation());
         return quotationOption;
     }
-   
     
-   
+    public static MessageBody toMessageBody(MessageBodyCommandModel messageBodyCommandModel, QuotationRequest quotationRequest) {
+        MessageBody messageBody = new MessageBody();
+        
+        messageBody.setReason(messageBodyCommandModel.getReason());
+        messageBody.setQuotationRequest(quotationRequest);
+       
+        return messageBody;
+    }
 
-    
     
 }

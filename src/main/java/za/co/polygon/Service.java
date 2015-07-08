@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import za.co.polygon.domain.Broker;
@@ -21,8 +21,12 @@ import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.Answer;
+
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
+
+import za.co.polygon.domain.MessageBody;
+
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
@@ -33,6 +37,8 @@ import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.MessageBodyRepository;
+
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationOptionRepository;
@@ -67,12 +73,19 @@ public class Service {
     @Autowired
     private NotificationService notificationService;
     
+
     @Autowired
     private Quotation quotationRepository;
     
     @Autowired
     private QuotationOptionRepository quotationOptionRepository;
     
+
+    
+    @Autowired
+    private MessageBodyRepository messageBodyRepository;
+
+
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -141,16 +154,23 @@ public class Service {
     }
     
     
-     @RequestMapping(value = "api/reject-quotation/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-      public void rejectQuotation(@PathVariable("reference") String reference,@RequestParam(value="reason")String reason){
+     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+      public void rejectQuotation(@PathVariable("reference") String reference,@RequestBody MessageBody messageBody){
            
           QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-          log.info("Meesage :"+ reason);
+           
+           messageBody.setReason(messageBody.getReason());
+          log.info("Meesage :"+ messageBody.getReason());
           
           quotationRequest.setStatus("Rejected");
+          
+          messageBody.setQuotationRequest(quotationRequest);
+          
           log.info("New status :"+ quotationRequest.getStatus());
-          notificationService.sendApplicantRejectMessage(quotationRequest, reason);
+          notificationService.sendApplicantRejectMessage(quotationRequest, messageBody);
           quotationRequestRepository.save(quotationRequest);
+          messageBodyRepository.save(messageBody);
+          
           
       }
 
