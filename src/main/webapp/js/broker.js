@@ -22,11 +22,11 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
     };
 
-    //call the service and get all categories(make status false in database)
+   
     $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
     $scope.categories = [];
     $scope.categoryNumber = 0;
-    $scope.models=[];
+    
      $scope.init = function () {
         $scope.getQuotationRequest($routeParams.reference);
     };
@@ -49,7 +49,6 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     console.log(error);
                 });
     };
-
 
     $scope.rejectQuotationRequest = function (reference, reason) {
         
@@ -80,8 +79,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 });
     }
     
-    
-    
+
     $scope.accept = function () {
         $scope.categories.push($scope.categorieslist[0]);
     };
@@ -92,8 +90,35 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
         $scope.categories.push($scope.categorieslist[$scope.categoryNumber]);
     };
     
-    $scope.save=function(){
-        console.log($scope.categories);
+    $scope.save=function(form){
+        if (form.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+        	console.log("Form Validation Success");
+                
+               
+                
+                 
+                     
+            console.log($scope.models.category);
+            $http({
+                url: '/api/createPolicy',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: $scope.models.category
+            }).success(function (data, status) {
+                if (status == 200) {
+                    console.log('All the premiums are saved in premium table');
+                    console.log("Data:" + data);
+                } else {
+                    console.log('status:' + status);
+                }
+            }).error(function (error) {
+                console.log(error);
+            });
+        }
     };
 
 
