@@ -12,11 +12,15 @@ import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
+import za.co.polygon.domain.Quotation;
+import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
+import za.co.polygon.model.QuotationCommandModel;
+import za.co.polygon.model.QuotationCommandModel.Quotations;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
@@ -181,7 +185,21 @@ public class Mapper {
         
     }
     
-    
+    public static QuotationOption toCreateQuotation(QuotationCommandModel quotationCommandModel) {
+        
+        QuotationOption quotationOption = new QuotationOption();
+        quotationOption.setId(quotationCommandModel.getId());
+        quotationOption.setCommodity(quotationCommandModel.getCommodity());
+        quotationOption.setLocation(quotationCommandModel.getLocation());
+        quotationOption.setLimit(quotationCommandModel.getLimit());
+        quotationOption.setCover(quotationCommandModel.getCover());
+        quotationOption.setExcess(quotationCommandModel.getExcess());
+        quotationOption.setPeroid(quotationCommandModel.getPeroid());
+        quotationOption.setPremium(quotationCommandModel.getPremium());
+        quotationOption.setQuotation(toCreateQuotation(quotationCommandModel).getQuotation());
+        return quotationOption;
+    }
+   
     
    
 

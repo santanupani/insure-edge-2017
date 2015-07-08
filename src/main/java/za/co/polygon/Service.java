@@ -21,10 +21,13 @@ import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.Answer;
+import za.co.polygon.domain.Quotation;
+import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
+import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserCommandModel;
@@ -32,6 +35,7 @@ import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
+import za.co.polygon.repository.QuotationOptionRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
@@ -62,6 +66,12 @@ public class Service {
 
     @Autowired
     private NotificationService notificationService;
+    
+    @Autowired
+    private Quotation quotationRepository;
+    
+    @Autowired
+    private QuotationOptionRepository quotationOptionRepository;
     
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -149,6 +159,14 @@ public class Service {
         User user = fromUserCommandModel(userCommandModel);
         log.info("request received to create guest : " + user);
         userRepository.save(user);
+    }
+    
+    @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
+        
+        QuotationOption quotationOption = toCreateQuotation(quotationCommandModel);
+        quotationOption = quotationOptionRepository.save(quotationOption);
+        log.info("saved all the quotation values in quotaion optons table" + quotationOption);
     }
     
 }

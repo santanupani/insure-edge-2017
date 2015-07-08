@@ -122,10 +122,10 @@
                                 <element name="peroid" type="string" />
                                 <element name="excess" type="string" />
 				<element name="premium" type="string" />
-                                <element name="questionrequests" minOccurs="0" maxOccurs="unbounded">
+                                <element name="quotations" minOccurs="0" maxOccurs="unbounded">
 					<complexType>
 						<sequence>
-                                                        <element name="productId" type="long" />
+                                                        <element name="productId" type="string" />
 							<element name="createDate" type="string"/>
                                                         <element name="applicantName" type="string"/>
 						</sequence>

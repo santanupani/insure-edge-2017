@@ -50,6 +50,9 @@ public class QuotationRequest {
     
     @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
     private List<Answer> answers;
+    
+    @OneToMany(mappedBy = "quotation", fetch = FetchType.EAGER)
+    private List<QuotationRequest> quotationRequest;
 
     public Long getId() {
         return id;
@@ -125,5 +128,12 @@ public class QuotationRequest {
     public void setAnswers(List<Answer> quotationRequestQuestionnaire) {
         this.answers = quotationRequestQuestionnaire;
     }
- 
+
+    public List<QuotationRequest> getQuotationRequest() {
+        return quotationRequest;
+    }
+
+    public void setQuotationRequest(List<QuotationRequest> quotationRequest) {
+        this.quotationRequest = quotationRequest;
+    }
 }
