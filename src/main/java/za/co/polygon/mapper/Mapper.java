@@ -11,12 +11,14 @@ import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Category;
+import za.co.polygon.domain.MessageBody;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.CategoryQueryModel;
+import za.co.polygon.model.MessageBodyCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationRequestCommandModel;
@@ -102,6 +104,8 @@ public class Mapper {
         }
         return brokerQueryModels;
     }
+    
+    
 
     public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product) {
         QuotationRequest quotationRequest = new QuotationRequest();
@@ -198,5 +202,16 @@ public class Mapper {
         }
         return categoryList;
     }
+    
+    
+    public static MessageBody toMessageBody(MessageBodyCommandModel messageBodyCommandModel, QuotationRequest quotationRequest) {
+        MessageBody messageBody = new MessageBody();
+        
+        messageBody.setReason(messageBodyCommandModel.getReason());
+        messageBody.setQuotationRequest(quotationRequest);
+       
+        return messageBody;
+    }
+
     
 }

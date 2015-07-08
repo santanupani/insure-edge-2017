@@ -14,6 +14,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
     $scope.quotationRequest;
     $scope.toggle = true;
+    $scope.messageBody = {};
 
 
     $scope.init = function () {
@@ -51,14 +52,16 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
 
     $scope.rejectQuotationRequest = function (reference, reason) {
-
+        
+         $scope.messageBody.reason;
+         
         $http({
-            url: '/api/reject-quotation/' + reference+'?reason='+reason,
+            url: '/api/quotation-requests/' + reference,
             method: 'put',
             headers: {
                     'Content-Type': 'application/json',
                 },
-            data: $scope.reason,
+            data: $scope.messageBody,
         }).
             success(function (data, status) {
                     console.log('get success code:' + status);

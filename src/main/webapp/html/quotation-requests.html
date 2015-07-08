@@ -69,12 +69,12 @@
                           <div class="panel-body">
                               <div>
                                 <div class="form-group">
-                                         <textarea class="form-control" type="text" ng-model="reason"></textarea>
+                                         <textarea class="form-control" type="text" ng-model="messageBody.reason"></textarea>
                                       </div>
                                   </div>
                            </div>
                           <div class="panel-footer text-right">
-                                <button type="submit"  class="btn btn-danger" role="button" ng-click="rejectQuotationRequest(quotationRequest.reference, reason);toggle = !toggle">Reject</button>
+                                <button type="submit"  class="btn btn-danger" role="button" ng-click="rejectQuotationRequest(quotationRequest.reference, messageBody.reason);toggle = !toggle">Reject</button>
                                 </div>
                          </div>
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.MessageBody;
 import za.co.polygon.domain.Notification;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.repository.MessageRepository;
@@ -27,10 +28,17 @@ public class NotificationService {
         messageRepository.publish(notification, "q.notification");
     }
 
-    public void sendApplicantRejectMessage(QuotationRequest quotationRequest,String reason) {
+    public void sendApplicantRejectMessage(QuotationRequest quotationRequest,MessageBody messageBody) {
         String to = quotationRequest.getApplicantEmail();
-        String subject = "Reason For Rejection";
-        Notification notification = new Notification(to, subject, reason);
+        String subject = "Quotation Request - Ref : " + quotationRequest.getStatus() + 
+                         " Status - " + quotationRequest.getStatus();
+        String message = String.format("Dear " + quotationRequest.getApplicantName() + "," +"\n\n"
+                +"Your request for quotation Ref : "
+                + quotationRequest.getReference() + "\n\n" + "Has been " 
+                +quotationRequest.getStatus() + " for the following reason(s)" + "\n\n"
+                + 
+                messageBody.getReason());
+        Notification notification = new Notification(to, subject, message);
         messageRepository.publish(notification, "q.notification");
     }
 

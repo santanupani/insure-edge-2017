@@ -21,6 +21,7 @@ import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.Answer;
+import za.co.polygon.domain.MessageBody;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.CategoryQueryModel;
@@ -32,6 +33,7 @@ import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.CategoryRepository;
+import za.co.polygon.repository.MessageBodyRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
@@ -67,6 +69,9 @@ public class Service {
     
     @Autowired
     private CategoryRepository categoryRepository;
+    
+    @Autowired
+    private MessageBodyRepository messageBodyRepository;
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -135,16 +140,23 @@ public class Service {
     }
     
     
-     @RequestMapping(value = "api/reject-quotation/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-      public void rejectQuotation(@PathVariable("reference") String reference,@RequestParam(value="reason")String reason){
+     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+      public void rejectQuotation(@PathVariable("reference") String reference,@RequestBody MessageBody messageBody){
            
           QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-          log.info("Meesage :"+ reason);
+           
+           messageBody.setReason(messageBody.getReason());
+          log.info("Meesage :"+ messageBody.getReason());
           
           quotationRequest.setStatus("Rejected");
+          
+          messageBody.setQuotationRequest(quotationRequest);
+          
           log.info("New status :"+ quotationRequest.getStatus());
-          notificationService.sendApplicantRejectMessage(quotationRequest, reason);
+          notificationService.sendApplicantRejectMessage(quotationRequest, messageBody);
           quotationRequestRepository.save(quotationRequest);
+          messageBodyRepository.save(messageBody);
+          
           
       }
 
