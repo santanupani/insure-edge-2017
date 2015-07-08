@@ -53,7 +53,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.rejectQuotationRequest = function (reference, reason) {
 
         $http({
-            url: '/api/reject-quotation/' + reference + '/' + reason,
+            url: '/api/reject-quotation/' + reference+'?reason='+reason,
             method: 'put',
             headers: {
                     'Content-Type': 'application/json',
