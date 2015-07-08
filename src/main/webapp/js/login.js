@@ -40,6 +40,7 @@ login.controller('loginCtrl', function ($scope, $http, $location) {
             }).success(function (data, status) {
                 if (status == 200) {
                     console.log('user creation invoked successfully');
+                    console.log('Data:' + data);
                     $location.path("/users");
                 } else {
                     console.log('status:' + status);
@@ -52,10 +53,7 @@ login.controller('loginCtrl', function ($scope, $http, $location) {
     };
 });
 
-login.controller('userCtrl', function ($scope, $http) {
 
-
-});
 
 
 

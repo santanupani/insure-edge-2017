@@ -14,7 +14,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
     $scope.quotationRequest;
 
-    //call the service and get all categories(make status false in database)
+   
     $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
     $scope.categories = [];
     $scope.categoryNumber = 0;
@@ -41,9 +41,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     console.log(error);
                 });
     };
-    
-    
-    
+
     $scope.accept = function () {
         $scope.categories.push($scope.categorieslist[0]);
     };
@@ -55,7 +53,40 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     };
     
     $scope.save=function(){
-        console.log($scope.categories);
+        if (form.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+        	console.log("Form Validation Success");
+                
+                $scope.models.location = $scope.category.location;
+                $scope.models.limit = $scope.category.limit;
+                $scope.models.commodity = $scope.category.commodity;
+                $scope.models.cover = $scope.category.cover;
+                $scope.models.period = $scope.category.period;
+                $scope.models.excess = $scope.category.excess;
+                $scope.models.premium = $scope.category.premium;
+                
+                 $scope.models = [];
+                     
+            console.log($scope.models.category);
+            $http({
+                url: '/api/createPolicy',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: $scope.models.category
+            }).success(function (data, status) {
+                if (status == 200) {
+                    console.log('All the premiums are saved in premium table');
+                    console.log("Data:" + data);
+                } else {
+                    console.log('status:' + status);
+                }
+            }).error(function (error) {
+                console.log(error);
+            });
+        }
     };
 
 
