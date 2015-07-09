@@ -59,7 +59,7 @@
                 </div>                                     
             </div>
             <div class="panel-footer text-right">
-                <button class="btn btn-success" ng-click="accept()">Accept</button> 
+                <button class="btn btn-success" ng-click="accept();quotationtoggle = !quotationtoggle">Accept</button> 
                 <button class="btn btn-danger" ng-click="toggle = !toggle">Reject</button>
             </div>
             <div ng-hide="toggle">
@@ -79,9 +79,10 @@
                          </div>
 
             
+            
 
-            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">    
-                <div class="panel-body">
+            <div ng-hide="quotationtoggle" class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <form data-toggle="validator" role="form" name="form" id="form">
                     <div class="panel-heading">
                         <h3 align="left">To:  <font color="darkblue">Reverside Software Solutions</font></h3>
                         <h3 align="left">Dear  </font><font size="3" color="darkblue">{{quotationRequest.applicantName}}</font></h3> 
@@ -91,7 +92,7 @@
                     <div class="panel-body" align="center" ng-repeat="category in categories">
                         <div ng-if="category.status">
                             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-                                <form data-toggle="validator" role="form" name="form" id="form">
+                                
                                     <div class="form-group">
                                         <label class="control-label"><font  color="darkblack">{{category.name}}</font></label>                               
                                     </div>
@@ -124,8 +125,7 @@
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        <button class="btn btn-success" id="save" ng-click="save(form)">Create Policy</button> 
-                    </div>
+                        <button class="btn btn-success" ng-click="save(form);quotationtoggle = !quotationtoggle">Create Quote</button> 
                     </div>
                 </div>
 
