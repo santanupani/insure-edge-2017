@@ -27,14 +27,14 @@ public class NotificationService {
         messageRepository.publish(notification, "q.notification");
     }
 
-    public void sendApplicantRejectMessage(QuotationRequest quotationRequest) {
+    public void sendNotificationForRejectQuotationRequest(QuotationRequest quotationRequest, String reason) {
         String to = quotationRequest.getApplicantEmail();
         String subject = "Quotation Request - Ref : " + quotationRequest.getStatus() + 
                          " Status - " + quotationRequest.getStatus();
         String message = String.format("Dear " + quotationRequest.getApplicantName() + "," +"\n\n"
                 +"Your request for quotation Ref : "
                 + quotationRequest.getReference() + "\n\n" + "Has been " 
-                +quotationRequest.getStatus() + " for the following reason(s)" + "\n\n");
+                +quotationRequest.getStatus() + " for the following reason(s)" + "\n\n" + reason);
         Notification notification = new Notification(to, subject, message);
         messageRepository.publish(notification, "q.notification");
     }
