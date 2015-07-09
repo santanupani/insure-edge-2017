@@ -17,7 +17,6 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.quotationtoggle = true;
     $scope.messageBody = {};
 
-
     $scope.init = function () {
         $scope.getQuotationRequest($routeParams.reference);
 
