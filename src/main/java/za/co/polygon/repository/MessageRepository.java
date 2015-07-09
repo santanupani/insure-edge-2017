@@ -1,6 +1,7 @@
 package za.co.polygon.repository;
 
 import javax.jms.JMSException;
+import javax.jms.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
@@ -17,10 +18,8 @@ public class MessageRepository {
 
    
     public void publish(final Notification notification, String queue){
-
         jmsTemplate.send(queue, new MessageCreator() {
-            @Override
-            public javax.jms.Message createMessage(javax.jms.Session session) throws JMSException {
+            public javax.jms.Message createMessage(Session session) throws JMSException {
                 return session.createObjectMessage(notification);
             }
         });

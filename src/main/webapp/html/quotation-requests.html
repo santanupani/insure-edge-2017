@@ -1,142 +1,161 @@
-<div class="row" style="padding: 25px;" ng-init="init()"> 
+<div class="row" style="padding: 25px;" ng-init="init()">
 
-    <div class="col-md-3">
+	<div class="col-md-3">
 
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Product</h4>
-            </div>
-            <div class="panel-body" align="center" style="height: 300px;">
-                <img class="img-circle" ng-src="{{quotationRequest.product.image}}"  width="140" height="140">
-                <h3>{{quotationRequest.product.name}}</h3>
-                <p>{{quotationRequest.product.description}}</p>
-            </div>
-        </div>
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Product</h4>
+			</div>
+			<div class="panel-body" align="center" style="height: 300px;">
+				<img class="img-circle" ng-src="{{quotationRequest.product.image}}"
+					width="140" height="140">
+				<h3>{{quotationRequest.product.name}}</h3>
+				<p>{{quotationRequest.product.description}}</p>
+			</div>
+		</div>
 
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Quotation Request</h4>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <label class="control-label" for="reference">Reference</label>                               
-                        <input type="text" class="form-control"  id="reference" ng-model="quotationRequest.reference" readonly="readonly"></input>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="companyName">Company</label>                               
-                        <input type="text" class="form-control"  id="companyName"  value="Reverside Software Solutions" readonly="readonly"></input>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="applicant">Applicant</label>                               
-                        <input type="text" class="form-control"  id="applicant" ng-model="quotationRequest.applicantName" readonly="readonly"></input>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="appliedOn">Applied On</label>                               
-                        <input type="text" class="form-control"  id="appliedOn" ng-model="quotationRequest.createDate" readonly="readonly"></input>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="status">Status</label>                               
-                        <input type="text" class="form-control"  id="status"   ng-model="quotationRequest.status" readonly="readonly"></input>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Quotation Request</h4>
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="form-group">
+						<label class="control-label" for="reference">Reference</label> <input
+							type="text" class="form-control" id="reference"
+							ng-model="quotationRequest.reference" readonly="readonly"></input>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="companyName">Company</label> <input
+							type="text" class="form-control" id="companyName"
+							value="Reverside Software Solutions" readonly="readonly"></input>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="applicant">Applicant</label> <input
+							type="text" class="form-control" id="applicant"
+							ng-model="quotationRequest.applicantName" readonly="readonly"></input>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="appliedOn">Applied On</label> <input
+							type="text" class="form-control" id="appliedOn"
+							ng-model="quotationRequest.createDate" readonly="readonly"></input>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="status">Status</label> <input
+							type="text" class="form-control" id="status"
+							ng-model="quotationRequest.status" readonly="readonly"></input>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div  class="col-md-9" >
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Questionnaires</h4>
-            </div>
-            <div class="panel-body">                
-                <div>
-                    <div class="form-group" ng-repeat="questionnaire in quotationRequest.questionnaire">
-                        <label class="control-label" for="q_{{index}}">Q: {{questionnaire.question}}</label>
-                        <textarea class="form-control"  id="q_{{index}}" ng-model="questionnaire.answer" readonly="readonly"></textarea>
-                    </div>
+	<div class="col-md-9">
 
-                </div>                                     
-            </div>
-            <div class="panel-footer text-right">
-                <button class="btn btn-success" ng-click="accept();
-                            quotationtoggle = !quotationtoggle">Accept</button> 
-                <button class="btn btn-danger" ng-click="toggle = !toggle">Reject</button>
-            </div>
-        </div>
-            
-           <div ng-hide="toggle" class="panel panel-default" style="box-shadow: 0 0 30px black;">
-                <div class="panel-heading">
-                    <h4>Please fill in reason for rejection</h4>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <h4>To : <font size="3" color="darkblue">{{quotationRequest.applicantName}}</font>, </h4>
-                        <h4>Email : <font size="3" color="darkblue">{{quotationRequest.applicantEmail}}</font>, </h4>
-                        <h4>Date Applied : <font size="3" color="darkblue">{{quotationRequest.createDate}}</font></h4>
-                        
-                        <div class="form-group">
-                            <textarea placeholder="Please fill in reason for rejection here" class="form-control" type="text" ng-model="messageBody.reason"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer text-right">
-                    <button type="submit"  class="btn btn-danger" role="button" ng-click="rejectQuotationRequest(quotationRequest.reference, messageBody.reason);
+
+		<div ng-if="mode=='reject'" class="panel panel-default"
+			style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Reject Quotation Request</h4>
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="form-group">
+						<textarea placeholder="Please fill in reason for rejection here" rows="9"
+							class="form-control" type="text" ng-model="messageBody.reason"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer text-right">
+				<button type="submit" class="btn btn-danger" role="button"
+					    ng-click="rejectQuotationRequest(quotationRequest.reference, messageBody.reason);
                                             toggle = !toggle">Reject</button>
-                </div>
-            </div>
-                
+                <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
+			</div>
+		</div>
+		
+		<form data-toggle="validator" role="form" name="form" id="form">
+		<div ng-if="mode=='accept'" class="panel panel-default" style="box-shadow: 0 0 30px black;">			
+				<div class="panel-heading">
+					<h4>Create Quotation</h4>
+				</div>
+				<div class="panel-body" >
+					<div ng-if="category.status" ng-repeat="category in categories">
+						<div >
+							<div class="form-group">
+								<label class="control-label"><font color="silver">{{category.name}}</font></label>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Location"
+									ng-model="category.location" required>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Limit"
+									ng-model="category.limit" required>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Commodity"
+									ng-model="category.commodity" required>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Cover"
+									ng-model="category.cover" required>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control"
+									placeholder="Duration/peroid" ng-model="category.period"
+									required>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Excess"
+									ng-model="category.excess" required>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Premium"
+									ng-model="category.premium" required>
+							</div>
+							
+						</div>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-success" ng-click="add()">Add</button>
+						<button class="btn btn-success" ng-click="remove()">Remove</button>
+					</div>
+				</div>
+				
+				<div class="panel-footer text-right">
+				 <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
+					<button type="submit" class="btn btn-success" ng-click="save(form)">Create	Quotation</button>
+				    
+				</div>		
+
+		</div>
+	</form>
+
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading text-right" ng-if="mode==undefined"	>				
+				<span class="text-right">
+					<button class="btn btn-success" ng-click="changeMode('accept')">Accept</button>
+					<button class="btn btn-danger"   ng-click="changeMode('reject')">Reject</button>
+				</span>
+
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="form-group"
+						ng-repeat="questionnaire in quotationRequest.questionnaire">
+						<label class="control-label" for="q_{{index}}">Q:
+							{{questionnaire.question}}</label>
+						<textarea class="form-control" id="q_{{index}}"
+							ng-model="questionnaire.answer" readonly="readonly"></textarea>
+					</div>
+
+				</div>
+			</div>
+		
+		</div>
 
 
 
-
-            <div ng-hide="quotationtoggle" class="panel panel-default" style="box-shadow: 0 0 30px black;">
-                <form data-toggle="validator" role="form" name="form" id="form">
-                    <div class="panel-heading">
-                        <h4>To:  <font color="darkblue">Reverside Software Solutions &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{quotationRequest.createDate}}</font></h4>
-                        <h4>Dear  <font size="3" color="darkblue">{{quotationRequest.applicantName}}</font></h4> 
-                        <h4><font  color="darkred">{{quotationRequest.product.name}}</font></h4>
-                    </div>
-                    <div class="panel-body" align="center" ng-repeat="category in categories">
-                        <div ng-if="category.status">
-                            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-
-                                <div class="form-group">
-                                    <label class="control-label"><font  color="darkblack">{{category.name}}</font></label>                               
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control"  placeholder="Location" ng-model="category.location"  required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control"  placeholder="Limit" ng-model="category.limit"  required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Commodity" ng-model="category.commodity"  required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Cover" ng-model="category.cover"  required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Duration/peroid" ng-model="category.period"  required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Excess" ng-model="category.excess"  required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Premium" ng-model="category.premium"  required>
-                                </div>
-                                <div class="form-group">
-                                    <button  class="btn btn-success" ng-click="add()">Add</button> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer text-center">
-                        <button type="submit" class="btn btn-primary" form="form" ng-click="save(form);quotationtoggle = !quotationtoggle">Create Quote</button> 
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
-    </div>
+	</div>
+</div>
