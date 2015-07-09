@@ -85,7 +85,7 @@
         <complexType>
             <sequence>
                 <element name="reason" type="string" />
-                <element name="status" type="String" />
+                <element name="status" type="string" />
             </sequence>
         </complexType>
     </element>

@@ -25,7 +25,6 @@ import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 
-import za.co.polygon.domain.MessageBody;
 
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
@@ -37,7 +36,7 @@ import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
-import za.co.polygon.repository.MessageBodyRepository;
+
 
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
@@ -81,9 +80,7 @@ public class Service {
     private QuotationOptionRepository quotationOptionRepository;
     
 
-    
-    @Autowired
-    private MessageBodyRepository messageBodyRepository;
+   
 
 
 
@@ -155,21 +152,15 @@ public class Service {
     
     
      @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-      public void rejectQuotation(@PathVariable("reference") String reference,@RequestBody MessageBody messageBody){
+      public void rejectQuotation(@PathVariable("reference") String reference){
            
           QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-           
-           messageBody.setReason(messageBody.getReason());
-          log.info("Meesage :"+ messageBody.getReason());
-          
+       
           quotationRequest.setStatus("Rejected");
           
-          messageBody.setQuotationRequest(quotationRequest);
-          
           log.info("New status :"+ quotationRequest.getStatus());
-          notificationService.sendApplicantRejectMessage(quotationRequest, messageBody);
+          notificationService.sendApplicantRejectMessage(quotationRequest);
           quotationRequestRepository.save(quotationRequest);
-          messageBodyRepository.save(messageBody);
           
           
       }
