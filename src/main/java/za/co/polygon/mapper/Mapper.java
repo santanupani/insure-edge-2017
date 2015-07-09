@@ -8,7 +8,6 @@ import java.util.UUID;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
-import za.co.polygon.domain.MessageBody;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationOption;
@@ -200,14 +199,5 @@ public class Mapper {
         return quotationOption;
     }
     
-    public static MessageBody toMessageBody(MessageBodyCommandModel messageBodyCommandModel, QuotationRequest quotationRequest) {
-        MessageBody messageBody = new MessageBody();
-        
-        messageBody.setReason(messageBodyCommandModel.getReason());
-        messageBody.setQuotationRequest(quotationRequest);
-       
-        return messageBody;
-    }
-
     
 }

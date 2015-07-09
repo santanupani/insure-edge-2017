@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import za.co.polygon.domain.Broker;
-import za.co.polygon.domain.MessageBody;
 import za.co.polygon.domain.Notification;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.repository.MessageRepository;
