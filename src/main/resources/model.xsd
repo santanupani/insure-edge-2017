@@ -85,7 +85,7 @@
         <complexType>
             <sequence>
                 <element name="reason" type="string" />
-                <element name="requestQuotationId" type="long" />
+                <element name="status" type="String" />
             </sequence>
         </complexType>
     </element>
