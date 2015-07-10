@@ -1,7 +1,6 @@
 package za.co.polygon;
 
 import static za.co.polygon.mapper.Mapper.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -13,18 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RestController;
-
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.Answer;
-
+import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
-
-
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.MessageBodyCommandModel;
@@ -36,11 +31,10 @@ import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
-
-
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationOptionRepository;
+import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
@@ -72,16 +66,12 @@ public class Service {
     @Autowired
     private NotificationService notificationService;
     
-
-       
+    @Autowired
+    private QuotationRepository quotationRepository;
+    
     @Autowired
     private QuotationOptionRepository quotationOptionRepository;
     
-
-   
-
-
-
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
         log.info("find user");
@@ -148,12 +138,10 @@ public class Service {
         return toQuotationRequestQueryModel(quotationRequest);
     }
     
-    
      @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
       public void rejectQuotation(@PathVariable("reference") String reference, @RequestBody MessageBodyCommandModel messageBodyCommandModel ){
            
-          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-         // MessageBodyCommandModel messageBodyCommandModel = new MessageBodyCommandModel();
+          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);        
           messageBodyCommandModel.setStatus("Rejected");
           
           quotationRequest.setStatus(messageBodyCommandModel.getStatus());
@@ -175,9 +163,18 @@ public class Service {
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
         
-        QuotationOption quotationOption = toCreateQuotation(quotationCommandModel);
+        Product product = productRepository.findOne(quotationCommandModel.getProductId());
+        
+        
+        Quotation quotation = toCreateQuotation(quotationCommandModel, product);
+        List<QuotationOption> quotationOptions = quotation.getQuotationOptions();
+        quotation = quotationRepository.save(quotation);
+        log.info("quotaion received for a product : " + quotation);
+        
+        for(QuotationOption quotationOption : quotationOptions)
         quotationOption = quotationOptionRepository.save(quotationOption);
-        log.info("saved all the quotation values in quotaion optons table" + quotationOption);
+        
+            
     }
     
 }

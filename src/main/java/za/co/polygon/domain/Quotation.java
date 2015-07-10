@@ -29,7 +29,7 @@ public class Quotation {
     
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "quotation")
-    private List<Quotation> quotation;
+    private List<QuotationOption> quotationOptions;
 
     public Long getId() {
         return id;
@@ -47,13 +47,15 @@ public class Quotation {
         this.quotationRequest = quotationRequest;
     }
 
-    public List<Quotation> getQuotation() {
-        return quotation;
+    public List<QuotationOption> getQuotationOptions() {
+        return quotationOptions;
     }
 
-    public void setQuotation(List<Quotation> quotation) {
-        this.quotation = quotation;
+    public void setQuotationOptions(List<QuotationOption> quotationOptions) {
+        this.quotationOptions = quotationOptions;
     }
+
+    
 
     
     
