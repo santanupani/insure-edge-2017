@@ -5,6 +5,7 @@ package za.co.polygon.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,6 +51,9 @@ public class QuotationRequest {
     
     @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
     private List<Answer> answers;
+    
+    @OneToMany(mappedBy = "quotationRequest")
+    private List<Quotation> quotation;
     
     
 
@@ -128,5 +132,12 @@ public class QuotationRequest {
         this.answers = quotationRequestQuestionnaire;
     }
 
-   
+    public List<Quotation> getQuotation() {
+        return quotation;
+    }
+
+    public void setQuotation(List<Quotation> quotation) {
+        this.quotation = quotation;
+    }
+  
 }

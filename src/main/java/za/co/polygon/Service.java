@@ -160,13 +160,12 @@ public class Service {
         userRepository.save(user);
     }
     
-    @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+@Transactional   
+@RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
         
-        Product product = productRepository.findOne(quotationCommandModel.getProductId());
         
-        
-        Quotation quotation = toCreateQuotation(quotationCommandModel, product);
+        Quotation quotation = toCreateQuotation(quotationCommandModel);
         List<QuotationOption> quotationOptions = quotation.getQuotationOptions();
         quotation = quotationRepository.save(quotation);
         log.info("quotaion received for a product : " + quotation);

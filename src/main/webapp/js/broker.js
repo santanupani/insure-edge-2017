@@ -18,8 +18,8 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
     $scope.categories = [];
     $scope.categoryNumber = 0;
+    $scope.quotation = {};
 
-    $scope.category = {};
     
     $scope.init = function () {
         $scope.getQuotationRequest($routeParams.reference);
@@ -98,35 +98,39 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
             console.log("Form Validation Failure");
         } else {
         	console.log("Form Validation Success");
-                
-               
-                
+                               
+             $scope.quotation.categories=[];   
             for(var i=0; i< $scope.categories.length; i++) {
-            	$scope.categories[i]= {};
-            	$scope.categories[i].location =  $scope.location;
-                console.log($scope.category.location);
+            	$scope.quotation.categories[i]= {};
+            	$scope.quotation.categories[i].location =  $scope.categories[i].location;
+                $scope.quotation.categories[i].limit =  $scope.categories[i].limit;
+                $scope.quotation.categories[i].commodity =  $scope.categories[i].commodity;
+                $scope.quotation.categories[i].cover =  $scope.categories[i].cover;
+                $scope.quotation.categories[i].period =  $scope.categories[i].period;
+                $scope.quotation.categories[i].excess =  $scope.categories[i].excess;
+                $scope.quotation.categories[i].premium =  $scope.categories[i].premium;
+                console.log("All data of the category are populated");
             	
             }  
-                 
-                     
-           
-//            $http({
-//                url: '/api/createPolicy',
-//                method: 'post',
-//                headers: {
-//                    'Content-Type': 'application/json',
-//                },
-//                data: $scope.models.category
-//            }).success(function (data, status) {
-//                if (status == 200) {
-//                    console.log('All the premiums are saved in premium table');
-//                    console.log("Data:" + data);
-//                } else {
-//                    console.log('status:' + status);
-//                }
-//            }).error(function (error) {
-//                console.log(error);
-//            });
+                           
+            $http({
+                url: '/api/quotations',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: $scope.quotation
+            }).success(function (data, status) {
+                 console.log('get success CODE:' + status);
+                if (status == 200) {
+                    console.log('All the data are saved in quotationOptions and quotation table');
+                    console.log("Data:" + data);
+                } else {
+                    console.log('status:' + status);
+                }
+            }).error(function (error) {
+                console.log(error);
+            });
         }
     };
 

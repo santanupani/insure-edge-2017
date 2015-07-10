@@ -125,9 +125,7 @@
         <complexType>
             <sequence>
                 <element name="id" type="long" />
-                <element name="productId" type="long" />
-                <element name="createDate" type="string"/>
-                <element name="applicantName" type="string"/>
+                <element name="quotationRequestId" type="long" />
                 <element name="quotationoptions" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
                         <sequence>

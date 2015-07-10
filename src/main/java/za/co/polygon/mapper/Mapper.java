@@ -185,15 +185,14 @@ public class Mapper {
         
     }
     
-    public static Quotation toCreateQuotation(QuotationCommandModel quotationCommandModel,Product product) {
+   public static Quotation toCreateQuotation(QuotationCommandModel quotationCommandModel) {
         
          
        QuotationRequest quotationRequest =  new QuotationRequest();
-       quotationRequest.setCreateDate(new Date(quotationCommandModel.getCreateDate()));
-       quotationRequest.setApplicantName(quotationCommandModel.getApplicantName());
-       quotationRequest.setProduct(product);
-    
+       quotationRequest.setId(quotationCommandModel.getQuotationRequestId());
+       
        Quotation quotation = new Quotation();
+       quotation.setId(quotationCommandModel.getId());
        quotation.setQuotationRequest(quotationRequest);
        
        List<QuotationOption> quotationOptionsList = new ArrayList<QuotationOption>();
@@ -214,6 +213,7 @@ public class Mapper {
         
         return quotation;
     }
+ 
     
     
 }

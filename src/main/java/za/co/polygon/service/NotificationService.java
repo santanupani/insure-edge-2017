@@ -38,5 +38,7 @@ public class NotificationService {
         Notification notification = new Notification(to, subject, message);
         messageRepository.publish(notification, "q.notification");
     }
+    
+    
 
 }
