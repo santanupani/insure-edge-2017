@@ -13,24 +13,18 @@ broker.config(['$routeProvider', function ($routeProvider) {
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location) {
 
     $scope.quotationRequest;
-    $scope.toggle = true;
-    $scope.quotationtoggle = true;
+    $scope.mode ;
     $scope.messageBody = {};
-
-
-    $scope.init = function () {
-        $scope.getQuotationRequest($routeParams.reference);
-
-    };
-
-   
     $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
     $scope.categories = [];
     $scope.categoryNumber = 0;
+
     $scope.category = {};
     
-     $scope.init = function () {
+    $scope.init = function () {
         $scope.getQuotationRequest($routeParams.reference);
+        $scope.categories.push($scope.categorieslist[0]);
+
     };
 
     $scope.getQuotationRequest = function (reference) {
@@ -79,18 +73,25 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 .error(function (error) {
                     console.log(error);
                 });
-    }
-    
-
-    $scope.accept = function () {
-        $scope.categories.push($scope.categorieslist[0]);
     };
+    
+    $scope.changeMode = function(mode){
+    	$scope.mode = mode;
+    };
+    
 
     $scope.add = function () {
         $scope.categoryNumber++;
         $scope.categorieslist[$scope.categoryNumber].status = true;
         $scope.categories.push($scope.categorieslist[$scope.categoryNumber]);
     };
+    
+    $scope.remove = function(){
+    	if($scope.categories.length>1){
+    		 $scope.categoryNumber--;
+    		$scope.categories.pop();
+    	}    	
+    }
     
     $scope.save=function(form){
         if (form.$invalid) {
