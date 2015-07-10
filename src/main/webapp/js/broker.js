@@ -27,6 +27,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
     $scope.categories = [];
     $scope.categoryNumber = 0;
+    $scope.category = {};
     
      $scope.init = function () {
         $scope.getQuotationRequest($routeParams.reference);
@@ -99,26 +100,32 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 
                
                 
+            for(var i=0; i< $scope.categories.length; i++) {
+            	$scope.categories[i]= {};
+            	$scope.categories[i].location =  $scope.location;
+                console.log($scope.category.location);
+            	
+            }  
                  
                      
-            console.log($scope.models.category);
-            $http({
-                url: '/api/createPolicy',
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                data: $scope.models.category
-            }).success(function (data, status) {
-                if (status == 200) {
-                    console.log('All the premiums are saved in premium table');
-                    console.log("Data:" + data);
-                } else {
-                    console.log('status:' + status);
-                }
-            }).error(function (error) {
-                console.log(error);
-            });
+           
+//            $http({
+//                url: '/api/createPolicy',
+//                method: 'post',
+//                headers: {
+//                    'Content-Type': 'application/json',
+//                },
+//                data: $scope.models.category
+//            }).success(function (data, status) {
+//                if (status == 200) {
+//                    console.log('All the premiums are saved in premium table');
+//                    console.log("Data:" + data);
+//                } else {
+//                    console.log('status:' + status);
+//                }
+//            }).error(function (error) {
+//                console.log(error);
+//            });
         }
     };
 
