@@ -52,7 +52,6 @@
 
 	<div class="col-md-9">
 
-
 		<div ng-if="mode=='reject'" class="panel panel-default"
 			style="box-shadow: 0 0 30px black;">
 			<div class="panel-heading">
@@ -62,14 +61,12 @@
 				<div>
 					<div class="form-group">
 						<textarea placeholder="Please fill in reason for rejection here" rows="9"
-							class="form-control" type="text" ng-model="messageBody.reason"></textarea>
+							class="form-control" type="text" ng-model="reject.reason"></textarea>
 					</div>
 				</div>
 			</div>
 			<div class="panel-footer text-right">
-				<button type="submit" class="btn btn-danger" role="button"
-					    ng-click="rejectQuotationRequest(quotationRequest.reference, messageBody.reason);
-                                            toggle = !toggle">Reject</button>
+				<button type="submit" class="btn btn-danger" ng-click="rejectQuotationRequest()">Reject</button>
                 <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
 			</div>
 		</div>
