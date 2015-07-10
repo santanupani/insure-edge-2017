@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "quotation_questionnaires")
+@Table(name = "answers")
 public class Answer {
     
     @Id   
@@ -20,7 +20,7 @@ public class Answer {
     private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "quotation_requests_id")
+    @JoinColumn(name = "quotation_request_id")
     QuotationRequest quotationRequest;
     
     @Column(name = "question")
