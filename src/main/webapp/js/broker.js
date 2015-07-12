@@ -12,25 +12,33 @@ broker.config(['$routeProvider', function ($routeProvider) {
 
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location) {
 
+    $scope.message ;
     $scope.quotationRequest;
     $scope.mode ;
-    $scope.reject = {};
-    $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
-    $scope.categories = [];
-    $scope.categoryNumber = 0;
-    $scope.quotation = {};
+    $scope.reject ;
+    $scope.categorieslist ;
+    $scope.categories ;
+    $scope.categoryNumber ;
+    $scope.quotation ;
 
     
     $scope.init = function () {
         $scope.getQuotationRequest($routeParams.reference);
         $scope.categories.push($scope.categorieslist[0]);
+        $scope.mode = undefined;
+        $scope.message = undefined;
+        $scope.reject = {};
+        $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
+        $scope.categories = [];
+        $scope.categoryNumber = 0;
+        $scope.quotation = {};
 
     };
 
     $scope.getQuotationRequest = function (reference) {
         $http({
             url: '/api/quotation-requests/' + reference,
-            method: 'get',
+            method: 'get'
         }).
                 success(function (data, status) {
                     console.log('get success code::' + status);
@@ -52,17 +60,16 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
             url: '/api/quotation-requests/' + $routeParams.reference,
             method: 'put',
             headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-            data: $scope.reject,
+            data: $scope.reject
         }). success(function (data, status) {
                     console.log('get success code:' + status);
                     if (status == 200) {
-                        $scope.reason = reason;
-                        console.log(data);
-                        console.log('Rejection Reason:' + reason);
-                        $scope.getQuotationRequest($routeParams.reference);
-                        $location.path("/quotation-requests/"+ reference);
+                        console.log('Quotation Rejected. Reason:' + $scope.reject.reason);
+                        //$location.path("/quotation-requests/"+ reference);
+                        $scope.init();
+                        $scope.message = "Quotation Request Rejected Successfully";
                     } else {
                         console.log('status:' + status);
                     }
@@ -114,7 +121,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 url: '/api/quotations',
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 data: $scope.quotation
             }).success(function (data, status) {

@@ -153,15 +153,9 @@ public class Service {
           
       }
 
-    @RequestMapping(value = "api/createuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-    public void fromcreateUser(@RequestBody UserCommandModel userCommandModel) {
-        User user = fromUserCommandModel(userCommandModel);
-        log.info("request received to create guest : " + user);
-        userRepository.save(user);
-    }
     
-@Transactional   
-@RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+    @Transactional
+    @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
         
         QuotationRequest quotationRequest = quotationRequestRepository.findOne(quotationCommandModel.getQuotationRequestId());
@@ -171,8 +165,9 @@ public class Service {
         quotation = quotationRepository.save(quotation);
         log.info("quotaion received for a product : " + quotation);
         
-        for(QuotationOption quotationOption : quotationOptions)
-        quotationOption = quotationOptionRepository.save(quotationOption);
+        for(QuotationOption quotationOption : quotationOptions) {
+            quotationOptionRepository.save(quotationOption);
+        }
         
             
     }
