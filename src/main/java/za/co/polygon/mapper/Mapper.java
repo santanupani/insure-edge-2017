@@ -18,7 +18,7 @@ import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
-import za.co.polygon.model.QuotationCommandModel.Quotationoptions;
+import za.co.polygon.model.QuotationCommandModel.Options;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
@@ -185,22 +185,22 @@ public class Mapper {
         
     }
     
-   public static Quotation toCreateQuotation(QuotationCommandModel quotationCommandModel,QuotationRequest quotationRequest) {
+  
+  public static Quotation toCreateQuotation(QuotationCommandModel quotationCommandModel,QuotationRequest quotationRequest) {
  
        Quotation quotation = new Quotation();
-       quotation.setId(quotationCommandModel.getId());
        quotation.setQuotationRequest(quotationRequest);
        
        List<QuotationOption> quotationOptionsList = new ArrayList<QuotationOption>();
-    	 for (Quotationoptions quotationoptions : quotationCommandModel.getQuotationoptions()) {
+    	 for (Options options : quotationCommandModel.getOptions()) {
             QuotationOption quotationOption = new QuotationOption();
-            quotationOption.setCommodity(quotationoptions.getCommodity());
-            quotationOption.setCover(quotationoptions.getCover());
-            quotationOption.setExcess(quotationoptions.getExcess());
-            quotationOption.setLimit(quotationoptions.getLimit());
-            quotationOption.setLocation(quotationoptions.getLocation());
-            quotationOption.setPeroid(quotationoptions.getPeroid());
-            quotationOption.setPremium(quotationoptions.getPremium());
+            quotationOption.setCommodity(options.getCommodity());
+            quotationOption.setCover(options.getCover());
+            quotationOption.setExcess(options.getExcess());
+            quotationOption.setLimit(options.getLimit());
+            quotationOption.setLocation(options.getLocation());
+            quotationOption.setPeroid(options.getPeroid());
+            quotationOption.setPremium(options.getPremium());
             quotationOption.setQuotation(quotation);
             quotationOptionsList.add(quotationOption);
 
@@ -209,7 +209,6 @@ public class Mapper {
         
         return quotation;
     }
- 
     
     
 }

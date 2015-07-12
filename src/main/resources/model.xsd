@@ -124,9 +124,8 @@
     <element name="QuotationCommandModel">
         <complexType>
             <sequence>
-                <element name="id" type="long" />
                 <element name="quotationRequestId" type="long" />
-                <element name="quotationoptions" minOccurs="0" maxOccurs="unbounded">
+                <element name="options" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
                         <sequence>
                             <element name="location" type="string" />

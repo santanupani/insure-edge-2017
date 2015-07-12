@@ -153,7 +153,6 @@ public class Service {
           
       }
 
-    
     @Transactional
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
@@ -168,8 +167,8 @@ public class Service {
         for(QuotationOption quotationOption : quotationOptions) {
             quotationOptionRepository.save(quotationOption);
         }
-        
-            
+               
     }
+    
     
 }
