@@ -32,11 +32,13 @@ public class NotificationService {
         String subject = "Quotation Request Rejected";
         String message = String.format(
                  "Dear %s ," +"\n"
+                + "\n"
                 +"Your request for quotation Ref : %s has been rejected for the following reason(s)" + "\n"
+                + "\n"
                 +"Reason(s):" + "\n"
                 + "%s" + "\n"
                 + "\n"
-                + "Thanks"
+                + "Thanks" + "\n"
                 + "Polygon Team",
                 quotationRequest.getApplicantName(),
                 quotationRequest.getReference(),
