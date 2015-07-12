@@ -64,7 +64,6 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     console.log('get success code:' + status);
                     if (status == 200) {
                         console.log('Quotation Rejected. Reason:' + $scope.reject.reason);
-                        //$location.path("/quotation-requests/"+ reference);
                         $scope.init();
                         $scope.message = "Quotation Request Rejected Successfully";
                     } else {
