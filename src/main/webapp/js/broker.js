@@ -10,7 +10,7 @@ broker.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
-broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location) {
+broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location, $rootScope) {
     
     $scope.reference ;
     $scope.quotationRequest;
@@ -49,7 +49,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.rejectQuotationRequest = function () {
     	$scope.reject.status = "REJECTED";
         $http({
-            url: '/api/quotation-requests/' + $scope.reference,
+            url: '/api/quotation-requests/' + $scope.reference + "/reject",
             method: 'put',
             headers: {
                     'Content-Type': 'application/json'

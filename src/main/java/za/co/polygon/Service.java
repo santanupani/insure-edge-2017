@@ -3,6 +3,8 @@ package za.co.polygon;
 import static za.co.polygon.mapper.Mapper.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +22,12 @@ import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
-import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
-import za.co.polygon.model.MessageBodyCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
-import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.ProductRepository;
@@ -137,16 +136,16 @@ public class Service {
         log.info("find all the questions and answers inserted for a product using the reference");
         return toQuotationRequestQueryModel(quotationRequest);
     }
-    
-     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-      public void rejectQuotation(@PathVariable("reference") String reference, @RequestBody MessageBodyCommandModel messageBodyCommandModel ){
-          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);        
-          messageBodyCommandModel.setStatus("Rejected");
-          quotationRequest.setStatus(messageBodyCommandModel.getStatus());
-          log.info("New status :"+ quotationRequest.getStatus());
-          notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, messageBodyCommandModel.getReason());
-          quotationRequestRepository.save(quotationRequest);
-      }
+
+    @Transactional
+    @RequestMapping(value = "api/quotation-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+    public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason){
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+        quotationRequest.setStatus("REJECTED");
+        notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, reason.get("reason"));
+        quotationRequestRepository.save(quotationRequest);
+        log.info("New status :"+ quotationRequest.getStatus());
+    }
 
     @Transactional
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

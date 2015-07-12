@@ -80,15 +80,6 @@
             </sequence>
         </complexType>
     </element>
-        
-    <element name="MessageBodyCommandModel">
-        <complexType>
-            <sequence>
-                <element name="reason" type="string" />
-                <element name="status" type="string" />
-            </sequence>
-        </complexType>
-    </element>
 
     <element name="QuotationRequestQueryModel">
         <complexType>
