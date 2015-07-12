@@ -13,26 +13,23 @@ broker.config(['$routeProvider', function ($routeProvider) {
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location) {
 
     $scope.message ;
+    $scope.reference ;
     $scope.quotationRequest;
-    $scope.mode ;
-    $scope.reject ;
-    $scope.categorieslist ;
-    $scope.categories ;
-    $scope.categoryNumber ;
     $scope.quotation ;
+    $scope.mode ;
+    $scope.reject;
+ 
 
     
     $scope.init = function () {
-        $scope.getQuotationRequest($routeParams.reference);
-        $scope.categories.push($scope.categorieslist[0]);
+        $scope.reference = $routeParams.reference;     
         $scope.mode = undefined;
         $scope.message = undefined;
         $scope.reject = {};
-        $scope.categorieslist = [{"name": 'Category I', "status": true}, {"name": 'Category II', "status": false}, {"name": 'Category III', "status": false}];
-        $scope.categories = [];
-        $scope.categoryNumber = 0;
-        $scope.quotation = {};
-
+        $scope.quotation = {
+            "options" :[{"name": "Category I"}]
+        };
+        $scope.getQuotationRequest($scope.reference);
     };
 
     $scope.getQuotationRequest = function (reference) {
@@ -57,7 +54,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.rejectQuotationRequest = function () {
     	$scope.reject.status = "REJECTED";
         $http({
-            url: '/api/quotation-requests/' + $routeParams.reference,
+            url: '/api/quotation-requests/' + $scope.reference,
             method: 'put',
             headers: {
                     'Content-Type': 'application/json'
@@ -85,9 +82,9 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     
 
     $scope.add = function () {
-        $scope.categoryNumber++;
-        $scope.categorieslist[$scope.categoryNumber].status = true;
-        $scope.categories.push($scope.categorieslist[$scope.categoryNumber]);
+       // $scope.categoryNumber++;
+       // $scope.categorieslist[$scope.categoryNumber].status = true;
+       // $scope.categories.push($scope.categorieslist[$scope.categoryNumber]);
     };
     
     $scope.remove = function(){
@@ -101,21 +98,9 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
-        	console.log("Form Validation Success");
-                               
-             $scope.quotation.categories=[];   
-            for(var i=0; i< $scope.categories.length; i++) {
-            	$scope.quotation.categories[i]= {};
-            	$scope.quotation.categories[i].location =  $scope.categories[i].location;
-                $scope.quotation.categories[i].limit =  $scope.categories[i].limit;
-                $scope.quotation.categories[i].commodity =  $scope.categories[i].commodity;
-                $scope.quotation.categories[i].cover =  $scope.categories[i].cover;
-                $scope.quotation.categories[i].period =  $scope.categories[i].period;
-                $scope.quotation.categories[i].excess =  $scope.categories[i].excess;
-                $scope.quotation.categories[i].premium =  $scope.categories[i].premium;
-                console.log("All data of the category are populated");
-            	
-            }  
+            $scope.quotation.reference = $scope.reference;
+            console.log($scope.quotationRequest);
+            console.log($scope.quotation);
                            
             $http({
                 url: '/api/quotations',
@@ -134,7 +119,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 }
             }).error(function (error) {
                 console.log(error);
-            });
+            }); 
         }
     };
 

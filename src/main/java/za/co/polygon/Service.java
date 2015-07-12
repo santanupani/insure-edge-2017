@@ -149,15 +149,14 @@ public class Service {
           log.info("New status :"+ quotationRequest.getStatus());
           notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, messageBodyCommandModel.getReason());
           quotationRequestRepository.save(quotationRequest);
-          
-          
       }
 
     @Transactional
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
         
-        QuotationRequest quotationRequest = quotationRequestRepository.findOne(quotationCommandModel.getQuotationRequestId());
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getQuotationReference());
+        
         
         Quotation quotation = toCreateQuotation(quotationCommandModel, quotationRequest);
         List<QuotationOption> quotationOptions = quotation.getQuotationOptions();
@@ -168,7 +167,7 @@ public class Service {
             quotationOptionRepository.save(quotationOption);
         }
                
-    }
+    }   
     
     
 }
