@@ -22,7 +22,6 @@ import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
-import za.co.polygon.model.MessageBodyCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
@@ -139,18 +138,12 @@ public class Service {
     }
     
      @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-      public void rejectQuotation(@PathVariable("reference") String reference, @RequestBody MessageBodyCommandModel messageBodyCommandModel ){
-           
-          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);        
-          messageBodyCommandModel.setStatus("Rejected");
-          
-          quotationRequest.setStatus(messageBodyCommandModel.getStatus());
-          
+      public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody QuotationRequestCommandModel  quotationRequestCommandModel){
+          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+          quotationRequest.setStatus("REJECTED");
           log.info("New status :"+ quotationRequest.getStatus());
-          notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, messageBodyCommandModel.getReason());
+          notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, quotationRequestCommandModel.getReason());
           quotationRequestRepository.save(quotationRequest);
-          
-          
       }
 
     

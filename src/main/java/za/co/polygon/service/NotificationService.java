@@ -29,12 +29,18 @@ public class NotificationService {
 
     public void sendNotificationForRejectQuotationRequest(QuotationRequest quotationRequest, String reason) {
         String to = quotationRequest.getApplicantEmail();
-        String subject = "Quotation Request - Ref : " + quotationRequest.getStatus() + 
-                         " Status - " + quotationRequest.getStatus();
-        String message = String.format("Dear " + quotationRequest.getApplicantName() + "," +"\n\n"
-                +"Your request for quotation Ref : "
-                + quotationRequest.getReference() + "\n\n" + "Has been " 
-                +quotationRequest.getStatus() + " for the following reason(s)" + "\n\n" + reason);
+        String subject = "Quotation Request Rejected";
+        String message = String.format(
+                 "Dear %s ," +"\n"
+                +"Your request for quotation Ref : %s has been rejected for the following reason(s)" + "\n"
+                +"Reason(s):" + "\n"
+                + "%s" + "\n"
+                + "\n"
+                + "Thanks"
+                + "Polygon Team",
+                quotationRequest.getApplicantName(),
+                quotationRequest.getReference(),
+                reason);
         Notification notification = new Notification(to, subject, message);
         messageRepository.publish(notification, "q.notification");
     }
