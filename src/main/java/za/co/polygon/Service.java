@@ -3,6 +3,8 @@ package za.co.polygon;
 import static za.co.polygon.mapper.Mapper.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,15 +138,16 @@ public class Service {
         log.info("find all the questions and answers inserted for a product using the reference");
         return toQuotationRequestQueryModel(quotationRequest);
     }
-    
-     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-      public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody QuotationRequestCommandModel  quotationRequestCommandModel){
-          QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-          quotationRequest.setStatus("REJECTED");
-          log.info("New status :"+ quotationRequest.getStatus());
-          notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, quotationRequestCommandModel.getReason());
-          quotationRequestRepository.save(quotationRequest);
-      }
+
+    @Transactional
+    @RequestMapping(value = "api/quotation-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
+    public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason){
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+        quotationRequest.setStatus("REJECTED");
+        notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, reason.get("reason"));
+        quotationRequestRepository.save(quotationRequest);
+        log.info("New status :"+ quotationRequest.getStatus());
+    }
 
     
     @Transactional

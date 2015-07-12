@@ -77,8 +77,6 @@
                         </sequence>
                     </complexType>
                 </element>
-                <element name="reason" type="string" />
-                <element name="status" type="string" />
             </sequence>
         </complexType>
     </element>
