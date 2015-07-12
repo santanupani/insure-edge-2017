@@ -51,7 +51,12 @@ public class MailRepository {
 	        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(notification.getTo()));
 	        message.setSubject(notification.getSubject());
 	        message.setText(notification.getMessage());
+                if(notification.getAttachment() != null){
+                    
+                }
 	        Transport.send(message);
 	    }
+            
+    
 
 }

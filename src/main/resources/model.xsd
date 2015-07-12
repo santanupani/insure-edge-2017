@@ -124,7 +124,7 @@
     <element name="QuotationCommandModel">
         <complexType>
             <sequence>
-                <element name="quotationReference" type="string" />
+                <element name="reference" type="string" />
                 <element name="options" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
                         <sequence>
@@ -132,7 +132,7 @@
                             <element name="commodity" type="string" />
                             <element name="limit" type="string" />
                             <element name="cover" type="string" />
-                            <element name="peroid" type="string" />
+                            <element name="duration" type="string" />
                             <element name="excess" type="string" />
                             <element name="premium" type="string" />
                         </sequence>

@@ -140,12 +140,9 @@ public class Service {
     
      @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
       public void rejectQuotation(@PathVariable("reference") String reference, @RequestBody MessageBodyCommandModel messageBodyCommandModel ){
-           
           QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);        
           messageBodyCommandModel.setStatus("Rejected");
-          
           quotationRequest.setStatus(messageBodyCommandModel.getStatus());
-          
           log.info("New status :"+ quotationRequest.getStatus());
           notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, messageBodyCommandModel.getReason());
           quotationRequestRepository.save(quotationRequest);
@@ -154,20 +151,13 @@ public class Service {
     @Transactional
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
+        quotationRequest.setStatus("ACCEPTED");
         
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getQuotationReference());
-        
-        
-        Quotation quotation = toCreateQuotation(quotationCommandModel, quotationRequest);
-        List<QuotationOption> quotationOptions = quotation.getQuotationOptions();
+        Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
         quotation = quotationRepository.save(quotation);
-        log.info("quotaion received for a product : " + quotation);
         
-        for(QuotationOption quotationOption : quotationOptions) {
-            quotationOptionRepository.save(quotationOption);
-        }
-               
+        List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel,quotation);
+        quotationOptionRepository.save(quotationOptions);
     }   
-    
-    
 }

@@ -11,30 +11,25 @@ broker.config(['$routeProvider', function ($routeProvider) {
     }]);
 
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location) {
-
-    $scope.message ;
+    
     $scope.reference ;
     $scope.quotationRequest;
     $scope.quotation ;
     $scope.mode ;
     $scope.reject;
- 
-
     
     $scope.init = function () {
         $scope.reference = $routeParams.reference;     
-        $scope.mode = undefined;
-        $scope.message = undefined;
         $scope.reject = {};
         $scope.quotation = {
-            "options" :[{"name": "Category I"}]
+            "options" :[{"name": "Category 1"}]
         };
         $scope.getQuotationRequest($scope.reference);
     };
-
-    $scope.getQuotationRequest = function (reference) {
+    
+    $scope.getQuotationRequest = function () {
         $http({
-            url: '/api/quotation-requests/' + reference,
+            url: '/api/quotation-requests/' + $scope.reference,
             method: 'get'
         }).
                 success(function (data, status) {
@@ -64,9 +59,9 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     console.log('get success code:' + status);
                     if (status == 200) {
                         console.log('Quotation Rejected. Reason:' + $scope.reject.reason);
-                        //$location.path("/quotation-requests/"+ reference);
                         $scope.init();
-                        $scope.message = "Quotation Request Rejected Successfully";
+                        $rootScope.message = "Quotation Request Rejected Successfully";
+                        $scope.mode = undefined;
                     } else {
                         console.log('status:' + status);
                     }
@@ -78,21 +73,21 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     
     $scope.changeMode = function(mode){
     	$scope.mode = mode;
-    };
-    
+    }; 
 
     $scope.add = function () {
-       // $scope.categoryNumber++;
-       // $scope.categorieslist[$scope.categoryNumber].status = true;
-       // $scope.categories.push($scope.categorieslist[$scope.categoryNumber]);
+        var option = {};
+        var optionName = "Category " + ($scope.quotation.options.length + 1);
+        option.name = optionName;
+        $scope.quotation.options.push(option);
+      
     };
     
     $scope.remove = function(){
-    	if($scope.categories.length>1){
-    		 $scope.categoryNumber--;
-    		$scope.categories.pop();
-    	}    	
-    }
+    	if($scope.quotation.options.length>1)
+    		$scope.quotation.options.pop();
+    		
+    };
     
     $scope.save=function(form){
         if (form.$invalid) {
@@ -100,8 +95,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
         } else {
             $scope.quotation.reference = $scope.reference;
             console.log($scope.quotationRequest);
-            console.log($scope.quotation);
-                           
+            console.log($scope.quotation);                           
             $http({
                 url: '/api/quotations',
                 method: 'post',
@@ -111,9 +105,11 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 data: $scope.quotation
             }).success(function (data, status) {
                  console.log('get success CODE:' + status);
-                if (status == 200) {
+                if (status === 200) {
                     console.log('All the data are saved in quotationOptions and quotation table');
-                    console.log("Data:" + data);
+                    $scope.init();
+                    $rootScope.message = "Quotation Request Accepted Successfully";
+                    $scope.mode = undefined;
                 } else {
                     console.log('status:' + status);
                 }

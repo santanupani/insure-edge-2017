@@ -35,7 +35,7 @@ public class QuotationOption {
     @Column(name = "cover")
     private String cover;
     
-    @Column(name = "peroid")
+    @Column(name = "periods")
     private String peroid;
     
     @Column(name = "excess")
@@ -99,7 +99,7 @@ public class QuotationOption {
     public void setPeroid(String peroid) {
         this.peroid = peroid;
     }
-
+   
     public String getExcess() {
         return excess;
     }

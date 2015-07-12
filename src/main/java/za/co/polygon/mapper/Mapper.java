@@ -186,29 +186,33 @@ public class Mapper {
     }
     
   
-  public static Quotation toCreateQuotation(QuotationCommandModel quotationCommandModel,QuotationRequest quotationRequest) {
+  public static Quotation fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel,QuotationRequest quotationRequest) {
  
        Quotation quotation = new Quotation();
        quotation.setQuotationRequest(quotationRequest);
-       
-       List<QuotationOption> quotationOptionsList = new ArrayList<QuotationOption>();
-    	 for (Options options : quotationCommandModel.getOptions()) {
+       return quotation;
+    }
+  
+  public static List<QuotationOption> fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel,Quotation quotation) {
+    	List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();
+    	for (Options options : quotationCommandModel.getOptions()) {
             QuotationOption quotationOption = new QuotationOption();
             quotationOption.setCommodity(options.getCommodity());
             quotationOption.setCover(options.getCover());
             quotationOption.setExcess(options.getExcess());
             quotationOption.setLimit(options.getLimit());
             quotationOption.setLocation(options.getLocation());
-            quotationOption.setPeroid(options.getPeroid());
+            
+            quotationOption.setPeroid(options.getDuration());
+            System.out.println("The period Value from xsd" + options.getDuration());
+            
             quotationOption.setPremium(options.getPremium());
+            System.out.println("The period Value of quotation option" + quotationOption.getPeroid());
             quotationOption.setQuotation(quotation);
-            quotationOptionsList.add(quotationOption);
+            quotationOptionList.add(quotationOption);
 
-        }
-       quotation.setQuotationOptions(quotationOptionsList);
-        
-        return quotation;
+        }       
+        return quotationOptionList;
     }
-    
-    
+       
 }

@@ -9,11 +9,19 @@ public class Notification implements Serializable {
 	private String to;
     private String subject;
     private String message;
+    private byte[] attachment;
     
     public Notification(String to, String subject, String message){
     	this.to = to;
     	this.subject = subject;
     	this.message = message;
+    }
+    
+    public Notification(String to, String subject, String message, byte[] attachment){
+    	this.to = to;
+    	this.subject = subject;
+    	this.message = message;
+        this.attachment = attachment;
     }
     
 	public String getTo() {
@@ -34,6 +42,14 @@ public class Notification implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+    public byte[] getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(byte[] attachment) {
+        this.attachment = attachment;
+    }
 
     
 }
