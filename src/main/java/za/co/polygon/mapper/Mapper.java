@@ -185,12 +185,8 @@ public class Mapper {
         
     }
     
-   public static Quotation toCreateQuotation(QuotationCommandModel quotationCommandModel) {
-        
-         
-       QuotationRequest quotationRequest =  new QuotationRequest();
-       quotationRequest.setId(quotationCommandModel.getQuotationRequestId());
-       
+   public static Quotation toCreateQuotation(QuotationCommandModel quotationCommandModel,QuotationRequest quotationRequest) {
+ 
        Quotation quotation = new Quotation();
        quotation.setId(quotationCommandModel.getId());
        quotation.setQuotationRequest(quotationRequest);

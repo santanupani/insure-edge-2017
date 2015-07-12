@@ -164,8 +164,9 @@ public class Service {
 @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
         
+        QuotationRequest quotationRequest = quotationRequestRepository.findOne(quotationCommandModel.getQuotationRequestId());
         
-        Quotation quotation = toCreateQuotation(quotationCommandModel);
+        Quotation quotation = toCreateQuotation(quotationCommandModel, quotationRequest);
         List<QuotationOption> quotationOptions = quotation.getQuotationOptions();
         quotation = quotationRepository.save(quotation);
         log.info("quotaion received for a product : " + quotation);
