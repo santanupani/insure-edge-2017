@@ -58,7 +58,7 @@
     </div>
 
     <div class="col-md-9">
-
+       <form data-toggle="validator" role="form" name="rejectform" id="rejectform">
         <div ng-if="mode == 'reject'" class="panel panel-default"
              style="box-shadow: 0 0 30px black;">
             <div class="panel-heading">
@@ -68,15 +68,16 @@
                 <div>
                     <div class="form-group">
                         <textarea placeholder="Please fill in reason for rejection here" rows="9"
-                                  class="form-control" type="text" ng-model="reject.reason"></textarea>
+                                  class="form-control" type="text" ng-model="reject.reason" required></textarea>
                     </div>
                 </div>
             </div>
             <div class="panel-footer text-right">
-                <button type="submit" class="btn btn-danger" ng-click="rejectQuotationRequest()">Reject</button>
+                <button type="submit" class="btn btn-danger" ng-click="rejectQuotationRequest(rejectform)">Reject</button>
                 <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
             </div>
         </div>
+       </form>
 
         <form data-toggle="validator" role="form" name="form" id="form">
             <div ng-if="mode == 'accept'" class="panel panel-default" style="box-shadow: 0 0 30px black;">			

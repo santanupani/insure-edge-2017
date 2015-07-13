@@ -132,5 +132,27 @@
             </sequence>
         </complexType>
     </element>
+    
+    <element name="QuotationQueryModel">
+        <complexType>
+            <sequence>
+                <element name="quotationId" type="long" />
+                <element name="options" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <sequence>
+                            <element name="location" type="string" />
+                            <element name="commodity" type="string" />
+                            <element name="limit" type="string" />
+                            <element name="cover" type="string" />
+                            <element name="duration" type="string" />
+                            <element name="excess" type="string" />
+                            <element name="premium" type="string" />
+                        </sequence>
+                    </complexType>
+                </element>
+                                
+            </sequence>
+        </complexType>
+    </element>
         
 </schema>
