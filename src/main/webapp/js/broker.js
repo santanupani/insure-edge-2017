@@ -73,6 +73,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     }
                 })
                 .error(function (error) {
+                    $rootScope.message = "";
                     console.log(error);
                 });
             }
@@ -97,6 +98,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     };
     
     $scope.save=function(form){
+        
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {

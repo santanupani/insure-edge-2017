@@ -31,6 +31,9 @@ public class QuotationRequest {
     @Column(name = "applicant_name")
     private String applicantName;
     
+    @Column(name = "company_name")
+    private String companyName;
+    
     @Column(name = "applicant_email")
     private String applicantEmail;
     
@@ -80,6 +83,15 @@ public class QuotationRequest {
         this.applicantName = applicantName;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+    
+    
     public String getApplicantEmail() {
         return applicantEmail;
     }

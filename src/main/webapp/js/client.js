@@ -162,6 +162,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                 }
             }).error(function (error) {
                 console.log(error);
+                $rootScope.message = error;
             });
         }
 

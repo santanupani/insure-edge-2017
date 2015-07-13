@@ -102,13 +102,12 @@ public class Mapper {
         }
         return brokerQueryModels;
     }
-    
-    
 
     public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product) {
         QuotationRequest quotationRequest = new QuotationRequest();
         quotationRequest.setApplicantName(quotationRequestCommandModel.getApplicantName());
         quotationRequest.setApplicantEmail(quotationRequestCommandModel.getApplicantEmail());
+        quotationRequest.setCompanyName(quotationRequestCommandModel.getCompanyName());
         quotationRequest.setReference(UUID.randomUUID().toString());
         quotationRequest.setStatus("APPLIED");
         quotationRequest.setCreateDate(new Date());
@@ -139,6 +138,7 @@ public class Mapper {
         result.setCreateDate(new SimpleDateFormat("dd/MM/YYYY").format(quotationRequest.getCreateDate()));
         result.setApplicantName(quotationRequest.getApplicantName());
         result.setApplicantEmail(quotationRequest.getApplicantEmail());
+        result.setCompanyName(quotationRequest.getCompanyName());
 
         BrokerQueryModel broker = new BrokerQueryModel();
         broker.setId(quotationRequest.getBroker().getId());
@@ -153,66 +153,65 @@ public class Mapper {
         product.setName(quotationRequest.getProduct().getName());
         product.setImage(quotationRequest.getProduct().getImage());
         result.setProduct(product);
-        
-        for(Answer answer : quotationRequest.getAnswers()){
-        	QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
-        	q.setQuestion(answer.getQuestion());
-        	q.setAnswer(answer.getAnswer());
-        	result.getQuestionnaire().add(q);
+
+        for (Answer answer : quotationRequest.getAnswers()) {
+            QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
+            q.setQuestion(answer.getQuestion());
+            q.setAnswer(answer.getAnswer());
+            result.getQuestionnaire().add(q);
         }
         return result;
     }
-    
-    public static List<Answer> fromQuotationRequestCommandModel(QuotationRequestCommandModel quotationRequestQueryModel, QuotationRequest quotationRequest){
-    	List<Answer> result = new ArrayList<Answer>();
-    	for(QuotationRequestCommandModel.Questionnaires questionnaire : quotationRequestQueryModel.getQuestionnaires()){
-    		Answer answer = new Answer();
-    		answer.setQuestion(questionnaire.getQuestion());
-    		answer.setAnswer(questionnaire.getAnswer());
-    		answer.setQuotationRequest(quotationRequest);
-    		result.add(answer);    		
-    	}
-    	return result;
+
+    public static List<Answer> fromQuotationRequestCommandModel(QuotationRequestCommandModel quotationRequestQueryModel, QuotationRequest quotationRequest) {
+        List<Answer> result = new ArrayList<Answer>();
+        for (QuotationRequestCommandModel.Questionnaires questionnaire : quotationRequestQueryModel.getQuestionnaires()) {
+            Answer answer = new Answer();
+            answer.setQuestion(questionnaire.getQuestion());
+            answer.setAnswer(questionnaire.getAnswer());
+            answer.setQuotationRequest(quotationRequest);
+            result.add(answer);
+        }
+        return result;
     }
-    
-    public static User fromUserCommandModel(UserCommandModel userCommandModel) {       
-        User user = new User();      
+
+    public static User fromUserCommandModel(UserCommandModel userCommandModel) {
+        User user = new User();
         user.setUserName(userCommandModel.getUserName());
         user.setPassword(userCommandModel.getPassword());
         user.setRole(userCommandModel.getRole());
         user.setEnabled(true);
         return user;
-        
+
     }
-    
-  
-  public static Quotation fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel,QuotationRequest quotationRequest) {
- 
-       Quotation quotation = new Quotation();
-       quotation.setQuotationRequest(quotationRequest);
-       return quotation;
+
+    public static Quotation fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel, QuotationRequest quotationRequest) {
+
+        Quotation quotation = new Quotation();
+        quotation.setQuotationRequest(quotationRequest);
+        return quotation;
     }
-  
-  public static List<QuotationOption> fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel,Quotation quotation) {
-    	List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();
-    	for (Options options : quotationCommandModel.getOptions()) {
+
+    public static List<QuotationOption> fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel, Quotation quotation) {
+        List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();
+        for (Options options : quotationCommandModel.getOptions()) {
             QuotationOption quotationOption = new QuotationOption();
             quotationOption.setCommodity(options.getCommodity());
             quotationOption.setCover(options.getCover());
             quotationOption.setExcess(options.getExcess());
             quotationOption.setLimit(options.getLimit());
             quotationOption.setLocation(options.getLocation());
-            
+
             quotationOption.setPeroid(options.getDuration());
             System.out.println("The period Value from xsd" + options.getDuration());
-            
+
             quotationOption.setPremium(options.getPremium());
             System.out.println("The period Value of quotation option" + quotationOption.getPeroid());
             quotationOption.setQuotation(quotation);
             quotationOptionList.add(quotationOption);
 
-        }       
+        }
         return quotationOptionList;
     }
-       
+
 }
