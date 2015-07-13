@@ -46,7 +46,10 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 });
     };
 
-    $scope.rejectQuotationRequest = function () {
+    $scope.rejectQuotationRequest = function (rejectform) {
+            if (rejectform.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
     	$scope.reject.status = "REJECTED";
         $http({
             url: '/api/quotation-requests/' + $scope.reference + "/reject",
@@ -69,6 +72,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                 .error(function (error) {
                     console.log(error);
                 });
+            }
     };
     
     $scope.changeMode = function(mode){
