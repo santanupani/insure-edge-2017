@@ -17,6 +17,8 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
     $scope.quotation ;
     $scope.mode ;
     $scope.reject;
+    $scope.com ;
+                               
     
     $scope.init = function () {
         $scope.reference = $routeParams.reference;     
@@ -25,6 +27,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
             "options" :[{"name": "Category 1"}]
         };
         $scope.getQuotationRequest($scope.reference);
+        $scope.com = ['Cash', 'Bullion', 'Diamond' ,'Art'];
     };
     
     $scope.getQuotationRequest = function () {

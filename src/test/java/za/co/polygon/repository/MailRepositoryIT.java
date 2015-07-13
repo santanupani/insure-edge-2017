@@ -15,6 +15,7 @@ public class MailRepositoryIT {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+    
+    
 }

@@ -43,13 +43,15 @@ public class Notification implements Serializable {
 		this.message = message;
 	}
 
-    public byte[] getAttachment() {
-        return attachment;
-    }
+        public byte[] getAttachment() {
+            return attachment;
+        }
 
-    public void setAttachment(byte[] attachment) {
-        this.attachment = attachment;
-    }
+        public void setAttachment(byte[] attachment) {
+            this.attachment = attachment;
+        }
+        
+        
 
-    
+        
 }

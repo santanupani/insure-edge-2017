@@ -52,7 +52,7 @@ public class MailRepository {
 	        message.setSubject(notification.getSubject());
 	        message.setText(notification.getMessage());
                 if(notification.getAttachment() != null){
-                    
+                   
                 }
 	        Transport.send(message);
 	    }
