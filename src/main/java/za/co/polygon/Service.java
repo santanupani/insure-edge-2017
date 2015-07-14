@@ -39,7 +39,7 @@ import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.NotificationService;
-import za.co.polygon.service.ReportService;
+import za.co.polygon.service.DocumentService;
 
 @RestController
 public class Service {
@@ -74,7 +74,7 @@ public class Service {
     private QuotationOptionRepository quotationOptionRepository;
     
     @Autowired
-    private ReportService reportService;
+    private DocumentService reportService;
     
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
