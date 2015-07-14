@@ -25,6 +25,8 @@ public class ReportService {
     
     
     public void buildQuotationPdf(List<QuotationOption> quotationOption, QuotationRequest quotationRequest){
+        // TODO : Why passing List<QuotationOption> quotationOption while quotationRequest has the list in it
+        // TODO : Why the return type is not byte[] as I specified in the initial requirement
         
         Document document = new Document();
         File repDir = new File("reports");
