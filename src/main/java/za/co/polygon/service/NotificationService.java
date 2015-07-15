@@ -1,5 +1,7 @@
 package za.co.polygon.service;
 
+import java.io.File;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,26 @@ public class NotificationService {
                 quotationRequest.getApplicantName(),
                 quotationRequest.getReference(),
                 reason);
+        Notification notification = new Notification(to, subject, message);
+        messageRepository.publish(notification, "q.notification");
+    }
+    
+    public void sendNotificationForAcceptQuotationRequest(QuotationRequest quotationRequest){
+          String to = quotationRequest.getApplicantEmail();
+        String subject = "Quotation Request Accepted";
+        String message = String.format(
+                 "Dear %s ," +"\n"
+                + "\n"
+                +"Your request for quotation Ref : %s has been accepted" + "\n"
+                + "\n"
+                +"please find the attachement" + "\n"
+                + "\n"
+                + "Thanks" + "\n"
+                + "Polygon Team",
+                quotationRequest.getApplicantName(),
+                quotationRequest.getReference());
+        
+        
         Notification notification = new Notification(to, subject, message);
         messageRepository.publish(notification, "q.notification");
     }

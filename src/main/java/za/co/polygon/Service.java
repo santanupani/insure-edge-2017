@@ -1,5 +1,6 @@
 package za.co.polygon;
 
+import java.io.IOException;
 import static za.co.polygon.mapper.Mapper.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.NotificationService;
+import za.co.polygon.service.DocumentService;
 
 @RestController
 public class Service {
@@ -70,6 +72,9 @@ public class Service {
     
     @Autowired
     private QuotationOptionRepository quotationOptionRepository;
+    
+    @Autowired
+    private DocumentService reportService;
     
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -157,6 +162,12 @@ public class Service {
         quotation = quotationRepository.save(quotation);
         
         List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel,quotation);
+
+         reportService.buildQuotationPdf(quotationOptions, quotationRequest);
+     
+        
+        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest);
         quotationOptionRepository.save(quotationOptions);
+        
     } 
 }
