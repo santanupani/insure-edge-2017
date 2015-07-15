@@ -49,7 +49,7 @@ public class NotificationService {
         messageRepository.publish(notification, "q.notification");
     }
     
-    public void sendNotificationForAcceptQuotationRequest(QuotationRequest quotationRequest){
+    public void sendNotificationForAcceptQuotationRequest(QuotationRequest quotationRequest,byte[] data){
           String to = quotationRequest.getApplicantEmail();
         String subject = "Quotation Request Accepted";
         String message = String.format(
@@ -63,9 +63,9 @@ public class NotificationService {
                 + "Polygon Team",
                 quotationRequest.getApplicantName(),
                 quotationRequest.getReference());
+        String filename = quotationRequest.getApplicantName() + "_quotation.pdf";
         
-        
-        Notification notification = new Notification(to, subject, message);
+        Notification notification = new Notification(to, subject, message, data, filename);
         messageRepository.publish(notification, "q.notification");
     }
     
