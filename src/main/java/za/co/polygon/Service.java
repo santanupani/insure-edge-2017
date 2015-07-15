@@ -1,5 +1,8 @@
 package za.co.polygon;
 
+import com.itextpdf.text.DocumentException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import static za.co.polygon.mapper.Mapper.*;
 import java.util.ArrayList;
@@ -66,16 +69,16 @@ public class Service {
 
     @Autowired
     private NotificationService notificationService;
-    
+
     @Autowired
     private QuotationRepository quotationRepository;
-    
+
     @Autowired
     private QuotationOptionRepository quotationOptionRepository;
-    
+
     @Autowired
     private DocumentService reportService;
-    
+
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
         log.info("find user");
@@ -115,24 +118,23 @@ public class Service {
     }
 
     @Transactional
-    @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-    public String createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {        
-      Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
-      
-      Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
-      
-      QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
-      quotationRequest = quotationRequestRepository.save(quotationRequest);
-      
-      List<Answer> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
-      quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
+    @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+    public String createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {
+        Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
 
-      notificationService.sendNotificationForNewQuotationRequest(quotationRequest, broker);
+        Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
 
-      log.info("Quotation Request Created. reference : {} " , quotationRequest.getReference());
-      return quotationRequest.getReference();
+        QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
+        quotationRequest = quotationRequestRepository.save(quotationRequest);
+
+        List<Answer> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
+        quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
+
+        notificationService.sendNotificationForNewQuotationRequest(quotationRequest, broker);
+
+        log.info("Quotation Request Created. reference : {} ", quotationRequest.getReference());
+        return quotationRequest.getReference();
     }
-
 
     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) {
@@ -143,31 +145,38 @@ public class Service {
     }
 
     @Transactional
-    @RequestMapping(value = "api/quotation-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces="text/html")
-    public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason){
+    @RequestMapping(value = "api/quotation-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+    public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason) {
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
         quotationRequest.setStatus("REJECTED");
         notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, reason.get("reason"));
         quotationRequestRepository.save(quotationRequest);
-        log.info("New status :"+ quotationRequest.getStatus());
+        log.info("New status :" + quotationRequest.getStatus());
     }
 
     @Transactional
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
+    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException {
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
         quotationRequest.setStatus("ACCEPTED");
-        
+
         Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
         quotation = quotationRepository.save(quotation);
-        
-        List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel,quotation);
 
-         reportService.buildQuotationPdf(quotationOptions, quotationRequest);
-     
+        List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel, quotation);
+
+        quotation.setQuotationOptions(quotationOptions);
+        quotation.setQuotationRequest(quotationRequest);
+        reportService.generateQuotation(quotation);
+         
         
-        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest);
+        byte[] data = reportService.generateQuotation(quotation);
+        FileOutputStream out = new FileOutputStream("target/" + quotationRequest.getApplicantName() + "_quotation.pdf");
+        out.write(data);
+        out.close();
+
+        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
         quotationOptionRepository.save(quotationOptions);
-        
-    } 
+
+    }
 }
