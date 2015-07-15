@@ -1,0 +1,23 @@
+{
+    "attributes": {
+        "id": {
+            "context": "style"
+        },
+        "height": {
+            "context": "table"
+        },
+        "name": {
+            "context": "div"
+        },
+        "path": {
+            "context": "div"
+        },
+        "async": {
+            "context": "script"
+        }
+    },
+    "elements": {
+        "loading": {},
+        "p": {}
+    }
+}

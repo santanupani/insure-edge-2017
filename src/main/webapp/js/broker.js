@@ -123,7 +123,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
                     console.log('status:' + status);
                 }
             }).error(function (error) {
-                console.log(error);
+                $rootScope.message = "Oops, we received your request, but there was an error processing it";
             }); 
         }
     };

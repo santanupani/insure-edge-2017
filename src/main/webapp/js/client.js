@@ -26,7 +26,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
             url: '/api/products',
             method: 'get'
         }).success(function (data, status) {
-            if (status == 200) {
+            if (status === 200) {
                 console.log('retrived successfully');
                 $rootScope.products = data;
             } else {
@@ -35,8 +35,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
                 ;
             }
         }).error(function (error) {
-            console.log(error);
-            $rootScope.error = error;
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
         });
     };
     
