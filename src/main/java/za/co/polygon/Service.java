@@ -1,5 +1,6 @@
 package za.co.polygon;
 
+import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import static za.co.polygon.mapper.Mapper.*;
 import java.util.ArrayList;
@@ -154,7 +155,7 @@ public class Service {
 
     @Transactional
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
+    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException {
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
         quotationRequest.setStatus("ACCEPTED");
         
@@ -163,9 +164,7 @@ public class Service {
         
         List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel,quotation);
 
-         reportService.buildQuotationPdf(quotationOptions, quotationRequest);
-     
-        
+        reportService.generateQuotation(quotation);
         notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest);
         quotationOptionRepository.save(quotationOptions);
         
