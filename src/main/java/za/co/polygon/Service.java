@@ -175,26 +175,12 @@ public class Service {
         List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel, quotation);
         quotationOptionRepository.save(quotationOptions);
         
-        Quotation newQuotation = quotationRepository.findOne(quotation.getId());
-        newQuotation.setQuotationRequest(quotationRequest);
-        newQuotation.setQuotationOptions(quotationOptions);
-         reportService.generateQuotation(newQuotation);
-         
+       Quotation newQuotation = quotationRepository.findOne(quotation.getId());
         
         byte[] data = reportService.generateQuotation(newQuotation);
         notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
         
         
     }
-    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
-        quotationRequest.setStatus("ACCEPTED");
 
-        Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
-        quotation = quotationRepository.save(quotation);
-
-        List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel, quotation);
-        quotationOptionRepository.save(quotationOptions);
-
-    }
 }

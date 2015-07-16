@@ -113,7 +113,6 @@ public class Mapper {
         quotationRequest.setCreateDate(new Date());
         quotationRequest.setProduct(product);
         quotationRequest.setBroker(broker);
-
         List<Answer> answerList = new ArrayList<Answer>();
 
         for (Questionnaires questionnaires : quotationRequestCommandModel.getQuestionnaires()) {
@@ -189,6 +188,25 @@ public class Mapper {
 
         Quotation quotation = new Quotation();
         quotation.setQuotationRequest(quotationRequest);
+        List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();
+        for (Options options : quotationCommandModel.getOptions()) {
+            QuotationOption quotationOption = new QuotationOption();
+            quotationOption.setCommodity(options.getCommodity());
+            quotationOption.setCover(options.getCover());
+            quotationOption.setExcess(options.getExcess());
+            quotationOption.setLimit(options.getLimit());
+            quotationOption.setLocation(options.getLocation());
+
+            quotationOption.setPeroid(options.getDuration());
+            System.out.println("The period Value from xsd" + options.getDuration());
+
+            quotationOption.setPremium(options.getPremium());
+            System.out.println("The period Value of quotation option" + quotationOption.getPeroid());
+            quotationOption.setQuotation(quotation);
+            quotationOptionList.add(quotationOption);
+
+        }
+        quotation.setQuotationOptions(quotationOptionList);
         return quotation;
     }
 
