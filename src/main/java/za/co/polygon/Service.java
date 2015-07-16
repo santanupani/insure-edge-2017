@@ -182,9 +182,6 @@ public class Service {
          
         
         byte[] data = reportService.generateQuotation(newQuotation);
-        FileOutputStream out = new FileOutputStream("target/" + quotationRequest.getApplicantName() + "_quotation.pdf");
-        out.write(data);
-        out.close();
         notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
         
         
@@ -197,18 +194,6 @@ public class Service {
         quotation = quotationRepository.save(quotation);
 
         List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel, quotation);
-
-//        quotation.setQuotationOptions(quotationOptions);
-//        quotation.setQuotationRequest(quotationRequest);
-//        reportService.generateQuotation(quotation);
-//         
-//        
-//        byte[] data = reportService.generateQuotation(quotation);
-//        FileOutputStream out = new FileOutputStream("target/" + quotationRequest.getApplicantName() + "_quotation.pdf");
-//        out.write(data);
-//        out.close();
-//
-//        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
         quotationOptionRepository.save(quotationOptions);
 
     }
