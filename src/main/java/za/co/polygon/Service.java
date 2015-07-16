@@ -186,7 +186,7 @@ public class Service {
         
         
     }
-    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException {
+    public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) {
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
         quotationRequest.setStatus("ACCEPTED");
 
