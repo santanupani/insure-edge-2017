@@ -165,6 +165,30 @@ public class Service {
         generate pdf from the newly created quotation
         send notification for the newly created quotation to the applicant attaching the pdf
      */
+    public void createNewQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException{
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
+        quotationRequest.setStatus("ACCEPTED");
+        
+        Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
+        quotation = quotationRepository.save(quotation);
+               
+        List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel, quotation);
+        quotationOptionRepository.save(quotationOptions);
+        
+        Quotation newQuotation = quotationRepository.findOne(quotation.getId());
+        newQuotation.setQuotationRequest(quotationRequest);
+        newQuotation.setQuotationOptions(quotationOptions);
+         reportService.generateQuotation(newQuotation);
+         
+        
+        byte[] data = reportService.generateQuotation(newQuotation);
+        FileOutputStream out = new FileOutputStream("target/" + quotationRequest.getApplicantName() + "_quotation.pdf");
+        out.write(data);
+        out.close();
+        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
+        
+        
+    }
     public void createQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException {
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
         quotationRequest.setStatus("ACCEPTED");
@@ -174,17 +198,17 @@ public class Service {
 
         List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel, quotation);
 
-        quotation.setQuotationOptions(quotationOptions);
-        quotation.setQuotationRequest(quotationRequest);
-        reportService.generateQuotation(quotation);
-         
-        
-        byte[] data = reportService.generateQuotation(quotation);
-        FileOutputStream out = new FileOutputStream("target/" + quotationRequest.getApplicantName() + "_quotation.pdf");
-        out.write(data);
-        out.close();
-
-        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
+//        quotation.setQuotationOptions(quotationOptions);
+//        quotation.setQuotationRequest(quotationRequest);
+//        reportService.generateQuotation(quotation);
+//         
+//        
+//        byte[] data = reportService.generateQuotation(quotation);
+//        FileOutputStream out = new FileOutputStream("target/" + quotationRequest.getApplicantName() + "_quotation.pdf");
+//        out.write(data);
+//        out.close();
+//
+//        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
         quotationOptionRepository.save(quotationOptions);
 
     }
