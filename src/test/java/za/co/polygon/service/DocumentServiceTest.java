@@ -27,10 +27,10 @@ public class DocumentServiceTest {
 		quotationRequest.setCompanyName("Reverside");
                 
 		quotationRequest.setCreateDate(new Date());
-                Product product = new Product();
+        Product product = new Product();
 		product.setName("Cash and Valuables in Transinsit");
                 
-                QuotationOption quotationOption = new QuotationOption();
+        QuotationOption quotationOption = new QuotationOption();
                 quotationOption.setCommodity("Gold");
                 quotationOption.setLocation("Midrand");
                 quotationOption.setExcess("1231");

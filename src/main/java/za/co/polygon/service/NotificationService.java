@@ -50,7 +50,7 @@ public class NotificationService {
     }
     
     public void sendNotificationForAcceptQuotationRequest(QuotationRequest quotationRequest,byte[] data){
-          String to = quotationRequest.getApplicantEmail();
+        String to = quotationRequest.getApplicantEmail();
         String subject = "Quotation Request Accepted";
         String message = String.format(
                  "Dear %s ," +"\n"

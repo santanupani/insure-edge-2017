@@ -2,17 +2,10 @@
 package za.co.polygon.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "quotations")
@@ -26,9 +19,8 @@ public class Quotation {
     @ManyToOne
     @JoinColumn(name = "quotation_request_id")
     private QuotationRequest quotationRequest;
-    
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "quotation")
+
+    @OneToMany(mappedBy = "quotation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<QuotationOption> quotationOptions;
 
     public Long getId() {
@@ -48,15 +40,11 @@ public class Quotation {
     }
 
     public List<QuotationOption> getQuotationOptions() {
+        if(quotationOptions==null) quotationOptions = new ArrayList<QuotationOption>();
         return quotationOptions;
     }
 
     public void setQuotationOptions(List<QuotationOption> quotationOptions) {
         this.quotationOptions = quotationOptions;
     }
-
-    
-
-    
-    
 }

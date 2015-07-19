@@ -72,8 +72,6 @@ public class Service {
     @Autowired
     private QuotationRepository quotationRepository;
 
-    @Autowired
-    private QuotationOptionRepository quotationOptionRepository;
 
     @Autowired
     private DocumentService reportService;
@@ -155,32 +153,14 @@ public class Service {
 
     @Transactional
     @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-     /*
-        receive quotationcommand model
-        update the status of corresponding quotation request
-        create a new quotation in the database which includes 2 steps :
-           - insert a record into quotations table
-           - insert one or more quotation options into quottion options tables
-        fetch the newly quotatio object again from data base
-        generate pdf from the newly created quotation
-        send notification for the newly created quotation to the applicant attaching the pdf
-     */
     public void createNewQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException{
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
         quotationRequest.setStatus("ACCEPTED");
-        
         Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
         quotation = quotationRepository.save(quotation);
-               
-        List<QuotationOption> quotationOptions = fromQuotationRequestCommandModel(quotationCommandModel, quotation);
-        quotationOptionRepository.save(quotationOptions);
-        
-       Quotation newQuotation = quotationRepository.findOne(quotation.getId());
-        
-        byte[] data = reportService.generateQuotation(newQuotation);
-        notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
-        
-        
+        byte[] data = reportService.generateQuotation(quotation);
+        notificationService.sendNotificationForAcceptQuotationRequest(quotation.getQuotationRequest(), data);
+        log.info("Quotation Created Successfully !!!");
     }
 
 }

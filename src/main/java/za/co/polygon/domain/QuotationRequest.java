@@ -54,7 +54,7 @@ public class QuotationRequest {
     @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
     private List<Answer> answers;
     
-    @OneToMany(mappedBy = "quotationRequest")
+    @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
     private List<Quotation> quotation;
     
     
