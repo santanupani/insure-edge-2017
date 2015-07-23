@@ -82,8 +82,9 @@
         </complexType>
     </element>
 
-    <element name="QuotationRequestQueryModel">
-        <complexType>
+    <element name="QuotationRequestQueryModel" type="tns:QuotationRequestQueryModel" />
+    
+        <complexType name="QuotationRequestQueryModel">
             <sequence>
                 <element name="reference" type="string" />
                 <element name="status" type="string" />
@@ -103,7 +104,7 @@
                 </element>
             </sequence>
         </complexType>
-    </element>
+   
     <element name="CategoryQueryModel">
         <complexType>
             <sequence>
@@ -139,6 +140,7 @@
         <complexType>
             <sequence>
                 <element name="quotationId" type="long" />
+                <element name="quotationRequest" minOccurs="0" maxOccurs="1"		type="tns:QuotationRequestQueryModel" />
                 <element name="options" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
                         <sequence>
