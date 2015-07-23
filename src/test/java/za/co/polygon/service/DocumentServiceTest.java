@@ -16,57 +16,69 @@ import com.itextpdf.text.DocumentException;
 import java.util.List;
 
 public class DocumentServiceTest {
-	
-	@Test
-	public void test() throws DocumentException, IOException{
-		DocumentService  service = new DocumentService();
-                
-		Quotation quotation = new Quotation();
-		QuotationRequest  quotationRequest = new QuotationRequest();
-		quotationRequest.setApplicantName("Thabo");
-		quotationRequest.setCompanyName("Reverside");
-                
-		quotationRequest.setCreateDate(new Date());
+
+    @Test
+    public void test() throws DocumentException, IOException {
+        DocumentService service = new DocumentService();
+
+        Quotation quotation = new Quotation();
+        QuotationRequest quotationRequest = new QuotationRequest();
+        quotationRequest.setApplicantName("Thabo");
+        quotationRequest.setCompanyName("Reverside Software Solutions");
+
+        quotationRequest.setCreateDate(new Date());
+        quotationRequest.setReference("fe0cf511-11cf-4a90-b8c1-661fedd10016");
+        
         Product product = new Product();
-		product.setName("Cash and Valuables in Transinsit");
-                
+        product.setName("Cash and Valuables in Transinsit");
+
         QuotationOption quotationOption = new QuotationOption();
-                quotationOption.setCommodity("Gold");
-                quotationOption.setLocation("Midrand");
-                quotationOption.setExcess("1231");
-                quotationOption.setLimit("1000");
-                quotationOption.setPremium("12334");
-                quotationOption.setPeroid("2 weeks");
-                quotationOption.setCover("Static cover");
-                quotationOption.setQuotation(quotation);
-                
-                QuotationOption quotationOption2 = new QuotationOption();
-                quotationOption2.setCommodity("Cash");
-                quotationOption2.setLocation("Sandton");
-                quotationOption2.setExcess("12000");
-                quotationOption2.setLimit("998");
-                quotationOption2.setPremium("1999");
-                quotationOption2.setPeroid("12 months");
-                quotationOption2.setCover("Cash In Transit");
-                quotationOption2.setQuotation(quotation);
-                
-		
-		
-		quotationRequest.setProduct(product);
-		
-		quotation.setQuotationRequest(quotationRequest);
-		
-                List<QuotationOption> quotationOptions = new ArrayList<QuotationOption>();
-                
-                quotationOptions.add(quotationOption);
-                quotationOptions.add(quotationOption2);
-                
-		quotation.setQuotationOptions(quotationOptions);
-		
-		byte[] data = service.generateQuotation(quotation);
-		FileOutputStream out = new FileOutputStream("target/test.pdf");
-		out.write(data);
-		out.close();
-	}
+        quotationOption.setCommodity("Gold");
+        quotationOption.setLocation("Midrand");
+        quotationOption.setExcess("1231");
+        quotationOption.setLimit("1000");
+        quotationOption.setPremium("12334");
+        quotationOption.setPeroid("2 weeks");
+        quotationOption.setCover("Static cover");
+        quotationOption.setQuotation(quotation);
+
+        QuotationOption quotationOption2 = new QuotationOption();
+        quotationOption2.setCommodity("Cash");
+        quotationOption2.setLocation("Sandton");
+        quotationOption2.setExcess("12000");
+        quotationOption2.setLimit("998");
+        quotationOption2.setPremium("1999");
+        quotationOption2.setPeroid("12 months");
+        quotationOption2.setCover("Cash In Transit");
+        quotationOption2.setQuotation(quotation);
+
+        
+        QuotationOption quotationOption3 = new QuotationOption();
+        quotationOption3.setCommodity("Cash");
+        quotationOption3.setLocation("Sandton");
+        quotationOption3.setExcess("12000");
+        quotationOption3.setLimit("998");
+        quotationOption3.setPremium("1999");
+        quotationOption3.setPeroid("12 months");
+        quotationOption3.setCover("Cash In Transit");
+        quotationOption3.setQuotation(quotation);
+        
+        quotationRequest.setProduct(product);
+
+        quotation.setQuotationRequest(quotationRequest);
+
+        List<QuotationOption> quotationOptions = new ArrayList<QuotationOption>();
+
+        quotationOptions.add(quotationOption);
+        quotationOptions.add(quotationOption2);
+        quotationOptions.add(quotationOption3);
+
+        quotation.setQuotationOptions(quotationOptions);
+
+        byte[] data = service.generateQuotation(quotation);
+        FileOutputStream out = new FileOutputStream("target/test.pdf");
+        out.write(data);
+        out.close();
+    }
 
 }
