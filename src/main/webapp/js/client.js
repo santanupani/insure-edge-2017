@@ -9,7 +9,11 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 .when('/products/:id/questionnaires', {
                     'templateUrl': '/html/questionnaires.html',
                     'controller': 'questionnairesCtrl'
-                }).otherwise({
+                }).when('/viewquote',{
+                    'templateUrl': '/html/view-quotation.html',
+                    'controller': 'viewQuotationCtrl'
+                })
+                        .otherwise({
                     redirectTo: '/products'
                 });
     }]);
@@ -166,4 +170,68 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         }
 
     };
+});
+
+polygon.controller('viewQuotationCtrl', function ($scope, $rootScope, $http) {
+    
+    
+    
+    $scope.quotationRequest = {
+        reference : "28888",
+        status: "ACCEPTED",
+    createDate: "23/07/2015",
+    companyName: "Reverside",
+    applicantName: "Thabo",
+    applicantEmail: "thabothulare68@gmail.com"};
+
+    $scope.product= {
+      id: 1,
+      name: "Cash and Valuables in Transit",
+      description: "All risk cover for your cash and valuables whilst in transit.",
+      image: "/img/products/Cash and Valuables in Transit.jpg"
+    };
+    
+     $scope.questionnaires = [
+    {
+      question: "what is your name?",
+      answer: "Thabo"
+    }, {
+      question: "what is your name?",
+      answer: "Thabo"
+    }, {
+      question: "what is your name?",
+      answer: "Thabo"
+    }, {
+      question: "what is your name?",
+      answer: "Thabo"
+    }, {
+      question: "what is your name?",
+      answer: "Thabo"
+    }, {
+      question: "what is your name?",
+      answer: "Thabo"
+    }];
+    
+    $scope.options = [
+    {
+      location: "23 Locations",
+      commodity: "Cash",
+      limit: "89999",
+      cover: "Cash in Transit",
+      duration: "11 weeks",
+      excess: "7999,99",
+      premium: "1076.89"
+    },
+    {
+      location: "16 Locations",
+      commodity: "Art",
+      limit: "1200000",
+      cover: "Cash In Transit",
+      duration: "6 years",
+      excess: "1299,87",
+      premium: "172.12"
+    }];
+
+
+
 });

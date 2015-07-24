@@ -19,6 +19,7 @@ import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationCommandModel.Options;
+import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
@@ -194,6 +195,9 @@ public class Mapper {
         quotation.setQuotationOptions(quotationOptionList);
         return quotation;
     }
+    
+    
+       
 
 
 }

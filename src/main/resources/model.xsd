@@ -141,7 +141,7 @@
             <sequence>
                 <element name="quotationId" type="long" />
                 <element name="quotationRequest" minOccurs="0" maxOccurs="1"		type="tns:QuotationRequestQueryModel" />
-                <element name="options" minOccurs="0" maxOccurs="unbounded">
+                <element name="option" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
                         <sequence>
                             <element name="location" type="string" />
@@ -153,8 +153,7 @@
                             <element name="premium" type="string" />
                         </sequence>
                     </complexType>
-                </element>
-                                
+                </element>              
             </sequence>
         </complexType>
     </element>

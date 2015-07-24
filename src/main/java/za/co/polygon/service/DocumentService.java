@@ -115,7 +115,7 @@ public class DocumentService extends PdfPageEventHelper{
 
             Image footer = null;
             try {
-                footer = Image.getInstance("/polygon/polygon/src/main/webapp/img/products/polygon-footer.png");
+                footer = Image.getInstance("src/main/webapp/img/products/polygon-footer.png");
             } catch (BadElementException ex) {
                 Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -131,7 +131,7 @@ public class DocumentService extends PdfPageEventHelper{
 
             Image img = null;
             try {
-                img = Image.getInstance("/polygon/polygon/src/main/webapp/img/products/polygon-logo.jpg");
+                img = Image.getInstance("src/main/webapp/img/products/polygon-logo.jpg");
             } catch (BadElementException ex) {
                 Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
