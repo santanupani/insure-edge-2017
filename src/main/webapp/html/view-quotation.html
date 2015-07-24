@@ -15,42 +15,7 @@
             </div>
         </div>
 
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Quotation Request</h4>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <label class="control-label" for="reference">Reference</label> <input
-                            type="text" class="form-control" id="reference"
-                            ng-model="quotationRequest.reference" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="companyName">Company</label> <input
-                            type="text" class="form-control" id="companyName"
-                            ng-model="quotationRequest.companyName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="applicant">Applicant</label> <input
-                            type="text" class="form-control" id="applicant"
-                            ng-model="quotationRequest.applicantName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="appliedOn">Applied On</label> <input
-                            type="text" class="form-control" id="appliedOn"
-                            ng-model="quotationRequest.createDate" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="status">Status</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="quotationRequest.status" readonly="readonly"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                           <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
             <div class="panel-heading">
                 <h4>Quotation Options</h4>
             </div>
@@ -96,15 +61,55 @@
                 
             </div>
         </div>
-        
+ 
+
+
+
     </div>
+    
+  
 
     <div class="col-md-9">
-  
+        
+               <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Personal Details</h4>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <div class="form-group">
+                        <label class="control-label" for="reference">Reference</label> <input
+                            type="text" class="form-control" id="reference"
+                            ng-model="quotationRequest.reference" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="companyName">Company</label> <input
+                            type="text" class="form-control" id="companyName"
+                            ng-model="quotationRequest.companyName" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="applicant">Applicant</label> <input
+                            type="text" class="form-control" id="applicant"
+                            ng-model="quotationRequest.applicantName" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="appliedOn">Applied On</label> <input
+                            type="text" class="form-control" id="appliedOn"
+                            ng-model="quotationRequest.createDate" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="status">Status</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="quotationRequest.status" readonly="readonly"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
             <div class="panel-heading">
-                <h1>Q and A</h1>
+                <h4>Questionnaire and Answers</h4>
             </div>
             <div class="panel-body">
                 <div>
@@ -118,11 +123,25 @@
 
                 </div>
             </div>
+            
+            
 
         </div>
 
-
-
     </div>
+    
+     <div class="col-md-12">
+         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-footer text-center">
+                <span class="text-center">
+                    <button class="btn btn-success">Accept</button>
+                    <button class="btn btn-danger">Reject</button>
+                </span>
+
+            </div>
+         </div>
+     </div>
+
+
 </div>
 
