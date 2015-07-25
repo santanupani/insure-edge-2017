@@ -15,63 +15,7 @@
             </div>
         </div>
 
-                           <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Quotation Options</h4>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group"
-                         ng-repeat=" option in options">
-                        
-                    
-                        <H4 class="control-label" >Category  {{$index + 1}}</h4><br>
-                         
-                        
-                        <label class="control-label" for="q_{{index}}">Location: </label>
-                        <input type="text" class="form-control" id="q_{{index}}"
-                                  ng-model="option.location" readonly="readonly">
-                        
-                         <label class="control-label" for="q_{{index}}">Commodity: </label>
-                        <input type="text" class="form-control" id="q_{{index}}"
-                                  ng-model="option.commodity" readonly="readonly">
-                         
-                          <label class="control-label" for="q_{{index}}">Limit: </label>
-                        <input type="text" class="form-control" id="q_{{index}}"
-                                ng-model="option.limit" readonly="readonly">
-                          
-                           <label class="control-label" for="q_{{index}}">Cover: </label>
-                        <input type="text" class="form-control" id="q_{{index}}"
-                                  ng-model="option.cover" readonly="readonly">
-                           
-                            <label class="control-label" for="q_{{index}}">Duration: </label>
-                        <input type="text" class="form-control" id="q_{{index}}"
-                                  ng-model="option.duration" readonly="readonly">
-                            
-                              <label class="control-label" for="q_{{index}}">Excess: </label>
-                        <input type="text" class="form-control" id="q_{{index}}"
-                                  ng-model="option.excess" readonly="readonly">
-                              
-                                <label class="control-label" for="q_{{index}}">Premium: </label>
-                        <input type="text" class="form-control" id="q_{{index}}"
-                                  ng-model="option.premium" readonly="readonly">
-                    </div>
-
-                </div>
-                
-            </div>
-        </div>
- 
-
-
-
-    </div>
-    
-  
-
-    <div class="col-md-9">
-        
-               <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
             <div class="panel-heading">
                 <h4>Personal Details</h4>
             </div>
@@ -105,42 +49,56 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    
+    <div class="col-md-9" ng-repeat=" option in options">
 
         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
             <div class="panel-heading">
-                <h4>Questionnaire and Answers</h4>
+                <h4>Quotation Options, Category  {{$index + 1}}</h4>
+
             </div>
             <div class="panel-body">
                 <div>
-                    <div class="form-group"
-                         ng-repeat="questionnaire in questionnaires">
-                        <label class="control-label" for="q_{{index}}">Q:
-                            {{questionnaire.question}}</label>
-                        <textarea class="form-control" id="q_{{index}}"
-                                  ng-model="questionnaire.answer" readonly="readonly"></textarea>
+                    <div class="form-group">
+                        <label class="control-label" for="q_{{index}}">Location: </label>
+                        <input type="text" class="form-control" id="q_{{index}}"
+                               ng-model="option.location" readonly="readonly">
+
+                        <label class="control-label" for="q_{{index}}">Commodity: </label>
+                        <input type="text" class="form-control" id="q_{{index}}"
+                               ng-model="option.commodity" readonly="readonly">
+
+                        <label class="control-label" for="q_{{index}}">Limit: </label>
+                        <input type="text" class="form-control" id="q_{{index}}"
+                               ng-model="option.limit" readonly="readonly">
+
+                        <label class="control-label" for="q_{{index}}">Cover: </label>
+                        <input type="text" class="form-control" id="q_{{index}}"
+                               ng-model="option.cover" readonly="readonly">
+
+                        <label class="control-label" for="q_{{index}}">Duration: </label>
+                        <input type="text" class="form-control" id="q_{{index}}"
+                               ng-model="option.duration" readonly="readonly">
+
+                        <label class="control-label" for="q_{{index}}">Excess: </label>
+                        <input type="text" class="form-control" id="q_{{index}}"
+                               ng-model="option.excess" readonly="readonly">
+
+                        <label class="control-label" for="q_{{index}}">Premium: </label>
+                        <input type="text" class="form-control" id="q_{{index}}"
+                               ng-model="option.premium" readonly="readonly">
                     </div>
-
                 </div>
-            </div>
-            
-            
 
+            </div>
+            <div class="panel-footer text-right">
+                <button class="btn btn-info">Apply For Policy</button>
+            </div>
         </div>
 
-    </div>
-    
-     <div class="col-md-12">
-         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-footer text-center">
-                <span class="text-center">
-                    <button class="btn btn-success">Accept</button>
-                    <button class="btn btn-danger">Reject</button>
-                </span>
 
-            </div>
-         </div>
-     </div>
+    </div>
 
 
 </div>

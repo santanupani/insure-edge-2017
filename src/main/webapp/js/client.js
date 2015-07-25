@@ -174,6 +174,35 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 
 polygon.controller('viewQuotationCtrl', function ($scope, $rootScope, $http) {
     
+    $scope.quotationdetails;
+    $scope.quotationId;
+    
+       $scope.init = function () {
+        $scope.quotationId = $routeParams.quotationId;     
+        $scope.getQuotation($scope.quotationId);
+        
+    };
+    
+        $scope.getQuotation = function () {
+        $http({
+            url: '/api/view-quotation/' + $scope.quotationId,
+            method: 'get'
+        }).
+                success(function (data, status) {
+                    console.log('get success code::' + status);
+                    if (status == 200) {
+                        $scope.quotationdetails = data;
+                        console.log('Quotationde Details:' + $scope.quotationdetails);
+                    } else {
+                        console.log('status:' + status);
+                    }
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+    };
+    
+    
     
     
     $scope.quotationRequest = {
