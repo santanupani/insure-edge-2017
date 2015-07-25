@@ -201,37 +201,11 @@ public class Mapper {
 
         QuotationQueryModel result = new QuotationQueryModel();
         result.setQuotationId(quotation.getId());
-        
-      
-        QuotationRequestQueryModel quotationRequest = new QuotationRequestQueryModel();
-        quotationRequest.setApplicantEmail(quotation.getQuotationRequest().getApplicantEmail());
-        quotationRequest.setApplicantName(quotation.getQuotationRequest().getApplicantName());
-        quotationRequest.setCreateDate(new SimpleDateFormat("dd/MM/YYYY").format(quotation.getQuotationRequest().getCreateDate()));
-        quotationRequest.setStatus(quotation.getQuotationRequest().getStatus());
-        quotationRequest.setReference(quotation.getQuotationRequest().getReference());
-        quotationRequest.setCompanyName(quotation.getQuotationRequest().getCompanyName());
-
-        ProductQueryModel product = new ProductQueryModel();
-        product.setId(quotation.getQuotationRequest().getProduct().getId());
-        product.setDescription(quotation.getQuotationRequest().getProduct().getDescription());
-        product.setName(quotation.getQuotationRequest().getProduct().getName());
-        product.setImage(quotation.getQuotationRequest().getProduct().getImage());
-        quotationRequest.setProduct(product);
-        
-        
-        
-         for (Answer answer : quotation.getQuotationRequest().getAnswers()) {
-            QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
-            q.setQuestion(answer.getQuestion());
-            q.setAnswer(answer.getAnswer());
-            quotationRequest.getQuestionnaire().add(q);
-        }
-       
-        result.setQuotationRequest(quotationRequest);
+        result.setQuotationRequest(toQuotationRequestQueryModel(quotation.getQuotationRequest()));
         
         for (QuotationOption quotationOption : quotation.getQuotationOptions()) {
-        	QuotationQueryModel.Option option = new QuotationQueryModel.Option();
-        	option.setCommodity(quotationOption.getCommodity());
+            QuotationQueryModel.Option option = new QuotationQueryModel.Option();
+            option.setCommodity(quotationOption.getCommodity());
             option.setCover(quotationOption.getCover());
             option.setDuration(quotationOption.getPeroid());
             option.setExcess(quotationOption.getExcess());
@@ -240,7 +214,6 @@ public class Mapper {
             option.setPremium(quotationOption.getPremium());
             result.getOption().add(option);
         }
-
         return result;
     }
     
