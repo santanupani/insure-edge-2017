@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
@@ -23,7 +24,6 @@ import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
-import za.co.polygon.model.UserCommandModel;
 import za.co.polygon.model.UserQueryModel;
 
 public class Mapper {
@@ -197,7 +197,53 @@ public class Mapper {
     }
     
     
+    public static QuotationQueryModel toQuotationQueryModel(Quotation quotation) {
+
+        QuotationQueryModel result = new QuotationQueryModel();
+        result.setQuotationId(quotation.getId());
+        
+      
+        QuotationRequestQueryModel quotationRequest = new QuotationRequestQueryModel();
+        quotationRequest.setApplicantEmail(quotation.getQuotationRequest().getApplicantEmail());
+        quotationRequest.setApplicantName(quotation.getQuotationRequest().getApplicantName());
+        quotationRequest.setCreateDate(new SimpleDateFormat("dd/MM/YYYY").format(quotation.getQuotationRequest().getCreateDate()));
+        quotationRequest.setStatus(quotation.getQuotationRequest().getStatus());
+        quotationRequest.setReference(quotation.getQuotationRequest().getReference());
+        quotationRequest.setCompanyName(quotation.getQuotationRequest().getCompanyName());
+
+        ProductQueryModel product = new ProductQueryModel();
+        product.setId(quotation.getQuotationRequest().getProduct().getId());
+        product.setDescription(quotation.getQuotationRequest().getProduct().getDescription());
+        product.setName(quotation.getQuotationRequest().getProduct().getName());
+        product.setImage(quotation.getQuotationRequest().getProduct().getImage());
+        quotationRequest.setProduct(product);
+        
+        
+        
+         for (Answer answer : quotation.getQuotationRequest().getAnswers()) {
+            QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
+            q.setQuestion(answer.getQuestion());
+            q.setAnswer(answer.getAnswer());
+            quotationRequest.getQuestionnaire().add(q);
+        }
        
+        result.setQuotationRequest(quotationRequest);
+        
+        for (QuotationOption quotationOption : quotation.getQuotationOptions()) {
+        	QuotationQueryModel.Option option = new QuotationQueryModel.Option();
+        	option.setCommodity(quotationOption.getCommodity());
+            option.setCover(quotationOption.getCover());
+            option.setDuration(quotationOption.getPeroid());
+            option.setExcess(quotationOption.getExcess());
+            option.setLimit(quotationOption.getLimit());
+            option.setLocation(quotationOption.getLocation());
+            option.setPremium(quotationOption.getPremium());
+            result.getOption().add(option);
+        }
 
+        return result;
+    }
+    
 
-}
+}  
+

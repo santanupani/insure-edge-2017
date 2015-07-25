@@ -139,7 +139,7 @@
     <element name="QuotationQueryModel">
         <complexType>
             <sequence>
-                <element name="quotationId" type="long" />
+            	<element name="quotationId" type="long" />
                 <element name="quotationRequest" minOccurs="0" maxOccurs="1"		type="tns:QuotationRequestQueryModel" />
                 <element name="option" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
