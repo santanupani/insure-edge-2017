@@ -193,24 +193,65 @@ polygon.controller('viewQuotationCtrl', function ($scope, $rootScope, $http) {
     
      $scope.questionnaires = [
     {
-      question: "what is your name?",
-      answer: "Thabo"
-    }, {
-      question: "what is your name?",
-      answer: "Thabo"
-    }, {
-      question: "what is your name?",
-      answer: "Thabo"
-    }, {
-      question: "what is your name?",
-      answer: "Thabo"
-    }, {
-      question: "what is your name?",
-      answer: "Thabo"
-    }, {
-      question: "what is your name?",
-      answer: "Thabo"
-    }];
+        question: "What do you wish to insure ?",
+        answer: "Cash and Coins "
+      },
+      {
+        question: "What is the maximum amount you wish to insure ?",
+        answer: "12345"
+      },
+      {
+        question: "Is the above amount the total full value of the goods being moved ?",
+        answer: "true"
+      },
+      {
+        question: "Do you want first loss cover for additional premium ?",
+        answer: "true"
+      },
+      {
+        question: "Do you use the service of a professional valuables carriers ?",
+        answer: "true"
+      },
+      {
+        question: "What is the name of the professional valuables carriers ?",
+        answer: "Protea Coin Service"
+      },
+     
+      {
+        question: "How many times per week are the valuables carried ?",
+        answer: "3 times/week"
+      },
+      {
+        question: "Please select from where and to where are the valuables carried :",
+        answer: "Rustenburg to Kimberley"
+      },
+      {
+        question: "What is the approximate distance ?",
+        answer: "200km to 300km"
+      },
+      {
+        question: "Are you currently insured ?",
+        answer: "true"
+      },
+      {
+        question: "Please provide details of your previous insurance company :",
+        answer: "Reverside"
+      },
+      {
+        question: "Please provide details of losses of valuable goods of insured/uninsured the past 5 years ?",
+        answer: "false"
+      },
+    
+      {
+        question: "Do you have more history details of insured/uninsured goods :",
+        answer: "false"
+      },
+  
+    
+      {
+        question: "Do you require SASRIA cover ?",
+        answer: "true"
+      }];
     
     $scope.options = [
     {
@@ -228,6 +269,15 @@ polygon.controller('viewQuotationCtrl', function ($scope, $rootScope, $http) {
       limit: "1200000",
       cover: "Cash In Transit",
       duration: "6 years",
+      excess: "1299,87",
+      premium: "172.12"
+    },
+       {
+      location: "18 Locations",
+      commodity: "Diamond",
+      limit: "1200000",
+      cover: "Cash In Transit",
+      duration: "2 years",
       excess: "1299,87",
       premium: "172.12"
     }];
