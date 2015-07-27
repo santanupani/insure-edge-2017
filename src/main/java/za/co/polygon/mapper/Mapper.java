@@ -9,6 +9,7 @@ import java.util.UUID;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
@@ -16,6 +17,7 @@ import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
@@ -216,7 +218,9 @@ public class Mapper {
         }
         return result;
     }
-       
+    
+
+    
 
 }  
 

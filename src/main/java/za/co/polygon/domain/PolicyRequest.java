@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,10 +24,9 @@ public class PolicyRequest {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy = "policyRequest", fetch = FetchType.EAGER)
-    private List<QuotationOption> quotationOptions;
-
-    
+     @ManyToOne
+    @JoinColumn(name = "quotation_option_id")
+    private QuotationOption quotationOptions; 
     
     @OneToOne
     @JoinColumn(name = "quotation_id")
@@ -238,15 +238,17 @@ public class PolicyRequest {
         this.debitOrderDate = debitOrderDate;
     }
 
- 
-
-    public List<QuotationOption> getQuotationOptions() {
+    public QuotationOption getQuotationOptions() {
         return quotationOptions;
     }
 
-    public void setQuotationOptions(List<QuotationOption> quotationOptions) {
+    public void setQuotationOptions(QuotationOption quotationOptions) {
         this.quotationOptions = quotationOptions;
     }
+
+ 
+
+    
 
     public byte[] getBankStatement() {
         return bankStatement;
