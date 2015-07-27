@@ -205,14 +205,14 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
 polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
     
     
-    $scope.quotation ;
+    $scope.quotations ;
     
     $scope.init = function () {
                
         if ($rootScope.quotation == undefined) {
             $scope.getQuotation($routeParams.reference);
         } else {
-            $scope.getQuotation($routeParams['reference']);
+            $scope.quotations = $rootScope.quotation;
         }
     };
     
