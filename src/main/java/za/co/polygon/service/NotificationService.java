@@ -57,11 +57,15 @@ public class NotificationService {
                 + "\n"
                 +"Your request for quotation Ref : %s has been accepted" + "\n"
                 + "\n"
-                +"please find the attachement" + "\n"
+                +"Please find the attachement t view your quotation" + "\n"
+                + "\n"
+                + "Please click the link below to apply for a policy" + " \n"
+                + "http://localhost:8080/polygon/client.html#/quotations/%s " + " \n"
                 + "\n"
                 + "Thanks" + "\n"
                 + "Polygon Team",
                 quotationRequest.getApplicantName(),
+                quotationRequest.getReference(),
                 quotationRequest.getReference());
         String filename = quotationRequest.getApplicantName() + "_quotation.pdf";
         
