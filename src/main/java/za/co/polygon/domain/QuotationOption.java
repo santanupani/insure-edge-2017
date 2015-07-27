@@ -23,6 +23,10 @@ public class QuotationOption {
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
     
+    @ManyToOne
+    @JoinColumn(name = "policy_request_id")
+    private PolicyRequest policyRequest;
+    
     @Column(name = "location")
     private String location;
     
@@ -114,6 +118,14 @@ public class QuotationOption {
 
     public void setPremium(String premium) {
         this.premium = premium;
+    }
+
+    public PolicyRequest getPolicyRequest() {
+        return policyRequest;
+    }
+
+    public void setPolicyRequest(PolicyRequest policyRequest) {
+        this.policyRequest = policyRequest;
     }
     
     
