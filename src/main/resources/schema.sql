@@ -103,7 +103,6 @@ create table quotation_options(
     excess varchar(256) not null,
     premium varchar(256) not null,
     constraint quotation_options_fk foreign key (quotation_id) references quotations (id)
-    constraint quotation_options_fk1 foreign key (policy_request_id) references policy_requests (id)
 );
 
 /*table : policy_requests */

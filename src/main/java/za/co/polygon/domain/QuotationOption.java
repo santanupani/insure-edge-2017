@@ -22,11 +22,11 @@ public class QuotationOption {
     @ManyToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
-    
-    @ManyToOne
+   
+     @ManyToOne
     @JoinColumn(name = "policy_request_id")
     private PolicyRequest policyRequest;
-    
+     
     @Column(name = "location")
     private String location;
     
@@ -127,6 +127,8 @@ public class QuotationOption {
     public void setPolicyRequest(PolicyRequest policyRequest) {
         this.policyRequest = policyRequest;
     }
+
+
     
     
 }

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +26,9 @@ public class PolicyRequest {
     @OneToMany(mappedBy = "policyRequest", fetch = FetchType.EAGER)
     private List<QuotationOption> quotationOptions;
 
+    
+    
+    @OneToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
 
@@ -80,7 +84,7 @@ public class PolicyRequest {
     private Date debitOrderDate;
 
     @Column(name = "bank_statement")
-    private Blob bankStatement;
+    private byte[] bankStatement;
 
     public Long getId() {
         return id;
@@ -234,13 +238,7 @@ public class PolicyRequest {
         this.debitOrderDate = debitOrderDate;
     }
 
-    public Blob getBankStatement() {
-        return bankStatement;
-    }
-
-    public void setBankStatement(Blob bankStatement) {
-        this.bankStatement = bankStatement;
-    }
+ 
 
     public List<QuotationOption> getQuotationOptions() {
         return quotationOptions;
@@ -248,6 +246,14 @@ public class PolicyRequest {
 
     public void setQuotationOptions(List<QuotationOption> quotationOptions) {
         this.quotationOptions = quotationOptions;
+    }
+
+    public byte[] getBankStatement() {
+        return bankStatement;
+    }
+
+    public void setBankStatement(byte[] bankStatement) {
+        this.bankStatement = bankStatement;
     }
 
 }
