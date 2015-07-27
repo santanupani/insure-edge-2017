@@ -95,6 +95,9 @@
                                 <input type="text" class="form-control" placeholder="Postal Code" ng-model="applicant.postalCode" required>
                             </div>
                             <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Designation" ng-model="applicant.designation" required>
+                            </div>
+                            <div class="form-group">
                                 <textarea class="form-control" placeholder="Description Of Business" ng-model="applicant.businessDescription" required></textarea>
                             </div>
                         </div>
@@ -193,6 +196,10 @@
                                 <label>
                                     <input type="radio" name="debitorder" value="7th" required>7th
                                 </label>
+                            </div>
+                            <div>
+                                <label>Upload Bank Statements:</label> 
+                                <input class="btn btn-primary pull-right" type="file" file-model="myFile" required/>
                             </div>
                         </div>
                     </div>
