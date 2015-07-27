@@ -5,15 +5,16 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 .when('/products', {
                     'templateUrl': '/html/products.html',
                     'controller': 'productsCtrl'
-                })
-                .when('/products/:id/questionnaires', {
+                }).when('/products/:id/questionnaires', {
                     'templateUrl': '/html/questionnaires.html',
                     'controller': 'questionnairesCtrl'
                 }).when('/quotations/:reference',{
                     'templateUrl': '/html/quotations.html',
                     'controller': 'quotationsCtrl'
-                })
-                        .otherwise({
+                }).when('/quotations/:reference/policies', {
+                    'templateUrl': '/html/policies.html',
+                    'controller': 'policyCtrl'
+                }).otherwise({
                     redirectTo: '/products'
                 });
     }]);
@@ -186,7 +187,7 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
             method: 'get'
         }).success(function (data, status) {
             if (status == 200) {
-                console.log('brokers retrived successfully');
+                console.log('quotations retrived sucessfully');
                 $rootScope.quotation = data;
                 console.log(data);
             } else {
@@ -199,7 +200,56 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
             $rootScope.error = error;
         });
     };
-    
-  
+});
 
+polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
+    
+    
+    $scope.quotation ;
+    
+    $scope.init = function () {
+               
+        if ($rootScope.quotation == undefined) {
+            $scope.getQuotation($routeParams.reference);
+        } else {
+            $scope.getQuotation($routeParams['reference']);
+        }
+    };
+    
+    $scope.getQuotation = function (reference) {
+      
+         $http({
+            url: '/api/quotations/'+ reference,
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('quotations retrived sucessfully');
+                $rootScope.quotation = data;
+                $scope.init();
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+        });
+    };
+    
+    
+    $scope.submitforPolicy = function (applicantform) {
+    	
+        if (applicantform.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            
+            console.log("Form Validation Sucess");
+            $rootScope.message = "Form Validation was succesfull";
+        }
+    };
+    
+    $scope.closeNotification = function(){
+    	$rootScope.message = undefined;
+    };
 });

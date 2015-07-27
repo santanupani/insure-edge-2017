@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-9" ng-repeat=" option in quotation.option">
 
         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
@@ -93,7 +93,9 @@
 
             </div>
             <div class="panel-footer text-right">
-                <button class="btn btn-info">Apply For Policy</button>
+                <p>
+                    <a class="btn btn-default" ng-href="#/quotations/{{quotation.quotationRequest.reference}}/policies" role="button">Apply For Policy</a>
+                </p>
             </div>
         </div>
 

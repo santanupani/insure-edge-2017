@@ -1,0 +1,206 @@
+<div class="row" style="padding: 25px;" ng-init="init()">
+    
+    <div class="alert alert-success alert-dismissible" role="alert" ng-if="error">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Sorry ! </strong>{{error}}
+    </div>
+
+    <div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Success ! </strong>{{message}}
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Product</h4>
+            </div>
+            <div class="panel-body" align="center" style="height: 300px;">
+                <img class="img-circle" ng-src="{{quotation.quotationRequest.product.image}}"
+                     width="140" height="140">
+                <h3>{{quotation.quotationRequest.product.name}}</h3>
+                <p>{{quotation.quotationRequest.product.description}}</p>
+            </div>
+        </div>
+
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Personal Details</h4>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <div class="form-group">
+                        <label class="control-label" for="reference">Reference</label> <input
+                            type="text" class="form-control" id="reference"
+                            ng-model="quotation.quotationRequest.reference" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="companyName">Company</label> <input
+                            type="text" class="form-control" id="companyName"
+                            ng-model="quotation.quotationRequest.companyName" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="applicant">Applicant</label> <input
+                            type="text" class="form-control" id="applicant"
+                            ng-model="quotation.quotationRequest.applicantName" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="appliedOn">Applied On</label> <input
+                            type="text" class="form-control" id="appliedOn"
+                            ng-model="quotation.quotationRequest.createDate" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="status">Status</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="quotation.quotationRequest.status" readonly="readonly"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <form data-toggle="validator" role="applicantform" name="applicantform" id="applicantform">
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                    <div class="panel-heading">
+                        <h4>APPLICANT DETAILS FORM</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Company Registration Number" ng-model="applicant.companyRegistrationNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="VAT Registration Number" ng-model="applicant.vatRegistrationNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Telephone Number" ng-model="applicant.telephoneNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Fax Number" ng-model="applicant.faxNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Street Address" ng-model="applicant.streetaddress" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Suburb" ng-model="applicant.suburb" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Postal Code" ng-model="applicant.postalCode" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Description Of Business" ng-model="applicant.businessDescription" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                    <div class="panel-heading">
+                        <h4>FAIS COMPLIANCE FORM</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-inline">
+                            <label for="offered" class="control-label input-group">Have you been offered cash in transit insurance by a Representative:</label>
+                            <label>
+                                <input type="radio" name="offered" value="Yes" required>Yes
+                            </label>
+                            <label>
+                                <input type="radio" name="offered" value="No" required>No
+                            </label>
+                            <div class="bootstraplist">
+                                <h3>If answered Yes to the above please note the following:</h3>
+                                <ul>
+                                    <li>Cover is only against the Risk of hijack,theft,armed,robbery and accidental damage.</li>
+                                    <li><b>Cover is subject to receipt of premiums by the Insured on or before the 7th of the month.</b></li>
+                                    <li><b>It is your duty as the insured to ensure that any and all premiums are paid for inception of cover to be effective.</b></li>
+                                    <li>There will be cover at all if there is more cash/valuables per container bag/in
+                                        storage/in vault than the amount agreed and insured, unless it is noted that this policy is a
+                                        first loss cover, insuring the access payable under another policy carrying the same loss.
+                                        Details of such policy must be given and the policy must be enforced at all times and
+                                        respond to any loss claimed under the policy.</li>
+                                    <li>It is of the utmost importance that you the insured report any potential loss to Polygon
+                                        Underwriting in writing with in 72 hours of the incident. Any loss reported outside of this 
+                                        time frame will not be paid. Sunday and Public Holidays will NOT be taken in account in
+                                        determining the calculation of the 72 hours period.</li>
+                                    <li>You the insured must at all times adhere to the procedure and recommendations laid
+                                        down by your security risk adviser and or Security Services Provider.</li>
+                                    <li>You confirm having received a copy of the policy wording and copy of the application form
+                                        detailing cover under the policy, at the time of the completing the application forms. Should 
+                                        you require any further clarity, please address your queries to
+                                        info@polygongroup.co.za</li>
+                                </ul>   
+                            </div>
+                            <label class="control-label"><input type="checkbox" required>I, the undersigned, hereby declare that this product was explained to me prior to signing this
+                                application and that I will not hold Polygon Underwriting, the underwriter, the insurer and or my
+                                service provider liable for any claims and/or material facts not disclosed to me. I am aware that I 
+                                can obtain the necessary relavant documentation from Polygon Underwriting on request.</label>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div  class="panel panel-default" style="box-shadow: 0 0 30px black;">			
+                    <div class="panel-heading">
+                        <h4>Debit Order Form</h4>
+                    </div>
+                    <div class="panel-body" >
+                        <div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Full Name of Payee/Account Holder" ng-model="applicant.accountHolderName" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Account Name(If Different From above)" ng-model="applicant.accountNameifdifferent" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Policy/Quote Number" ng-model="applicant.quoteNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Name of Bank" ng-model="applicant.bankName" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Account Number" ng-model="applicant.accountNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Branch Code" ng-model="applicant.branchCode" required>
+                            </div>
+                            <div class="form-inline">
+                                <label for="accounts" class="control-label input-group">Type Of Account:</label>
+                                <label>
+                                    <input type="radio" name="accounts" value="current" required>Current
+                                </label>
+                                <label>
+                                    <input type="radio" name="accounts" value="transmission" required>Transmission
+                                </label>
+                                <label>
+                                    <input type="radio" name="accounts" value="Savings" required>Savings
+                                </label>
+                            </div>
+                            <div class="form-inline">
+                                <label for="debitorder" class="control-label input-group">Debit Order Date:</label>
+                                <label class="radio">
+                                    <input type="radio" name="debitorder" value="1st" required>1st
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="debitorder" value="7th" required>7th
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <button type="submit" class="btn btn-success" ng-click="submitforPolicy(applicantform)">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
