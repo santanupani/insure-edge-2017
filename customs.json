@@ -14,6 +14,9 @@
         },
         "async": {
             "context": "script"
+        },
+        "file-model": {
+            "context": "input"
         }
     },
     "elements": {

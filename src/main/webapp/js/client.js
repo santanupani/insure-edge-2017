@@ -19,6 +19,22 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 });
     }]);
 
+polygon.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
     $scope.init = function () {
@@ -205,14 +221,14 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
 polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
     
     
-    $scope.quotation ;
+    $scope.quotations ;
     
     $scope.init = function () {
                
         if ($rootScope.quotation == undefined) {
             $scope.getQuotation($routeParams.reference);
         } else {
-            $scope.getQuotation($routeParams['reference']);
+            $scope.quotations = $rootScope.quotation;
         }
     };
     

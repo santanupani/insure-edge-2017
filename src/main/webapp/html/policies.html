@@ -1,5 +1,5 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-    
+
     <div class="alert alert-success alert-dismissible" role="alert" ng-if="error">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
             <span aria-hidden="true">&times;</span>
@@ -95,6 +95,9 @@
                                 <input type="text" class="form-control" placeholder="Postal Code" ng-model="applicant.postalCode" required>
                             </div>
                             <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Designation" ng-model="applicant.designation" required>
+                            </div>
+                            <div class="form-group">
                                 <textarea class="form-control" placeholder="Description Of Business" ng-model="applicant.businessDescription" required></textarea>
                             </div>
                         </div>
@@ -187,18 +190,25 @@
                             </div>
                             <div class="form-inline">
                                 <label for="debitorder" class="control-label input-group">Debit Order Date:</label>
-                                <label class="radio">
+                                <label>
                                     <input type="radio" name="debitorder" value="1st" required>1st
                                 </label>
-                                <label class="radio">
+                                <label>
                                     <input type="radio" name="debitorder" value="7th" required>7th
                                 </label>
+                            </div>
+                            <div>
+                                <label>Upload Bank Statements:</label> 
+                                <input class="btn btn-primary pull-right" type="file" file-model="myFile" required/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer text-right">
-                    <button type="submit" class="btn btn-success" ng-click="submitforPolicy(applicantform)">Submit</button>
+                    <p>
+                        <a class="btn btn-info" ng-href="#/quotations/{{quotation.quotationRequest.reference}}" role="button">Choose Other Option</a>
+                        <a class="btn btn-success" ng-click="submitforPolicy(applicantform)"role="button">Submit</a>
+                    </p>
                 </div>
             </div>
         </form>
