@@ -180,7 +180,7 @@ public class Mapper {
     public static Quotation fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel, QuotationRequest quotationRequest) {
         Quotation quotation = new Quotation();
         quotation.setQuotationRequest(quotationRequest);
-        
+
         List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();
         for (Options options : quotationCommandModel.getOptions()) {
             QuotationOption quotationOption = new QuotationOption();
@@ -197,14 +197,13 @@ public class Mapper {
         quotation.setQuotationOptions(quotationOptionList);
         return quotation;
     }
-    
-    
+
     public static QuotationQueryModel toQuotationQueryModel(Quotation quotation) {
 
         QuotationQueryModel result = new QuotationQueryModel();
         result.setQuotationId(quotation.getId());
         result.setQuotationRequest(toQuotationRequestQueryModel(quotation.getQuotationRequest()));
-        
+
         for (QuotationOption quotationOption : quotation.getQuotationOptions()) {
             QuotationQueryModel.Option option = new QuotationQueryModel.Option();
             option.setCommodity(quotationOption.getCommodity());
@@ -218,9 +217,31 @@ public class Mapper {
         }
         return result;
     }
-    
 
-    
+    public static PolicyRequest toPolicyRequest(PolicyRequestCommandModel policyRequestCommandModel, Quotation quotation, QuotationOption quotationOption) {
+        PolicyRequest policyRequest = new PolicyRequest();
 
-}  
+        policyRequest.setCompanyRegNumber(policyRequestCommandModel.getCompanyRegNumber());
+        policyRequest.setVatRegNumber(policyRequestCommandModel.getVatRegNumber());
+        policyRequest.setTelephoneNumber(policyRequestCommandModel.getTelephoneNumber());
+        policyRequest.setFaxNumber(policyRequestCommandModel.getFaxNumber());
+        policyRequest.setStreetAddress(policyRequestCommandModel.getStreetAddress());
+        policyRequest.setSuburb(policyRequestCommandModel.getSuburb());
+        policyRequest.setPostalCode(policyRequestCommandModel.getPostalCode());
+        policyRequest.setDesignation(policyRequestCommandModel.getDesignation());
+        policyRequest.setBuisnessDesc(policyRequestCommandModel.getBuisnessDesc());
+        policyRequest.setRepresentive(policyRequestCommandModel.getRepresentive());
+        policyRequest.setAccountHolder(policyRequestCommandModel.getAccountHolder());
+        policyRequest.setAccountName(policyRequestCommandModel.getAccountName());
+        policyRequest.setBankName(policyRequestCommandModel.getBankName());
+        policyRequest.setAccountNumber(policyRequestCommandModel.getAccountNumber());
+        policyRequest.setBranchCode(policyRequestCommandModel.getBranchCode());
+        policyRequest.setAccType(policyRequestCommandModel.getDebitOrderDate());
+        policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
+        policyRequest.setQuotation(quotation);
+        policyRequest.setQuotationOptions(quotationOption);
 
+        return policyRequest;
+    }
+
+}

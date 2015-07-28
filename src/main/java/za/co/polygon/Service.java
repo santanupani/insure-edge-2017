@@ -44,6 +44,11 @@ import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
 
 import com.itextpdf.text.DocumentException;
+import za.co.polygon.domain.PolicyRequest;
+import za.co.polygon.domain.QuotationOption;
+import za.co.polygon.model.PolicyRequestCommandModel;
+import za.co.polygon.repository.PolicyRequestRepository;
+import za.co.polygon.repository.QuotationOptionRepository;
 
 
 @RestController
@@ -74,6 +79,13 @@ public class Service {
 
     @Autowired
     private QuotationRepository quotationRepository;
+    
+    @Autowired
+    private QuotationOptionRepository quotationOptionRepository;
+    
+      
+    @Autowired
+    private PolicyRequestRepository policyRequestRepository;
  
         
  
@@ -186,6 +198,22 @@ public class Service {
 
         }
         throw new RuntimeException("Quotation has not been Accepted yet");            
+    }
+    
+    @Transactional
+    @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+    public String createPolicyRequest(@RequestBody PolicyRequestCommandModel policyRequestCommandModel) {
+        
+        Quotation quotation = quotationRepository.findOne(policyRequestCommandModel.getQuotationId());
+        
+        QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
+        
+        PolicyRequest policyRequest = toPolicyRequest(policyRequestCommandModel, quotation, quotationOption);
+        
+        policyRequest = policyRequestRepository.save(policyRequest);
+        
+ 
+        return policyRequest.getQuotation().getQuotationRequest().getReference();
     }
     
 }
