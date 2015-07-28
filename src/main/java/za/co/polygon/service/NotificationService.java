@@ -1,13 +1,12 @@
 package za.co.polygon.service;
 
-import java.io.File;
-import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Notification;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.repository.MailRepository;
 import za.co.polygon.repository.MessageRepository;
 
 @Service
@@ -15,6 +14,7 @@ public class NotificationService {
 
     @Autowired
     private MessageRepository messageRepository;
+    private Notification notification;
 
     public void sendNotificationForNewQuotationRequest(QuotationRequest quotationRequest, Broker broker) {
         String to = broker.getEmail();
@@ -26,7 +26,7 @@ public class NotificationService {
                 quotationRequest.getReference(),
                 quotationRequest.getReference());
         Notification notification = new Notification(to, subject, message);
-        messageRepository.publish(notification, "q.notification");
+        getMessageRepository().publish(notification, "q.notification");
     }
 
     public void sendNotificationForRejectQuotationRequest(QuotationRequest quotationRequest, String reason) {
@@ -46,7 +46,7 @@ public class NotificationService {
                 quotationRequest.getReference(),
                 reason);
         Notification notification = new Notification(to, subject, message);
-        messageRepository.publish(notification, "q.notification");
+        getMessageRepository().publish(notification, "q.notification");
     }
     
     public void sendNotificationForAcceptQuotationRequest(QuotationRequest quotationRequest,byte[] data){
@@ -70,9 +70,42 @@ public class NotificationService {
         String filename = quotationRequest.getApplicantName() + "_quotation.pdf";
         
         Notification notification = new Notification(to, subject, message, data, filename);
-        messageRepository.publish(notification, "q.notification");
+        getMessageRepository().publish(notification, "q.notification");
     }
+   
     
-    
+    public void sendNotificationForNewPolicyRequest(QuotationRequest quotationRequest, Broker broker) {
+        String to = broker.getEmail();
+        String subject = "New Policy Request";
+        String message = String.format(
+                "Ref : %s" + "\n"
+                + "Click the link below to view policy request : " + "\n"
+                + "http://localhost:8080/polygon/broker.html#/policy-requests/%s",
+                quotationRequest.getReference(),
+                quotationRequest.getReference());
+        		setNotification(new Notification(to, subject, message));
+        		try {
+        			MailRepository mailRepository = new MailRepository();
+        			mailRepository.send(notification);
+        		} catch (Exception e) {
+        			e.printStackTrace();
+        		}
+        		getMessageRepository().publish(getNotification(), "q.notification");     
+    }
 
+	public MessageRepository getMessageRepository() {
+		return messageRepository;
+	}
+
+	public void setMessageRepository(MessageRepository messageRepository) {
+		this.messageRepository = messageRepository;
+	}
+
+	public Notification getNotification() {
+		return notification;
+	}
+
+	public void setNotification(Notification notification) {
+		this.notification = notification;
+	}
 }

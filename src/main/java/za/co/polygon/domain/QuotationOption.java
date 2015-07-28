@@ -22,7 +22,7 @@ public class QuotationOption {
     @ManyToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
-    
+       
     @Column(name = "location")
     private String location;
     
@@ -115,6 +115,8 @@ public class QuotationOption {
     public void setPremium(String premium) {
         this.premium = premium;
     }
+
+
     
     
 }
