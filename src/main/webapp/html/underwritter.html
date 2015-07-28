@@ -75,49 +75,50 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-9">
+        <div ng-repeat="option in quotation.option">
 
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Quotation Options</h4>
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel-heading">
+                    <h4>Quotation Options</h4>
 
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <label class="control-label" for="location">Location: </label>
-                        <input type="text" class="form-control" id="location"
-                               ng-model="option.location" readonly="readonly">
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <div class="form-group">
+                            <label class="control-label" for="location">Location: </label>
+                            <input type="text" class="form-control" id="location"
+                                   ng-model="option.location" readonly="readonly">
 
-                        <label class="control-label" for="commodity">Commodity: </label>
-                        <input type="text" class="form-control" id="commodity"
-                               ng-model="option.commodity" readonly="readonly">
+                            <label class="control-label" for="commodity">Commodity: </label>
+                            <input type="text" class="form-control" id="commodity"
+                                   ng-model="option.commodity" readonly="readonly">
 
-                        <label class="control-label" for="limit">Limit: </label>
-                        <input type="text" class="form-control" id="limit"
-                               ng-model="option.limit" readonly="readonly">
+                            <label class="control-label" for="limit">Limit: </label>
+                            <input type="text" class="form-control" id="limit"
+                                   ng-model="option.limit" readonly="readonly">
 
-                        <label class="control-label" for="cover">Cover: </label>
-                        <input type="text" class="form-control" id="cover"
-                               ng-model="option.cover" readonly="readonly">
+                            <label class="control-label" for="cover">Cover: </label>
+                            <input type="text" class="form-control" id="cover"
+                                   ng-model="option.cover" readonly="readonly">
 
-                        <label class="control-label" for="duration">Duration: </label>
-                        <input type="text" class="form-control" id="duration"
-                               ng-model="option.duration" readonly="readonly">
+                            <label class="control-label" for="duration">Duration: </label>
+                            <input type="text" class="form-control" id="duration"
+                                   ng-model="option.duration" readonly="readonly">
 
-                        <label class="control-label" for="excess">Excess: </label>
-                        <input type="text" class="form-control" id="excess"
-                               ng-model="option.excess" readonly="readonly">
+                            <label class="control-label" for="excess">Excess: </label>
+                            <input type="text" class="form-control" id="excess"
+                                   ng-model="option.excess" readonly="readonly">
 
-                        <label class="control-label" for="premium">Premium: </label>
-                        <input type="text" class="form-control" id="premium"
-                               ng-model="option.premium" readonly="readonly">
+                            <label class="control-label" for="premium">Premium: </label>
+                            <input type="text" class="form-control" id="premium"
+                                   ng-model="option.premium" readonly="readonly">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div>
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
                 <div class="panel-heading">
@@ -136,7 +137,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
