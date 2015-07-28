@@ -205,6 +205,7 @@ public class Mapper {
         
         for (QuotationOption quotationOption : quotation.getQuotationOptions()) {
             QuotationQueryModel.Option option = new QuotationQueryModel.Option();
+            option.setQuotationOptionId(quotationOption.getId());
             option.setCommodity(quotationOption.getCommodity());
             option.setCover(quotationOption.getCover());
             option.setDuration(quotationOption.getPeroid());

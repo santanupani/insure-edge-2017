@@ -80,25 +80,25 @@
                                 <input type="text" class="form-control" placeholder="VAT Registration Number" ng-model="applicant.vatRegistrationNumber" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Telephone Number" ng-model="applicant.telephoneNumber" required>
+                                <input type="text" class="form-control" name="phoneNumber" onblur="formatPhone(this);" placeholder="Telephone Number" ng-model="applicant.telephoneNumber" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Fax Number" ng-model="applicant.faxNumber" required>
+                                <input type="text" class="form-control" placeholder="Fax Number" ng-model="applicant.faxNumber" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Street Address" ng-model="applicant.streetaddress" required>
+                                <input type="text" class="form-control" placeholder="Street Address" ng-model="applicant.streetaddress" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Suburb" ng-model="applicant.suburb" required>
+                                <input type="text" class="form-control" placeholder="Suburb" ng-model="applicant.suburb" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Postal Code" ng-model="applicant.postalCode" required>
+                                <input type="text" class="form-control" placeholder="Postal Code" ng-model="applicant.postalCode" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Designation" ng-model="applicant.designation" required>
+                                <input type="text" class="form-control" placeholder="Designation" ng-model="applicant.designation" required/>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="Description Of Business" ng-model="applicant.businessDescription" required></textarea>
+                                <textarea class="form-control" placeholder="Description Of Business" ng-model="applicant.businessDescription" required/></textarea>
                             </div>
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                 <div class="panel-footer text-right">
                     <p>
                         <a class="btn btn-info" ng-href="#/quotations/{{quotation.quotationRequest.reference}}" role="button">Choose Other Option</a>
-                        <a class="btn btn-success" ng-click="submitforPolicy(applicantform)"role="button">Submit</a>
+                        <button class="btn btn-success" ng-click="submitforPolicy(applicantform)"role="button">Submit</button>
                     </p>
                 </div>
             </div>

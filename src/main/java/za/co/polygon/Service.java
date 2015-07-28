@@ -44,6 +44,8 @@ import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
 
 import com.itextpdf.text.DocumentException;
+import za.co.polygon.domain.QuotationOption;
+import za.co.polygon.repository.QuotationOptionRepository;
 
 @RestController
 public class Service {
@@ -169,13 +171,14 @@ public class Service {
     public QuotationQueryModel getQuotation(@PathVariable("reference") String reference) {
 
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-
+        
         if (quotationRequest.getStatus().equals("ACCEPTED")) {
 
             Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
 
             log.info("Number of quotation options for this quotation: " + quotationRepository.count());
             log.info("Quotation request size: " + quotation.getQuotationOptions().size());
+           
 
             log.info("find all the quotation details inserted for a product using the reference");
             return toQuotationQueryModel(quotation);

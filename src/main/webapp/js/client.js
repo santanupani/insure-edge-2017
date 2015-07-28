@@ -8,7 +8,7 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 }).when('/products/:id/questionnaires', {
                     'templateUrl': '/html/questionnaires.html',
                     'controller': 'questionnairesCtrl'
-                }).when('/quotations/:reference',{
+                }).when('/quotations/:reference', {
                     'templateUrl': '/html/quotations.html',
                     'controller': 'quotationsCtrl'
                 }).when('/quotations/:reference/policies', {
@@ -20,27 +20,29 @@ polygon.config(['$routeProvider', function ($routeProvider) {
     }]);
 
 polygon.directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
                 });
-            });
-        }
-    };
-}]);
+            }
+        };
+    }]);
+
+
 
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
     $scope.init = function () {
         $scope.getProducts();
     };
-    
+
     $scope.getProducts = function () {
         console.log('get products');
         $http({
@@ -59,22 +61,22 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
             $rootScope.message = "Oops, we received your request, but there was an error processing it";
         });
     };
-    
-    $scope.closeNotification = function(){
-    	$rootScope.message = undefined;
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
     };
 });
 
 polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
 
-	$scope.product ;
-	
+    $scope.product;
+
     $scope.questionnaires = [];
-    
+
     $scope.quotationRequest = {};
 
     $scope.init = function () {
-               
+
         if ($rootScope.products == undefined) {
             $scope.getProducts();
         } else {
@@ -123,7 +125,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
-                
+
             }
         }).error(function (error) {
             console.log(error);
@@ -144,7 +146,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
-                
+
             }
         }).error(function (error) {
             console.log(error);
@@ -153,17 +155,17 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     };
 
     $scope.submitQuotationRequest = function (form) {
-    	
+
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
-        	console.log("Form Validation Success");
+            console.log("Form Validation Success");
             $scope.quotationRequest.questionnaires = [];
-            for(var i=0; i< $scope.questionnaires.length; i++) {
-            	$scope.quotationRequest.questionnaires[i]= {};
-            	$scope.quotationRequest.questionnaires[i].question =  $scope.questionnaires[i].question;
-            	$scope.quotationRequest.questionnaires[i].answer = $scope.questionnaires[i].answer;
-            }            
+            for (var i = 0; i < $scope.questionnaires.length; i++) {
+                $scope.quotationRequest.questionnaires[i] = {};
+                $scope.quotationRequest.questionnaires[i].question = $scope.questionnaires[i].question;
+                $scope.quotationRequest.questionnaires[i].answer = $scope.questionnaires[i].answer;
+            }
             console.log($scope.quotationRequest);
             $http({
                 url: '/api/quotation-requests',
@@ -190,16 +192,16 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 });
 
 polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $routeParams) {
-    
-    
-    $scope.init = function () {    
-        $scope.getQuotation($routeParams.reference); 
+
+
+    $scope.init = function () {
+        $scope.getQuotation($routeParams.reference);
     };
-    
+
     $scope.getQuotation = function (reference) {
-      
-         $http({
-            url: '/api/quotations/'+ reference,
+
+        $http({
+            url: '/api/quotations/' + reference,
             method: 'get'
         }).success(function (data, status) {
             if (status == 200) {
@@ -209,7 +211,7 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
-                
+
             }
         }).error(function (error) {
             console.log(error);
@@ -219,23 +221,25 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
 });
 
 polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
-    
-    
-    $scope.quotations ;
-    
+
+
+    $scope.quotations;
+
     $scope.init = function () {
-               
+
         if ($rootScope.quotation == undefined) {
-            $scope.getQuotation($routeParams.reference);
+            
+            $scope.quotations = $scope.getQuotation($routeParams.reference);
+            
         } else {
             $scope.quotations = $rootScope.quotation;
         }
     };
-    
+
     $scope.getQuotation = function (reference) {
-      
-         $http({
-            url: '/api/quotations/'+ reference,
+
+        $http({
+            url: '/api/quotations/' + reference,
             method: 'get'
         }).success(function (data, status) {
             if (status == 200) {
@@ -245,27 +249,27 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
-                
+
             }
         }).error(function (error) {
             console.log(error);
             $rootScope.error = error;
         });
     };
-    
-    
+
     $scope.submitforPolicy = function (applicantform) {
-    	
+
         if (applicantform.$invalid) {
             console.log("Form Validation Failure");
         } else {
-            
+
             console.log("Form Validation Sucess");
             $rootScope.message = "Form Validation was succesfull";
         }
     };
-    
-    $scope.closeNotification = function(){
-    	$rootScope.message = undefined;
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
     };
+
 });

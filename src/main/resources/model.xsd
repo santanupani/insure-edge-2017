@@ -144,6 +144,7 @@
                 <element name="option" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
                         <sequence>
+                            <element name="quotationOptionId" type="long" />
                             <element name="location" type="string" />
                             <element name="commodity" type="string" />
                             <element name="limit" type="string" />
