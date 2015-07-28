@@ -186,6 +186,33 @@
         </complexType>
     </element>
     
+    <element name="PolicyRequestQueryModel">
+        <complexType>
+            <sequence>
+                <element name="quotationId" type="long" />
+                <element name="quotationOptionId" type="long" />
+                <element name="quotationRequest" minOccurs="0" maxOccurs="1"		type="tns:QuotationRequestQueryModel" />
+                <element name="companyRegNumber" type="string" />
+                <element name="vatRegNumber" type="string" />
+                <element name="telephoneNumber" type="string" />
+                <element name="faxNumber" type="string" />
+                <element name="streetAddress" type="string" />
+                <element name="suburb" type="string" />
+                <element name="postalCode" type="string" />
+                <element name="designation" type="string" />
+                <element name="buisnessDesc" type="string" />
+                <element name="representive" type="string" />
+                <element name="accountHolder" type="string" />
+                <element name="accountName" type="string" />
+                <element name="bankName" type="string" />
+                <element name="accountNumber" type="string" />
+                <element name="branchCode" type="string" />
+                <element name="accType" type="string" />
+                <element name="debitOrderDate" type="string" />
+                <element name="bankStatement" type="hexBinary" />
+            </sequence>
+        </complexType>
+    </element>
     
         
 </schema>
