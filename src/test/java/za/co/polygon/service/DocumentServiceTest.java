@@ -88,54 +88,5 @@ public class DocumentServiceTest {
         out.write(data);
         out.close();
     }
-    
-    
-    //Test email notification for policy request
-    @Test
-    public void testSendPolicyRequestNotification(){
-    	Broker broker = new Broker();
-    	broker.setId(1l);
-    	broker.setEmail("lkonaite@gmail.com");
-    	
-    	QuotationOption selectedOption = new QuotationOption();
-    	selectedOption.setId(1l);
-    	selectedOption.setLocation("Randburg");
-    	selectedOption.setCommodity("Cash and Valuables");
-    	selectedOption.setCover("Cash");
-    	selectedOption.setExcess("2000.00");
-    	
-    	List<QuotationOption> quotationOptions = new ArrayList<QuotationOption>();
-    	quotationOptions.add(selectedOption);
-    	
-    	QuotationRequest quotationRequest = new QuotationRequest();
-    	quotationRequest.setReference("5a3444b9-849a-473a-b662-65d06a11c117");
-    	quotationRequest.setApplicantName("Client Requesting Policy");
-    	quotationRequest.setCompanyName("My Company to Run");
-    	
-    	Quotation quotation = new Quotation();
-    	quotation.setId(1l);
-    	quotation.setQuotationOptions(quotationOptions);
-    	quotation.setQuotationRequest(quotationRequest);
-    	
-    	PolicyRequest policyRequest = new PolicyRequest();
-    	policyRequest.setAccountNumber("123123");
-    	policyRequest.setAccountHolder("My Company to Run");
-    	policyRequest.setQuotation(quotation); // Set new policy's quotation that requested the quotation
-   
-    	NotificationService notificationService = new NotificationService();
-    	
-    	MessageRepository messageRepository = mock(MessageRepository.class);
-    	
-    	notificationService.setMessageRepository(messageRepository);
-    	Assert.assertNotNull(notificationService.getMessageRepository());
-    	
-    	notificationService.sendNotificationForNewPolicyRequest(quotationRequest, broker);
-    	
-    	verify(messageRepository,times(1)).publish(notificationService.getNotification(), "q.notification");
-    	
-    	
-    	
-    	
-    }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Notification;
+import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.repository.MailRepository;
 import za.co.polygon.repository.MessageRepository;
@@ -74,22 +75,22 @@ public class NotificationService {
     }
    
     
-    public void sendNotificationForNewPolicyRequest(QuotationRequest quotationRequest, Broker broker) {
-        String to = broker.getEmail();
+    public void sendNotificationForNewPolicyRequest(PolicyRequest policyRequest, String toUnderwriterEmail,String underWriterName) {
+        String to = toUnderwriterEmail;
         String subject = "New Policy Request";
         String message = String.format(
-                "Ref : %s" + "\n"
-                + "Click the link below to view policy request : " + "\n"
-                + "http://localhost:8080/polygon/broker.html#/policy-requests/%s",
-                quotationRequest.getReference(),
-                quotationRequest.getReference());
+                "Dear " +underWriterName+ ",\n\n"
+                + "You have a new Policy Request for Ref. :  %s\nClick the link below to view policy request details: " + "\n"
+                + "http://localhost:8080/polygon/underwriter.html#/policy-requests/%s\n\nKind Regards,",
+                policyRequest.getQuotation().getQuotationRequest().getReference(),
+                policyRequest.getQuotation().getQuotationRequest().getReference());
         		setNotification(new Notification(to, subject, message));
-        		try {
-        			MailRepository mailRepository = new MailRepository();
-        			mailRepository.send(notification);
-        		} catch (Exception e) {
-        			e.printStackTrace();
-        		}
+//        		try {
+//        			MailRepository mailRepository = new MailRepository();
+//        			mailRepository.send(notification);
+//        		} catch (Exception e) {
+//        			e.printStackTrace();
+//        		}
         		getMessageRepository().publish(getNotification(), "q.notification");     
     }
 
