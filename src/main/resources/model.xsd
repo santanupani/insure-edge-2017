@@ -162,8 +162,6 @@
     <element name="PolicyRequestCommandModel">
         <complexType>
             <sequence>
-                <element name="quotationId" type="long" />
-                <element name="quotationOptionId" type="long" />
                 <element name="companyRegNumber" type="string" />
                 <element name="vatRegNumber" type="string" />
                 <element name="telephoneNumber" type="string" />
@@ -181,7 +179,9 @@
                 <element name="branchCode" type="string" />
                 <element name="accType" type="string" />
                 <element name="debitOrderDate" type="string" />
-                <element name="bankStatement" type="hexBinary" />
+                <element name="bankStatement" type="hexBinary"/>
+                <element name="quotationId" type="long" />
+                <element name="quotationOptionId" type="long" />
             </sequence>
         </complexType>
     </element>

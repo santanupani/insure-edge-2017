@@ -201,10 +201,11 @@ public class Service {
     }
     
     @Transactional
-    @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
     public void createPolicyRequest(@RequestBody PolicyRequestCommandModel policyRequestCommandModel) {
         
         Quotation quotation = quotationRepository.findOne(policyRequestCommandModel.getQuotationId());
+        log.info("QuotationId : " + policyRequestCommandModel.getQuotationId());
         
         QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
         
@@ -213,6 +214,7 @@ public class Service {
         policyRequest = policyRequestRepository.save(policyRequest);
         
         log.info("saved all the values");
+        log.info(policyRequest.toString());
         
         //return policyRequest.getQuotation().getQuotationRequest().getReference();
     }

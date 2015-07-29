@@ -231,14 +231,14 @@ public class Mapper {
         policyRequest.setPostalCode(policyRequestCommandModel.getPostalCode());
         policyRequest.setDesignation(policyRequestCommandModel.getDesignation());
         policyRequest.setBuisnessDesc(policyRequestCommandModel.getBuisnessDesc());
-        policyRequest.setRepresentive(policyRequestCommandModel.getRepresentive());
         policyRequest.setAccountHolder(policyRequestCommandModel.getAccountHolder());
         policyRequest.setAccountName(policyRequestCommandModel.getAccountName());
         policyRequest.setBankName(policyRequestCommandModel.getBankName());
         policyRequest.setAccountNumber(policyRequestCommandModel.getAccountNumber());
         policyRequest.setBranchCode(policyRequestCommandModel.getBranchCode());
-        policyRequest.setAccType(policyRequestCommandModel.getDebitOrderDate());
-       // policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
+        policyRequest.setAccType(policyRequestCommandModel.getAccType());
+        policyRequest.setDebitOrderDate(policyRequestCommandModel.getDebitOrderDate());
+        policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
         policyRequest.setQuotation(quotation);
         policyRequest.setQuotationOptions(quotationOption);
 

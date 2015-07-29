@@ -65,7 +65,8 @@
     </div>
 
     <div class="col-md-9">
-        <form data-toggle="validator" role="applicantform" name="applicantform" id="applicantform">
+        <form data-toggle="validator" role="form" name="form" id="form">
+        
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
                 <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
                     <div class="panel-heading">
@@ -74,31 +75,31 @@
                     <div class="panel-body">
                         <div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Company Registration Number" ng-model="applicant.companyRegistrationNumber" required>
+                                <input type="text" class="form-control" placeholder="Company Registration Number" ng-model="policyRequest.companyRegNumber"  required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="VAT Registration Number" ng-model="applicant.vatRegistrationNumber" required>
+                                <input type="text" class="form-control" placeholder="VAT Registration Number" ng-model="policyRequest.vatRegNumber"  required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="phoneNumber" placeholder="Telephone Number" ng-model="applicant.telephoneNumber" required/>
+                                <input type="text" class="form-control" name="phoneNumber" placeholder="Telephone Number" ng-model="policyRequest.telephoneNumber"  required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Fax Number" ng-model="applicant.faxNumber" required/>
+                                <input type="text" class="form-control" placeholder="Fax Number" ng-model="policyRequest.faxNumber" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Street Address" ng-model="applicant.streetaddress" required/>
+                                <input type="text" class="form-control" placeholder="Street Address" ng-model="policyRequest.streetAddress"  required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Suburb" ng-model="applicant.suburb" required/>
+                                <input type="text" class="form-control" placeholder="Suburb" ng-model="policyRequest.suburb" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Postal Code" ng-model="applicant.postalCode" required/>
+                                <input type="text" class="form-control" placeholder="Postal Code" ng-model="policyRequest.postalCode" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Designation" ng-model="applicant.designation" required/>
+                                <input type="text" class="form-control" placeholder="Designation" ng-model="policyRequest.designation" required/>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="Description Of Business" ng-model="applicant.businessDescription" required/></textarea>
+                                <textarea class="form-control" placeholder="Description Of Business" ng-model="policyRequest.buisnessDesc"  required/></textarea>
                             </div>
                         </div>
                     </div>
@@ -112,10 +113,10 @@
                         <div class="form-inline">
                             <label for="offered" class="control-label input-group">Have you been offered cash in transit insurance by a Representative:</label>
                             <label>
-                                <input type="radio" name="offered" value="Yes" required>Yes
+                                <input type="radio" name="offered" value="Yes">Yes
                             </label>
                             <label>
-                                <input type="radio" name="offered" value="No" required>No
+                                <input type="radio" name="offered" value="No">No
                             </label>
                             <div class="bootstraplist">
                                 <h3>If answered Yes to the above please note the following:</h3>
@@ -157,57 +158,47 @@
                         <h4>Debit Order Form</h4>
                     </div>
                     <div class="panel-body" >
+                        
                         <div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Full Name of Payee/Account Holder" ng-model="applicant.accountHolderName" required>
+                                <input type="text" class="form-control" placeholder="Full Name of Payee/Account Holder" ng-model="policyRequest.accountHolder" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Account Name(If Different From above)" ng-model="applicant.accountNameifdifferent" required>
+                                <input type="text" class="form-control" placeholder="Account Name(If Different From above)" ng-model="policyRequest.accountName" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Policy/Quote Number" ng-model="applicant.quoteNumber" required>
+                                <input type="text" class="form-control" placeholder="Name of Bank" ng-model="policyRequest.bankName" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name of Bank" ng-model="applicant.bankName" required>
+                                <input type="text" class="form-control" placeholder="Account Number" ng-model="policyRequest.accountNumber" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Account Number" ng-model="applicant.accountNumber" required>
+                                <input type="text" class="form-control" placeholder="Branch Code" ng-model="policyRequest.branchCode" required>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Branch Code" ng-model="applicant.branchCode" required>
+                              <div class="form-group">
+                                <select class="form-control" placeholder="Account Type" ng-model="policyRequest.accType" ng-options="accounttype for accounttype in accounttype" required>
+                                        <option value="">Select Your Account type</option>
+                                </select>
                             </div>
-                            <div class="form-inline">
-                                <label for="accounts" class="control-label input-group">Type Of Account:</label>
-                                <label>
-                                    <input type="radio" name="accounts" value="current" required>Current
-                                </label>
-                                <label>
-                                    <input type="radio" name="accounts" value="transmission" required>Transmission
-                                </label>
-                                <label>
-                                    <input type="radio" name="accounts" value="Savings" required>Savings
-                                </label>
-                            </div>
-                            <div class="form-inline">
-                                <label for="debitorder" class="control-label input-group">Debit Order Date:</label>
-                                <label>
-                                    <input type="radio" name="debitorder" value="1st" required>1st
-                                </label>
-                                <label>
-                                    <input type="radio" name="debitorder" value="7th" required>7th
-                                </label>
+                               <div class="form-group">
+                                <select class="form-control" placeholder="Account Type" ng-model="policyRequest.debitOrderDate" ng-options="debitOrderDate for debitOrderDate in debitOrderDate" required>
+                                        <option value="">Select Debit order date</option>
+                                </select>
                             </div>
 <!--                            <div>
                                 <label>Upload Bank Statements:</label> 
                                 <input class="btn btn-primary pull-right" type="file" file-model="myFile" required/>
                             </div>-->
                         </div>
+                           
                     </div>
+                    
                 </div>
+                 
                 <div class="panel-footer text-right">
                     <p>
                         <a class="btn btn-info" ng-href="#/quotations/{{quotation.quotationRequest.reference}}" role="button">Choose Other Option</a>
-                        <button class="btn btn-success" ng-click="submitforPolicy(applicantform)"role="button">Submit</button>
+                        <button class="btn btn-success" ng-click="submitforPolicy(form)"role="button">Submit</button>
                     </p>
                 </div>
             </div>

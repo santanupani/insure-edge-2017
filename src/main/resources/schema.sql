@@ -118,15 +118,14 @@ create table policy_requests(
     postal_code varchar(64) not null,
     designation varchar(64) not null,
     buisness_desc varchar(64) not null,
-    representive varchar(64) not null,
     account_holder varchar(64) not null,
     account_name varchar(64) not null,
     bank_name varchar(64) not null,
     account_number varchar(64) not null,
     branch_code varchar(64) not null,
     acc_type varchar(64) not null,
-    debit_order_date date not null,
-    bank_statement blob,
-    constraint applicant_details_fk foreign key (quotation_id) references quotations (id),
-    constraint applicant_details_fk1 foreign key (quotation_option_id) references quotation_options (id)
+    debit_order_date varchar(32) not null,
+    bank_statement binary,
+    constraint applicant_details_fk1 foreign key (quotation_id) references quotations (id),
+    constraint applicant_details_fk2 foreign key (quotation_option_id) references quotation_options (id)
 );

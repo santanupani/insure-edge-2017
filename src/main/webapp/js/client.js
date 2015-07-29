@@ -224,12 +224,20 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
 
 
     $scope.quotations;
+    $scope.QuotationId ;
+    $scope.policyRequest = {};
 
     $scope.init = function () {
+        
+          $scope.debitOrderDate = ['1st', '7th'];
+           $scope.accounttype = ['Current', 'Savings', 'Transmition'];
 
         if ($rootScope.quotation == undefined) {
-
+            
             $scope.quotations = $scope.getQuotation($routeParams.reference);
+            
+           
+          
 
         } else {
             $scope.quotations = $rootScope.quotation;
@@ -257,15 +265,16 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
         });
     };
 
-    $scope.submitforPolicy = function (applicantform) {
+    $scope.submitforPolicy = function (form) {
 
-//        if (applicantform.$invalid) {
-//            console.log("Form Validation Failure");
-//        } else {
-//
-//            console.log("Form Validation Sucess");
-//            $rootScope.message = "Form Validation was succesfull";
-//        }
+        if (form.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+
+            console.log("Form Validation Sucess");
+            $rootScope.message = "Form Validation was succesfull";
+        
+        $scope.policyRequest.QuotationId = $scope.QuotationId;
          console.log($scope.policyRequest);
         $http({
             url: '/api/policy-requests',
@@ -286,8 +295,9 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             console.log(error);
             $rootScope.message = error;
         });
+    }
     };
-
+    
     $scope.closeNotification = function () {
         $rootScope.message = undefined;
     };
