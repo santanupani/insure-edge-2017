@@ -238,7 +238,7 @@ public class Mapper {
         policyRequest.setAccountNumber(policyRequestCommandModel.getAccountNumber());
         policyRequest.setBranchCode(policyRequestCommandModel.getBranchCode());
         policyRequest.setAccType(policyRequestCommandModel.getDebitOrderDate());
-        policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
+       // policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
         policyRequest.setQuotation(quotation);
         policyRequest.setQuotationOptions(quotationOption);
 
