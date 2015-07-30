@@ -1,6 +1,15 @@
 package za.co.polygon;
 
-import static za.co.polygon.mapper.Mapper.*;
+import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
+import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
+import static za.co.polygon.mapper.Mapper.toPolicyRequest;
+import static za.co.polygon.mapper.Mapper.toProductQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuotationQueryModel;
+import static za.co.polygon.mapper.Mapper.toQuotationRequest;
+import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
+import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+import static za.co.polygon.mapper.Mapper.toPolicyRequestQueryModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,11 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
+import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.PolicyRequestCommandModel;
+import za.co.polygon.model.PolicyRequestQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
@@ -34,20 +47,18 @@ import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.PolicyRequestRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
+import za.co.polygon.repository.QuotationOptionRepository;
 import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
+
 import com.itextpdf.text.DocumentException;
-import za.co.polygon.domain.PolicyRequest;
-import za.co.polygon.domain.QuotationOption;
-import za.co.polygon.model.PolicyRequestCommandModel;
-import za.co.polygon.repository.PolicyRequestRepository;
-import za.co.polygon.repository.QuotationOptionRepository;
 
 
 @RestController
@@ -201,10 +212,12 @@ public class Service {
     }
     
     @Transactional
-    @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
     public void createPolicyRequest(@RequestBody PolicyRequestCommandModel policyRequestCommandModel) {
         
-        Quotation quotation = quotationRepository.findOne(policyRequestCommandModel.getQuotationId());
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(policyRequestCommandModel.getReference());
+        
+        Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
         
         QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
         
@@ -213,8 +226,21 @@ public class Service {
         policyRequest = policyRequestRepository.save(policyRequest);
         
         log.info("saved all the values");
+        log.info(policyRequest.toString());
         
         //return policyRequest.getQuotation().getQuotationRequest().getReference();
+    }
+    
+    
+    @RequestMapping(value = "api/policy-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PolicyRequestQueryModel getPolicyRequest(@PathVariable("reference") String reference) {
+    	
+    	QuotationRequest quotationtRequest = quotationRequestRepository.findByReference(reference);
+    	Quotation quotation = quotationRepository.findByQuotationRequest(quotationtRequest);
+    	PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
+    	
+    	return toPolicyRequestQueryModel(policyRequest);
+        
     }
     
 }
