@@ -6,17 +6,17 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/products.html',
                     'controller': 'productsCtrl'
                 }).when('/products/:id/questionnaires', {
-                    'templateUrl': '/html/questionnaires.html',
-                    'controller': 'questionnairesCtrl'
-                }).when('/quotations/:reference', {
-                    'templateUrl': '/html/quotations.html',
-                    'controller': 'quotationsCtrl'
-                }).when('/quotations/:reference/policies', {
-                    'templateUrl': '/html/policies.html',
-                    'controller': 'policyCtrl'
-                }).otherwise({
-                    redirectTo: '/products'
-                });
+            'templateUrl': '/html/questionnaires.html',
+            'controller': 'questionnairesCtrl'
+        }).when('/quotations/:reference', {
+            'templateUrl': '/html/quotations.html',
+            'controller': 'quotationsCtrl'
+        }).when('/quotations/:reference/policies', {
+            'templateUrl': '/html/policies.html',
+            'controller': 'policyCtrl'
+        }).otherwise({
+            redirectTo: '/products'
+        });
     }]);
 
 polygon.directive('fileModel', ['$parse', function ($parse) {
@@ -224,13 +224,22 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
 
 
     $scope.quotations;
+    $scope.quotationOption;
+    $scope.policyRequest = {};
 
     $scope.init = function () {
+            $scope.reference = $routeParams.reference;
+            $
+          $scope.debitOrderDate = ['1st', '7th'];
+           $scope.accounttype = ['Current', 'Savings', 'Transmition'];
 
         if ($rootScope.quotation == undefined) {
             
             $scope.quotations = $scope.getQuotation($routeParams.reference);
             
+           
+          
+
         } else {
             $scope.quotations = $rootScope.quotation;
         }
@@ -257,17 +266,40 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
         });
     };
 
-    $scope.submitforPolicy = function (applicantform) {
+    $scope.submitforPolicy = function (form) {
 
-        if (applicantform.$invalid) {
+        if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
 
             console.log("Form Validation Sucess");
             $rootScope.message = "Form Validation was succesfull";
-        }
+        
+        $scope.policyRequest.reference = $scope.reference;
+        console.log("ref " + $scope.reference);
+         console.log($scope.policyRequest);
+        $http({
+            url: '/api/policy-requests',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: $scope.policyRequest
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('All the details are saved succesfullly');
+                $rootScope.message = "Reference Number : " + data;
+                $location.path("/products");
+            } else {
+                console.log('status:' + status);
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.message = error;
+        });
+    }
     };
-
+    
     $scope.closeNotification = function () {
         $rootScope.message = undefined;
     };

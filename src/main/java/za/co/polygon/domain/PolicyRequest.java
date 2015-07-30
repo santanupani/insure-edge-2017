@@ -1,18 +1,12 @@
 package za.co.polygon.domain;
 
-import java.sql.Blob;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,14 +17,7 @@ public class PolicyRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-     @ManyToOne
-    @JoinColumn(name = "quotation_option_id")
-    private QuotationOption quotationOptions; 
     
-    @OneToOne
-    @JoinColumn(name = "quotation_id")
-    private Quotation quotation;
 
     @Column(name = "company_reg_number")
     private String companyRegNumber;
@@ -59,8 +46,7 @@ public class PolicyRequest {
     @Column(name = "buisness_desc")
     private String buisnessDesc;
 
-    @Column(name = "representive")
-    private String representive;
+   
 
     @Column(name = "account_holder")
     private String accountHolder;
@@ -81,10 +67,18 @@ public class PolicyRequest {
     private String accType;
 
     @Column(name = "debit_order_date")
-    private Date debitOrderDate;
-
+    private String debitOrderDate;
+    
     @Column(name = "bank_statement")
     private byte[] bankStatement;
+    
+    @ManyToOne
+    @JoinColumn(name = "quotation_id")
+    private Quotation quotation;
+    
+    @ManyToOne
+    @JoinColumn(name = "quotation_option_id")
+    private QuotationOption quotationOptions; 
 
     public Long getId() {
         return id;
@@ -100,6 +94,14 @@ public class PolicyRequest {
 
     public void setQuotation(Quotation quotation) {
         this.quotation = quotation;
+    }
+
+    public QuotationOption getQuotationOptions() {
+        return quotationOptions;
+    }
+
+    public void setQuotationOptions(QuotationOption quotationOptions) {
+        this.quotationOptions = quotationOptions;
     }
 
     public String getCompanyRegNumber() {
@@ -174,14 +176,6 @@ public class PolicyRequest {
         this.buisnessDesc = buisnessDesc;
     }
 
-    public String getRepresentive() {
-        return representive;
-    }
-
-    public void setRepresentive(String representive) {
-        this.representive = representive;
-    }
-
     public String getAccountHolder() {
         return accountHolder;
     }
@@ -230,25 +224,13 @@ public class PolicyRequest {
         this.accType = accType;
     }
 
-    public Date getDebitOrderDate() {
+    public String getDebitOrderDate() {
         return debitOrderDate;
     }
 
-    public void setDebitOrderDate(Date debitOrderDate) {
+    public void setDebitOrderDate(String debitOrderDate) {
         this.debitOrderDate = debitOrderDate;
     }
-
-    public QuotationOption getQuotationOptions() {
-        return quotationOptions;
-    }
-
-    public void setQuotationOptions(QuotationOption quotationOptions) {
-        this.quotationOptions = quotationOptions;
-    }
-
- 
-
-    
 
     public byte[] getBankStatement() {
         return bankStatement;
@@ -257,5 +239,10 @@ public class PolicyRequest {
     public void setBankStatement(byte[] bankStatement) {
         this.bankStatement = bankStatement;
     }
+    
+
+
+   
+
 
 }
