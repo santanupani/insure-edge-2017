@@ -224,11 +224,12 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
 
 
     $scope.quotations;
-    $scope.QuotationId ;
+    $scope.quotationOption;
     $scope.policyRequest = {};
 
     $scope.init = function () {
-        
+            $scope.reference = $routeParams.reference;
+            $
           $scope.debitOrderDate = ['1st', '7th'];
            $scope.accounttype = ['Current', 'Savings', 'Transmition'];
 
@@ -274,7 +275,8 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             console.log("Form Validation Sucess");
             $rootScope.message = "Form Validation was succesfull";
         
-        $scope.policyRequest.QuotationId = $scope.QuotationId;
+        $scope.policyRequest.reference = $scope.reference;
+        console.log("ref " + $scope.reference);
          console.log($scope.policyRequest);
         $http({
             url: '/api/policy-requests',

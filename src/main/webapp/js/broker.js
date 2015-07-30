@@ -103,6 +103,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
             console.log("Form Validation Failure");
         } else {
             $scope.quotation.reference = $scope.reference;
+            
             console.log("Ref Test : "+$scope.reference);
             console.log($scope.quotationRequest);
             console.log($scope.quotation);                           

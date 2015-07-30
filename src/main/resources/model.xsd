@@ -162,6 +162,7 @@
     <element name="PolicyRequestCommandModel">
         <complexType>
             <sequence>
+                <element name="reference" type="string"/>
                 <element name="companyRegNumber" type="string" />
                 <element name="vatRegNumber" type="string" />
                 <element name="telephoneNumber" type="string" />

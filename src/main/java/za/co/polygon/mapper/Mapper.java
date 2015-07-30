@@ -222,6 +222,7 @@ public class Mapper {
     public static PolicyRequest toPolicyRequest(PolicyRequestCommandModel policyRequestCommandModel, Quotation quotation, QuotationOption quotationOption) {
         PolicyRequest policyRequest = new PolicyRequest();
 
+        
         policyRequest.setCompanyRegNumber(policyRequestCommandModel.getCompanyRegNumber());
         policyRequest.setVatRegNumber(policyRequestCommandModel.getVatRegNumber());
         policyRequest.setTelephoneNumber(policyRequestCommandModel.getTelephoneNumber());

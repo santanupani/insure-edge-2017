@@ -204,8 +204,9 @@ public class Service {
     @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
     public void createPolicyRequest(@RequestBody PolicyRequestCommandModel policyRequestCommandModel) {
         
-        Quotation quotation = quotationRepository.findOne(policyRequestCommandModel.getQuotationId());
-        log.info("QuotationId : " + policyRequestCommandModel.getQuotationId());
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(policyRequestCommandModel.getReference());
+        
+        Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
         
         QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
         
