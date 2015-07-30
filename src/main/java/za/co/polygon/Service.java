@@ -237,7 +237,7 @@ public class Service {
     	
     	QuotationRequest quotationtRequest = quotationRequestRepository.findByReference(reference);
     	Quotation quotation = quotationRepository.findByQuotationRequest(quotationtRequest);
-    	PolicyRequest policyRequest = policyRequestRepository.findByQuotationId(quotation.getId());
+    	PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
     	
     	return toPolicyRequestQueryModel(policyRequest);
         

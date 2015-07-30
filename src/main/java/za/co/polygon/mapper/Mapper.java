@@ -265,7 +265,6 @@ public class Mapper {
     	policyRequestQueryModel.setPostalCode(policyRequest.getPostalCode());
     	policyRequestQueryModel.setDesignation(policyRequest.getDesignation());
     	policyRequestQueryModel.setBuisnessDesc(policyRequest.getBuisnessDesc());
-    	policyRequestQueryModel.setRepresentive(policyRequest.getRepresentive());
     	policyRequestQueryModel.setAccountHolder(policyRequest.getAccountHolder());
     	policyRequestQueryModel.setAccountName(policyRequest.getAccountName());
     	policyRequestQueryModel.setBankName(policyRequest.getBankName());
