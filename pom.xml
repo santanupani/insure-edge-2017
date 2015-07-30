@@ -97,11 +97,6 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.3</version>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlets</artifactId>
-			<version>9.2.9.v20150224</version>
-		</dependency>
 	</dependencies>
 
 	<build>

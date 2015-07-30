@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.eclipse.jetty.servlets.QoSFilter;
-
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
