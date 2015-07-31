@@ -18,6 +18,7 @@ import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
+import za.co.polygon.model.PolicyRequestQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
@@ -247,6 +248,35 @@ public class Mapper {
         policyRequest.setQuotationOptions(quotationOption);
 
         return policyRequest;
+    }
+    
+    public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest){
+    	
+    	PolicyRequestQueryModel policyRequestQueryModel = new PolicyRequestQueryModel();
+    	
+    	policyRequestQueryModel.setQuotationId(policyRequest.getQuotation().getId());
+    	policyRequestQueryModel.setQuotationOptionId(policyRequest.getQuotationOptions().getId());
+    	policyRequestQueryModel.setQuotationRequest(toQuotationRequestQueryModel(policyRequest.getQuotation().getQuotationRequest()));
+    	policyRequestQueryModel.setCompanyRegNumber(policyRequest.getCompanyRegNumber());
+    	policyRequestQueryModel.setVatRegNumber(policyRequest.getVatRegNumber());
+    	policyRequestQueryModel.setTelephoneNumber(policyRequest.getTelephoneNumber());
+    	policyRequestQueryModel.setFaxNumber(policyRequest.getFaxNumber());
+    	policyRequestQueryModel.setStreetAddress(policyRequest.getStreetAddress());
+    	policyRequestQueryModel.setSuburb(policyRequest.getSuburb());
+    	policyRequestQueryModel.setPostalCode(policyRequest.getPostalCode());
+    	policyRequestQueryModel.setDesignation(policyRequest.getDesignation());
+    	policyRequestQueryModel.setBuisnessDesc(policyRequest.getBuisnessDesc());
+    	policyRequestQueryModel.setAccountHolder(policyRequest.getAccountHolder());
+    	policyRequestQueryModel.setAccountName(policyRequest.getAccountName());
+    	policyRequestQueryModel.setBankName(policyRequest.getBankName());
+    	policyRequestQueryModel.setAccountNumber(policyRequest.getAccountNumber());
+    	policyRequestQueryModel.setBranchCode(policyRequest.getBranchCode());
+    	policyRequestQueryModel.setAccType(policyRequest.getAccType());
+    	policyRequestQueryModel.setDebitOrderDate(new SimpleDateFormat("dd/MM/YYYY").format(policyRequest.getDebitOrderDate()));
+    	policyRequestQueryModel.setBankStatement(policyRequest.getBankStatement());
+    	
+    	return policyRequestQueryModel;
+    	
     }
 
 }
