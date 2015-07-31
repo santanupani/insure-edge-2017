@@ -49,7 +49,6 @@ import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.repository.PolicyRequestRepository;
 import za.co.polygon.repository.QuotationOptionRepository;
 
-
 @RestController
 public class Service {
 
@@ -78,16 +77,12 @@ public class Service {
 
     @Autowired
     private QuotationRepository quotationRepository;
-    
+
     @Autowired
     private QuotationOptionRepository quotationOptionRepository;
-    
-      
+
     @Autowired
     private PolicyRequestRepository policyRequestRepository;
- 
-        
- 
 
     @Autowired
     private DocumentService reportService;
@@ -184,40 +179,41 @@ public class Service {
     public QuotationQueryModel getQuotation(@PathVariable("reference") String reference) {
 
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-        
+
         if (quotationRequest.getStatus().equals("ACCEPTED")) {
 
             Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
 
             log.info("Number of quotation options for this quotation: " + quotationRepository.count());
             log.info("Quotation request size: " + quotation.getQuotationOptions().size());
-           
 
             log.info("find all the quotation details inserted for a product using the reference");
             return toQuotationQueryModel(quotation);
 
         }
-        throw new RuntimeException("Quotation has not been Accepted yet");            
+        throw new RuntimeException("Quotation has not been Accepted yet");
     }
-    
+
+
+
     @Transactional
     @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
     public void createPolicyRequest(@RequestBody PolicyRequestCommandModel policyRequestCommandModel) {
-        
+
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(policyRequestCommandModel.getReference());
-        
+
         Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
-        
+
         QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
-        
+
         PolicyRequest policyRequest = toPolicyRequest(policyRequestCommandModel, quotation, quotationOption);
-        
+
         policyRequest = policyRequestRepository.save(policyRequest);
-        
+
         log.info("saved all the values");
         log.info(policyRequest.toString());
-        
+
         //return policyRequest.getQuotation().getQuotationRequest().getReference();
     }
-    
+
 }

@@ -84,26 +84,26 @@
 
     <element name="QuotationRequestQueryModel" type="tns:QuotationRequestQueryModel" />
     
-        <complexType name="QuotationRequestQueryModel">
-            <sequence>
-                <element name="reference" type="string" />
-                <element name="status" type="string" />
-                <element name="createDate" type="string" />
-                <element name="companyName" type="string" />
-                <element name="applicantName" type="string" />
-                <element name="applicantEmail" type="string" />
-                <element name="product" minOccurs="0" maxOccurs="1" 	type="tns:ProductQueryModel" />
-                <element name="broker" minOccurs="0" maxOccurs="1"		type="tns:BrokerQueryModel" />
-                <element name="questionnaire" minOccurs="0" maxOccurs="unbounded">
-                    <complexType>
-                        <sequence>
-                            <element name="question" type="string" />
-                            <element name="answer" type="string" />
-                        </sequence>
-                    </complexType>
-                </element>
-            </sequence>
-        </complexType>
+    <complexType name="QuotationRequestQueryModel">
+        <sequence>
+            <element name="reference" type="string" />
+            <element name="status" type="string" />
+            <element name="createDate" type="string" />
+            <element name="companyName" type="string" />
+            <element name="applicantName" type="string" />
+            <element name="applicantEmail" type="string" />
+            <element name="product" minOccurs="0" maxOccurs="1" 	type="tns:ProductQueryModel" />
+            <element name="broker" minOccurs="0" maxOccurs="1"		type="tns:BrokerQueryModel" />
+            <element name="questionnaire" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="question" type="string" />
+                        <element name="answer" type="string" />
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
    
     <element name="CategoryQueryModel">
         <complexType>
@@ -136,10 +136,12 @@
         </complexType>
     </element>
     
+    
+    
     <element name="QuotationQueryModel">
         <complexType>
             <sequence>
-            	<element name="quotationId" type="long" />
+                <element name="quotationId" type="long" />
                 <element name="quotationRequest" minOccurs="0" maxOccurs="1"		type="tns:QuotationRequestQueryModel" />
                 <element name="option" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
