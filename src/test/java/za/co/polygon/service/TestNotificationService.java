@@ -48,7 +48,7 @@ public class TestNotificationService {
     	policyRequest.setAccountNumber("123123");
     	policyRequest.setAccountHolder("My Company to Run");
     	policyRequest.setQuotation(quotation); // Set new policy's quotation that requested the quotation
-    	policyRequest.setQuotationOptions(selectedOption);
+    	policyRequest.setQuotationOption(selectedOption);
     	
    
     	NotificationService notificationService = new NotificationService();
