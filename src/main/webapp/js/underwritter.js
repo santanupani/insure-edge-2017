@@ -23,6 +23,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
     $scope.getPoicyRequest = function (reference) {
 
+
         $http({
             url: '/api/policy-requests/' + reference,
             method: 'get'
@@ -53,5 +54,6 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.changeMode = function (mode) {
         $scope.mode = mode;
     };
+
 
 });
