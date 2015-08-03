@@ -74,12 +74,12 @@
                     <div class="form-group">
                         <label class="control-label" for="accountType">Account Type</label> <input
                             type="text" class="form-control" id="status"
-                            ng-model="policyRequest.accountType" readonly="readonly"/>
+                            ng-model="policyRequest.accType" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="debitorder">Debit Order Date</label> <input
                             type="text" class="form-control" id="status"
-                            ng-model="policyRequest.debitOrder" readonly="readonly"/>
+                            ng-model="policyRequest.debitOrderDate" readonly="readonly"/>
                     </div>
                 </div>
             </div>
@@ -95,33 +95,35 @@
                 <div class="panel-body">
                     <div>
                         <div class="form-group">
-                            <label class="control-label" for="location">Location: </label>
-                            <input type="text" class="form-control" id="location"
-                                   ng-model="policyRequest.quotation.option.location" readonly="readonly">
+ 
+                            <label class="control-label" for="premium">Location: </label>
+                            <input type="text" class="form-control" id="premium"
+                                   ng-model="policyRequest.quotationOption.location" readonly="readonly">
 
                             <label class="control-label" for="commodity">Commodity: </label>
                             <input type="text" class="form-control" id="commodity"
-                                   ng-model="policyRequest.quotation.option.commodity" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.commodity" readonly="readonly">
 
                             <label class="control-label" for="limit">Limit: </label>
                             <input type="text" class="form-control" id="limit"
-                                   ng-model="policyRequest.quotation.option.limit" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.limit" readonly="readonly">
 
                             <label class="control-label" for="cover">Cover: </label>
                             <input type="text" class="form-control" id="cover"
-                                   ng-model="policyRequest.quotation.option.cover" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.cover" readonly="readonly">
 
                             <label class="control-label" for="duration">Duration: </label>
                             <input type="text" class="form-control" id="duration"
-                                   ng-model="policyRequest.quotation.option.duration" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.duration" readonly="readonly">
 
                             <label class="control-label" for="excess">Excess: </label>
                             <input type="text" class="form-control" id="excess"
-                                   ng-model="policyRequest.quotation.option.excess" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.excess" readonly="readonly">
 
                             <label class="control-label" for="premium">Premium: </label>
                             <input type="text" class="form-control" id="premium"
-                                   ng-model="policyRequest.quotation.option.premium" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.premium" readonly="readonly">
+
                         </div>
                     </div>
                 </div>

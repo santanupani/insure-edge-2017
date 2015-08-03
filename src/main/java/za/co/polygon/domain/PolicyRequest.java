@@ -78,7 +78,7 @@ public class PolicyRequest {
     
     @ManyToOne
     @JoinColumn(name = "quotation_option_id")
-    private QuotationOption quotationOptions; 
+    private QuotationOption quotationOption; 
 
     public Long getId() {
         return id;
@@ -96,12 +96,12 @@ public class PolicyRequest {
         this.quotation = quotation;
     }
 
-    public QuotationOption getQuotationOptions() {
-        return quotationOptions;
+    public QuotationOption getQuotationOption() {
+        return quotationOption;
     }
 
-    public void setQuotationOptions(QuotationOption quotationOptions) {
-        this.quotationOptions = quotationOptions;
+    public void setQuotationOption(QuotationOption quotationOption) {
+        this.quotationOption = quotationOption;
     }
 
     public String getCompanyRegNumber() {
@@ -239,10 +239,6 @@ public class PolicyRequest {
     public void setBankStatement(byte[] bankStatement) {
         this.bankStatement = bankStatement;
     }
-    
-
-
-   
 
 
 }

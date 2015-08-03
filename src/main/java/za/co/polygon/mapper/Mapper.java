@@ -23,6 +23,7 @@ import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationCommandModel.Options;
+import za.co.polygon.model.QuotationOptionQueryModel;
 import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
@@ -219,6 +220,9 @@ public class Mapper {
         }
         return result;
     }
+    
+ 
+
 
     public static PolicyRequest toPolicyRequest(PolicyRequestCommandModel policyRequestCommandModel, Quotation quotation, QuotationOption quotationOption) {
         PolicyRequest policyRequest = new PolicyRequest();
@@ -242,18 +246,31 @@ public class Mapper {
         policyRequest.setDebitOrderDate(policyRequestCommandModel.getDebitOrderDate());
         policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
         policyRequest.setQuotation(quotation);
-        policyRequest.setQuotationOptions(quotationOption);
+        policyRequest.setQuotationOption(quotationOption);
 
         return policyRequest;
     }
     
-    public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest){
+    public static QuotationOptionQueryModel toQuotationOptionQueryModel(QuotationOption quotationOption){
+    	QuotationOptionQueryModel quotationOptionQueryModel = new QuotationOptionQueryModel();
+    	quotationOptionQueryModel.setQuotationOptionId(quotationOption.getId());
+    	quotationOptionQueryModel.setCommodity(quotationOption.getCommodity());
+    	quotationOptionQueryModel.setCover(quotationOption.getCover());
+    	quotationOptionQueryModel.setDuration(quotationOption.getLimit());
+    	quotationOptionQueryModel.setExcess(quotationOption.getExcess());
+    	quotationOptionQueryModel.setLimit(quotationOption.getLimit());
+    	quotationOptionQueryModel.setLocation(quotationOption.getLocation());
+    	quotationOptionQueryModel.setPremium(quotationOption.getPremium());
+    	
+    	return quotationOptionQueryModel;
+    }
+    
+    public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest,Quotation quotation,QuotationOption quotationOption){
     	
     	PolicyRequestQueryModel policyRequestQueryModel = new PolicyRequestQueryModel();
     	
-    	policyRequestQueryModel.setQuotationId(policyRequest.getQuotation().getId());
-    	policyRequestQueryModel.setQuotationOptionId(policyRequest.getQuotationOptions().getId());
-    	policyRequestQueryModel.setQuotationRequest(toQuotationRequestQueryModel(policyRequest.getQuotation().getQuotationRequest()));
+    	policyRequestQueryModel.setQuotation(toQuotationQueryModel(quotation));
+    	policyRequestQueryModel.setQuotationOption(toQuotationOptionQueryModel(quotationOption));
     	policyRequestQueryModel.setCompanyRegNumber(policyRequest.getCompanyRegNumber());
     	policyRequestQueryModel.setVatRegNumber(policyRequest.getVatRegNumber());
     	policyRequestQueryModel.setTelephoneNumber(policyRequest.getTelephoneNumber());
@@ -269,7 +286,7 @@ public class Mapper {
     	policyRequestQueryModel.setAccountNumber(policyRequest.getAccountNumber());
     	policyRequestQueryModel.setBranchCode(policyRequest.getBranchCode());
     	policyRequestQueryModel.setAccType(policyRequest.getAccType());
-    	policyRequestQueryModel.setDebitOrderDate(new SimpleDateFormat("dd/MM/YYYY").format(policyRequest.getDebitOrderDate()));
+    	policyRequestQueryModel.setDebitOrderDate(policyRequest.getDebitOrderDate());
     	policyRequestQueryModel.setBankStatement(policyRequest.getBankStatement());
     	
     	return policyRequestQueryModel;
