@@ -262,9 +262,9 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
     };
     
         $scope.getOuotationOptionId = function (quotationOptionId){
-        $rootScope.qOId = quotationOptionId;
+         $rootScope.qOId = quotationOptionId;
         console.log("Quotation id : " + quotationOptionId);
-    };
+         };
     
   
 
@@ -308,7 +308,7 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             url: '/api/policy-requests',
             method: 'post',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json', 
             },
             data: $scope.policyRequest
         }).success(function (data, status) {

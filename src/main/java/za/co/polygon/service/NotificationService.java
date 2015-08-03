@@ -81,7 +81,7 @@ public class NotificationService {
         String message = String.format(
                 "Dear " +underWriterName+ ",\n\n"
                 + "You have a new Policy Request for Ref. :  %s\nClick the link below to view policy request details: " + "\n"
-                + "http://localhost:8080/polygon/underwriter.html#/policy-requests/%s\n\nKind Regards,",
+                + "http://localhost:8080/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
                 policyRequest.getQuotation().getQuotationRequest().getReference(),
                 policyRequest.getQuotation().getQuotationRequest().getReference());
         		setNotification(new Notification(to, subject, message));

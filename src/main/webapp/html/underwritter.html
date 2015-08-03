@@ -8,10 +8,10 @@
                 <h4>Product</h4>
             </div>
             <div class="panel-body" align="center" style="height: 300px;">
-                <img class="img-circle" ng-src="{{product.image}}"
+                <img class="img-circle" ng-src="{{policyRequest.quotation.quotationRequest.product.image}}"
                      width="140" height="140">
-                <h3>{{product.name}}</h3>
-                <p>{{product.description}}</p>
+                <h3>{{policyRequest.quotation.quotationRequest.product.name}}</h3>
+                <p>{{policyRequest.quotation.quotationRequest.product.description}}</p>
             </div>
         </div>
 
@@ -24,27 +24,27 @@
                     <div class="form-group">
                         <label class="control-label" for="reference">Reference</label> <input
                             type="text" class="form-control" id="reference"
-                            ng-model="quotationRequest.reference" readonly="readonly"/>
+                            ng-model="policyRequest.quotation.quotationRequest.reference" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="companyName">Company</label> <input
                             type="text" class="form-control" id="companyName"
-                            ng-model="quotationRequest.companyName" readonly="readonly"/>
+                            ng-model="policyRequest.quotation.quotationRequest.companyName" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="applicant">Applicant</label> <input
                             type="text" class="form-control" id="applicant"
-                            ng-model="quotationRequest.applicantName" readonly="readonly"/>
+                            ng-model="policyRequest.quotation.quotationRequest.applicantName" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="appliedOn">Applied On</label> <input
                             type="text" class="form-control" id="appliedOn"
-                            ng-model="quotationRequest.createDate" readonly="readonly"/>
+                            ng-model="policyRequest.quotation.quotationRequest.createDate" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="status">Status</label> <input
                             type="text" class="form-control" id="status"
-                            ng-model="quotationRequest.status" readonly="readonly"/>
+                            ng-model="policyRequest.quotation.quotationRequest.status" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="telephoneNumber">Telephone Number</label> <input
@@ -74,12 +74,12 @@
                     <div class="form-group">
                         <label class="control-label" for="accountType">Account Type</label> <input
                             type="text" class="form-control" id="status"
-                            ng-model="policyRequest.accountType" readonly="readonly"/>
+                            ng-model="policyRequest.accType" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="debitorder">Debit Order Date</label> <input
                             type="text" class="form-control" id="status"
-                            ng-model="policyRequest.debitOrder" readonly="readonly"/>
+                            ng-model="policyRequest.debitOrderDate" readonly="readonly"/>
                     </div>
                 </div>
             </div>
@@ -97,31 +97,31 @@
                         <div class="form-group">
                             <label class="control-label" for="location">Location: </label>
                             <input type="text" class="form-control" id="location"
-                                   ng-model="option.location" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.location" readonly="readonly">
 
                             <label class="control-label" for="commodity">Commodity: </label>
                             <input type="text" class="form-control" id="commodity"
-                                   ng-model="option.commodity" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.commodity" readonly="readonly">
 
                             <label class="control-label" for="limit">Limit: </label>
                             <input type="text" class="form-control" id="limit"
-                                   ng-model="option.limit" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.limit" readonly="readonly">
 
                             <label class="control-label" for="cover">Cover: </label>
                             <input type="text" class="form-control" id="cover"
-                                   ng-model="option.cover" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.cover" readonly="readonly">
 
                             <label class="control-label" for="duration">Duration: </label>
                             <input type="text" class="form-control" id="duration"
-                                   ng-model="option.duration" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.duration" readonly="readonly">
 
                             <label class="control-label" for="excess">Excess: </label>
                             <input type="text" class="form-control" id="excess"
-                                   ng-model="option.excess" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.excess" readonly="readonly">
 
                             <label class="control-label" for="premium">Premium: </label>
                             <input type="text" class="form-control" id="premium"
-                                   ng-model="option.premium" readonly="readonly">
+                                   ng-model="policyRequest.quotationOption.premium" readonly="readonly">
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                 <div class="panel-body">
                     <div>
                         <div class="form-group"
-                             ng-repeat="questionnaire in questionnaires">
+                             ng-repeat="questionnaire in policyRequest.quotation.quotationRequest.questionnaire">
                             <label class="control-label" for="q_{{index}}">Q:
                                 {{questionnaire.question}}</label>
                             <textarea class="form-control" id="q_{{index}}"
