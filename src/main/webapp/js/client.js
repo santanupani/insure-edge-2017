@@ -339,5 +339,5 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
     $scope.closeNotification = function () {
         $rootScope.message = undefined;
     };
-
+    
 });

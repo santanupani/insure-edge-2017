@@ -6,22 +6,23 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/underwritter.html',
                     'controller': 'policyCtrl'
                 }).otherwise({
-                    redirectTo: '/policy-requests'
+            redirectTo: '/policy-requests'
         });
     }]);
 
 
 
 underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
-    
-    
-    
-         $scope.init = function () {
-               $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
-         };
-    
-    
-       $scope.getPoicyRequest = function (reference) {
+
+    $scope.mode;
+
+    $scope.init = function () {
+        $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
+    };
+
+
+    $scope.getPoicyRequest = function (reference) {
+
 
         $http({
             url: '/api/policy-requests/' + reference,
@@ -42,6 +43,17 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         });
     };
 
+    $scope.rejectPolicyRequest = function (rejectform) {
+        if (rejectform.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            $scope.mode = undefined;
+        }
+    };
+
+    $scope.changeMode = function (mode) {
+        $scope.mode = mode;
+    };
 
 
 });
