@@ -10,7 +10,6 @@ import static za.co.polygon.mapper.Mapper.toQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
-import static za.co.polygon.mapper.Mapper.toQuotationOptionQueryModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +26,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.Broker;
@@ -43,7 +45,6 @@ import za.co.polygon.model.PolicyRequestQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
-import za.co.polygon.model.QuotationOptionQueryModel;
 import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
@@ -214,9 +215,9 @@ public class Service {
 	}
 
 	@Transactional
-	@RequestMapping(value = "api/policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
-	public void createPolicyRequest(@RequestBody PolicyRequestCommandModel policyRequestCommandModel) {
-
+	@RequestMapping(value = "api/policy-requests", method = RequestMethod.POST)
+	public void createPolicyRequest(@RequestPart(value="policyRequest") PolicyRequestCommandModel policyRequestCommandModel,@RequestPart(value="file") MultipartFile file) throws IOException {
+	
 		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(policyRequestCommandModel.getReference());
 
 		Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
@@ -224,8 +225,9 @@ public class Service {
 		QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
 
 		PolicyRequest policyRequest = toPolicyRequest(policyRequestCommandModel, quotation, quotationOption);
-
+		policyRequest.setBankStatement(file.getBytes());
 		policyRequest = policyRequestRepository.save(policyRequest);
+		
 
 		log.info("saved all the values");
 		log.info("Policy Request Object :"+policyRequest.toString());

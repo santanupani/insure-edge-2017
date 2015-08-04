@@ -303,14 +303,25 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
         $scope.policyRequest.quotationOptionId = $scope.qOid;
         console.log("Quotation OptionID :" + $scope.qOid);
         console.log("ref " + $scope.reference);
-         console.log($scope.policyRequest);
+        console.log($scope.policyRequest);
+        console.log($scope.file);
         $http({
             url: '/api/policy-requests',
             method: 'post',
             headers: {
-                'Content-Type': 'application/json', 
+                'Content-Type': undefined, 
             },
-            data: $scope.policyRequest
+            transformRequest: function (data) {
+                var formData = new FormData();
+
+                formData.append('policyRequest', new Blob([angular.toJson(data.policyRequest)], {
+                    type: "application/json"
+                }));
+                formData.append("file", data.file);
+                return formData;
+            },
+            data: {policyRequest:$scope.policyRequest,file: $scope.file}
+            
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('All the details are saved succesfullly');

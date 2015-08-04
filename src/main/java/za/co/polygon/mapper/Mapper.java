@@ -244,7 +244,7 @@ public class Mapper {
         policyRequest.setBranchCode(policyRequestCommandModel.getBranchCode());
         policyRequest.setAccType(policyRequestCommandModel.getAccType());
         policyRequest.setDebitOrderDate(policyRequestCommandModel.getDebitOrderDate());
-        policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
+//        policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
         policyRequest.setQuotation(quotation);
         policyRequest.setQuotationOption(quotationOption);
 

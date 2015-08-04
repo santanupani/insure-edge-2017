@@ -65,7 +65,7 @@
     </div>
 
     <div class="col-md-9">
-        <form data-toggle="validator" role="form" name="form" id="form">
+        <form data-toggle="validator" role="form" name="form" id="form" enctype="multipart/form-data">
         
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
                 <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
@@ -187,7 +187,7 @@
                             </div>
                             <div>
                                 <label>Upload Bank Statements:</label> 
-                                <input class="btn btn-primary pull-right" type="file" file-model="policyRequest.bankStatement"  required/>
+                                <input class="btn btn-primary pull-right" type="file" name="file" file-model="file"/>
                             </div>
                         </div>
                            
