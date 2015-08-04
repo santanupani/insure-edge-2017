@@ -244,7 +244,7 @@ public class Mapper {
         policyRequest.setBranchCode(policyRequestCommandModel.getBranchCode());
         policyRequest.setAccType(policyRequestCommandModel.getAccType());
         policyRequest.setDebitOrderDate(policyRequestCommandModel.getDebitOrderDate());
-//        policyRequest.setBankStatement(policyRequestCommandModel.getBankStatement());
+        policyRequest.setStatus("APPLIED");
         policyRequest.setQuotation(quotation);
         policyRequest.setQuotationOption(quotationOption);
 
@@ -288,6 +288,7 @@ public class Mapper {
     	policyRequestQueryModel.setAccType(policyRequest.getAccType());
     	policyRequestQueryModel.setDebitOrderDate(policyRequest.getDebitOrderDate());
     	policyRequestQueryModel.setBankStatement(policyRequest.getBankStatement());
+        policyRequestQueryModel.setStatus(policyRequest.getStatus());
     	
     	return policyRequestQueryModel;
     	

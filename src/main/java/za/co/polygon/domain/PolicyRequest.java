@@ -72,6 +72,9 @@ public class PolicyRequest {
     @Column(name = "bank_statement")
     private byte[] bankStatement;
     
+    @Column(name = "status")
+    private String status;
+    
     @ManyToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
@@ -239,6 +242,16 @@ public class PolicyRequest {
     public void setBankStatement(byte[] bankStatement) {
         this.bankStatement = bankStatement;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
 
 
 }

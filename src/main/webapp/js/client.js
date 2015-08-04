@@ -229,7 +229,7 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
     
 });
 
-polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
+polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
 
 
 
@@ -325,7 +325,8 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('All the details are saved succesfullly');
-                $rootScope.message = "Reference Number : " + data;
+                $rootScope.message = "Your Policy Request has been Succesfully submitted";
+                $location.path("/products");
             } else {
                 console.log('status:' + status);
             }

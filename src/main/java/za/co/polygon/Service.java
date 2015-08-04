@@ -249,5 +249,20 @@ public class Service {
 		return toPolicyRequestQueryModel(policyRequest,quotation,quotationOption);
 
 	}
+        
+        
+         @Transactional
+	@RequestMapping(value = "api/policy-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+	public void rejectPolicyRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason) {
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+                Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
+                PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
+		policyRequest.setStatus("REJECTED");
+		notificationService.sendNotificationForRejectPolicyRequest(policyRequest, reason.get("reason"));
+		policyRequestRepository.save(policyRequest);
+		log.info("New status :" + policyRequest.getStatus());
+                log.info("Policy Request Rejected succes");
+	}
+
 
 }

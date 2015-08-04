@@ -49,6 +49,25 @@ public class NotificationService {
         Notification notification = new Notification(to, subject, message);
         getMessageRepository().publish(notification, "q.notification");
     }
+    public void sendNotificationForRejectPolicyRequest(PolicyRequest policyRequest, String reason) {
+        String to = policyRequest.getQuotation().getQuotationRequest().getApplicantEmail();
+        String subject = "Policy Request Rejected";
+        String message = String.format(
+                 "Dear %s ," +"\n"
+                + "\n"
+                +"Your policy request for quotation Ref : %s has been rejected for the following reason(s)" + "\n"
+                + "\n"
+                +"Reason(s):" + "\n"
+                + "%s" + "\n"
+                + "\n"
+                + "Thanks" + "\n"
+                + "Polygon Team",
+                policyRequest.getQuotation().getQuotationRequest().getApplicantName(),
+                policyRequest.getQuotation().getQuotationRequest().getReference(),
+                reason);
+        Notification notification = new Notification(to, subject, message);
+        getMessageRepository().publish(notification, "q.notification");
+    }
     
     public void sendNotificationForAcceptQuotationRequest(QuotationRequest quotationRequest,byte[] data){
         String to = quotationRequest.getApplicantEmail();

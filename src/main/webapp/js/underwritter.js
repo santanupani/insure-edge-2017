@@ -15,8 +15,12 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
 underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
 
     $scope.mode;
+    $scope.reference ;
+     $scope.reject;
 
     $scope.init = function () {
+        $scope.reference = $routeParams.reference;
+         $scope.reject = {};
         $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
     };
 
@@ -44,11 +48,33 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     };
 
     $scope.rejectPolicyRequest = function (rejectform) {
-        if (rejectform.$invalid) {
+            if (rejectform.$invalid) {
             console.log("Form Validation Failure");
         } else {
-            $scope.mode = undefined;
-        }
+    	$scope.reject.status = "REJECTED";
+        $http({
+            url: '/api/policy-requests/' + $scope.reference + "/reject",
+            method: 'put',
+            headers: {
+                    'Content-Type': 'application/json'
+                },
+            data: $scope.reject
+        }). success(function (data, status) {
+                    console.log('get success code:' + status);
+                    if (status == 200) {
+                        console.log('Policy request Rejected. Reason:' + $scope.reject.reason);
+                        $scope.init();
+                        $rootScope.message = "Policy Request Rejected Successfully";
+                        $scope.mode = undefined;
+                    } else {
+                        console.log('status:' + status);
+                    }
+                })
+                .error(function (error) {
+                    $rootScope.message = "";
+                    console.log(error);
+                });
+            }
     };
 
     $scope.changeMode = function (mode) {

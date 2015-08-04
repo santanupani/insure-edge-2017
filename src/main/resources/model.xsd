@@ -229,6 +229,7 @@
 				<element name="accType" type="string" />
 				<element name="debitOrderDate" type="string" />
 				<element name="bankStatement" type="hexBinary" />
+                                <element name="status" type="string"/>
 			</sequence>
 		</complexType>
 	</element>
