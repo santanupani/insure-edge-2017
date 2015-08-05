@@ -58,7 +58,7 @@ public class TestNotificationService {
     	notificationService.setMessageRepository(messageRepository);
     	Assert.assertNotNull(notificationService.getMessageRepository());
     	
-    	notificationService.sendNotificationForNewPolicyRequest(policyRequest, underwriterToEmailAddress,underwriterName);
+    	//notificationService.sendNotificationForNewPolicyRequest(policyRequest, underwriterToEmailAddress,underwriterName);
     	
     	verify(messageRepository,times(1)).publish(notificationService.getNotification(), "q.notification");
     	

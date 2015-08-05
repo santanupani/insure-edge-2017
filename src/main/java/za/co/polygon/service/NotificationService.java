@@ -1,7 +1,9 @@
 package za.co.polygon.service;
 
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Notification;
@@ -94,7 +96,7 @@ public class NotificationService {
     }
    
     
-    public void sendNotificationForNewPolicyRequest(PolicyRequest policyRequest, String toUnderwriterEmail,String underWriterName) {
+    public void sendNotificationForNewPolicyRequest(PolicyRequest policyRequest, MultipartFile file, String toUnderwriterEmail,String underWriterName) throws IOException {
         String to = toUnderwriterEmail;
         String subject = "New Policy Request";
         String message = String.format(
@@ -103,7 +105,7 @@ public class NotificationService {
                 + "http://localhost:8080/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
                 policyRequest.getQuotation().getQuotationRequest().getReference(),
                 policyRequest.getQuotation().getQuotationRequest().getReference());
-        		setNotification(new Notification(to, subject, message));
+        		setNotification(new Notification(to, subject, message, file.getBytes(), "bankstatement.pdf"));
 //        		try {
 //        			MailRepository mailRepository = new MailRepository();
 //        			mailRepository.send(notification);
