@@ -28,6 +28,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
         };
         $scope.getQuotationRequest($scope.reference);
         $scope.com = ['Cash', 'Bullion', 'Diamond' ,'Art'];
+        $scope.cov = ['Cash And Valuables in Transit', 'Fine Art and Collectables', 'Static Cover Cash And Valuables' ,'Static And In Transit Cover Cash and Valuables'];
     };
     
     $scope.getQuotationRequest = function () {

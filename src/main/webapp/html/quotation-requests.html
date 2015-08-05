@@ -1,5 +1,5 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-    
+
     <div class="alert alert-success alert-dismissible" role="alert" ng-if="error">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
             <span aria-hidden="true">&times;</span>
@@ -65,26 +65,26 @@
     </div>
 
     <div class="col-md-9">
-       <form data-toggle="validator" role="form" name="rejectform" id="rejectform">
-        <div ng-if="mode == 'reject'" class="panel panel-default"
-             style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Reject Quotation Request</h4>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <textarea placeholder="Please fill in reason for rejection here" rows="9"
-                                  class="form-control" type="text" ng-model="reject.reason" required></textarea>
+        <form data-toggle="validator" role="form" name="rejectform" id="rejectform">
+            <div ng-if="mode == 'reject'" class="panel panel-default"
+                 style="box-shadow: 0 0 30px black;">
+                <div class="panel-heading">
+                    <h4>Reject Quotation Request</h4>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <div class="form-group">
+                            <textarea placeholder="Please fill in reason for rejection here" rows="9"
+                                      class="form-control" type="text" ng-model="reject.reason" required></textarea>
+                        </div>
                     </div>
                 </div>
+                <div class="panel-footer text-right">
+                    <button type="submit" class="btn btn-danger" ng-click="rejectQuotationRequest(rejectform)">Reject</button>
+                    <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
+                </div>
             </div>
-            <div class="panel-footer text-right">
-                <button type="submit" class="btn btn-danger" ng-click="rejectQuotationRequest(rejectform)">Reject</button>
-                <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
-            </div>
-        </div>
-       </form>
+        </form>
 
         <form data-toggle="validator" role="form" name="form" id="form">
             <div ng-if="mode == 'accept'" class="panel panel-default" style="box-shadow: 0 0 30px black;">			
@@ -105,11 +105,13 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" placeholder="Commodity" ng-model="option.commodity" ng-options="com for com in com" required>
-                                        <option value="">Select Commodity</option>
+                                    <option value="">Select Commodity</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Cover" ng-model="option.cover" required>
+                                <select class="form-control" placeholder="Type Of Cover" ng-model="option.cover" ng-options="cov for cov in cov" required>
+                                    <option value="">Select Type of Cover</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Duration/peroid" ng-model="option.duration" required>
