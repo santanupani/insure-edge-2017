@@ -80,10 +80,6 @@ public class DocumentService extends PdfPageEventHelper{
             document.add(Chunk.TABBING);
             document.add(new Phrase(option.getCover()));
             document.add(Chunk.NEWLINE);
-            document.add(new Phrase("Duration/Period : "));
-            document.add(Chunk.TABBING);
-            document.add(new Phrase(option.getPeroid()));
-            document.add(Chunk.NEWLINE);
             document.add(new Phrase("Execess : "));
             document.add(Chunk.TABBING);
             document.add(Chunk.TABBING);

@@ -128,7 +128,6 @@
 							<element name="commodity" type="string" />
 							<element name="limit" type="string" />
 							<element name="cover" type="string" />
-							<element name="duration" type="string" />
 							<element name="excess" type="string" />
 							<element name="premium" type="string" />
 						</sequence>
@@ -152,7 +151,6 @@
 						<element name="commodity" type="string" />
 						<element name="limit" type="string" />
 						<element name="cover" type="string" />
-						<element name="duration" type="string" />
 						<element name="excess" type="string" />
 						<element name="premium" type="string" />
 					</sequence>

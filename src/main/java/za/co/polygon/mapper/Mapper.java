@@ -191,7 +191,6 @@ public class Mapper {
             quotationOption.setExcess(options.getExcess());
             quotationOption.setLimit(options.getLimit());
             quotationOption.setLocation(options.getLocation());
-            quotationOption.setPeroid(options.getDuration());
             quotationOption.setPremium(options.getPremium());
             quotationOption.setQuotation(quotation);
             quotationOptionList.add(quotationOption);
@@ -211,7 +210,6 @@ public class Mapper {
             option.setQuotationOptionId(quotationOption.getId());
             option.setCommodity(quotationOption.getCommodity());
             option.setCover(quotationOption.getCover());
-            option.setDuration(quotationOption.getPeroid());
             option.setExcess(quotationOption.getExcess());
             option.setLimit(quotationOption.getLimit());
             option.setLocation(quotationOption.getLocation());
@@ -256,7 +254,6 @@ public class Mapper {
     	quotationOptionQueryModel.setQuotationOptionId(quotationOption.getId());
     	quotationOptionQueryModel.setCommodity(quotationOption.getCommodity());
     	quotationOptionQueryModel.setCover(quotationOption.getCover());
-    	quotationOptionQueryModel.setDuration(quotationOption.getLimit());
     	quotationOptionQueryModel.setExcess(quotationOption.getExcess());
     	quotationOptionQueryModel.setLimit(quotationOption.getLimit());
     	quotationOptionQueryModel.setLocation(quotationOption.getLocation());
