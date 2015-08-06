@@ -92,6 +92,14 @@
                                 		  name="{{questionnaire.id}}"
                                           ng-model="questionnaire.answer"></textarea>
                             </div>
+                            
+                             <div  ng-if="questionnaire.answerType == 'date'" class="form-group">
+                                <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+                                <input type="date" class="form-control" 
+                                		id="q_{{questionnaire.id}}"
+                                       	ng-model="questionnaire.answer"
+                                       	ng-required="questionnaire.isRequired"/>
+                            </div>
 
                         </div>
 
