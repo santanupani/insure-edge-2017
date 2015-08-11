@@ -13,8 +13,6 @@ broker.config(['$routeProvider', function ($routeProvider) {
 	});
 }]);
 
-
-
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location, $rootScope) {
 
 	$scope.reference ;
@@ -213,9 +211,8 @@ broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http,$fi
 		var date1 = new Date($scope.formatString(firstDate));
 		var timeDiff = Math.abs(date2.getTime() - date1.getTime());   
 		$scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
-//		alert($scope.dayDifference);
 		return $scope.dayDifference;
-	}
+	};
 
 	$scope.formatString = function(format) {
 		var day   = parseInt(format.substring(0,2));
@@ -223,6 +220,6 @@ broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http,$fi
 		var year   = parseInt(format.substring(6,10));
 		var date = new Date(year, month-1, day);
 		return date;
-	}
+	};
 });
 
