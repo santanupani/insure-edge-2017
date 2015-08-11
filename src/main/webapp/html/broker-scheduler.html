@@ -1,0 +1,71 @@
+<div class="row" style="padding: 25px;" ng-init="init()">
+
+    <div class="col-md-9">
+
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>All Quotations</h4>
+            </div>
+            <div class="panel-body" align="left">
+
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Ref Number</th>
+                            <th>Applicant Name</th>
+                            <th>View Clients Details</th>
+                            <th>Days Since Applied</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="quotation in quotations| orderBy:'quotation.quotationRequest.createDate'" >
+                            <td for="q_{{quotation.id}}">{{quotation.quotationRequest.reference}}</td>
+                            <td for="q_{{quotation.id}}">{{quotation.quotationRequest.applicantName}}</td>
+                            <td for="q_{{quotation.id}}"><button class="btn-info" ng-click="getQuotation(quotation.quotationRequest.reference);changeMode('view')">View Client</button></td>
+                            <td for="q_{{quotation.id}}">{{quotation.quotationRequest.createDate}}</td>
+                        </tr>
+                        <tr>
+                            <td for="q_{{quotation.id}}" colspan="4">
+                                 <div data-toggle="validator">
+            <div ng-if="mode == 'view'" class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Quotation For {{quotation.quotationRequest.applicantName}}</h4>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <div class="form-group">
+                            <h4>Reference number : {{quotation.quotationRequest.reference}}</h4>
+                            <h4>Date Applied : {{quotation.quotationRequest.createDate}}</h4>
+                            <h4>Company name : {{quotation.quotationRequest.companyName}}</h4>
+                            <h4>Email : {{quotation.quotationRequest.applicantEmail}}</h4>
+                            <h4>Applied for : {{quotation.quotationRequest.product.name}}</h4>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-warning">Notify</button>
+                    <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
+                </div>
+            </div>
+        </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="panel-footer text-right">
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Request Quote</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -263,6 +263,14 @@ public class Service {
 		log.info("New status :" + policyRequest.getStatus());
                 log.info("Policy Request Rejected succes");
 	}
+        
+       @RequestMapping(value = "api/quotations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<QuotationQueryModel> findAllQuotations() {
+		log.info("find all quotations");
+		List<Quotation> quotation = quotationRepository.findAll();
+		log.info("found all quotations - size:{}", quotation.size());
+		return toQuotationQueryModel(quotation);
+	}
 
 
 }

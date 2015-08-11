@@ -219,7 +219,15 @@ public class Mapper {
         return result;
     }
     
- 
+    
+     public static List<QuotationQueryModel> toQuotationQueryModel(List<Quotation> fromList) {
+        List<QuotationQueryModel> quotationQueryModel = new ArrayList<QuotationQueryModel>();
+        for (Quotation quotation : fromList) {
+            quotationQueryModel.add(toQuotationQueryModel(quotation));
+
+        }
+        return quotationQueryModel;
+    }
 
 
     public static PolicyRequest toPolicyRequest(PolicyRequestCommandModel policyRequestCommandModel, Quotation quotation, QuotationOption quotationOption) {
