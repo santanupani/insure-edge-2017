@@ -5,7 +5,7 @@ broker.config(['$routeProvider', function ($routeProvider) {
 	.when('/quotation-requests/:reference', {
 		'templateUrl': '/html/quotation-requests.html',
 		'controller': 'quotationRequestsCtrl'
-	}).when('/viewall', {
+	}).when('/quotations', {
 		'templateUrl': '/html/broker-scheduler.html',
 		'controller': 'brokerSchedulerCtrl'
 	}).otherwise({
@@ -14,34 +14,34 @@ broker.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 //broker.filter('dateDiff', function () {
-//	  var magicNumber = (1000 * 60 * 60 * 24);
-//
-//	  return function (toDate, fromDate) {
-//	    if(toDate && fromDate){
-//	      var dayDiff = Math.floor((toDate - fromDate) / magicNumber);
-//	      if (angular.isNumber(dayDiff)){
-//	        return dayDiff + 1;
-//	      }
-//	    }
-//	  };
-//	});
+//var magicNumber = (1000 * 60 * 60 * 24);
+
+//return function (toDate, fromDate) {
+//if(toDate && fromDate){
+//var dayDiff = Math.floor((toDate - fromDate) / magicNumber);
+//if (angular.isNumber(dayDiff)){
+//return dayDiff + 1;
+//}
+//}
+//};
+//});
 
 //broker.directive('datepicker', function() {
-//    return {
-//        restrict: 'A',
-//        require : 'ngModel',
-//        link : function (scope, element, attrs, ngModelCtrl) {
-//            $(function(){
-//                element.datepicker({
-//                    dateFormat:'dd/mm/yyyy',
-//                    onSelect:function (date) {
-//                        ngModelCtrl.$setViewValue(date);
-//                        scope.$apply();
-//                    }
-//                });
-//            });
-//        }
-//    }
+//return {
+//restrict: 'A',
+//require : 'ngModel',
+//link : function (scope, element, attrs, ngModelCtrl) {
+//$(function(){
+//element.datepicker({
+//dateFormat:'dd/mm/yyyy',
+//onSelect:function (date) {
+//ngModelCtrl.$setViewValue(date);
+//scope.$apply();
+//}
+//});
+//});
+//}
+//}
 //});
 
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location, $rootScope) {
@@ -169,17 +169,17 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 });
 
 
+
 broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http,$filter) {
 
+	$scope.mode ;
 	$scope.noOfDays=[];
 	$scope.quotations = [];
 	$scope.currDate; 
-	
+
 	$scope.init = function () {
 		$scope.currDate = $filter("date")(Date.now(),'dd/MM/yyyy');
-		
 		$scope.getAllQuotations();
-		
 	};
 
 
@@ -203,6 +203,35 @@ broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http,$fi
 		}).error(function (error) {
 			$rootScope.message = "Oops, we received your request, but there was an error processing it";
 		});
+	};
+
+	$scope.closeNotification = function () {
+		$rootScope.message = undefined;
+	};
+
+	$scope.getQuotation = function (reference) {
+
+		$http({
+			url: '/api/quotations/' + reference,
+			method: 'get'
+		}).success(function (data, status) {
+			if (status == 200) {
+				console.log('quotations retrived sucessfully');
+				$rootScope.quotation = data;
+				$scope.init();
+			} else {
+				console.log('status:' + status);
+				$rootScope.error = "error status code : " + status;
+
+			}
+		}).error(function (error) {
+			console.log(error);
+			$rootScope.error = error;
+		});
+	};
+
+	$scope.changeMode = function(mode){
+		$scope.mode = mode;
 	};
 
 	$scope.closeNotification = function () {
