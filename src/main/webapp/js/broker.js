@@ -13,37 +13,6 @@ broker.config(['$routeProvider', function ($routeProvider) {
 	});
 }]);
 
-//broker.filter('dateDiff', function () {
-//var magicNumber = (1000 * 60 * 60 * 24);
-
-//return function (toDate, fromDate) {
-//if(toDate && fromDate){
-//var dayDiff = Math.floor((toDate - fromDate) / magicNumber);
-//if (angular.isNumber(dayDiff)){
-//return dayDiff + 1;
-//}
-//}
-//};
-//});
-
-//broker.directive('datepicker', function() {
-//return {
-//restrict: 'A',
-//require : 'ngModel',
-//link : function (scope, element, attrs, ngModelCtrl) {
-//$(function(){
-//element.datepicker({
-//dateFormat:'dd/mm/yyyy',
-//onSelect:function (date) {
-//ngModelCtrl.$setViewValue(date);
-//scope.$apply();
-//}
-//});
-//});
-//}
-//}
-//});
-
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location, $rootScope) {
 
 	$scope.reference ;
