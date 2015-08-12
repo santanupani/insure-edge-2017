@@ -232,7 +232,7 @@ public class Service {
 		log.info("saved all the values");
 		log.info("Policy Request Object :"+policyRequest.toString());
 
-		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "gerhard@polygongroup.co.za", "Gerhard Kriek");
+		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "binod.sethi@gmail.com", "Binod Sethi");
 	}
 
 

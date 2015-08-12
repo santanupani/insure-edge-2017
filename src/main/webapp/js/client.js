@@ -193,10 +193,13 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 
 polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $routeParams) {
 
-
+  
+    
     $scope.init = function () {
-        $scope.getQuotation($routeParams.reference);
+        $rootScope.quotations = $scope.getQuotation($routeParams.reference);
     };
+    
+
 
     $scope.getQuotation = function (reference) {
 
@@ -218,23 +221,52 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
             $rootScope.error = error;
         });
     };
+    
+    $scope.getOuotationOptionId = function (quotationOptionId){
+        $rootScope.qOId = quotationOptionId;
+        console.log("Quotation id : " + quotationOptionId);
+    };
+    
 });
 
-polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
+polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
 
 
-    $scope.quotations;
+
+    $scope.quotation;
+    $scope.quotationOptionId;
+     
+    $scope.policyRequest = {};
+    
+     
+
+  
+    
 
     $scope.init = function () {
+        
+            $scope.reference = $routeParams.reference;
+            $scope.qOid = $rootScope.qOid;
+            $scope.debitOrderDate = ['1st', '7th'];
+            $scope.accounttype = ['Current', 'Savings', 'Transmition'];
+           
 
-        if ($rootScope.quotation == undefined) {
-
-            $scope.quotations = $scope.getQuotation($routeParams.reference);
-
+        if ($rootScope.quotation == undefined || $rootScope.qOId == undefined) {  
+            $scope.quotation = $scope.getQuotation($routeParams.reference);
+            $scope.qOid = $scope.getOuotationOptionId($rootScope.qOid);
         } else {
-            $scope.quotations = $rootScope.quotation;
+            $scope.quotation = $rootScope.quotation;
+            $scope.qOid = $rootScope.qOId;
+            console.log("Returned Quotation rootScope:"+$scope.quotation);
         }
     };
+    
+        $scope.getOuotationOptionId = function (quotationOptionId){
+         $rootScope.qOId = quotationOptionId;
+        console.log("Quotation id : " + quotationOptionId);
+         };
+    
+  
 
     $scope.getQuotation = function (reference) {
 
@@ -256,28 +288,44 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             $rootScope.error = error;
         });
     };
+   
 
-    $scope.submitforPolicy = function (applicantform) {
+    $scope.submitforPolicy = function (form) {
 
-//        if (applicantform.$invalid) {
-//            console.log("Form Validation Failure");
-//        } else {
-//
-//            console.log("Form Validation Sucess");
-//            $rootScope.message = "Form Validation was succesfull";
-//        }
-         console.log($scope.policyRequest);
+        if (form.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+
+            console.log("Form Validation Sucess");
+            $rootScope.message = "Form Validation was succesfull";
+        
+        $scope.policyRequest.reference = $scope.reference;
+        $scope.policyRequest.quotationOptionId = $scope.qOid;
+        console.log("Quotation OptionID :" + $scope.qOid);
+        console.log("ref " + $scope.reference);
+        console.log($scope.policyRequest);
+        console.log($scope.file);
         $http({
             url: '/api/policy-requests',
             method: 'post',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': undefined, 
             },
-            data: $scope.policyRequest
+            transformRequest: function (data) {
+                var formData = new FormData();
+
+                formData.append('policyRequest', new Blob([angular.toJson(data.policyRequest)], {
+                    type: "application/json"
+                }));
+                formData.append("file", data.file);
+                return formData;
+            },
+            data: {policyRequest:$scope.policyRequest,file: $scope.file}
+            
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('All the details are saved succesfullly');
-                $rootScope.message = "Reference Number : " + data;
+                $rootScope.message = "Your Policy Request has been Succesfully submitted";
                 $location.path("/products");
             } else {
                 console.log('status:' + status);
@@ -286,10 +334,11 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             console.log(error);
             $rootScope.message = error;
         });
+    }
     };
-
+    
     $scope.closeNotification = function () {
         $rootScope.message = undefined;
     };
-
+    
 });
