@@ -4,6 +4,7 @@ package za.co.polygon.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -19,6 +20,12 @@ public class Quotation {
     @ManyToOne
     @JoinColumn(name = "quotation_request_id")
     private QuotationRequest quotationRequest;
+    
+    @Column(name = "created_date")
+    private Date createdDate;
+    
+    @Column(name = "expired_date")
+    private Date expired;
 
     @OneToMany(mappedBy = "quotation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<QuotationOption> quotationOptions;
@@ -39,6 +46,22 @@ public class Quotation {
         this.quotationRequest = quotationRequest;
     }
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getExpired() {
+        return expired;
+    }
+
+    public void setExpired(Date expired) {
+        this.expired = expired;
+    }
+    
     public List<QuotationOption> getQuotationOptions() {
         if(quotationOptions==null) quotationOptions = new ArrayList<QuotationOption>();
         return quotationOptions;
