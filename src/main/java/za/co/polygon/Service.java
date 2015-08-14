@@ -232,7 +232,8 @@ public class Service {
 		log.info("saved all the values");
 		log.info("Policy Request Object :"+policyRequest.toString());
 
-		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "thabothulare68@gmail.com", "Thabo Thulare");
+		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "binod.sethi@gmail.com", "Binod Sethi");
+
 	}
 
 
