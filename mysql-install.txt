@@ -1,0 +1,49 @@
+# Documentation For MySQL 5.5 Installation
+
+# Step 1. Log in into putty (IP: 45.56.76.161)
+#Step 2. Go to http://www.mysql.com/ and go to downloads 
+#step 3. Choose MySQL Community Download
+#Step 4. Click on MySQL Community server 
+#Step 5. Choose the 5.1 version and choose the Linux - Generic  platform
+#Step 6. copy the link for linux compressed TAR Archieve
+#Step 7. change to dir /usr/local by typing 
+	 	cd /usr/local 
+	#Download MySQL using wget tool by typing the following and press enter
+
+	 	wget http://downloads.mysql.com/archives/get/file/mysql-5.5.1-m2-linux-x86_64-icc-glibc23.tar.gz
+
+#step 8. Unzip the file into /usr/local/polygon diretory by typing the following command
+	tar zxvf mysql-5.5.1-m2-linux-x86_64-glibc23#.tar.gz -C /usr/local/polygon
+
+#Configure MySql by typing the following commands
+
+#Step 9. Preconfiguration setup
+	 groupadd mysql
+	 useradd -r -g mysql mysql
+
+#Step 10. Beginning of source-build specific instructions
+
+#Step 10.1. Postinstallation setup
+	cd /usr/local/mysql
+	chown -R mysql .
+	chgrp -R mysql .
+	scripts/mysql_install_db --user=mysql
+	chown -R root .
+	chown -R mysql data
+#Step 10.2. Next command is optional
+	cp support-files/my-medium.cnf /etc/my.cnf
+	bin/mysqld_safe --user=mysql &
+#Step 10.3. Next command is optional
+	cp support-files/mysql.server /etc/init.d/mysql.server
+
+
+#Step 11To run MySql
+
+	cd /usr/local/polygon/mysql-5.5.1-m2-linux-x86_64-glibc23/bin
+ 	./mysql
+#When you see the below you now have access to mysql
+mysql>
+
+#Step 12. To see all schemas(DBs) type the following
+show schemas;
+#Step 13. Press enter
