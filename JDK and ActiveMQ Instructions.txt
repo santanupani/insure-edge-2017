@@ -1,0 +1,51 @@
+############################################################### Java JDK Installation Instructions ##############################################################
+
+# Step 1: Login Into the Server
+# Login into the server as follows:
+# Open putty, and paste the address 45.56.76.161 in the Host Name( or IP address) textbox and click open.
+# Step 2: Provide Login details at terminal  (username and password)
+# On successful login, the following are installation instructions!!!
+
+# Step 3: Installation Instructions: Java JDK
+# Change to the directory /usr/local
+cd  /usr/local
+# Download JDK Setup
+wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz
+
+# Step 4: Unpack the downloaded JDK file into /usr/local/polygon
+
+tar zxvf jdk-8u45-linux-x64.tar.gz -C /usr/local/polygon
+
+# The above instruction unpacks the tar.gz file into /usr/local/polygon/jdk1.8.0_45
+# Step 5: Setting JAVA_HOME and PATH for each new session ( This is for running ActiveMQ Broker)
+
+export JAVA_HOME=/usr/local/polygon/jdk1.8.0_45
+export PATH=$PATH:/usr/local/polygon/jdk1.8.0_45/bin
+
+# Step 6: Check JAVA_HOME and PATH are set type 
+echo $JAVA_HOME
+echo $PATH
+
+# Step 7: Confirm Java Version in use is the installed version
+java -version
+
+# Java version “1.8.0” will be displayed
+
+
+############################################################### ActiveMQ Installation Instructions #############################################################
+
+# Installation instruction for ActiveMQ
+# Step 1: Change to /usr/local
+cd  /usr/local
+
+# Step 2: Download ActiveMQ
+wget http://apache.is.co.za/activemq/5.11.1/apache-activemq-5.11.1-bin.tar.gz
+
+#Step 3: Unpack the downloaded ActiveMQ setup file into /usr/local/polygon by typing following command:
+tar zxvf apache-activemq-5.11.1-bin.tar.gz -C /usr/local/polygon
+
+# To Run ActiveMQ. Change to /usr/local/polygon/apache-activemq-5/bin
+cd /usr/local/polygon/apache-activemq-5.11.1/bin
+./activemq
+
+# ActiveMQ should be running
