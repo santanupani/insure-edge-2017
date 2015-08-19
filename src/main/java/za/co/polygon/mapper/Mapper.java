@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
@@ -205,6 +204,7 @@ public class Mapper {
             quotationOption.setLimit(options.getLimit());
             quotationOption.setLocation(options.getLocation());
             quotationOption.setPremium(options.getPremium());
+            quotationOption.setCrossPavements(options.getCrossPavement());
             quotationOption.setQuotation(quotation);
             quotationOptionList.add(quotationOption);
         }
@@ -227,6 +227,7 @@ public class Mapper {
             option.setLimit(quotationOption.getLimit());
             option.setLocation(quotationOption.getLocation());
             option.setPremium(quotationOption.getPremium());
+            option.setCrossPavement(quotationOption.getCrossPavements());
             result.getOption().add(option);
         }
         return result;
@@ -279,6 +280,7 @@ public class Mapper {
     	quotationOptionQueryModel.setLimit(quotationOption.getLimit());
     	quotationOptionQueryModel.setLocation(quotationOption.getLocation());
     	quotationOptionQueryModel.setPremium(quotationOption.getPremium());
+        quotationOptionQueryModel.setCrossPavement(quotationOption.getCrossPavements());
     	
     	return quotationOptionQueryModel;
     }
