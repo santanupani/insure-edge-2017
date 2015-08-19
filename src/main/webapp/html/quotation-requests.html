@@ -97,21 +97,22 @@
                             <div class="form-group">
                                 <label class="control-label"><font color="silver">{{option.name}}</font></label>
                             </div>
+                            
+                             <div class="form-group">
+                                <input type="text" class="form-control" placeholder="duration" ng-model="quotationRequest.product.name" readonly required>
+                            </div>
                             <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Limit" ng-model="commodity" readonly required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Limit" ng-model="limit" readonly required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="duration" ng-model="duration" readonly required>
+                            </div>
+                           <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Location" ng-model="option.location" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Limit" ng-model="option.limit" required>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" placeholder="Commodity" ng-model="option.commodity" ng-options="com for com in com" required>
-                                    <option value="">Select Commodity</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" placeholder="Type Of Cover" ng-model="option.cover" ng-options="cov for cov in cov" required>
-                                    <option value="">Select Type of Cover</option>
-                                </select>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Excess" ng-model="option.excess" required>
@@ -143,7 +144,7 @@
         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
             <div class="panel-heading text-right" ng-if="mode == undefined && quotationRequest.status == 'APPLIED'">
                 <span class="text-right">
-                    <button class="btn btn-success" ng-click="changeMode('accept')">Accept</button>
+                    <button class="btn btn-success" ng-click="changeMode('accept');optionInfo();">Accept</button>
                     <button class="btn btn-danger"   ng-click="changeMode('reject')">Reject</button>
                 </span>
 

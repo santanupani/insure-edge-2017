@@ -78,7 +78,7 @@ insert into answer_values(questionnaire_id, answer_value) values(11, '300km to 4
 insert into answer_values(questionnaire_id, answer_value) values(11, '400km to 500km');
 insert into answer_values(questionnaire_id, answer_value) values(11, '500km to 600km');
 insert into answer_values(questionnaire_id, answer_value) values(11, '600km to 700km');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '12', 'Please select the durtaion for your cover  ?'                     ,                    3,    null,  null, 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '12', 'Please select the duration for your cover  ?'                     ,                    3,    null,  null, 'true');
 insert into answer_values(questionnaire_id, answer_value) values(12, 'Annually');
 insert into answer_values(questionnaire_id, answer_value) values(12, 'Monthly');
 insert into answer_values(questionnaire_id, answer_value) values(12, 'Once Off');

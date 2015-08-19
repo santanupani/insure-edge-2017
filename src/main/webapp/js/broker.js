@@ -21,6 +21,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 	$scope.mode ;
 	$scope.reject;
 	$scope.com ;
+	$scope.questionnairres = [];
 
 
 	$scope.init = function () {
@@ -30,6 +31,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 				"options" :[{"name": "Category 1"}]
 		};
 		$scope.getQuotationRequest($scope.reference);
+		$scope.optionInfo();
 		$scope.com = ['Cash', 'Bullion', 'Diamond' ,'Art'];
 		$scope.cov = ['Cash And Valuables in Transit', 'Fine Art and Collectables', 'Static Cover Cash And Valuables' ,'Static And In Transit Cover Cash and Valuables'];
 	};
@@ -43,7 +45,10 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 			console.log('get success code::' + status);
 			if (status == 200) {
 				$scope.quotationRequest = data;
-				console.log('Quotationdetail Detail::' + $scope.quotationRequest);
+				$scope.questionnairres = $scope.quotationRequest.questionnaire;
+				
+				console.log('Quotation Request Detail::' + $scope.quotationRequest);
+				console.log('Questionairres Detail::' + $scope.questionnairres);
 			} else {
 				console.log('status:' + status);
 			}
@@ -94,6 +99,21 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 		$scope.quotation.options.push(option);
 
 	};
+	
+	$scope.optionInfo = function(){
+		angular.forEach($scope.questionnairres,function(questionnairre){
+			if(angular.equals(questionnairre.question,'What do you wish to insure ?')){
+				console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
+				$scope.commodity = questionnairre.answer;
+			}else if(angular.equals(questionnairre.question,'What is the maximum amount you wish to insure ?')){
+				console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
+				$scope.limit = questionnairre.answer;
+			}else if(angular.equals(questionnairre.question,'Please select the duration for your cover  ?')){
+				console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
+				$scope.duration = questionnairre.answer;
+			}
+		});
+	}
 
 	$scope.remove = function(){
 		if($scope.quotation.options.length>1)
@@ -178,23 +198,10 @@ broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http,$fi
 	};
 
 	$scope.getQuotation = function (reference) {
-
-		$http({
-			url: '/api/quotations/' + reference,
-			method: 'get'
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('quotations retrived sucessfully');
-				$rootScope.quotation = data;
-				$scope.init();
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
-
+		angular.forEach($scope.quotations,function(quotation){
+			if(quotation.quotationRequest.reference == referennce){
+				return quotation;
 			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.error = error;
 		});
 	};
 

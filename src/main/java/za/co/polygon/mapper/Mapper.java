@@ -1,9 +1,12 @@
 package za.co.polygon.mapper;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import za.co.polygon.domain.Answer;
@@ -157,11 +160,20 @@ public class Mapper {
         product.setName(quotationRequest.getProduct().getName());
         product.setImage(quotationRequest.getProduct().getImage());
         result.setProduct(product);
-
+        NumberFormat nft = NumberFormat.getInstance(new Locale("en", "ZA"));
+        nft.setMaximumFractionDigits(2);
         for (Answer answer : quotationRequest.getAnswers()) {
             QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
             q.setQuestion(answer.getQuestion());
-            q.setAnswer(answer.getAnswer());
+            if(answer.getQuestion().contains("What is the maximum amount you wish to insure ?")){
+            	try{
+            	q.setAnswer(nft.format(nft.parse(answer.getAnswer())));
+            	}catch(ParseException pex){
+            		
+            	}
+            }else{
+            	 q.setAnswer(answer.getAnswer());
+            }
             result.getQuestionnaire().add(q);
         }
         return result;

@@ -63,9 +63,10 @@
                                 <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
 
                                 <input type="number" class="form-control" 
-                                		id="q_{{questionnaire.id}}"
+                                		id="q_{{questionnaire.id}}" number-format decimals="numberOfDecimals"
                                        	ng-model="questionnaire.answer"
-                                       	ng-required="questionnaire.isRequired">                                   
+                                       	ng-required="questionnaire.isRequired">
+                                       <!-- <label name="number" for="q_{{questionnaire.id}}">{{questionnaire.answer | currency:'R '}}</label> -->	                                   
                             </div>
 
                             <div ng-if="questionnaire.answerType == 'checkbox'" class="checkbox">
