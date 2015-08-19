@@ -35,35 +35,6 @@ polygon.directive('fileModel', ['$parse', function ($parse) {
         };
     }]);
 
-polygon.directive('numberFormat', ['$filter', '$parse', function ($filter, $parse) {
-	  return {
-		    require: 'ngModel',
-		    link: function (scope, element, attrs, ngModelController) {
-
-		      var decimals = $parse(attrs.decimals)(scope);
-
-		      ngModelController.$parsers.push(function (data) {
-		        var parsed = parseFloat(data);
-		        return !isNaN(parsed) ? parsed : undefined;
-		      });
-		      
-		      ngModelController.$formatters.push(function (data) {
-		        
-		        return $filter('number')(data, decimals); 
-		      });
-
-		      element.bind('focus', function () {
-		        element.val(ngModelController.$modelValue);
-		      });
-
-		      element.bind('blur', function () {
-		        // Apply formatting on the stored model value for display
-		        var formatted = $filter('number')(ngModelController.$modelValue, decimals);
-		        element.val(formatted);
-		    });
-		}
-	}
-}]);
 
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
