@@ -47,3 +47,9 @@ mysql>
 #Step 12. To see all schemas(DBs) type the following
 show schemas;
 #Step 13. Press enter
+#Step 14. create schema
+   create schema polygon;
+   grant all on polygon.* to 'mysql'@'localhost' identied by 'admin';
+
+
+#Accessing MySQL through workbench

@@ -42,7 +42,7 @@ public class QuotationOption {
     private String premium;
     
     @Column(name = "cross_pavement")
-    private String crossPavements;
+    private String crossPavement;
 
     public Long getId() {
         return id;
@@ -108,12 +108,14 @@ public class QuotationOption {
         this.premium = premium;
     }
 
-    public String getCrossPavements() {
-        return crossPavements;
+    public String getCrossPavement() {
+        return crossPavement;
     }
 
-    public void setCrossPavements(String crossPavements) {
-        this.crossPavements = crossPavements;
+    public void setCrossPavement(String crossPavement) {
+        this.crossPavement = crossPavement;
     }
+
+    
     
 }
