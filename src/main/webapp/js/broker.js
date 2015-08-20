@@ -94,8 +94,11 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
 	$scope.add = function () {
 		var option = {};
-		var optionName = "Category " + ($scope.quotation.options.length + 1);
-		option.name = optionName;
+		option.commodity = $scope.commodity;
+		option.limit = $scope.limit;
+		option.cover = $scope.cover;
+		option.duration = $scope.duration;
+		option.name = "Category " + ($scope.quotation.options.length + 1);
 		$scope.quotation.options.push(option);
 
 	};
@@ -130,7 +133,8 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
 			console.log("Ref Test : "+$scope.reference);
 			console.log($scope.quotationRequest);
-			console.log($scope.quotation);                           
+			console.log($scope.quotation.options);  
+			console.log($scope.quotation); 
 			$http({
 				url: '/api/quotations',
 				method: 'post',

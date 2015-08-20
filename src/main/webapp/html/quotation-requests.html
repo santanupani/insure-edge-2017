@@ -99,17 +99,17 @@
                             </div>
                             
                              <div class="form-group">
-                                <input type="text" class="form-control" placeholder="duration" ng-model="quotationRequest.product.name" readonly required>
+                                <input type="text" class="form-control" placeholder="duration" ng-model="option.cover=quotationRequest.product.name" readonly required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Limit" ng-model="commodity" readonly required>
+                                <input type="text" class="form-control" placeholder="Limit" ng-model="option.commodity=(option.commodity)? option.commodity: commodity" readonly required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Limit" ng-model="limit" readonly required>
+                                <input type="text" class="form-control" placeholder="Limit" ng-model="option.limit=(option.limit)? option.limit: limit" readonly required>
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="duration" ng-model="duration" readonly required>
+                                <input type="text" class="form-control" placeholder="duration" ng-model="option.duration=(option.duration)?option.duration: duration" readonly required>
                             </div>
                            <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Location" ng-model="option.location" required>

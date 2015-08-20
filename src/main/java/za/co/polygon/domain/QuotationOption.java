@@ -35,7 +35,8 @@ public class QuotationOption {
     @Column(name = "cover")
     private String cover;
     
-
+    @Column(name = "duration")
+    private String duration;
     
     @Column(name = "excess")
     private String excess;
@@ -106,6 +107,14 @@ public class QuotationOption {
     public void setPremium(String premium) {
         this.premium = premium;
     }
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
 
 
     

@@ -100,6 +100,7 @@ create table quotation_options(
     limit varchar(32) not  null ,
     commodity varchar(32) not null,
     cover varchar(256) not null,
+    duration varchar(256) not null,
     excess varchar(256) not null,
     premium varchar(256) not null,
     constraint quotation_options_fk foreign key (quotation_id) references quotations (id)
