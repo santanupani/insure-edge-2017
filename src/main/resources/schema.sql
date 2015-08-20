@@ -103,6 +103,7 @@ create table quotation_options(
     duration varchar(256) not null,
     excess varchar(256) not null,
     premium varchar(256) not null,
+    cross_pavement varchar(32) null,
     constraint quotation_options_fk foreign key (quotation_id) references quotations (id)
 );
 

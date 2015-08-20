@@ -98,6 +98,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 		option.limit = $scope.limit;
 		option.cover = $scope.cover;
 		option.duration = $scope.duration;
+		option.crosspavement = $scope.crosspavement;
 		option.name = "Category " + ($scope.quotation.options.length + 1);
 		$scope.quotation.options.push(option);
 
