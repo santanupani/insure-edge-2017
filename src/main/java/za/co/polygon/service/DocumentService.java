@@ -66,12 +66,28 @@ public class DocumentService extends PdfPageEventHelper {
                 document.add(new Phrase("Locations : "));
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
                 document.add(new Phrase(option.getLocation(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
-                document.add(Chunk.NEWLINE);
-                document.add(new Phrase("Limit ZAR  "));
-                document.add(Chunk.TABBING);
-                document.add(Chunk.TABBING);
-                document.add(new Phrase(option.getLimit()));
+                if (quotation.getQuotationRequest().getProduct().getId() != 4) {
+                    document.add(new Phrase("Limit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                } else if (quotation.getQuotationRequest().getProduct().getId() == 4) {
+
+                    document.add(new Phrase("Limit in Transit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+                    document.add(new Phrase("Limit in Static ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getStaticLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+
+                }
                 document.add(Chunk.NEWLINE);
                 document.add(new Phrase("Commodity : "));
                 document.add(Chunk.TABBING);
@@ -83,6 +99,11 @@ public class DocumentService extends PdfPageEventHelper {
                 document.add(Chunk.TABBING);
                 document.add(new Phrase(option.getCover()));
                 document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Duration : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getDuration() + " X Weekly."));
+                document.add(Chunk.NEWLINE);
                 document.add(new Phrase("Execess : "));
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
@@ -90,7 +111,8 @@ public class DocumentService extends PdfPageEventHelper {
                 document.add(Chunk.NEWLINE);
                 document.add(new Phrase("Premium ZAR"));
                 document.add(Chunk.TABBING);
-                document.add(new Phrase(option.getPremium()));
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getPremium() + " p/m ex Vat."));
                 document.add(Chunk.NEWLINE);
                 document.add(Chunk.NEWLINE);
             } else {
@@ -98,19 +120,36 @@ public class DocumentService extends PdfPageEventHelper {
                 document.add(new Phrase("Locations : "));
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
                 document.add(new Phrase(option.getLocation(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
                 document.add(Chunk.NEWLINE);
-                document.add(new Phrase("Limit ZAR  "));
-                document.add(Chunk.TABBING);
-                document.add(Chunk.TABBING);
-                document.add(new Phrase(option.getLimit()));
+                if (quotation.getQuotationRequest().getProduct().getId() != 4) {
+                    document.add(new Phrase("Limit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                } else if (quotation.getQuotationRequest().getProduct().getId() == 4) {
+
+                    document.add(new Phrase("Limit in Transit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+                    document.add(new Phrase("Limit in Static ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getStaticLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+
+                }
                 document.add(Chunk.NEWLINE);
-                document.add(new Phrase("Cross Payment ZAR  "));
+                document.add(new Phrase("Cross Payment ZAR"));
                 document.add(Chunk.TABBING);
-                document.add(Chunk.TABBING);
-                document.add(new Phrase(option.getPavements()));
+                document.add(new Phrase(option.getPavements() + " per vehicle per transit"));
                 document.add(Chunk.NEWLINE);
                 document.add(new Phrase("Commodity : "));
+                document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
                 document.add(new Phrase(option.getCommodity()));
@@ -118,14 +157,23 @@ public class DocumentService extends PdfPageEventHelper {
                 document.add(new Phrase("Cover : "));
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
                 document.add(new Phrase(option.getCover()));
                 document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Duration : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getDuration()));
+                document.add(Chunk.NEWLINE);
                 document.add(new Phrase("Execess : "));
+                document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
                 document.add(new Phrase(option.getExcess()));
                 document.add(Chunk.NEWLINE);
                 document.add(new Phrase("Premium ZAR"));
+                document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
                 document.add(new Phrase(option.getPremium()));
                 document.add(Chunk.NEWLINE);

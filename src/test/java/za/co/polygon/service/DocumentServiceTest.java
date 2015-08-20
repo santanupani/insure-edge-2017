@@ -39,6 +39,7 @@ public class DocumentServiceTest {
         
         Product product = new Product();
         product.setName("Cash and Valuables in Transinsit");
+        product.setId(1l);
 
         QuotationOption quotationOption = new QuotationOption();
         quotationOption.setCommodity("Gold");
