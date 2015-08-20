@@ -108,6 +108,10 @@
                                 <input type="text" class="form-control" placeholder="Limit" ng-model="option.limit=(option.limit)? option.limit: limit" readonly required>
                             </div>
                             
+                            <div class="form-group" ng-if="quotationRequest.product.id == 4">
+                                <input type="text" class="form-control" placeholder="static limit" ng-model="option.staticLimit=(option.staticLimit)? option.staticLimit: staticLimit" readonly required>
+                            </div>
+                            
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="duration" ng-model="option.duration=(option.duration)?option.duration: duration" readonly required>
                             </div>

@@ -46,6 +46,10 @@ public class QuotationOption {
     
     @Column(name = "cross_pavement")
     private String pavements;
+    
+    @Column(name = "static_limit")
+    private String staticLimit;
+    
 
     public Long getId() {
         return id;
@@ -127,5 +131,13 @@ public class QuotationOption {
 	public void setPavements(String pavements) {
 		this.pavements = pavements;
 	}
+
+    public String getStaticLimit() {
+        return staticLimit;
+    }
+
+    public void setStaticLimit(String staticLimit) {
+        this.staticLimit = staticLimit;
+    }
     
 }

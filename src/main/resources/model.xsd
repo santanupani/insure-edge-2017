@@ -131,7 +131,8 @@
 							<element name="duration" type="string" />
 							<element name="excess" type="string" />
 							<element name="premium" type="string" />
-                            <element name="pavement" type="string" />
+                                                        <element name="pavement" type="string" />
+                                                        <element name="staticLimit" type="string" />
 						</sequence>
 					</complexType>
 				</element>
@@ -157,7 +158,8 @@
 						<element name="duration" type="string" />
 						<element name="excess" type="string" />
 						<element name="premium" type="string" />
-                        <element name="pavement" type="string" />
+                                                <element name="pavement" type="string" />
+                                                <element name="staticLimit" type="string" />
 					</sequence>
 				</complexType>
 			</element>
@@ -205,7 +207,8 @@
 			<element name="duration" type="string" />
 			<element name="excess" type="string" />
 			<element name="premium" type="string" />
-            <element name="pavement" type="string" />
+                        <element name="pavement" type="string" />
+                        <element name="staticLimit" type="string" />
 		</sequence>
 	</complexType>
 

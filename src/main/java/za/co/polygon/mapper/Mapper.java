@@ -206,6 +206,7 @@ public class Mapper {
             quotationOption.setLocation(options.getLocation());
             quotationOption.setPremium(options.getPremium());
             quotationOption.setPavements(options.getPavement());
+            quotationOption.setStaticLimit(options.getStaticLimit());
             quotationOption.setQuotation(quotation);
             quotationOptionList.add(quotationOption);
         }
@@ -230,6 +231,7 @@ public class Mapper {
             option.setLocation(quotationOption.getLocation());
             option.setPremium(quotationOption.getPremium());
             option.setPavement(quotationOption.getPavements());
+            option.setStaticLimit(quotationOption.getStaticLimit());
             result.getOption().add(option);
         }
         return result;
@@ -283,6 +285,7 @@ public class Mapper {
     	quotationOptionQueryModel.setLocation(quotationOption.getLocation());
     	quotationOptionQueryModel.setPremium(quotationOption.getPremium());
         quotationOptionQueryModel.setPavement(quotationOption.getPavements());
+        quotationOptionQueryModel.setStaticLimit(quotationOption.getStaticLimit());
     	
     	return quotationOptionQueryModel;
     }

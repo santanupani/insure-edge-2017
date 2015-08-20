@@ -98,6 +98,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 		option.limit = $scope.limit;
 		option.cover = $scope.cover;
 		option.duration = $scope.duration;
+		option.staticLimit = $scope.staticLimit;
 		option.name = "Category " + ($scope.quotation.options.length + 1);
 		$scope.quotation.options.push(option);
 
@@ -108,12 +109,16 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 			if(angular.equals(questionnairre.question,'What do you wish to insure ?')){
 				console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
 				$scope.commodity = questionnairre.answer;
-			}else if(angular.equals(questionnairre.question,'What is the maximum amount you wish to insure ?')){
+			}else if(angular.equals(questionnairre.question,'What is the maximum amount you wish to insure ?') || angular.equals(questionnairre.question,'What is the maximum amount you wish to insure in Cash in transit ?')){
 				console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
 				$scope.limit = questionnairre.answer;
 			}else if(angular.equals(questionnairre.question,'Please select the duration for your cover  ?')){
 				console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
 				$scope.duration = questionnairre.answer;
+			}
+			else if(angular.equals(questionnairre.question,'What is the maximum amount you wish to insure in Static ?')){
+				console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
+				$scope.staticLimit = questionnairre.answer;
 			}
 		});
 	}

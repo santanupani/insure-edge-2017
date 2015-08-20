@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
 import za.co.polygon.domain.Answer;
+import za.co.polygon.domain.Questionnaire;
 
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
@@ -61,7 +62,7 @@ public class DocumentService extends PdfPageEventHelper {
 
         for (QuotationOption option : quotation.getQuotationOptions()) {
 
-            if (option.getCrossPavements() == null) {
+            if (option.getPavements() == null) {
                 document.add(new Phrase("Locations : "));
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
@@ -107,7 +108,7 @@ public class DocumentService extends PdfPageEventHelper {
                 document.add(new Phrase("Cross Payment ZAR  "));
                 document.add(Chunk.TABBING);
                 document.add(Chunk.TABBING);
-                document.add(new Phrase(option.getCrossPavements()));
+                document.add(new Phrase(option.getPavements()));
                 document.add(Chunk.NEWLINE);
                 document.add(new Phrase("Commodity : "));
                 document.add(Chunk.TABBING);
@@ -134,20 +135,22 @@ public class DocumentService extends PdfPageEventHelper {
         }
 
         for (Answer answer : quotation.getQuotationRequest().getAnswers()) {
-            if (answer.getAnswer().equals("Once-Off")) {
+            if (answer.getAnswer() != null) {
+                if (answer.getAnswer().equals("Once-Off")) {
 
-                document.add(new Paragraph("Quote only valid for 7 days"
-                        + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
-                        + "form  and signed debit order form. Underwriters serve the right to refuse"
-                        + "acceptance of the risk as declared to us\n"));
-                break;
-            } else {
+                    document.add(new Paragraph("Quote only valid for 7 days"
+                            + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
+                            + "form  and signed debit order form. Underwriters serve the right to refuse"
+                            + "acceptance of the risk as declared to us\n"));
+                    break;
+                } else if (answer.getAnswer().equals("Annually") || answer.getAnswer().equals("Monthly")) {
 
-                document.add(new Paragraph("Quote only valid for 15 days"
-                        + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
-                        + "form  and signed debit order form. Underwriters serve the right to refuse"
-                        + "acceptance of the risk as declared to us\n"));
-                break;
+                    document.add(new Paragraph("Quote only valid for 15 days"
+                            + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
+                            + "form  and signed debit order form. Underwriters serve the right to refuse"
+                            + "acceptance of the risk as declared to us\n"));
+                    break;
+                }
             }
         }
 
