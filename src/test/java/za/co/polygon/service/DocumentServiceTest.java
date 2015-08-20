@@ -73,7 +73,7 @@ public class DocumentServiceTest {
         quotation.setQuotationRequest(quotationRequest);
 
         List<QuotationOption> quotationOptions = new ArrayList<QuotationOption>();
-
+        
         quotationOptions.add(quotationOption);
         quotationOptions.add(quotationOption2);
         quotationOptions.add(quotationOption3);
