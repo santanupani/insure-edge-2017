@@ -22,12 +22,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
+import za.co.polygon.domain.Answer;
+import za.co.polygon.domain.Questionnaire;
 
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 
 @Service
-public class DocumentService extends PdfPageEventHelper{
+public class DocumentService extends PdfPageEventHelper {
 
     public byte[] generateQuotation(Quotation quotation) throws DocumentException, BadElementException, IOException {
         Document document = new Document(PageSize.A4);
@@ -50,7 +52,7 @@ public class DocumentService extends PdfPageEventHelper{
         document.add(Chunk.NEWLINE);
         document.add(Chunk.NEWLINE);
         document.add(new Phrase("Refence Number :"));
-        document.add(Chunk.TABBING);       
+        document.add(Chunk.TABBING);
         document.add(new Phrase(quotation.getQuotationRequest().getReference(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
         document.add(Chunk.NEWLINE);
         document.add(new Paragraph("To Whom it may concern : " + quotation.getQuotationRequest().getApplicantName(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
@@ -60,42 +62,146 @@ public class DocumentService extends PdfPageEventHelper{
 
         for (QuotationOption option : quotation.getQuotationOptions()) {
 
-            document.add(new Phrase("Locations : "));
-            document.add(Chunk.TABBING);
-            document.add(Chunk.TABBING);
-            document.add(new Phrase(option.getLocation(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
-            document.add(Chunk.NEWLINE);
-            document.add(new Phrase("Limit ZAR  "));
-            document.add(Chunk.TABBING);
-            document.add(Chunk.TABBING);
-            document.add(new Phrase(option.getLimit()));
-            document.add(Chunk.NEWLINE);
-            document.add(new Phrase("Commodity : "));
-            document.add(Chunk.TABBING);
-            document.add(Chunk.TABBING);
-            document.add(new Phrase(option.getCommodity()));
-            document.add(Chunk.NEWLINE);
-            document.add(new Phrase("Cover : "));
-            document.add(Chunk.TABBING);
-            document.add(Chunk.TABBING);
-            document.add(new Phrase(option.getCover()));
-            document.add(Chunk.NEWLINE);
-            document.add(new Phrase("Execess : "));
-            document.add(Chunk.TABBING);
-            document.add(Chunk.TABBING);
-            document.add(new Phrase(option.getExcess()));
-            document.add(Chunk.NEWLINE);
-            document.add(new Phrase("Premium ZAR"));
-            document.add(Chunk.TABBING);
-            document.add(new Phrase(option.getPremium()));
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
+            if (option.getPavements() == null) {
+                document.add(new Phrase("Locations : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getLocation(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+                if (quotation.getQuotationRequest().getProduct().getId() != 4) {
+                    document.add(new Phrase("Limit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                } else if (quotation.getQuotationRequest().getProduct().getId() == 4) {
+
+                    document.add(new Phrase("Limit in Transit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+                    document.add(new Phrase("Limit in Static ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getStaticLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+
+                }
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Commodity : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getCommodity()));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Cover : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getCover()));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Duration : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getDuration() + " X Weekly."));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Execess : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getExcess()));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Premium ZAR"));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getPremium() + " p/m ex Vat."));
+                document.add(Chunk.NEWLINE);
+                document.add(Chunk.NEWLINE);
+            } else {
+
+                document.add(new Phrase("Locations : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getLocation(), new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+                document.add(Chunk.NEWLINE);
+                if (quotation.getQuotationRequest().getProduct().getId() != 4) {
+                    document.add(new Phrase("Limit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                } else if (quotation.getQuotationRequest().getProduct().getId() == 4) {
+
+                    document.add(new Phrase("Limit in Transit ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+                    document.add(new Phrase("Limit in Static ZAR"));
+                    document.add(Chunk.TABBING);
+                    document.add(Chunk.TABBING);
+                    document.add(new Phrase(option.getStaticLimit() + " per vehicle per transit"));
+                    document.add(Chunk.NEWLINE);
+
+                }
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Cross Payment ZAR"));
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getPavements() + " per vehicle per transit"));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Commodity : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getCommodity()));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Cover : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getCover()));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Duration : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getDuration()));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Execess : "));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getExcess()));
+                document.add(Chunk.NEWLINE);
+                document.add(new Phrase("Premium ZAR"));
+                document.add(Chunk.TABBING);
+                document.add(Chunk.TABBING);
+                document.add(new Phrase(option.getPremium()));
+                document.add(Chunk.NEWLINE);
+                document.add(Chunk.NEWLINE);
+
+            }
         }
 
-        document.add(new Paragraph("Quote only valid for 15 days"
-                + "and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
-                + "form  and signed debit order form. Underwriters serve the right to refuse"
-                + "acceptance of the risk as declared to us\n"));
+        for (Answer answer : quotation.getQuotationRequest().getAnswers()) {
+            if (answer.getAnswer() != null) {
+                if (answer.getAnswer().equals("Once-Off")) {
+
+                    document.add(new Paragraph("Quote only valid for 7 days"
+                            + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
+                            + "form  and signed debit order form. Underwriters serve the right to refuse"
+                            + "acceptance of the risk as declared to us\n"));
+                    break;
+                } else if (answer.getAnswer().equals("Annually") || answer.getAnswer().equals("Monthly")) {
+
+                    document.add(new Paragraph("Quote only valid for 15 days"
+                            + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
+                            + "form  and signed debit order form. Underwriters serve the right to refuse"
+                            + "acceptance of the risk as declared to us\n"));
+                    break;
+                }
+            }
+        }
+
         document.add(Chunk.NEWLINE);
         document.add(new Paragraph("Best Regards\n "));
         document.add(new Paragraph("Polygon Team\n "));
@@ -106,41 +212,41 @@ public class DocumentService extends PdfPageEventHelper{
         return out.toByteArray();
     }
 
-      @Override
-        public void onEndPage(PdfWriter writer, Document document) {
+    @Override
+    public void onEndPage(PdfWriter writer, Document document) {
 
-            Image footer = null;
-            try {
-                footer = Image.getInstance("src/main/webapp/img/products/polygon-footer.png");
-            } catch (BadElementException ex) {
-                Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            footer.setAbsolutePosition(0, 5);
-            footer.scaleAbsolute(600f, 50f);
-            try {
-                document.add(footer);
-            } catch (DocumentException ex) {
-                Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            Image img = null;
-            try {
-                img = Image.getInstance("src/main/webapp/img/products/polygon-logo.jpg");
-            } catch (BadElementException ex) {
-                Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            img.setAbsolutePosition(10, 780);
-            img.scaleAbsolute(580f, 50f);
-            try {
-                document.add(img);
-            } catch (DocumentException ex) {
-                Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+        Image footer = null;
+        try {
+            footer = Image.getInstance("src/main/webapp/img/products/polygon-footer.png");
+        } catch (BadElementException ex) {
+            Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
         }
+        footer.setAbsolutePosition(0, 5);
+        footer.scaleAbsolute(600f, 50f);
+        try {
+            document.add(footer);
+        } catch (DocumentException ex) {
+            Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Image img = null;
+        try {
+            img = Image.getInstance("src/main/webapp/img/products/polygon-logo.jpg");
+        } catch (BadElementException ex) {
+            Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        img.setAbsolutePosition(10, 780);
+        img.scaleAbsolute(580f, 50f);
+        try {
+            document.add(img);
+        } catch (DocumentException ex) {
+            Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
 }

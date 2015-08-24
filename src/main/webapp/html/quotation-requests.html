@@ -99,13 +99,21 @@
                             </div>
                             
                              <div class="form-group">
+<<<<<<< HEAD
                                 <input type="text" class="form-control"  ng-model="option.cover=quotationRequest.product.name" readonly>
+=======
+                                <input type="text" class="form-control" placeholder="duration" ng-model="option.cover=quotationRequest.product.description" readonly required>
+>>>>>>> 47173506832ba671dcf1215b6df00c6aae5f4646
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control"  ng-model="option.commodity=(option.commodity)? option.commodity: commodity" readonly>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control"  ng-model="option.limit=(option.limit)? option.limit: limit" readonly>
+                            </div>
+                            
+                            <div class="form-group" ng-if="quotationRequest.product.id == 4">
+                                <input type="text" class="form-control" placeholder="static limit" ng-model="option.staticLimit=(option.staticLimit)? option.staticLimit: staticLimit" readonly required>
                             </div>
                             
                             <div class="form-group">
@@ -121,7 +129,7 @@
                                 <input type="text" class="form-control" placeholder="Premium" ng-model="option.premium" required>
                             </div>
                              <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Cross Pavement" ng-model="option.crosspavement" required>
+                                <input type="text" class="form-control" placeholder="Cross Pavement" ng-model="option.pavement" required>
                             </div>
 
                         </div>

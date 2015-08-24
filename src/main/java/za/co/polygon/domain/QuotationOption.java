@@ -44,7 +44,11 @@ public class QuotationOption {
     private String premium;
 
     @Column(name = "cross_pavement")
-    private String crossPavement;
+    private String pavements;
+
+    @Column(name = "static_limit")
+    private String staticLimit;
+
 
     public Long getId() {
         return id;
@@ -118,12 +122,20 @@ public class QuotationOption {
         this.duration = duration;
     }
 
-    public String getCrossPavement() {
-        return crossPavement;
+    public String getPavements() {
+        return pavements;
     }
 
-    public void setCrossPavement(String crossPavement) {
-        this.crossPavement = crossPavement;
+    public void setPavements(String pavements) {
+        this.pavements = pavements;
     }
-    
+
+    public String getStaticLimit() {
+        return staticLimit;
+    }
+
+    public void setStaticLimit(String staticLimit) {
+        this.staticLimit = staticLimit;
+    }
+
 }

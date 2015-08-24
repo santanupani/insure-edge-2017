@@ -1,30 +1,64 @@
-# Documentation For MySQL 5.5 Installation
 
-# Step 1. Log in into putty (IP: 45.56.76.161)
-#Step 2. Go to http://www.mysql.com/ and go to downloads 
-#step 3. Choose MySQL Community Download
-#Step 4. Click on MySQL Community server 
-#Step 5. Choose the 5.1 version and choose the Linux - Generic  platform
-#Step 6. copy the link for linux compressed TAR Archieve
-#Step 7. change to dir /usr/local by typing 
-	 	cd /usr/local 
-	#Download MySQL using wget tool by typing the following and press enter
+Installing MySQL generic binaries 
 
-	 	wget http://downloads.mysql.com/archives/get/file/mysql-5.5.1-m2-linux-x86_64-icc-glibc23.tar.gz
+#First download the tar.gz file. Make sure that you have the appropriate version of C libraries (glibc) installed
+# for instance, MySQL version 5.6.21 requires glibc 2.5. You can determine what version of glibc your OS 
+#is using with the following command:
 
-#step 8. Unzip the file into /usr/local/polygon diretory by typing the following command
-	tar zxvf mysql-5.5.1-m2-linux-x86_64-glibc23#.tar.gz -C /usr/local/polygon
+	ldd --version
+This will give you output resembling the following:
 
-#Configure MySql by typing the following commands
+	ldd (Debian GLIBC 2.19-13) 2.19
 
-#Step 9. Preconfiguration setup
-	 groupadd mysql
-	 useradd -r -g mysql mysql
+#First, you will need to create the mysql group if it does not already exist.
+#You can find out if it exists by the following command:
 
-#Step 10. Beginning of source-build specific instructions
+	cut -d: -f1 /etc/group | grep mysql
 
-#Step 10.1. Postinstallation setup
+#If the mysql group already exists, the above command will print:
+
+	mysql
+#If the command does not give this result, you will need to create the mysql group:
+
+	sudo groupadd mysql
+
+#Now that the mysql group has been added, you will need to create a user named mysql.
+#First, check to see if it already exists:
+
+	cut -d: -f1 /etc/passwd | grep mysql
+
+#If this command does not return:
+
+	mysql
+
+#Then you will need to create the mysql user, and add it to the mysql group:
+
+	sudo useradd -r -g mysql mysql
+
+#Next we will unpack the MySQL tar archive. Here, will assume the file is named mysql-5.1.73-linux-x86_64-glibc23.tar.gz,
+#and that it is located in the directory /downloads.
+#First, choose where to install MySQL. Here, 
+#we will choose the directory /usr/local, which is a standard location. In our installation, making changes to this directory requires root privileges,
+#so we will execute many of the following commands using sudo.
+#Now, we will unpack the tar archive into this directory the local directory by the following command
+#which will create an installation directory containing all the tarball's contents:
+
+	tar zxvf mysql-5.1.73-linux-x86_64-glibc23.tar.gz –C /usr/local
+	
+#First, we'll cd to /usr/local:
+
+	cd /usr/local
+
+#Next we will create a symbolic link to this directory called mysql, using the ln command:
+
+	ln -s mysql-5.1.73-linux-x86_64-glibc23 mysql
+
+#Now we will edit the configuration file, create the core databases, start the MySQL server, and set up passwords for the essential MySQL users.
+
+#First, we will cd into our base MySQL directory:
+
 	cd /usr/local/mysql
+<<<<<<< HEAD
 	chown -R mysql .
 	chgrp -R mysql .
 	scripts/mysql_install_db --user=mysql
@@ -53,3 +87,37 @@ show schemas;
 
 
 #Accessing MySQL through workbench
+=======
+#We should add /usr/local/mysql to our PATH environment variable by the following command. 
+
+	sudo echo 'PATH=$PATH:/usr/local/mysql/bin' >> /etc/profile
+
+#Now let's make sure that the mysql user and group are the owners of everything we just installed:
+
+	sudo chown -R mysql /usr/local/mysql/.
+	sudo chgrp -R mysql /usr/local/mysql/.
+
+#Now we will run the mysql_install_db program to set up the initial MySQL grant tables which define how users are able to access the MySQL databases
+
+	sudo /usr/local/mysql/scripts/mysql_install_db --user=mysql
+
+
+#When mysql_install_db runs successfully, it will create the server's data directory with mysql as the owner. 
+#Under the data directory, it creates directories for the database which holds the grant tables and the test database that you can use to test MySQL.
+#It also creates privilege table entries for the root and anonymous MySQL user accounts. These accounts have no password initially.
+#These default privileges permit the MySQL root account to do anything, and permit any MySQL user to create or use databases with a name of test or a name starting with test_.
+
+#Now we will start the MySQL server:
+
+	sudo bin/mysqld_safe --user=mysql &
+
+#At this point, anyone can access MySQL as the MySQL root user, because it has no password associated with it
+#This is very insecure, obviously, so we should set a password for the MySQL root user. To do this, we will launch the mysql client and issue the appropriate commands. Start the mysql client as the MySQL root user:
+
+	mysql -u root
+
+#After a brief hello message, you will be presented with the mysql> prompt.
+#You can now exit the mysql client by issuing the exit command:
+	mysql> exit
+
+>>>>>>> 47173506832ba671dcf1215b6df00c6aae5f4646
