@@ -1,4 +1,3 @@
-
 package za.co.polygon.domain;
 
 import javax.persistence.Column;
@@ -13,34 +12,37 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "quotation_options")
 public class QuotationOption {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
-       
+
     @Column(name = "location")
     private String location;
-    
+
     @Column(name = "limit")
     private String limit;
-    
+
     @Column(name = "commodity")
     private String commodity;
-    
+
     @Column(name = "cover")
     private String cover;
-    
+
+    @Column(name = "duration")
+    private String duration;
+
     @Column(name = "excess")
     private String excess;
-    
+
     @Column(name = "premium")
     private String premium;
-    
+
     @Column(name = "cross_pavement")
     private String crossPavement;
 
@@ -108,6 +110,14 @@ public class QuotationOption {
         this.premium = premium;
     }
 
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
     public String getCrossPavement() {
         return crossPavement;
     }
@@ -115,7 +125,5 @@ public class QuotationOption {
     public void setCrossPavement(String crossPavement) {
         this.crossPavement = crossPavement;
     }
-
-    
     
 }

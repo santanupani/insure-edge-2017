@@ -202,6 +202,7 @@ public class Mapper {
             quotationOption.setCover(options.getCover());
             quotationOption.setExcess(options.getExcess());
             quotationOption.setLimit(options.getLimit());
+            quotationOption.setDuration(options.getDuration());
             quotationOption.setLocation(options.getLocation());
             quotationOption.setPremium(options.getPremium());
             quotationOption.setCrossPavement(options.getCrossPavement());
@@ -224,6 +225,7 @@ public class Mapper {
             option.setCommodity(quotationOption.getCommodity());
             option.setCover(quotationOption.getCover());
             option.setExcess(quotationOption.getExcess());
+            option.setDuration(quotationOption.getDuration());
             option.setLimit(quotationOption.getLimit());
             option.setLocation(quotationOption.getLocation());
             option.setPremium(quotationOption.getPremium());

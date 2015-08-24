@@ -1,4 +1,4 @@
-############################################################### Java JDK Installation Instructions ##############################################################
+﻿############################################################### Java JDK Installation Instructions ##############################################################
 
 # Step 1: Login Into the Server
 # Login into the server as follows:
@@ -11,6 +11,8 @@
 cd  /usr/local
 # Download JDK Setup
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz
+
+
 
 # Step 4: Unpack the downloaded JDK file into /usr/local/polygon
 
@@ -46,6 +48,12 @@ tar zxvf apache-activemq-5.11.1-bin.tar.gz -C /usr/local/polygon
 
 # To Run ActiveMQ. Change to /usr/local/polygon/apache-activemq-5/bin
 cd /usr/local/polygon/apache-activemq-5.11.1/bin
-./activemq
+./activemq start
+#to check if the active mq is up and running
+./activemq status 
+#to start and stop active mq
+./activemq start  and ./activemq stop
 
 # ActiveMQ should be running
+
+Start and Stop(process need to be written)
