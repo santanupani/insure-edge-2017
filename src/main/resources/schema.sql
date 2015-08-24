@@ -100,18 +100,11 @@ create table quotation_options(
     limit varchar(32) not  null ,
     commodity varchar(32) not null,
     cover varchar(256) not null,
-<<<<<<< HEAD
-    duration varchar(64) not null,
-    excess varchar(32) not null,
-    premium varchar(32) not null,
-    cross_pavement varchar(32) null,
-=======
     duration varchar(256) not null,
     excess varchar(256) not null,
     premium varchar(256) not null,
     cross_pavement varchar(32),
     static_limit varchar(32),
->>>>>>> 47173506832ba671dcf1215b6df00c6aae5f4646
     constraint quotation_options_fk foreign key (quotation_id) references quotations (id)
 );
 
