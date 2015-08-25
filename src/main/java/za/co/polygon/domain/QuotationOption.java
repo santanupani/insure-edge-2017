@@ -26,7 +26,7 @@ public class QuotationOption {
     @Column(name = "location")
     private String location;
     
-    @Column(name = "limit")
+    @Column(name = "limits")
     private String limit;
     
     @Column(name = "commodity")

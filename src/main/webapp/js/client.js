@@ -118,7 +118,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                 $scope.questionnaires = data;
                 for (var i = 0; i < $scope.questionnaires.length; i++) {
                     if ($scope.questionnaires[i].answerType == 'checkbox') {
-                        $scope.questionnaires[i].answer = 'false';
+                        $scope.questionnaires[i].answer = false;
                     }
                 }
                 $scope.getBrokers();

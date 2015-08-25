@@ -90,3 +90,23 @@ This will give you output resembling the following:
 #You can now exit the mysql client by issuing the exit command:
 	mysql> exit
 
+
+#After installing mysql go to my.cnf file and edit it to add the bind address by the following command
+
+    vi /etc/mysql/my.cnf
+
+#Add bind-address  
+
+    "bind-address            = 45.56.76.161"
+
+#Restart mysql by the following command
+
+     /etc/init.d/mysql.server restart
+
+#Now verify that the server in fact has port 3306 open by executing the following command
+
+    netstat -ntlup | grep 3306
+
+You should see an output like this:
+
+    tcp        0      0 45.56.76.161:3306       0.0.0.0:*               LISTEN      27972/mysqld
