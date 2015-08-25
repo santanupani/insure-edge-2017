@@ -1,4 +1,3 @@
-
 package za.co.polygon.domain;
 
 import javax.persistence.Column;
@@ -13,25 +12,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "quotation_options")
 public class QuotationOption {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
-       
+
     @Column(name = "location")
     private String location;
+
     
     @Column(name = "limits")
     private String limit;
-    
+
     @Column(name = "commodity")
     private String commodity;
-    
+
     @Column(name = "cover")
     private String cover;
 
@@ -40,16 +40,16 @@ public class QuotationOption {
 
     @Column(name = "excess")
     private String excess;
-    
+
     @Column(name = "premium")
     private String premium;
-    
+
     @Column(name = "cross_pavement")
     private String pavements;
-    
+
     @Column(name = "static_limit")
     private String staticLimit;
-    
+
 
     public Long getId() {
         return id;
@@ -115,22 +115,21 @@ public class QuotationOption {
         this.premium = premium;
     }
 
-	public String getDuration() {
-		return duration;
-	}
+    public String getDuration() {
+        return duration;
+    }
 
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
 
+    public String getPavements() {
+        return pavements;
+    }
 
-	public String getPavements() {
-		return pavements;
-	}
-
-	public void setPavements(String pavements) {
-		this.pavements = pavements;
-	}
+    public void setPavements(String pavements) {
+        this.pavements = pavements;
+    }
 
     public String getStaticLimit() {
         return staticLimit;
@@ -139,5 +138,5 @@ public class QuotationOption {
     public void setStaticLimit(String staticLimit) {
         this.staticLimit = staticLimit;
     }
-    
+
 }

@@ -58,6 +58,36 @@ This will give you output resembling the following:
 #First, we will cd into our base MySQL directory:
 
 	cd /usr/local/mysql
+<<<<<<< HEAD
+	chown -R mysql .
+	chgrp -R mysql .
+	scripts/mysql_install_db --user=mysql
+	chown -R root .
+	chown -R mysql data
+#Step 10.2. Next command is optional
+	cp support-files/my-medium.cnf /etc/my.cnf
+	bin/mysqld_safe --user=mysql &
+#Step 10.3. Next command is optional
+	cp support-files/mysql.server /etc/init.d/mysql.server
+
+
+#Step 11To run MySql
+
+	cd /usr/local/polygon/mysql-5.5.1-m2-linux-x86_64-glibc23/bin
+ 	./mysql
+#When you see the below you now have access to mysql
+mysql>
+
+#Step 12. To see all schemas(DBs) type the following
+show schemas;
+#Step 13. Press enter
+#Step 14. create schema
+   create schema polygon;
+   grant all on polygon.* to 'mysql'@'localhost' identied by 'admin';
+
+
+#Accessing MySQL through workbench
+=======
 #We should add /usr/local/mysql to our PATH environment variable by the following command. 
 
 	sudo echo 'PATH=$PATH:/usr/local/mysql/bin' >> /etc/profile
@@ -90,6 +120,7 @@ This will give you output resembling the following:
 #You can now exit the mysql client by issuing the exit command:
 	mysql> exit
 
+<<<<<<< HEAD
 
 #After installing mysql go to my.cnf file and edit it to add the bind address by the following command
 
@@ -110,3 +141,4 @@ This will give you output resembling the following:
 You should see an output like this:
 
     tcp        0      0 45.56.76.161:3306       0.0.0.0:*               LISTEN      27972/mysqld
+
