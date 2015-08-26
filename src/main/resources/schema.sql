@@ -1,6 +1,6 @@
 
 /* table : login */
-create table login (
+create table if not exists login (
     id integer auto_increment not null primary key,
     user_name varchar(32) not null, 
     password varchar(32) not null, 
@@ -9,7 +9,7 @@ create table login (
 )Engine=InnoDB Default charset=latin1;
 
 /* table : product */
-create table products(
+create table if not exists products(
     id integer auto_increment not null primary key, 
     name varchar(64) not null, 
     description varchar(256),
@@ -17,14 +17,14 @@ create table products(
 )Engine=InnoDB Default charset=latin1;
 
 /* table: answer_types */
-create table answer_types(
+create table if not exists answer_types(
     id integer auto_increment not null primary key,
     answer_type varchar(16) not null
 )Engine=InnoDB Default charset=latin1;
 
 
 /* table : questionnaires */
-create table questionnaires(
+create table if not exists questionnaires(
     id integer auto_increment not null primary key, 
     product_id integer not null,
     sequence_number integer not null,
@@ -39,7 +39,7 @@ create table questionnaires(
 
 
 /* table : answer_values */
-create table answer_values(
+create table if not exists answer_values(
     id integer auto_increment not null primary key,
     questionnaire_id integer not null,
     answer_value varchar(128) not null,
@@ -47,7 +47,7 @@ create table answer_values(
 )Engine=InnoDB Default charset=latin1;
 
 /* table : broker */
-create table brokers(
+create table if not exists brokers(
     id integer auto_increment not null primary key,
     code varchar(8) not null,
     name varchar(64) not null,
@@ -55,7 +55,7 @@ create table brokers(
 )Engine=InnoDB Default charset=latin1;
 
 /* table : quotation_requests */
-create table quotation_requests(
+create table if not exists quotation_requests(
     id integer auto_increment not null primary key,
     reference varchar(64) not null,
     applicant_name varchar(32) not null,
@@ -70,7 +70,7 @@ create table quotation_requests(
 )Engine=InnoDB Default charset=latin1;
 
 /* table : quotation_questoionnaires */
-create table answers(
+create table if not exists answers(
     id integer auto_increment not null primary key,
     quotation_request_id integer not null,
     question varchar(256) not null,
@@ -82,7 +82,7 @@ create table answers(
 
 
 /* table : quotations */
-create table quotations(
+create table if not exists quotations(
     id integer auto_increment not null primary key,
     quotation_request_id integer not null,
     created_date date not null,
@@ -92,7 +92,7 @@ create table quotations(
 
 
 /* table : quotation_options  */
-create table quotation_options(
+create table if not exists quotation_options(
     id integer auto_increment not null primary key,
     quotation_id integer not null,
     location varchar(32) not null,
@@ -108,7 +108,7 @@ create table quotation_options(
 )Engine=InnoDB Default charset=latin1;
 
 /*table : policy_requests */
-create table policy_requests(
+create table if not exists policy_requests(
     id integer auto_increment not null primary key,
     quotation_id integer not null,
     quotation_option_id integer not null,
