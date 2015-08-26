@@ -10,6 +10,9 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
+$(document).ready(function(){
+   $("#regId").mouseout().css("text-transform","uppercase"); 
+});
 
 
 underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams) {
