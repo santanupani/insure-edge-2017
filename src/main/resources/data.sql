@@ -1,3 +1,4 @@
+/*
 insert into login (user_name, password, enabled, role) values('admin', 'secret', true, 'ROLE_ADMIN');
 
 insert into products(name, description, image) values('Cash and Valuables in Transit', 'All risk cover for your cash and valuables whilst in transit.', '/img/products/Cash and Valuables in Transit.jpg');
@@ -6,8 +7,8 @@ insert into products(name, description, image) values('Fine Art and Collectables
 insert into products(name, description, image) values('Static and In Transit Cover Cash and Valuables', 'All risk cover for cash/valuables whilst in transit and static/on-site in vault or safe.', '/img/products/Static and In Transit Cover Cash and Valuables1.jpeg');
 
 
-/*broker*/
-insert into brokers(code, name, email) values ('00001', 'Coin Risk Management', 'binod.sethi@reverside.co.za');
+/*broker
+insert into brokers(code, name, email) values ('00001', 'Blue Quanta', 'binod.sethi@reverside.co.za');
 insert into brokers(code, name, email) values ('00002', 'Admin Focus (Pty) Ltd', 'thabo.thulare@reverside.co.za');
 insert into brokers(code, name, email) values ('00003', 'Optimum Financial Services Group', 'lesetja.konaite@reverside.co.za');
 insert into brokers(code, name, email) values ('00004', 'Status Insurance Brokers (Pty) Ltd', 'info@statusib.co.za');
@@ -20,7 +21,7 @@ insert into brokers(code, name, email) values ('00010', 'Willem Jacobus Nienaber
 insert into brokers(code, name, email) values ('00011', 'Deposita Systems (Pty) Ltd', 'lizaan.botha@reverside.co.za');
 
 
-/*answer_type*/
+/*answer_type
 insert into answer_types(answer_type) values('text');
 insert into answer_types(answer_type) values('number');
 insert into answer_types(answer_type) values('select');
@@ -30,7 +31,7 @@ insert into answer_types(answer_type) values('date');
 insert into answer_types(answer_type) values('other');
 
 
-/*Product1*/
+/*Product1
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '1', 'What do you wish to insure ?',                 3,  null,    null, 'true');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Cash');
 insert into answer_values(questionnaire_id, answer_value) values(1, 'Fine Art');
@@ -99,7 +100,7 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 
 
 
-/*Product2*/
+/*Product2
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '38', 'What do you wish to insure ?',                 3,  null,    null, 'true');
 insert into answer_values(questionnaire_id, answer_value) values(38, 'Cash');
 insert into answer_values(questionnaire_id, answer_value) values(38, 'Fine Art');
@@ -160,7 +161,7 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '78', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 
 
-/*Product3*/
+/*Product3
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '79', 'What do you wish to insure ?',                 3,  null,    null, 'true');
 insert into answer_values(questionnaire_id, answer_value) values(79, 'Cash');
 insert into answer_values(questionnaire_id, answer_value) values(79, 'Fine Art');
@@ -227,7 +228,7 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '115', 'Do you require SASRIA cover ?'                     ,                    4,    null,  null, 'false');
 
 
-/*product4*/
+/*product4
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '116', 'What do you wish to insure ?',                 3,  null,    null, 'true');
 insert into answer_values(questionnaire_id, answer_value) values(116, 'Cash');
 insert into answer_values(questionnaire_id, answer_value) values(116, 'Fine Art');
@@ -316,5 +317,5 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '166', 'TYPE OF LOSS :'                     ,                    1,    48,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '167', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 
-
+*/
 
