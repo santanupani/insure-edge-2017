@@ -67,9 +67,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
     };
 });
 
-$(function() {
-    $( "input[name='datepicker']" ).datepicker({ dateFormat: "dd/mm/yyyy" }).val();
-});
+
 
 polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $filter) {
 
