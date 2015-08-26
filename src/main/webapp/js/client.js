@@ -6,18 +6,19 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/products.html',
                     'controller': 'productsCtrl'
                 }).when('/products/:id/questionnaires', {
-            'templateUrl': '/html/questionnaires.html',
-            'controller': 'questionnairesCtrl'
-        }).when('/quotations/:reference', {
-            'templateUrl': '/html/quotations.html',
-            'controller': 'quotationsCtrl'
-        }).when('/quotations/:reference/policies', {
-            'templateUrl': '/html/policies.html',
-            'controller': 'policyCtrl'
-        }).otherwise({
-            redirectTo: '/products'
-        });
+                    'templateUrl': '/html/questionnaires.html',
+                    'controller': 'questionnairesCtrl'
+                }).when('/quotations/:reference', {
+                    'templateUrl': '/html/quotations.html',
+                    'controller': 'quotationsCtrl'
+                }).when('/quotations/:reference/policies', {
+                    'templateUrl': '/html/policies.html',
+                    'controller': 'policyCtrl'
+                }).otherwise({
+                    redirectTo: '/products'
+                });
     }]);
+
 
 polygon.directive('fileModel', ['$parse', function ($parse) {
         return {

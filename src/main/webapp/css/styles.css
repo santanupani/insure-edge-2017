@@ -31,3 +31,17 @@ body {
 .container {
     margin-top: 10px;
 }
+div[name=contacts]{
+    background-color:#ffffff;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+    box-shadow: 0 0 30px black;
+}
+
+div[name=blueQHeader]{
+    clear:both;
+    padding:5px; 
+}
+
+
