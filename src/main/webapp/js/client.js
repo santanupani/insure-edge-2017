@@ -19,6 +19,7 @@ polygon.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
+
 polygon.directive('fileModel', ['$parse', function ($parse) {
         return {
             restrict: 'A',
