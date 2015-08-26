@@ -49,7 +49,7 @@
 
                     <div ng-repeat="questionnaire in questionnaires">
 
-                        <div ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">		  				  
+                        <div ng-if="questionnaires[questionnaire.dependsOn - 1].answer == questionnaire.onAnswer">		  				  
 
                             <div  ng-if="questionnaire.answerType == 'text'" class="form-group">
                                 <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
