@@ -130,7 +130,9 @@ public class Service {
             questionnaires = questionnaireRepository.findByProduct(product);
         }
         log.info("found questionnaires for product - productId:{}, size:{}", productId, questionnaires.size());
-        return toQuestionnaireQueryModel(questionnaires);
+        List<QuestionnaireQuery> r  = toQuestionnaireQueryModel(questionnaires);
+        log.info("mapping done....");
+        return r;
     }
 
     @RequestMapping(value = "api/brokers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,30 +1,30 @@
 
 /* table : login */
-create table if not exists login (
+create table login (
     id integer auto_increment not null primary key,
     user_name varchar(32) not null, 
     password varchar(32) not null, 
     enabled boolean not null, 
     role varchar(16) not null
-)Engine=InnoDB Default charset=latin1;
+);
 
 /* table : product */
-create table if not exists products(
+create table products(
     id integer auto_increment not null primary key, 
     name varchar(64) not null, 
     description varchar(256),
     image varchar(128) 
-)Engine=InnoDB Default charset=latin1;
+);
 
 /* table: answer_types */
-create table if not exists answer_types(
+create table answer_types(
     id integer auto_increment not null primary key,
     answer_type varchar(16) not null
-)Engine=InnoDB Default charset=latin1;
+);
 
 
 /* table : questionnaires */
-create table if not exists questionnaires(
+create table questionnaires(
     id integer auto_increment not null primary key, 
     product_id integer not null,
     sequence_number integer not null,
@@ -35,27 +35,26 @@ create table if not exists questionnaires(
     is_required bool not null,
     constraint questionnaires_fk1 foreign key (product_id) references products (id),
     constraint questionnaires_fk2 foreign key (answer_type_id) references answer_types (id)
-)Engine=InnoDB Default charset=latin1;
-
+);
 
 /* table : answer_values */
-create table if not exists answer_values(
+create table answer_values(
     id integer auto_increment not null primary key,
     questionnaire_id integer not null,
     answer_value varchar(128) not null,
     constraint answer_values_fk1 foreign key (questionnaire_id) references questionnaires (id)
-)Engine=InnoDB Default charset=latin1;
+);
 
 /* table : broker */
-create table if not exists brokers(
+create table brokers(
     id integer auto_increment not null primary key,
     code varchar(8) not null,
     name varchar(64) not null,
     email varchar(64) not null
-)Engine=InnoDB Default charset=latin1;
+);
 
 /* table : quotation_requests */
-create table if not exists quotation_requests(
+create table quotation_requests(
     id integer auto_increment not null primary key,
     reference varchar(64) not null,
     applicant_name varchar(32) not null,
@@ -67,32 +66,28 @@ create table if not exists quotation_requests(
     status varchar(16) not null,
     constraint quotation_requests_fk1 foreign key (broker_id) references brokers (id),
     constraint quotation_requests_fk2 foreign key (product_id) references products (id)
-)Engine=InnoDB Default charset=latin1;
+);
 
 /* table : quotation_questoionnaires */
-create table if not exists answers(
+create table answers(
     id integer auto_increment not null primary key,
     quotation_request_id integer not null,
     question varchar(256) not null,
     answer varchar(256),
     constraint answers_fk1 foreign key (quotation_request_id) references quotation_requests (id)   
-)Engine=InnoDB Default charset=latin1;
-
-
-
+);
 
 /* table : quotations */
-create table if not exists quotations(
+create table quotations(
     id integer auto_increment not null primary key,
     quotation_request_id integer not null,
     created_date date not null,
     expired_date date null,
     constraint quotation_fk foreign key (quotation_request_id) references quotation_requests (id)    
-)Engine=InnoDB Default charset=latin1;
-
+);
 
 /* table : quotation_options  */
-create table if not exists quotation_options(
+create table quotation_options(
     id integer auto_increment not null primary key,
     quotation_id integer not null,
     location varchar(32) not null,
@@ -105,10 +100,10 @@ create table if not exists quotation_options(
     cross_pavement varchar(32),
     static_limit varchar(32),
     constraint quotation_options_fk foreign key (quotation_id) references quotations (id)
-)Engine=InnoDB Default charset=latin1;
+);
 
 /*table : policy_requests */
-create table if not exists policy_requests(
+create table policy_requests(
     id integer auto_increment not null primary key,
     quotation_id integer not null,
     quotation_option_id integer not null,
@@ -132,4 +127,4 @@ create table if not exists policy_requests(
     status varchar(32) not null,
     constraint applicant_details_fk1 foreign key (quotation_id) references quotations (id),
     constraint applicant_details_fk2 foreign key (quotation_option_id) references quotation_options (id)
-)Engine=InnoDB Default charset=latin1;
+);
