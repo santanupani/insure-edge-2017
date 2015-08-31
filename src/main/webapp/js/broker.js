@@ -16,6 +16,7 @@ broker.config(['$routeProvider', function ($routeProvider) {
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location, $rootScope) {
 
 	$scope.reference ;
+        $scope.numberOfDecimals = 2;
 	$scope.quotationRequest;
 	$scope.quotation ;
 	$scope.mode ;
@@ -162,6 +163,11 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 			}); 
 		}
 	};
+        
+        $scope.formatNumber = function(nmbr){
+      return $filter('currency')(nmbr, 'R ', 2);
+       
+    };
 
 
 });
