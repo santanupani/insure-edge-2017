@@ -139,6 +139,14 @@
 			</sequence>
 		</complexType>
 	</element>
+        
+        <element name="SelectedQuotationQueryModel" type="tns:SelectedQuotationQueryModel" />
+        <complexType name="SelectedQuotationQueryModel">
+            <sequence>
+            <element name="quotation" minOccurs="0" maxOccurs="1" type="tns:QuotationQueryModel" />
+            <element name="selectedQuotation" minOccurs="0" maxOccurs="1" type="tns:QuotationOptionQueryModel" />
+            </sequence>
+        </complexType>
 
 	<element name="QuotationQueryModel" type="tns:QuotationQueryModel" />
 	<complexType name="QuotationQueryModel">

@@ -59,7 +59,8 @@ import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
 
 import com.itextpdf.text.DocumentException;
-import za.co.polygon.service.Utility;
+import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
+import za.co.polygon.model.SelectedQuotationQueryModel;
 
 @RestController
 public class Service {
@@ -98,10 +99,7 @@ public class Service {
 
     @Autowired
     private DocumentService reportService;
-    
-    @Autowired
-    private Utility utility;
-       
+
 
     @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserQueryModel> findAllUsers() {
@@ -210,6 +208,26 @@ public class Service {
         throw new RuntimeException("Quotation has not been Accepted yet");
     }
 
+    @RequestMapping(value = "api/quotations/{reference}/{quotationOptionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public SelectedQuotationQueryModel getQuotationSelected(@PathVariable("reference") String reference, @PathVariable("quotationOptionId") String optionId) {
+
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+        QuotationOption quotationOption = quotationOptionRepository.findOne(Long.parseLong(optionId));
+
+        if (quotationRequest.getStatus().equals("ACCEPTED")) {
+
+            Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
+
+            log.info("Number of quotation options for this quotation: " + quotationRepository.count());
+            log.info("Quotation request size: " + quotation.getQuotationOptions().size());
+            
+            log.info("find all the quotation details inserted for a product using the reference");
+            return toSelectedQuotationQueryModel(quotation,quotationOption);
+
+        }
+        throw new RuntimeException("Quotation has not been Accepted yet");
+    }
+
     @Transactional
     @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST)
     public void createPolicyRequest(@RequestPart(value = "policyRequest") PolicyRequestCommandModel policyRequestCommandModel, @RequestPart(value = "file") MultipartFile file) throws IOException {
@@ -265,12 +283,4 @@ public class Service {
         return toQuotationQueryModel(quotation);
     }
 
-    @RequestMapping(value = "api/quotations-scheduler", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Quotation> getQuotationExpired() {
-        List<Quotation> allQuotations = quotationRepository.findAll();
-
-        return utility.scheduleExpiredQuotations(allQuotations);
-
-    }
-	
 }

@@ -30,6 +30,7 @@ import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.SelectedQuotationQueryModel;
 import za.co.polygon.model.UserQueryModel;
 
 public class Mapper {
@@ -318,5 +319,14 @@ public class Mapper {
     	return policyRequestQueryModel;
     	
     }
+    
+        public static SelectedQuotationQueryModel toSelectedQuotationQueryModel(Quotation quotation,QuotationOption quotationOption) {
+            SelectedQuotationQueryModel selectedQuotationQueryModel = new SelectedQuotationQueryModel();
+            selectedQuotationQueryModel.setQuotation(toQuotationQueryModel(quotation));
+            selectedQuotationQueryModel.setSelectedQuotation(toQuotationOptionQueryModel(quotationOption));
+            
+            return selectedQuotationQueryModel;
+        }
+    
 
 }
