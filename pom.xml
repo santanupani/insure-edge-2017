@@ -75,12 +75,23 @@
             <version>5.11.1</version>
         </dependency>
         
+        <!-- 
         <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
                 <version>2.3.1</version>
         </dependency>
-  
+        -->
+
+        <!-- Profile : dev -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.188</version>
+        </dependency>
+
+        
+        <!-- Profile : test -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -129,6 +140,7 @@
                 <version>1.2.3.RELEASE</version>
                 <configuration>
                     <mainClass>za.co.polygon.Application</mainClass>
+
                 </configuration>
                 <executions>
                     <execution>
