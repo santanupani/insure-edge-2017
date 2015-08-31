@@ -2,6 +2,7 @@ package za.co.polygon.service;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,14 +18,17 @@ public class NotificationService {
     @Autowired
     private MessageRepository messageRepository;
     private Notification notification;
+    @Value("${hostname}")
+    private String hostname;
 
     public void sendNotificationForNewQuotationRequest(QuotationRequest quotationRequest, Broker broker) {
         String to = broker.getEmail();
         String subject = "New Quotation Request";
+        
         String message = String.format(
                 "Ref : %s" + "\n"
                 + "Click the link below to view quotation request : " + "\n"
-                + "${hostname}/polygon/broker.html#/quotation-requests/%s",
+                + hostname +"/polygon/broker.html#/quotation-requests/%s",
                 quotationRequest.getReference(),
                 quotationRequest.getReference());
         Notification notification = new Notification(to, subject, message);
@@ -81,7 +85,7 @@ public class NotificationService {
                 +"Please find the attachement t view your quotation" + "\n"
                 + "\n"
                 + "Please click the link below to apply for a policy" + " \n"
-                + "${hostname}/polygon/client.html#/quotations/%s " + " \n"
+                + hostname +"/polygon/client.html#/quotations/%s " + " \n"
                 + "\n"
                 + "Thanks" + "\n"
                 + "Polygon Team",
@@ -101,7 +105,7 @@ public class NotificationService {
         String message = String.format(
                 "Dear " +underWriterName+ ",\n\n"
                 + "You have a new Policy Request for Ref. :  %s\nClick the link below to view policy request details: " + "\n"
-                + "${hostname}/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
+                + hostname +"/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
                 policyRequest.getQuotation().getQuotationRequest().getReference(),
                 policyRequest.getQuotation().getQuotationRequest().getReference());
         		setNotification(new Notification(to, subject, message, file.getBytes(), "bankstatement.pdf"));

@@ -11,7 +11,7 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 }).when('/quotations/:reference', {
                     'templateUrl': '/html/quotations.html',
                     'controller': 'quotationsCtrl'
-                }).when('/quotations/:reference/policies', {
+                }).when('/quotations/:reference/:quotationOptionId', {
                     'templateUrl': '/html/policies.html',
                     'controller': 'policyCtrl'
                 }).otherwise({
@@ -35,7 +35,6 @@ polygon.directive('fileModel', ['$parse', function ($parse) {
             }
         };
     }]);
-
 
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
@@ -123,7 +122,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                 $scope.questionnaires = data;
                 for (var i = 0; i < $scope.questionnaires.length; i++) {
                     if ($scope.questionnaires[i].answerType == 'checkbox') {
-                        $scope.questionnaires[i].answer = false;
+                        $scope.questionnaires[i].answer = 'false';
                     }
                 }
                 $scope.getBrokers();
@@ -147,7 +146,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             if (status == 200) {
                 console.log('brokers retrived successfully');
                 $scope.brokers = data;
-                console.log($scope.brokers);
+                console.log('Broker: '+$scope.brokers[0].name);
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
@@ -194,6 +193,11 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         }
 
     };
+    
+    $scope.formatNumber = function(nmbr){
+      return $filter('currency')(nmbr, 'ZAR ', 2);
+       
+    };
 });
 
 polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $routeParams) {
@@ -227,62 +231,37 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
         });
     };
     
-    $scope.getOuotationOptionId = function (quotationOptionId){
-        $rootScope.qOId = quotationOptionId;
-        console.log("Quotation id : " + quotationOptionId);
-    };
+  
     
 });
 
 polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
 
 
-
-    $scope.quotation;
-    $scope.quotationOptionId;
-     
+    $scope.quotationOptionId; 
     $scope.policyRequest = {};
+    $scope.quotationSelected = [];
     
-     
-
-  
-    
-
     $scope.init = function () {
-        
-            $scope.reference = $routeParams.reference;
-            $scope.qOid = $rootScope.qOid;
+            $scope.getSelectedQuotation($routeParams.reference,$routeParams.quotationOptionId);
             $scope.debitOrderDate = ['1st', '7th'];
             $scope.accounttype = ['Current', 'Savings', 'Transmition'];
            
 
-        if ($rootScope.quotation == undefined || $rootScope.qOId == undefined) {  
-            $scope.quotation = $scope.getQuotation($routeParams.reference);
-            $scope.qOid = $scope.getOuotationOptionId($rootScope.qOid);
-        } else {
-            $scope.quotation = $rootScope.quotation;
-            $scope.qOid = $rootScope.qOId;
-            console.log("Returned Quotation rootScope:"+$scope.quotation);
-        }
+
     };
-    
-        $scope.getOuotationOptionId = function (quotationOptionId){
-         $rootScope.qOId = quotationOptionId;
-        console.log("Quotation id : " + quotationOptionId);
-         };
-    
   
 
-    $scope.getQuotation = function (reference) {
+    $scope.getSelectedQuotation = function (reference,quotationOptionId) {
 
         $http({
-            url: '/api/quotations/' + reference,
+            url: '/api/quotations/' + reference+'/'+quotationOptionId,
             method: 'get'
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('quotations retrived sucessfully');
-                $rootScope.quotation = data;
-                $scope.init();
+                $scope.quotationSelected = data;
+                console.log('Selected Reference: '+$scope.quotationSelected.quotation.quotationRequest.reference + '\nSelected Option ID: '+$scope.quotationSelected.selectedQuotation.quotationOptionId);
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
@@ -305,8 +284,8 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             $rootScope.message = "Form Validation was succesfull";
         
         $scope.policyRequest.reference = $scope.reference;
-        $scope.policyRequest.quotationOptionId = $scope.qOid;
-        console.log("Quotation OptionID :" + $scope.qOid);
+        $scope.policyRequest.quotationOptionId = $scope.quotationOptionId;
+        console.log("Quotation OptionID :" + $scope.quotationOptionId);
         console.log("ref " + $scope.reference);
         console.log($scope.policyRequest);
         console.log($scope.file);

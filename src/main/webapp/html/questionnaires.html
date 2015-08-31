@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <select class="form-control" ng-options="broker.id as broker.name for broker in brokers" ng-model="quotationRequest.brokerId" form="form" required>
-                        <option value=""></option>
+                    	<option value="">Select Broker</option>
                     </select>
                 </div>
             </div>
@@ -49,7 +49,7 @@
 
                     <div ng-repeat="questionnaire in questionnaires">
 
-                        <div ng-if="questionnaires[questionnaire.dependsOn - 1].answer == questionnaire.onAnswer">		  				  
+                        <div ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">		  				  
 
                             <div  ng-if="questionnaire.answerType == 'text'" class="form-group">
                                 <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
@@ -64,14 +64,14 @@
 
                                 <input type="number" class="form-control" 
                                 id="q_{{questionnaire.id}}"
-                                       	ng-model="questionnaire.answer"
+                                ng-model="questionnaire.answer"
                                        	ng-required="questionnaire.isRequired">
+                                <label ng-show='questionnaire.answer' >{{questionnaire.answer | currency:'ZAR '}}</label>
                             </div>
 
                             <div ng-if="questionnaire.answerType == 'checkbox'" class="checkbox">
                                 <label><input type="checkbox" 
-                                              ng-model="questionnaire.answer"
-                                              >{{questionnaire.question}}</label>                                              
+                                        ng-model="questionnaire.answer">{{questionnaire.question}}</label>                                              
                             </div>
 
                             <div ng-if="questionnaire.answerType == 'select'" class="form-group">
