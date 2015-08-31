@@ -18,8 +18,10 @@ public class NotificationService {
     @Autowired
     private MessageRepository messageRepository;
     private Notification notification;
-    @Value("${hostname}")
+    @Value("polygon.application.hostname")
     private String hostname;
+    @Value("polygon.application.port")
+    private int port;
 
     public void sendNotificationForNewQuotationRequest(QuotationRequest quotationRequest, Broker broker) {
         String to = broker.getEmail();
@@ -28,9 +30,11 @@ public class NotificationService {
         String message = String.format(
                 "Ref : %s" + "\n"
                 + "Click the link below to view quotation request : " + "\n"
-                + hostname +"/polygon/broker.html#/quotation-requests/%s",
+                + "http://%s:%d/polygon/broker.html#/quotation-requests/%s",
                 quotationRequest.getReference(),
-                quotationRequest.getReference());
+                hostname,
+                port
+                quotationRequest.getReference(),);
         Notification notification = new Notification(to, subject, message);
         getMessageRepository().publish(notification, "q.notification");
     }
