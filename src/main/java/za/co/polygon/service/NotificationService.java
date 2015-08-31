@@ -9,7 +9,6 @@ import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Notification;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.QuotationRequest;
-import za.co.polygon.repository.MailRepository;
 import za.co.polygon.repository.MessageRepository;
 
 @Service
@@ -25,7 +24,7 @@ public class NotificationService {
         String message = String.format(
                 "Ref : %s" + "\n"
                 + "Click the link below to view quotation request : " + "\n"
-                + "http://localhost:8080/polygon/broker.html#/quotation-requests/%s",
+                + "${hostname}/polygon/broker.html#/quotation-requests/%s",
                 quotationRequest.getReference(),
                 quotationRequest.getReference());
         Notification notification = new Notification(to, subject, message);
@@ -82,7 +81,7 @@ public class NotificationService {
                 +"Please find the attachement t view your quotation" + "\n"
                 + "\n"
                 + "Please click the link below to apply for a policy" + " \n"
-                + "http://localhost:8080/polygon/client.html#/quotations/%s " + " \n"
+                + "${hostname}/polygon/client.html#/quotations/%s " + " \n"
                 + "\n"
                 + "Thanks" + "\n"
                 + "Polygon Team",
@@ -102,7 +101,7 @@ public class NotificationService {
         String message = String.format(
                 "Dear " +underWriterName+ ",\n\n"
                 + "You have a new Policy Request for Ref. :  %s\nClick the link below to view policy request details: " + "\n"
-                + "http://localhost:8080/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
+                + "${hostname}/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
                 policyRequest.getQuotation().getQuotationRequest().getReference(),
                 policyRequest.getQuotation().getQuotationRequest().getReference());
         		setNotification(new Notification(to, subject, message, file.getBytes(), "bankstatement.pdf"));
