@@ -27,20 +27,19 @@ echo $PATH
 # Step 7: Confirm Java Version in use is the installed version
 java -version
 
-# Java version “1.8.0�? will be displayed
+# Java version “1.8.0"? will be displayed
 
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													Pre-Installation for Active
+#													Pre-Installation for ActiveMQ
 #--------------------------------------------------------------------------------------------------------------------------------------
 
-# ActiveMQ Pre-installation
 # ActiveMQ requires that JDK be setup before it can run.
-# Login into the server as follows and type the following command to check if Java is Installed and set properly
+# Login into the server and check if Java is Installed and set properly
 echo JAVA_HOME
 # /root/jdk1.8.0_45 should be displayed on the console
 java -version
 #  Java version 1.8.0 should be displayed on the console
-# If Java is not set properly refer to JDK Setup file
+# If Java is not set properly refer to JDK Installation
 
 #--------------------------------------------------------------------------------------------------------------------------------------
 #													ActiveMQ Installation
@@ -56,12 +55,19 @@ wget http://apache.is.co.za/activemq/5.11.1/apache-activemq-5.11.1-bin.tar.gz
 #Step 3: Unpack the downloaded ActiveMQ setup file into ~/ by typing following command:
 tar zxvf apache-activemq-5.11.1-bin.tar.gz -C ~/
 
+# Create a Symbolic link to ActiveMQ home
+ln -s ~/activemq-5.11.1-bin activemq
+
 # Add  symbolic link to the init script provided by Active MQ (64 bit linux example):
 
-sudo ln -sf /opt/apache-activemq-5.5.0/bin/linux-x86-64/activemq /etc/init.d/
+ln -sf activemq/bin/linux-x86-64/activemq /etc/init.d/
+
+# Create a default configuration file:
+
+/etc/init.d/activemq setup /etc/default/activemq
 
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													Post-Installation
+#													Post-Installation ActiveMQ
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 # ActiveMQ comes with default settings for Web Console and TCP connectors. These settings need 
@@ -70,17 +76,17 @@ sudo ln -sf /opt/apache-activemq-5.5.0/bin/linux-x86-64/activemq /etc/init.d/
 
 # Configure a broker and tcp variables using vim utility
 
-vim ~/apache-activemq-5.11.1/conf/jetty.xml
+vim activemq/conf/activemq.xml
 
 # Edit the text file by type i and navigating the text file. Locate the brokerName and change broker name to polygon. 
 # Locate Transport connectors <transportConnector name="openwire" uri="tcp://0.0.0.0:61616" enableStatusMonitor="true"/>
-# Change uri as uri="45.56.76.161:61616" and exit the terminal by clicking Esc, the :wq press enter
+# Change uri as uri="45.56.76.161:61616" and exit the terminal by clicking Esc, then :wq press enter
 # By Default, my Web Console credentials are admin/admin. For security purpose, these default values should be changed as follows:
 
 vim ~/apache-activemq-5.11.1/conf/jetty-realm.properties
 # Edit the properties file as per below.
 # Change username and password and leave the roles. Under , admin,admin,admin
-Polygon, P@1yg0N,admin
+polygon, P@1yg0N,admin
 
 # Remove user,user,user 
 # Exit the text editor and save the file (:wq)
@@ -99,34 +105,32 @@ netstat -an|grep 61616
 #													Starting ActiveMQ
 #---------------------------------------------------------------------------------------------------------------------------------------
 # If you like you can setup activemq to start on startup:
-# update-rc.d ~/apache-activemq-5.11.1/bin/activemq defaults
+# update-rc.d activemq/bin/activemq defaults
 
 # Start ActiveMQ Admin 
-cd ~/apache-activemq-5.11.1
-./bin/activemq-admin
+./activemq/bin/activemq-admin
 
 # Run activeMq
-./bin/activemq start
+./activemq/bin/activemq start
 
 # To check if the active mq is up and running
-./activemq status 
-#to start and stop active mq
-./activemq start  
-./activemq stop
+./activemq/bin/activemq status 
+# To stop the currently executing broker
+./activemq/bin/activemq stop
 
 #--------------------------------------------------------------------------------------------------------------------------------------
 #													Uninstallation of ActiveMQ
 #---------------------------------------------------------------------------------------------------------------------------------------
-# This should be executed only if 
+# To remove ActiveMQ in the file system
 update-rc.d -f activemq remove
 rm /etc/init.d/activemq
 
 
 
 # Refer to ActiveMQ online Documentation for further usage
-# http://activemq.apache.org/
+http://activemq.apache.org/
 
-# For On-Install for ActiveMQ, the below link can be referred to:
+# An On-Install for ActiveMQ, the below link can also be referred to:
 https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/activemq-installation
 
 
