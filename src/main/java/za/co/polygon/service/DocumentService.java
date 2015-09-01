@@ -217,7 +217,8 @@ public class DocumentService extends PdfPageEventHelper {
 
         Image footer = null;
         try {
-            footer = Image.getInstance("src/main/webapp/img/products/polygon-footer.png");
+            // TODO : Fix it (should not refer to any path try with classpath resource)
+            footer = Image.getInstance("src/main/resources/static/img/products/polygon-footer.png");
         } catch (BadElementException ex) {
             Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -233,7 +234,7 @@ public class DocumentService extends PdfPageEventHelper {
 
         Image img = null;
         try {
-            img = Image.getInstance("src/main/webapp/img/products/polygon-logo.jpg");
+            img = Image.getInstance("src/main/resources/static/img/products/polygon-logo.jpg");
         } catch (BadElementException ex) {
             Logger.getLogger(DocumentService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

@@ -7,6 +7,13 @@
     <artifactId>polygon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.3.RELEASE</version>
+    </parent>
+
     <dependencies>
 
         <dependency>
@@ -119,11 +126,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.2.3.RELEASE</version>
-                <configuration>
-                    <mainClass>za.co.polygon.Application</mainClass>
-
-                </configuration>
+                <version>1.2.3.RELEASE</version>           
                 <executions>
                     <execution>
                         <goals>
