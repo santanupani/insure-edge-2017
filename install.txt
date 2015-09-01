@@ -27,7 +27,7 @@ echo $PATH
 # Step 7: Confirm Java Version in use is the installed version
 java -version
 
-# Java version “1.8.0” will be displayed
+# Java version “1.8.0�? will be displayed
 
 #--------------------------------------------------------------------------------------------------------------------------------------
 #													Pre-Installation for Active
@@ -131,22 +131,31 @@ https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/a
 
 
 
-############################################################################
-                      MySQL Installation
-############################################################################
+        ############################################################################
+                     		 MySQL Installation
+	############################################################################
 
 
 
-Installing MySQL generic binaries 
+ #------------------------------------------#
+  	 MySQL Pre-Installation setup
+ #------------------------------------------#
 
-#First download the tar.gz file. Make sure that you have the appropriate version of C libraries (glibc) installed
-# for instance, MySQL version 5.6.21 requires glibc 2.5. You can determine what version of glibc your OS 
-#is using with the following command:
+# Verify that the version(s) of MySQL server that you intalling are supported by your server
+# Determine what version of glibc your OS with the following command:
 
 	ldd --version
-This will give you output resembling the following:
+# Download   mysql-5.1.73-linux-x86_64-glibc23.tar.gz on mysql http://www.mysql.com/ site to your server
 
-	ldd (Debian GLIBC 2.19-13) 2.19
+	wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.73-linux-x86_64-glibc23.tar.gz
+
+
+
+ #------------------------------------------#
+  	 MySQL Post-Installation setup 
+ #------------------------------------------#
+
+
 
 #First, you will need to create the mysql group if it does not already exist.
 #You can find out if it exists by the following command:
@@ -173,19 +182,23 @@ This will give you output resembling the following:
 
 	sudo useradd -r -g mysql mysql
 
-#Next we will unpack the MySQL tar archive. Here, will assume the file is named mysql-5.1.73-linux-x86_64-glibc23.tar.gz,
+
+
+ #-------------------------------------#
+	 MySQL Installation 
+ #-------------------------------------#
+
+
+#We will now unpack the MySQL tar archive. Here, will assume the file is named mysql-5.1.73-linux-x86_64-glibc23.tar.gz,
 #and that it is located in the directory /downloads.
 #First, choose where to install MySQL. Here, 
-#we will choose the directory /usr/local, which is a standard location. In our installation, making changes to this directory requires root privileges,
+#we will choose the directory /root, which is a standard location. In our installation, making changes to this directory requires root privileges,
 #so we will execute many of the following commands using sudo.
-#Now, we will unpack the tar archive into this directory the local directory by the following command
+#Now, we will unpack the tar archive into this directory the root directory by the following command
 #which will create an installation directory containing all the tarball's contents:
 
-	tar zxvf mysql-5.1.73-linux-x86_64-glibc23.tar.gz –C /usr/local
+	tar zxvf mysql-5.1.73-linux-x86_64-glibc23.tar.gz -C -/
 	
-#First, we'll cd to /usr/local:
-
-	cd /usr/local
 
 #Next we will create a symbolic link to this directory called mysql, using the ln command:
 
@@ -195,70 +208,77 @@ This will give you output resembling the following:
 
 #First, we will cd into our base MySQL directory:
 
-	cd /usr/local/mysql
-<<<<<<< HEAD
-	chown -R mysql .
-	chgrp -R mysql .
-	scripts/mysql_install_db --user=mysql
-	chown -R root .
-	chown -R mysql data
-#Step 10.2. Next command is optional
-	cp support-files/my-medium.cnf /etc/my.cnf
-	bin/mysqld_safe --user=mysql &
-#Step 10.3. Next command is optional
-	cp support-files/mysql.server /etc/init.d/mysql.server
+	cd mysql
 
+#We should add /mysql to our PATH environment variable
+#Add the line PATH=$PATH:/mysql/bin to the .profile file in your home directory
 
-#Step 11To run MySql
-
-	cd /usr/local/polygon/mysql-5.5.1-m2-linux-x86_64-glibc23/bin
- 	./mysql
-#When you see the below you now have access to mysql
-mysql>
-
-#Step 12. To see all schemas(DBs) type the following
-show schemas;
-#Step 13. Press enter
-#Step 14. create schema
-   create schema polygon;
-   grant all on polygon.* to 'mysql'@'localhost' identied by 'admin';
-
-
-#Accessing MySQL through workbench
-=======
-#We should add /usr/local/mysql to our PATH environment variable by the following command. 
-
-	sudo echo 'PATH=$PATH:/usr/local/mysql/bin' >> /etc/profile
+	echo 'PATH=$PATH:/usr/local/mysql/bin' >> ~/.profile
 
 #Now let's make sure that the mysql user and group are the owners of everything we just installed:
 
-	sudo chown -R mysql /usr/local/mysql/.
-	sudo chgrp -R mysql /usr/local/mysql/.
+	sudo chown -R /mysql/.
 
-#Now we will run the mysql_install_db program to set up the initial MySQL grant tables which define how users are able to access the MySQL databases
+	sudo chgrp -R mysql /mysql/.
+	
 
-	sudo /usr/local/mysql/scripts/mysql_install_db --user=mysql
+#Now we will run the mysql_install_db program to set up the initial MySQL
+#Grant tables which define how users are able to access the MySQL databases. 
+#This process is performed automatically in other installation procedures,
+#such as using a package manager. Here we will do it manually :
 
+sudo /usr/local/mysql/scripts/mysql_install_db --user=mysql
 
-#When mysql_install_db runs successfully, it will create the server's data directory with mysql as the owner. 
-#Under the data directory, it creates directories for the database which holds the grant tables and the test database that you can use to test MySQL.
-#It also creates privilege table entries for the root and anonymous MySQL user accounts. These accounts have no password initially.
-#These default privileges permit the MySQL root account to do anything, and permit any MySQL user to create or use databases with a name of test or a name starting with test_.
-
+#When mysql_install_db runs successfully, it will create the server's data directory
+#with mysql as the owner
 #Now we will start the MySQL server:
 
 	sudo bin/mysqld_safe --user=mysql &
 
-#At this point, anyone can access MySQL as the MySQL root user, because it has no password associated with it
-#This is very insecure, obviously, so we should set a password for the MySQL root user. To do this, we will launch the mysql client and issue the appropriate commands. Start the mysql client as the MySQL root user:
+#At this point, anyone can access MySQL as the MySQL root user,
+#because it has no password associated with it. This is very insecure,
+#obviously, so we should set a password for the MySQL root user.
+#To do this, we will launch the mysql client and issue the appropriate commands.
+#Start the mysql client as the MySQL root user:
 
-	mysql -u root
+mysql -u root
 
-#After a brief hello message, you will be presented with the mysql> prompt.
-#You can now exit the mysql client by issuing the exit command:
-	mysql> exit
 
-<<<<<<< HEAD
+#The MySQL database comes with some anonymous users with blank passwords.
+#As a result, anyone can connect to the database To check whether this is the case, do the following:
+
+mysql> select * from mysql.user where user="";
+
+#To remove the account, execute the following command:
+
+mysql> DROP USER "";
+
+
+At this prompt, enter the following commands, replacing newrootpwd with the password you'd
+like to set for MySQL root, and thishostname with the hostname of your system:
+
+	mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newrootpwd');
+	mysql> SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('newrootpwd');
+	mysql> SET PASSWORD FOR 'root'@'::1' = PASSWORD('newrootpwd');
+	mysql> SET PASSWORD FOR 'root'@'thishostname' = PASSWORD('newrootpwd');
+
+#To see all schemas(DBs) type the following
+	show schemas;
+
+# create schema
+  	create schema polygon;
+   	grant all on polygon.* to 'root'@'localhost' identied by 'newrootpwd';
+
+
+#Now you can exit mysql
+
+mysql> exit
+
+
+#To check that the MySQL server is running, we can use the mysqladmin program using this command, for example:
+
+	/mysql/bin/mysqladmin version -u root -p
+
 
 #After installing mysql go to my.cnf file and edit it to add the bind address by the following command
 
@@ -276,7 +296,133 @@ show schemas;
 
     netstat -ntlup | grep 3306
 
-You should see an output like this:
+#You should see an output like this:
 
     tcp        0      0 45.56.76.161:3306       0.0.0.0:*               LISTEN      27972/mysqld
 
+
+
+
+ #-----------------------------------------#
+ 	Unistalling MySQL 
+ #------------------------------------------#
+
+#To uninstall the activemq service, you may do the following:
+	sudo update-rc.d -f mysql remove
+	sudo rm /etc/init.d/mysql.server
+
+
+
+
+
+###############################################################################
+                       Polygon Set Up Doc
+###############################################################################
+
+#Step1  Log in to the server using putty
+
+            Put Host Name as 45.56.76.161 click Open
+                 userName :root Press Enter
+                 password :$3cr3t Press Enter
+ 
+#Step2  Check if jdk in installed
+    
+        When you are inside the server you can use the command below to check the java version 
+	    Command : java �verion
+        if the command give a value like 
+                java version "1.8.0_05"
+                Java(TM) SE Runtime Environment (build 1.8.0_05-b13)
+                Java HotSpot(TM) 64-Bit Server VM (build 25.5-b02, mixed mode)
+ 
+
+#Step3  To check if activeMQ is installed use the web address mentioned below
+                    Wed Address: http://45.56.76.161:8161/admin
+
+ 
+                            userName :polygon
+                            password :P@1yg0N                        press Enter 
+
+        If you successfully logged in using the credentials mentioned above then it verifies that activeMQ is installed in the server
+
+ 
+#Step4  To check the status of the activeMQ on the server please refer to activeMQ documentation.
+
+#Step5  To check the status of the MySQL in server.
+        
+        Once you manage to get into the server using putty you should run the command below to check the status of the MySQL installed on the server
+                        command : /etc/init.d/mysql.server status
+ 
+
+#Step6  To start and stop MySQL server please refer to MySQL documentation.
+
+#Step7  To run Polygon app on the server
+ 
+	We have two profiles as of now one as test and the other as dev
+
+#Step8  If you running the polygon app in a test profile
+
+        These are the following things you need to check before running the polygon application.
+
+#Step9  You need to look for these files in the server first before starting the application
+                            data.sql,schema.sql,polygon-0.0.1-SNAPSHOT.jar 
+
+#Step10 If these files are not there then you need to import these files to the server using winSCP 
+            
+#Step11 Connect to the server using winSCP
+ 
+        HostName:45.56.76.161
+        userName:root
+        password:$3cr3t
+
+#Step12 Once you successfully manage to connect to the server 
+		
+ 	Drag and drop the data.sql ,schema.sql and polygon-0.0.1-SNAPSHOT.jar files 
+
+        After you successfully transfer the file we need to run the schema.sql file and data.sql file manually.
+
+
+#Step13 First need to check if there is existing polygon schema in the server
+ 
+        in order to achieve that we run this command: show schemas;
+
+#Step14 You will be able to see all the schema's available in the server.If you are unable to find polygon schema then you need to create it by the command
+
+            create schema polygon;
+
+#Step15 After successfully creating a schema you need to use that schema by the command 
+
+                use {schema Name};
+#Step16 Then you need to run the script to create the table by the command
+            source ~/schema.sql;
+
+#Step17 Then you need to run the script to insert the data in the tables by the command
+
+            source ~/data.sql;
+
+#Step18 Now you should be able to see the tables using the command
+
+            show tables;
+
+#Step19 To check if all the data�s are successfully inserted on the tables we can query any table by the command
+
+        select * from {table Name};
+
+#Step20 After you have successfully configured MySQL, activeMQ and jdk we need to start the application by the following command
+
+            java -jar polygon-0.0.1-SNAPSHOT.jar --spring.profiles.active={profile Name}
+
+#Step21 After successfully the application is started you can use the web address below to check the application
+
+            http://45.56.76.161:8080/portal/index.html
+
+#Step22 If you are using dev profile to run the application
+
+        you just need the polygon-0.0.1-SNAPSHOT.jar in the server.
+
+#Step23 You can start the application if using dev profiles 
+
+        java -jar polygon-0.0.1-SNAPSHOT.jar --spring.profiles.active={profile Name}
+
+#Step24 After successfully the application is started you can use the web address below to check the application
+
+            http://localhost:8080/portal/index.html
