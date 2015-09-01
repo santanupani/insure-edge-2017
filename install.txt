@@ -1,32 +1,26 @@
-############################################################### 
-           Java JDK Installation Instructions 
-##############################################################
-
-# Step 1: Login Into the Server
-# Login into the server as follows:
-# Open putty, and paste the address 45.56.76.161 in the Host Name( or IP address) textbox and click open.
-# Step 2: Provide Login details at terminal  (username and password)
-# On successful login, the following are installation instructions!!!
-
-# Step 3: Installation Instructions: Java JDK
-# Change to the directory /usr/local
-cd  /usr/local
-# Download JDK Setup
+#--------------------------------------------------------------------------------------------------------------------------------------
+#													JDK Installation
+#--------------------------------------------------------------------------------------------------------------------------------------
+# Step 1: Download the JDK
+# Change to the directory ~/Download
+cd  ~/Download
+# command to Download JDK Setup
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz
 
+# Step 2: Unpack the downloaded JDK file into root directory (~/)
 
+tar zxvf jdk-8u45-linux-x64.tar.gz -C ~
 
-# Step 4: Unpack the downloaded JDK file into /usr/local/polygon
+# The above instruction unpacks the tar.gz file into ~/jdk1.8.0_45
+# Step 3: Setting JAVA_HOME and PATH( This is for running ActiveMQ Broker)
 
-tar zxvf jdk-8u45-linux-x64.tar.gz -C /usr/local/polygon
+vim /etc/environment
+# (vim) Command line text editor opens a file (Edit the file and enter the following instructions)
+JAVA_HOME=/root/jdk1.8.0_45
+# NOTE: Don't remove the PATH variable, only append  jJAVA_HOME/bin to existing PATH
+PATH=$PATH:JAVA_HOME/bin 
 
-# The above instruction unpacks the tar.gz file into /usr/local/polygon/jdk1.8.0_45
-# Step 5: Setting JAVA_HOME and PATH for each new session ( This is for running ActiveMQ Broker)
-
-export JAVA_HOME=/usr/local/polygon/jdk1.8.0_45
-export PATH=$PATH:/usr/local/polygon/jdk1.8.0_45/bin
-
-# Step 6: Check JAVA_HOME and PATH are set type 
+# Step 4: Check JAVA_HOME and PATH directory 
 echo $JAVA_HOME
 echo $PATH
 
@@ -35,32 +29,105 @@ java -version
 
 # Java version “1.8.0” will be displayed
 
+#--------------------------------------------------------------------------------------------------------------------------------------
+#													Pre-Installation for Active
+#--------------------------------------------------------------------------------------------------------------------------------------
 
-############################################################### 
-          ActiveMQ Installation Instructions 
-###############################################################
+# ActiveMQ Pre-installation
+# ActiveMQ requires that JDK be setup before it can run.
+# Login into the server as follows and type the following command to check if Java is Installed and set properly
+echo JAVA_HOME
+# /root/jdk1.8.0_45 should be displayed on the console
+java -version
+#  Java version 1.8.0 should be displayed on the console
+# If Java is not set properly refer to JDK Setup file
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+#													ActiveMQ Installation
+#--------------------------------------------------------------------------------------------------------------------------------------
 
 # Installation instruction for ActiveMQ
-# Step 1: Change to /usr/local
-cd  /usr/local
+# Step 1: Change to ~/Download
+cd  ~/Download
 
 # Step 2: Download ActiveMQ
 wget http://apache.is.co.za/activemq/5.11.1/apache-activemq-5.11.1-bin.tar.gz
 
-#Step 3: Unpack the downloaded ActiveMQ setup file into /usr/local/polygon by typing following command:
-tar zxvf apache-activemq-5.11.1-bin.tar.gz -C /usr/local/polygon
+#Step 3: Unpack the downloaded ActiveMQ setup file into ~/ by typing following command:
+tar zxvf apache-activemq-5.11.1-bin.tar.gz -C ~/
 
-# To Run ActiveMQ. Change to /usr/local/polygon/apache-activemq-5/bin
-cd /usr/local/polygon/apache-activemq-5.11.1/bin
-./activemq start
-#to check if the active mq is up and running
+# Add  symbolic link to the init script provided by Active MQ (64 bit linux example):
+
+sudo ln -sf /opt/apache-activemq-5.5.0/bin/linux-x86-64/activemq /etc/init.d/
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+#													Post-Installation
+#---------------------------------------------------------------------------------------------------------------------------------------
+
+# ActiveMQ comes with default settings for Web Console and TCP connectors. These settings need 
+# to be changed to secure ActiveMQ for (Remote) access and enable tcp connections. The instructions below are for changing the 
+# default settings and customizing accordingly.
+
+# Configure a broker and tcp variables using vim utility
+
+vim ~/apache-activemq-5.11.1/conf/jetty.xml
+
+# Edit the text file by type i and navigating the text file. Locate the brokerName and change broker name to polygon. 
+# Locate Transport connectors <transportConnector name="openwire" uri="tcp://0.0.0.0:61616" enableStatusMonitor="true"/>
+# Change uri as uri="45.56.76.161:61616" and exit the terminal by clicking Esc, the :wq press enter
+# By Default, my Web Console credentials are admin/admin. For security purpose, these default values should be changed as follows:
+
+vim ~/apache-activemq-5.11.1/conf/jetty-realm.properties
+# Edit the properties file as per below.
+# Change username and password and leave the roles. Under , admin,admin,admin
+Polygon, P@1yg0N,admin
+
+# Remove user,user,user 
+# Exit the text editor and save the file (:wq)
+
+# Activate web console for remote access
+# wget http://localhost:8161/admin
+# nc localhost 8161, nv localhost 8161
+
+openssl s_client -connect 45.56.76.161:8161 -crlf
+
+#ActiveMQ's default port is 61616. Run netstat and search for port 61616.
+netstat -an|grep 61616
+#and  web console should be available http://localhost:8161.
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+#													Starting ActiveMQ
+#---------------------------------------------------------------------------------------------------------------------------------------
+# If you like you can setup activemq to start on startup:
+# update-rc.d ~/apache-activemq-5.11.1/bin/activemq defaults
+
+# Start ActiveMQ Admin 
+cd ~/apache-activemq-5.11.1
+./bin/activemq-admin
+
+# Run activeMq
+./bin/activemq start
+
+# To check if the active mq is up and running
 ./activemq status 
 #to start and stop active mq
-./activemq start  and ./activemq stop
+./activemq start  
+./activemq stop
 
-# ActiveMQ should be running
+#--------------------------------------------------------------------------------------------------------------------------------------
+#													Uninstallation of ActiveMQ
+#---------------------------------------------------------------------------------------------------------------------------------------
+# This should be executed only if 
+update-rc.d -f activemq remove
+rm /etc/init.d/activemq
 
-Start and Stop(process need to be written)
+
+
+# Refer to ActiveMQ online Documentation for further usage
+# http://activemq.apache.org/
+
+# For On-Install for ActiveMQ, the below link can be referred to:
+https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/activemq-installation
 
 
 

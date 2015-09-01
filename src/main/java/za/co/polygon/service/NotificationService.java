@@ -18,10 +18,12 @@ public class NotificationService {
     @Autowired
     private MessageRepository messageRepository;
     private Notification notification;
-    @Value("polygon.application.hostname")
+    
+    @Value("${polygon.application.hostname}")
     private String hostname;
-    @Value("polygon.application.port")
-    private int port;
+    
+    @Value("${polygon.application.port}")
+    private String port;
 
     public void sendNotificationForNewQuotationRequest(QuotationRequest quotationRequest, Broker broker) {
         String to = broker.getEmail();
@@ -30,11 +32,11 @@ public class NotificationService {
         String message = String.format(
                 "Ref : %s" + "\n"
                 + "Click the link below to view quotation request : " + "\n"
-                + "http://%s:%d/polygon/broker.html#/quotation-requests/%s",
+                + "http://%s:%s/polygon/broker.html#/quotation-requests/%s",
                 quotationRequest.getReference(),
                 hostname,
-                port
-                quotationRequest.getReference(),);
+                port,
+                quotationRequest.getReference());
         Notification notification = new Notification(to, subject, message);
         getMessageRepository().publish(notification, "q.notification");
     }
@@ -89,12 +91,14 @@ public class NotificationService {
                 +"Please find the attachement t view your quotation" + "\n"
                 + "\n"
                 + "Please click the link below to apply for a policy" + " \n"
-                + hostname +"/polygon/client.html#/quotations/%s " + " \n"
+                + "http://%s:%s/polygon/client.html#/quotations/%s " + " \n"
                 + "\n"
                 + "Thanks" + "\n"
                 + "Polygon Team",
                 quotationRequest.getApplicantName(),
                 quotationRequest.getReference(),
+                hostname,
+                port,
                 quotationRequest.getReference());
         String filename = quotationRequest.getApplicantName() + "_quotation.pdf";
         
@@ -109,8 +113,10 @@ public class NotificationService {
         String message = String.format(
                 "Dear " +underWriterName+ ",\n\n"
                 + "You have a new Policy Request for Ref. :  %s\nClick the link below to view policy request details: " + "\n"
-                + hostname +"/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
+                + "http://%s:%s/polygon/underwritter.html#/policy-requests/%s\n\nKind Regards,",
                 policyRequest.getQuotation().getQuotationRequest().getReference(),
+                hostname,
+                port,
                 policyRequest.getQuotation().getQuotationRequest().getReference());
         		setNotification(new Notification(to, subject, message, file.getBytes(), "bankstatement.pdf"));
 //        		try {
