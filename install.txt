@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													JDK Installation
+#                                                    JDK Installation
 #--------------------------------------------------------------------------------------------------------------------------------------
 # Step 1: Download the JDK
 # Change to the directory ~/Download
@@ -14,11 +14,12 @@ tar zxvf jdk-8u45-linux-x64.tar.gz -C ~
 # The above instruction unpacks the tar.gz file into ~/jdk1.8.0_45
 # Step 3: Setting JAVA_HOME and PATH( This is for running ActiveMQ Broker)
 
-vim /etc/environment
+vim .bashrc
+
 # (vim) Command line text editor opens a file (Edit the file and enter the following instructions)
 JAVA_HOME=/root/jdk1.8.0_45
 # NOTE: Don't remove the PATH variable, only append  jJAVA_HOME/bin to existing PATH
-PATH=$PATH:JAVA_HOME/bin 
+PATH=$PATH:$JAVA_HOME/bin 
 
 # Step 4: Check JAVA_HOME and PATH directory 
 echo $JAVA_HOME
@@ -30,7 +31,7 @@ java -version
 # Java version “1.8.0"? will be displayed
 
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													Pre-Installation for ActiveMQ
+#                                                    Pre-Installation for ActiveMQ
 #--------------------------------------------------------------------------------------------------------------------------------------
 
 # ActiveMQ requires that JDK be setup before it can run.
@@ -42,7 +43,7 @@ java -version
 # If Java is not set properly refer to JDK Installation
 
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													ActiveMQ Installation
+#                                                    ActiveMQ Installation
 #--------------------------------------------------------------------------------------------------------------------------------------
 
 # Installation instruction for ActiveMQ
@@ -67,7 +68,7 @@ ln -sf activemq/bin/linux-x86-64/activemq /etc/init.d/
 /etc/init.d/activemq setup /etc/default/activemq
 
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													Post-Installation ActiveMQ
+#                                                    Post-Installation ActiveMQ
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 # ActiveMQ comes with default settings for Web Console and TCP connectors. These settings need 
@@ -91,26 +92,29 @@ polygon, P@1yg0N,admin
 # Remove user,user,user 
 # Exit the text editor and save the file (:wq)
 
-# Activate web console for remote access
-# wget http://localhost:8161/admin
+# Check if web console respond to request
+ wget http://localhost:8161/admin
+ 
 # nc localhost 8161, nv localhost 8161
 
-openssl s_client -connect 45.56.76.161:8161 -crlf
-
+# openssl s_client -connect 45.56.76.161:8161 -crlf
 #ActiveMQ's default port is 61616. Run netstat and search for port 61616.
 netstat -an|grep 61616
 #and  web console should be available http://localhost:8161.
 
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													Starting ActiveMQ
+#                                                    Starting ActiveMQ
 #---------------------------------------------------------------------------------------------------------------------------------------
 # If you like you can setup activemq to start on startup:
 # update-rc.d activemq/bin/activemq defaults
 
 # Start ActiveMQ Admin 
 ./activemq/bin/activemq-admin
+./activemq/bin/activemq-admin start
 
-# Run activeMq
+Ctrl+C
+
+# Run activemq
 ./activemq/bin/activemq start
 
 # To check if the active mq is up and running
@@ -119,7 +123,7 @@ netstat -an|grep 61616
 ./activemq/bin/activemq stop
 
 #--------------------------------------------------------------------------------------------------------------------------------------
-#													Uninstallation of ActiveMQ
+#                                                    Uninstallation of ActiveMQ
 #---------------------------------------------------------------------------------------------------------------------------------------
 # To remove ActiveMQ in the file system
 update-rc.d -f activemq remove
@@ -132,7 +136,6 @@ http://activemq.apache.org/
 
 # An On-Install for ActiveMQ, the below link can also be referred to:
 https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/activemq-installation
-
 
 
         ############################################################################
@@ -150,7 +153,9 @@ https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/a
 
 	ldd --version
 # Download   mysql-5.1.73-linux-x86_64-glibc23.tar.gz on mysql http://www.mysql.com/ site to your server
-
+# Into the download directory 
+         
+        cd download/
 	wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.73-linux-x86_64-glibc23.tar.gz
 
 
@@ -160,7 +165,8 @@ https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/a
  #------------------------------------------#
 
 
-
+#Go to the root directory
+     cd ~
 #First, you will need to create the mysql group if it does not already exist.
 #You can find out if it exists by the following command:
 
@@ -201,8 +207,12 @@ https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/a
 #Now, we will unpack the tar archive into this directory the root directory by the following command
 #which will create an installation directory containing all the tarball's contents:
 
-	tar zxvf mysql-5.1.73-linux-x86_64-glibc23.tar.gz -C -/
-	
+         cd downloads/
+
+	tar zxvf mysql-5.1.73-linux-x86_64-glibc23.tar.gz -C /usr/local/
+	 
+
+cd ~
 
 #Next we will create a symbolic link to this directory called mysql, using the ln command:
 
@@ -217,13 +227,16 @@ https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/a
 #We should add /mysql to our PATH environment variable
 #Add the line PATH=$PATH:/mysql/bin to the .profile file in your home directory
 
-	echo 'PATH=$PATH:/usr/local/mysql/bin' >> ~/.profile
+        vim .bashrc
+        MYSQL_HOME=/usr/local/mysql-5.1.73-linux-x86_64-glibc23
+        PATH=$PATH:$MYSQL_HOME/bin
+        
 
 #Now let's make sure that the mysql user and group are the owners of everything we just installed:
 
-	sudo chown -R /mysql/.
+	sudo chown -R mysql /usr/local/mysql/ .
 
-	sudo chgrp -R mysql /mysql/.
+	sudo chgrp -R mysql /usr/local/mysql/ .
 	
 
 #Now we will run the mysql_install_db program to set up the initial MySQL
@@ -231,66 +244,47 @@ https://sites.google.com/a/microgolem.com/www/home/infrastructure/linux/ubuntu/a
 #This process is performed automatically in other installation procedures,
 #such as using a package manager. Here we will do it manually :
 
-sudo /usr/local/mysql/scripts/mysql_install_db --user=mysql
+    
+    sudo /usr/local/mysql/scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql \ --datadir=/usr/local/mysql/data
 
 #When mysql_install_db runs successfully, it will create the server's data directory
 #with mysql as the owner
 #Now we will start the MySQL server:
 
-	sudo bin/mysqld_safe --user=mysql &
+	cd /usr/local/mysql ; /usr/local/mysql/bin/mysqld_safe &
+        
+        ./bin/mysql_secure_installation
 
-#At this point, anyone can access MySQL as the MySQL root user,
-#because it has no password associated with it. This is very insecure,
-#obviously, so we should set a password for the MySQL root user.
-#To do this, we will launch the mysql client and issue the appropriate commands.
-#Start the mysql client as the MySQL root user:
+#You will be promnted for password , press enter
+#Then it will promt you a new password enter your new password 
+#Then re-enter your password again
+#Then press y for yes and enter four times
 
-mysql -u root
+#Now you can run mysql with the foolowing command
 
+   ./bin/mysql -u root -p 
 
-#The MySQL database comes with some anonymous users with blank passwords.
-#As a result, anyone can connect to the database To check whether this is the case, do the following:
+#Now exit mysql.
+#Cd to the root directory by 
 
-mysql> select * from mysql.user where user="";
+        cd ~
 
-#To remove the account, execute the following command:
+#create the cnf by 
 
-mysql> DROP USER "";
-
-
-At this prompt, enter the following commands, replacing newrootpwd with the password you'd
-like to set for MySQL root, and thishostname with the hostname of your system:
-
-	mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newrootpwd');
-	mysql> SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('newrootpwd');
-	mysql> SET PASSWORD FOR 'root'@'::1' = PASSWORD('newrootpwd');
-	mysql> SET PASSWORD FOR 'root'@'thishostname' = PASSWORD('newrootpwd');
-
-#To see all schemas(DBs) type the following
-	show schemas;
-
-# create schema
-  	create schema polygon;
-   	grant all on polygon.* to 'root'@'localhost' identied by 'newrootpwd';
-
-
-#Now you can exit mysql
-
-mysql> exit
-
-
-#To check that the MySQL server is running, we can use the mysqladmin program using this command, for example:
-
-	/mysql/bin/mysqladmin version -u root -p
-
+        cp /usr/local/mysql/support-files/my-medium.cnf /etc/my.cnf
 
 #After installing mysql go to my.cnf file and edit it to add the bind address by the following command
 
-    vi /etc/mysql/my.cnf
+    vi /etc/my.cnf
+    source  /etc/my.cnf
 
 #Add bind-address  
 
     "bind-address            = 45.56.76.161"
+
+#Create the sysmbolick link for managin mysql server
+
+  cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql.server
 
 #Restart mysql by the following command
 
@@ -305,6 +299,29 @@ mysql> exit
     tcp        0      0 45.56.76.161:3306       0.0.0.0:*               LISTEN      27972/mysqld
 
 
+#Open mysql again to configure databases and privileges
+
+ mysql -u root -p
+
+#Enter the password you created
+
+mysql> show schema;
+
+mysql> create schema polygon;
+
+
+mysql> use mysql;
+
+mysql> select user, password, host from user;
+
+mysql> update user set user='polygon' where user='root'
+
+mysql> select user, password, host from user;
+
+mysql>  grant all privilleges on polygon.* to polygon@'45.56.76.161' identified by 'P@1ygN'
+mysql>  grant all privilleges on polygon.* to polygon@'%' identified by 'P@1ygN'
+mysql>  grant all privilleges on polygon.* to polygon@'localhost' identified by 'P@1ygN'
+
 
 
  #-----------------------------------------#
@@ -313,6 +330,7 @@ mysql> exit
 
 #To uninstall the activemq service, you may do the following:
 	sudo update-rc.d -f mysql remove
+        sudo update-rc.d -f mysql.server remove
 	sudo rm /etc/init.d/mysql.server
 
 
@@ -332,7 +350,7 @@ mysql> exit
 #Step2  Check if jdk in installed
     
         When you are inside the server you can use the command below to check the java version 
-	    Command : java �verion
+	    Command : java -verion
         if the command give a value like 
                 java version "1.8.0_05"
                 Java(TM) SE Runtime Environment (build 1.8.0_05-b13)
@@ -376,7 +394,7 @@ mysql> exit
  
         HostName:45.56.76.161
         userName:root
-        password:$3cr3t
+        password:R3v3r$1d3
 
 #Step12 Once you successfully manage to connect to the server 
 		
@@ -407,7 +425,7 @@ mysql> exit
 
             show tables;
 
-#Step19 To check if all the data�s are successfully inserted on the tables we can query any table by the command
+#Step19 To check if all the dataï¿½s are successfully inserted on the tables we can query any table by the command
 
         select * from {table Name};
 
@@ -417,7 +435,7 @@ mysql> exit
 
 #Step21 After successfully the application is started you can use the web address below to check the application
 
-            http://45.56.76.161:8080/portal/index.html
+            http://li926-161.members.linode.com/portal/index.html
 
 #Step22 If you are using dev profile to run the application
 
