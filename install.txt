@@ -28,7 +28,7 @@ echo $PATH
 # Step 7: Confirm Java Version in use is the installed version
 java -version
 
-# Java version “1.8.0"? will be displayed
+# Java version �1.8.0"? will be displayed
 
 #--------------------------------------------------------------------------------------------------------------------------------------
 #                                                    Pre-Installation for ActiveMQ
@@ -96,8 +96,8 @@ polygon, P@1yg0N,admin
  wget http://localhost:8161/admin
  
 # nc localhost 8161, nv localhost 8161
-
-# openssl s_client -connect 45.56.76.161:8161 -crlf
+nc -z 45.56.76.161 61616
+openssl s_client -connect 45.56.76.161:8161 -crlf
 #ActiveMQ's default port is 61616. Run netstat and search for port 61616.
 netstat -an|grep 61616
 #and  web console should be available http://localhost:8161.
@@ -425,7 +425,7 @@ mysql>  grant all privilleges on polygon.* to polygon@'localhost' identified by 
 
             show tables;
 
-#Step19 To check if all the dataï¿½s are successfully inserted on the tables we can query any table by the command
+#Step19 To check if all the data�s are successfully inserted on the tables we can query any table by the command
 
         select * from {table Name};
 

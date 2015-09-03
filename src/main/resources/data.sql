@@ -51,7 +51,7 @@ insert into answer_values(questionnaire_id, answer_value) values(8, 'Protea Coin
 insert into answer_values(questionnaire_id, answer_value) values(8, 'G4S Service');
 insert into answer_values(questionnaire_id, answer_value) values(8, 'Fidelity Service');
 insert into answer_values(questionnaire_id, answer_value) values(8, 'Imeprial Logistics');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '9', 'Please specify by whom and how are the valuables carried :',                           1,	6, 		'false', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '9', 'Please specify by whom and how are the valuables carried :',                           1,	7, 		'false', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '10', 'How many times per week are the valuables carried ?',                   3,  null,  	null, 'true');
 insert into answer_values(questionnaire_id, answer_value) values(10, '1 time /week');
 insert into answer_values(questionnaire_id, answer_value) values(10, '2 times/week');
