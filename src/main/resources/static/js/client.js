@@ -284,10 +284,10 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
             console.log("Form Validation Sucess");
             $rootScope.message = "Form Validation was succesfull";
         
-        $scope.policyRequest.reference = $scope.reference;
-        $scope.policyRequest.quotationOptionId = $scope.quotationOptionId;
-        console.log("Quotation OptionID :" + $scope.quotationOptionId);
-        console.log("ref " + $scope.reference);
+        $scope.policyRequest.reference = $scope.quotationSelected.quotation.quotationRequest.reference;
+        $scope.policyRequest.quotationOptionId = $scope.quotationSelected.selectedQuotation.quotationOptionId;
+        console.log("Quotation OptionID :" + $scope.quotationSelected.selectedQuotation.quotationOptionId);
+        console.log("ref " + $scope.quotationSelected.quotation.quotationRequest.reference);
         console.log($scope.policyRequest);
         console.log($scope.file);
         $http({

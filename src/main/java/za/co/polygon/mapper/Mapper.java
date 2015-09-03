@@ -294,7 +294,7 @@ public class Mapper {
     public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest,Quotation quotation,QuotationOption quotationOption){
     	
     	PolicyRequestQueryModel policyRequestQueryModel = new PolicyRequestQueryModel();
-    	
+  
     	policyRequestQueryModel.setQuotation(toQuotationQueryModel(quotation));
     	policyRequestQueryModel.setQuotationOption(toQuotationOptionQueryModel(quotationOption));
     	policyRequestQueryModel.setCompanyRegNumber(policyRequest.getCompanyRegNumber());
