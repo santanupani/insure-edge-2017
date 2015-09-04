@@ -56,7 +56,7 @@
                                 <input type="text" class="form-control" 
                                        id="q_{{questionnaire.id}}"
                                        ng-model="questionnaire.answer"
-                                       ng-required="questionnaire.isRequired"/>
+                                       ng-required="questionnaire.isRequired" required/>
                             </div>
 
                             <div ng-if="questionnaire.answerType == 'number'"  class="form-group">
@@ -65,7 +65,7 @@
                                 <input type="number" class="form-control" 
                                 id="q_{{questionnaire.id}}"
                                 ng-model="questionnaire.answer"
-                                       	ng-required="questionnaire.isRequired">
+                                       	ng-required="questionnaire.isRequired" required>
                                 <label ng-show='questionnaire.answer' >{{questionnaire.answer | currency:'ZAR '}}</label>
                             </div>
 
@@ -80,7 +80,7 @@
                                          id="q_{{questionnaire.id}}" 
                                          ng-model="questionnaire.answer"
                                          ng-options="answerValue for answerValue in questionnaire.answerValues" 
-                                         ng-required="questionnaire.isRequired">     
+                                         ng-required="questionnaire.isRequired" required>     
                                     <option value=""></option>                               	
                                 </select>                                
                             </div>
@@ -90,7 +90,7 @@
                                 <textarea class="form-control" 
                                           id="q_{{questionnaire.id}}" 
                                           name="{{questionnaire.id}}"
-                                          ng-model="questionnaire.answer"></textarea>
+                                          ng-model="questionnaire.answer" required></textarea>
                             </div>
 
                             <div  ng-if="questionnaire.answerType == 'date'" class="form-group">
@@ -99,7 +99,7 @@
                                        id="q_{{questionnaire.id}}"
                                        ng-model="questionnaire.answer"
                                       
-                                       ng-required="questionnaire.isRequired"/>
+                                       ng-required="questionnaire.isRequired" required/>
                             </div>
 
                             <div  ng-if="questionnaire.answerType == 'other'" class="form-group">
@@ -107,8 +107,7 @@
                                 <input type="text" class="form-control" 
                                        id="q_{{questionnaire.id}}"
                                        ng-model="questionnaire.answer"
-                                       ng-required="questionnaire.isRequired"/>
-
+                                       ng-required="questionnaire.isRequired" required/>
                             </div>
 
                         </div>
