@@ -199,6 +199,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
       return $filter('currency')(nmbr, 'ZAR ', 2);
        
     };
+
 });
 
 polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $routeParams) {
