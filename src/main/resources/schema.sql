@@ -1,4 +1,3 @@
-
 /* table : login */
 create table login (
     id integer auto_increment not null primary key,
@@ -126,7 +125,7 @@ create table policy_requests(
     branch_code varchar(64) not null,
     acc_type varchar(64) not null,
     debit_order_date varchar(32) not null,
-    bank_statement blob not null,
+    bank_statement longblob not null,
     status varchar(32) not null,
     constraint applicant_details_fk1 foreign key (quotation_id) references quotations (id),
     constraint applicant_details_fk2 foreign key (quotation_option_id) references quotation_options (id)
