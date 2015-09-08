@@ -81,10 +81,12 @@
                                 <input type="text" class="form-control" placeholder="VAT Registration Number" style="text-transform: uppercase" ng-model="policyRequest.vatRegNumber" required uppercased/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="phoneNumber" placeholder="Telephone Number" ng-model="policyRequest.telephoneNumber"  required/>
+                                <input type="text" class="form-control" pattern="[\(]\d{3}[\)]\d{3}[\-]\d{4}" name="phoneNumber" placeholder="Telephone Number" ng-model="policyRequest.telephoneNumber"  required/>
+                                <label>Required phone number Format: (012)345-6789</label>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Fax Number" ng-model="policyRequest.faxNumber" required/>
+                                <input type="text" class="form-control" pattern="[\(]\d{3}[\)]\d{3}[\-]\d{4}" placeholder="Fax Number" ng-model="policyRequest.faxNumber" required/>
+                                <label>Required Fax number Format: (012)345-6789</label>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Street Address" ng-model="policyRequest.streetAddress"  required/>
