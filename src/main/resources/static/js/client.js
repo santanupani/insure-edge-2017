@@ -246,7 +246,7 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
     
     $scope.init = function () {
             $scope.getSelectedQuotation($routeParams.reference,$routeParams.quotationOptionId);
-            $scope.debitOrderDate = ['1st', '7th'];
+            $scope.debitOrderDate = ['1st', '5th', '7th'];
             $scope.accounttype = ['Current', 'Savings', 'Transmition'];
            
 
