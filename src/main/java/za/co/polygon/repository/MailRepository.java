@@ -33,8 +33,8 @@ public class MailRepository {
     @Autowired
     public MailRepository(@Value("${polygon.mail.hostname}")String host,
     		@Value("${polygon.mail.port}")int port,
-    		@Value("${polygon.mail.username}")String user,
-    		@Value("${polygon.mail.password}")String pass) {
+    		@Value("${polygon.mail.username}")final String user,
+    		@Value("${polygon.mail.password}")final String pass) {
     	
     	this.setUsername(user);
         Properties props = new Properties();
