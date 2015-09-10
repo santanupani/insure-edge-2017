@@ -43,3 +43,32 @@ create table underwritter_general(
     constraint underwritter_general_fk5 foreign key (special_policy_condition_id) references special_policy_conditions (id)
 );
 
+create table client_master_data (
+      id integer auto increment not null primary key,
+      client_no varchar(64) not null,
+      client_name varchar(64) not null,
+      ap_code varchar(32) not null,
+      policy_number varchar(32) not null,
+      street varchar(32) not null,
+      city varchar(32) not null,
+      code varchar(32) not null,
+      postal_address varchar(32) not null,
+      surbub varchar(32) not null,
+      work_tel_number varchar(32) not null,
+      home_tel_number varchar(32),
+      fax_number varchar(32) not null,
+      cell_number varchar(32),
+      bank_code varchar(32),
+      account_number varchar(32) not null,
+      account_name varchar(32) not null,
+      branch varchar(32) not null,
+      bank_name varchar(32) not null,
+      reg_number varchar(32) not null,
+      income_tax_number varchar(32),
+      vat_number varchar(32) not null,
+      passport_number varchar(32),
+      email varchar(32) not null,
+      contact_person varchar(32) not null,
+      pref_comm varchar(32) not null,
+);
+
