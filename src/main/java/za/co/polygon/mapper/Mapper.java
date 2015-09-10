@@ -195,7 +195,7 @@ public class Mapper {
         Quotation quotation = new Quotation();
         quotation.setCreatedDate(new Date());
         quotation.setQuotationRequest(quotationRequest);
-
+        
         List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();
         for (Options options : quotationCommandModel.getOptions()) {
             QuotationOption quotationOption = new QuotationOption();
@@ -220,7 +220,6 @@ public class Mapper {
         QuotationQueryModel result = new QuotationQueryModel();
         result.setQuotationId(quotation.getId());
         result.setQuotationRequest(toQuotationRequestQueryModel(quotation.getQuotationRequest()));
-
         for (QuotationOption quotationOption : quotation.getQuotationOptions()) {
             QuotationQueryModel.Option option = new QuotationQueryModel.Option();
             option.setQuotationOptionId(quotationOption.getId());
@@ -277,6 +276,7 @@ public class Mapper {
     }
     
     public static QuotationOptionQueryModel toQuotationOptionQueryModel(QuotationOption quotationOption){
+        
     	QuotationOptionQueryModel quotationOptionQueryModel = new QuotationOptionQueryModel();
     	quotationOptionQueryModel.setQuotationOptionId(quotationOption.getId());
     	quotationOptionQueryModel.setCommodity(quotationOption.getCommodity());
