@@ -151,7 +151,7 @@ create table client_master_data (
       account_name varchar(32) not null,
       branch varchar(32) not null,
       bank_name varchar(32) not null,
-      reg_no varchar(32) not null,
+      reg_number varchar(32) not null,
       income_tax_number varchar(32),
       vat_number varchar(32) not null,
       passport_number varchar(32),
