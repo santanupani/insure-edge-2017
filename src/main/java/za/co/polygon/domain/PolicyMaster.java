@@ -36,6 +36,10 @@ public class PolicyMaster {
     @JoinColumn(name = "broker_id")
     private Broker broker;
     
+    @OneToOne
+    @JoinColumn(name = "client_master_id")
+    private ClientMasterData clientMasterData;
+    
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
     private SubAgent subAgent;
