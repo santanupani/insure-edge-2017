@@ -28,8 +28,8 @@ create table special_policy_conditions(
     special_policy_condition_values varchar(1024) not null
 );
 
-/* table : underwritter_general */
-create table underwritter_general(
+/* table : underwritter_generals */
+create table underwritter_generals(
     id integer auto_increment not null primary key,
     schedule_attaching_id integer not null,
     type_of_cover_id integer not null,
