@@ -131,8 +131,8 @@ create table policy_requests(
     constraint applicant_details_fk2 foreign key (quotation_option_id) references quotation_options (id)
 );
 
-create table client_master_data (
-      id integer auto increment not null primary key,
+create table client_details (
+      id integer auto_increment not null primary key,
       client_no varchar(64) not null,
       client_name varchar(64) not null,
       ap_code varchar(32) not null,
@@ -141,7 +141,7 @@ create table client_master_data (
       city varchar(32) not null,
       code varchar(32) not null,
       postal_address varchar(32) not null,
-      surbub varchar(32) not null,
+      suburb varchar(32) not null,
       work_tel_number varchar(32) not null,
       home_tel_number varchar(32),
       fax_number varchar(32) not null,
@@ -157,7 +157,7 @@ create table client_master_data (
       passport_number varchar(32),
       email varchar(32) not null,
       contact_person varchar(32) not null,
-      pref_comm varchar(32) not null,
+      pref_comm varchar(32) not null
 );
 
 
@@ -206,34 +206,6 @@ create table underwritter_generals(
     constraint underwritter_general_fk5 foreign key (special_policy_condition_id) references special_policy_conditions (id)
 );
 
-create table client_master_data (
-      id integer auto increment not null primary key,
-      client_no varchar(64) not null,
-      client_name varchar(64) not null,
-      ap_code varchar(32) not null,
-      policy_number varchar(32) not null,
-      street varchar(32) not null,
-      city varchar(32) not null,
-      code varchar(32) not null,
-      postal_address varchar(32) not null,
-      surbub varchar(32) not null,
-      work_tel_number varchar(32) not null,
-      home_tel_number varchar(32),
-      fax_number varchar(32) not null,
-      cell_number varchar(32),
-      bank_code varchar(32),
-      account_number varchar(32) not null,
-      account_name varchar(32) not null,
-      branch varchar(32) not null,
-      bank_name varchar(32) not null,
-      reg_number varchar(32) not null,
-      income_tax_number varchar(32),
-      vat_number varchar(32) not null,
-      passport_number varchar(32),
-      email varchar(32) not null,
-      contact_person varchar(32) not null,
-      pref_comm varchar(32) not null,
-);
 
 /* table : insurers */
 create table insurers(
@@ -283,7 +255,7 @@ create table policy_masters(
     sub_agent_id integer not null,
     broker_id integer not null,
     insurer_id integer not  null ,
-    client_master_id integer not  null ,
+    client_detail_id integer not  null ,
     policy_inception_date date not null,
     inception_date date not null,
     renewal_date date not null,
@@ -303,5 +275,5 @@ create table policy_masters(
     constraint policy_masters_details_fk2 foreign key (sub_agent_id) references sub_agents (id),
     constraint policy_masters_details_fk3 foreign key(insurer_id) references insurers(id),
     constraint policy_masters_details_fk5 foreign key(policy_request_id) references policy_requests(id),
-    constraint policy_masters_details_fk6 foreign key(client_master_id) references client_master_data(id)
+    constraint policy_masters_details_fk6 foreign key(client_details_id) references client_details(id)
 );

@@ -248,6 +248,39 @@
 			</sequence>
 		</complexType>
 	</element>
+        
+        
+        <element name="ClientDetailCommandModel">
+		<complexType>
+			<sequence>
+				<element name="clientNumber" type="string" />
+				<element name="PolicyNumber" type="string" />
+				<element name="clientName" type="string" />
+				<element name="apCode" type="string" />
+				<element name="street" type="string" />
+				<element name="city" type="string" />
+				<element name="code" type="string" />
+				<element name="postalAddress" type="string" />
+				<element name="suburb" type="string" />
+				<element name="workTelNumber" type="string" />
+				<element name="homeTelNumber" type="string" />
+				<element name="faxNumber" type="string" />
+				<element name="cellNumber" type="string" />
+				<element name="bankCode" type="string" />
+				<element name="accountNumber" type="string" />
+				<element name="accountName" type="string" />
+				<element name="branchCode" type="string" />
+				<element name="bankName" type="string" />
+				<element name="regNumber" type="string" />
+				<element name="incomeTaxNumber" type="string" />
+				<element name="vatNumber" type="string" />
+				<element name="passportNumber" type="string" />
+				<element name="email" type="string" />
+				<element name="contactPerson" type="string" />
+				<element name="prefComm" type="string" />
+			</sequence>
+		</complexType>
+	</element>
 
 
 </schema>

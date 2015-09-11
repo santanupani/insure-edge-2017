@@ -5,6 +5,9 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                 .when('/policy-requests/:reference', {
                     'templateUrl': '/html/underwritter.html',
                     'controller': 'policyCtrl'
+                }).when('/client-details', {
+                    'templateUrl': '/html/policycreation.html',
+                    'controller': 'policyCtrl'
                 }).otherwise({
             redirectTo: '/policy-requests'
         });
