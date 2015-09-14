@@ -173,40 +173,38 @@ create table contact_details(
 );
 
 
-
-
-
 /* table : schedule_attachings */
+
 create table schedule_attachings(
     id integer auto_increment not null primary key,
     schedule_attaching_values varchar(1024) not null
 );
 
-/* table : subject_matters */
+ table : subject_matters 
 create table subject_matters(
     id integer auto_increment not null primary key,
     subject_matter_values varchar(1024) not null
 );
 
-/* table : type_of_covers */
+ table : type_of_covers 
 create table type_of_covers(
     id integer auto_increment not null primary key,
     type_of_cover_values varchar(1024) not null
 );
 
-/* table : excess_structures */
+ table : excess_structures 
 create table excess_structures(
     id integer auto_increment not null primary key,
     excess_structure_values varchar(512) not null
 );
 
-/* table : special_policy_conditions */
+table : special_policy_conditions 
 create table special_policy_conditions(
     id integer auto_increment not null primary key,
     special_policy_condition_values varchar(1024) not null
 );
 
-/* table : underwritter_generals */
+table : underwritter_generals 
 create table underwritter_generals(
     id integer auto_increment not null primary key,
     schedule_attaching_id integer not null,
@@ -220,7 +218,7 @@ create table underwritter_generals(
     constraint underwritter_general_fk4 foreign key (excess_structure_id) references excess_structures (id),
     constraint underwritter_general_fk5 foreign key (special_policy_condition_id) references special_policy_conditions (id)
 );
-
+*/
 
 /* table : insurers */
 create table insurers(
@@ -262,11 +260,11 @@ create table commissions(
 );
 
 /* table : policy_masters */
-create table policy_masters(
+create table policy_details(
     id integer auto_increment not null primary key,
     reference_no int not null,
     policy_request_id varchar(60) not null,
-    int_policy_no integer not null,
+    policy_no integer not null,
     sub_agent_id integer not null,
     broker_id integer not null,
     insurer_id integer not  null ,
@@ -289,6 +287,8 @@ create table policy_masters(
     constraint policy_masters_details_fk1 foreign key (broker_id) references brokers (id),
     constraint policy_masters_details_fk2 foreign key (sub_agent_id) references sub_agents (id),
     constraint policy_masters_details_fk3 foreign key(insurer_id) references insurers(id),
-    constraint policy_masters_details_fk5 foreign key(policy_request_id) references policy_requests(id),
-    constraint policy_masters_details_fk6 foreign key(client_detail_id) references client_details(id)
+    constraint policy_masters_details_fk4 foreign key(policy_request_id) references policy_requests(id),
+    constraint policy_masters_details_fk5 foreign key(client_detail_id) references client_details(id)
+
+
 );

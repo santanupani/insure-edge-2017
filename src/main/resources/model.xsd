@@ -131,28 +131,30 @@
 							<element name="duration" type="string" />
 							<element name="excess" type="string" />
 							<element name="premium" type="string" />
-                                                        <element name="pavement" type="string" />
-                                                        <element name="staticLimit" type="string" />
+							<element name="pavement" type="string" />
+							<element name="staticLimit" type="string" />
 						</sequence>
 					</complexType>
 				</element>
 			</sequence>
 		</complexType>
 	</element>
-        
-        <element name="SelectedQuotationQueryModel" type="tns:SelectedQuotationQueryModel" />
-        <complexType name="SelectedQuotationQueryModel">
-            <sequence>
-            <element name="quotation" minOccurs="0" maxOccurs="1" type="tns:QuotationQueryModel" />
-            <element name="selectedQuotation" minOccurs="0" maxOccurs="1" type="tns:QuotationOptionQueryModel" />
-            </sequence>
-        </complexType>
+
+	<element name="SelectedQuotationQueryModel" type="tns:SelectedQuotationQueryModel" />
+	<complexType name="SelectedQuotationQueryModel">
+		<sequence>
+			<element name="quotation" minOccurs="0" maxOccurs="1"
+				type="tns:QuotationQueryModel" />
+			<element name="selectedQuotation" minOccurs="0" maxOccurs="1"
+				type="tns:QuotationOptionQueryModel" />
+		</sequence>
+	</complexType>
 
 	<element name="QuotationQueryModel" type="tns:QuotationQueryModel" />
 	<complexType name="QuotationQueryModel">
 		<sequence>
 			<element name="quotationId" type="long" />
-                        <element name="createdDate" type="string" />
+			<element name="createdDate" type="string" />
 			<element name="quotationRequest" minOccurs="0" maxOccurs="1"
 				type="tns:QuotationRequestQueryModel" />
 			<element name="option" minOccurs="0" maxOccurs="unbounded">
@@ -166,8 +168,8 @@
 						<element name="duration" type="string" />
 						<element name="excess" type="string" />
 						<element name="premium" type="string" />
-                                                <element name="pavement" type="string" />
-                                                <element name="staticLimit" type="string" />
+						<element name="pavement" type="string" />
+						<element name="staticLimit" type="string" />
 					</sequence>
 				</complexType>
 			</element>
@@ -215,15 +217,16 @@
 			<element name="duration" type="string" />
 			<element name="excess" type="string" />
 			<element name="premium" type="string" />
-                        <element name="pavement" type="string" />
-                        <element name="staticLimit" type="string" />
+			<element name="pavement" type="string" />
+			<element name="staticLimit" type="string" />
 		</sequence>
 	</complexType>
 
 	<element name="PolicyRequestQueryModel">
 		<complexType>
 			<sequence>
-				<element name="quotation" minOccurs="0" maxOccurs="1" type="tns:QuotationQueryModel"/>
+				<element name="quotation" minOccurs="0" maxOccurs="1"
+					type="tns:QuotationQueryModel" />
 				<element name="quotationOption" minOccurs="0" maxOccurs="1"
 					type="tns:QuotationOptionQueryModel" />
 				<element name="companyRegNumber" type="string" />
@@ -244,7 +247,7 @@
 				<element name="accType" type="string" />
 				<element name="debitOrderDate" type="string" />
 				<element name="bankStatement" type="hexBinary" />
-                                <element name="status" type="string"/>
+				<element name="status" type="string" />
 			</sequence>
 		</complexType>
 	</element>
@@ -282,5 +285,15 @@
 		</complexType>
 	</element>
 
+	<element name="SubAgentQueryModel" type="tns:SubAgentQueryModel" />
+
+	<complexType name="SubAgentQueryModel">
+		<sequence>
+			<element name="id" type="long"></element>
+			<element name="code" type="string"></element>
+			<element name="name" type="string"></element>
+			<element name="email" type="string"></element>
+		</sequence>
+	</complexType>
 
 </schema>
