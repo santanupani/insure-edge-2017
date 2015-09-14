@@ -5,9 +5,9 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                 .when('/policy-requests/:reference', {
                     'templateUrl': '/html/underwritter.html',
                     'controller': 'policyCtrl'
-                }).when('/client-details', {
-                    'templateUrl': '/html/policycreation.html',
-                    'controller': 'policyCtrl'
+                }).when('/create-policy/:reference', {
+                    'templateUrl': '/html/create-policy.html',
+                    'controller': 'createPolicyCtrl'
                 }).otherwise({
             redirectTo: '/policy-requests'
         });
@@ -27,7 +27,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.init = function () {
         $scope.reference = $routeParams.reference;
         $scope.reject = {};
-        $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
+        $rootScope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
     };
 
 
@@ -40,7 +40,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('policy Request retrived sucessfully');
-                $scope.policyRequest = data;
+                $rootScope.policyRequest = data;
                 console.log(data);
             } else {
                 console.log('status:' + status);
@@ -88,4 +88,41 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     };
 
 
+});
+
+underwritter.controller('createPolicyCtrl', function ($scope, $rootScope, $http, $routeParams) {
+
+    $scope.init = function () {
+                
+         if ($rootScope.policyRequest == undefined) {
+            $scope.getPoicyRequest();
+        } else {
+            $scope.policyRequests = $rootScope.policyRequest[$routeParams.reference];
+        }
+    };
+
+
+    $scope.getPoicyRequest = function (reference) {
+
+
+        $http({
+            url: '/api/policy-requests/' + reference,
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('policy Request retrived sucessfully');
+                $scope.policyRequest = data;
+                console.log(data);
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+        });
+    };
+
+   
 });

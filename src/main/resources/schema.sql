@@ -275,5 +275,5 @@ create table policy_masters(
     constraint policy_masters_details_fk2 foreign key (sub_agent_id) references sub_agents (id),
     constraint policy_masters_details_fk3 foreign key(insurer_id) references insurers(id),
     constraint policy_masters_details_fk5 foreign key(policy_request_id) references policy_requests(id),
-    constraint policy_masters_details_fk6 foreign key(client_details_id) references client_details(id)
+    constraint policy_masters_details_fk6 foreign key(client_detail_id) references client_details(id)
 );

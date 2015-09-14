@@ -137,11 +137,10 @@
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 
                 <div class="panel-heading text-right" ng-if="mode == undefined && policyRequest.status == 'APPLIED'">
-                    <span class="text-right">
-                        <button class="btn btn-success" ng-click="changeMode('accept')">Accept</button>
-                        <button class="btn btn-danger"   ng-click="changeMode('reject')">Reject</button>
-                    </span>
-
+                        <p>
+                            <a class="btn btn-success" ng-click="changeMode('accept')" ng-href="#/create-policy/{{policyRequest.quotation.quotationRequest.reference}}" role="button" >Accept</a>
+                            <button class="btn btn-danger"   ng-click="changeMode('reject')">Reject</button>
+                        </p>
                 </div>
                 <div class="panel-heading">
                     <h4>Quotation Options</h4>
