@@ -60,7 +60,7 @@ import za.co.polygon.service.NotificationService;
 
 import com.itextpdf.text.DocumentException;
 import za.co.polygon.domain.ClientDetail;
-import static za.co.polygon.mapper.Mapper.toClientDetailCommandModel;
+//import static za.co.polygon.mapper.Mapper.toClientDetailCommandModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import za.co.polygon.model.ClientDetailCommandModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
@@ -291,16 +291,16 @@ public class Service {
         log.info("found all quotations - size:{}", quotation.size());
         return toQuotationQueryModel(quotation);
     }
-    
-     @Transactional
-    @RequestMapping(value = "api/client-details", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void creatClientData(@RequestBody ClientDetailCommandModel clientDetailCommandModel)  {
-      
-        ClientDetail clientDetail = toClientDetailCommandModel(clientDetailCommandModel);
-        
-        clientMasterDataRepository.save(clientDetail);
-  
-        log.info("client details Created Successfully !!!");
-    }
+//    
+//     @Transactional
+//    @RequestMapping(value = "api/client-details", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public void creatClientData(@RequestBody ClientDetailCommandModel clientDetailCommandModel)  {
+//      
+//        ClientDetail clientDetail = toClientDetailCommandModel(clientDetailCommandModel);
+//        
+//        clientMasterDataRepository.save(clientDetail);
+//  
+//        log.info("client details Created Successfully !!!");
+//    }
 
 }

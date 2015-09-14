@@ -136,7 +136,7 @@ create table policy_requests(
 /* table : client_details */
 create table client_details (
       id integer auto_increment not null primary key,
-      client_name varchar(64) not null,
+      company_name varchar(64) not null,
       reg_no varchar(32) not null,
       income_tax_number varchar(32),
       vat_number varchar(32) not null 
