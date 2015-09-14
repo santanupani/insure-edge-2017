@@ -14,8 +14,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "policy_masters")
-public class PolicyMaster {
+@Table(name = "policy_details")
+public class PolicyDetail {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
