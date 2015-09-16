@@ -138,7 +138,6 @@ create table policy_requests(
 /* table : bank_accounts */
 create table bank_accounts(
       id integer auto_increment not null primary key,
-      client_id integer not null,
       account_number varchar(32) not null,
       account_name varchar(32) not null,
       branch varchar(32) not null,
@@ -149,7 +148,6 @@ create table bank_accounts(
 /* table :  contacts */
 create table contacts(
       id integer auto_increment not null primary key,
-      client_id integer not null,
       street varchar(32) not null,
       city varchar(32) not null,
       code varchar(32) not null,
