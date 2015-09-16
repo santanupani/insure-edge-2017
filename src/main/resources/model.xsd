@@ -287,8 +287,8 @@
                 <element name="regNumber" type="string" />
                 <element name="incomeTaxNumber" type="string" />
                 <element name="vatNumber" type="string" />
-                <element name="bankAccount" minOccurs="0" maxOccurs="1" type="tns:BankAccountCommandModel" />
-                <element name="contact" minOccurs="0" maxOccurs="1"  type="tns:ContactCommandModel" />
+                <element name="bankAccountId" type="long" />
+                <element name="contactId"  type="long" />
             </sequence>
         </complexType>
     </element>
