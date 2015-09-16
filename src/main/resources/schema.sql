@@ -133,47 +133,48 @@ create table policy_requests(
 
 
 
-/* table : client_details */
-create table client_details (
-      id integer auto_increment not null primary key,
-      company_name varchar(64) not null,
-      reg_no varchar(32) not null,
-      income_tax_number varchar(32),
-      vat_number varchar(32) not null 
-);
+
 
 /* table : banking_details */
-create table banking_details(
+create table bank_accounts(
       id integer auto_increment not null primary key,
       client_id integer not null,
       account_number varchar(32) not null,
       account_name varchar(32) not null,
       branch varchar(32) not null,
       bank_name varchar(32) not null,
-      constraint banking_details_fk1 foreign key (client_id) references client_details (id)
+   
 );
 
 /* table :  banking_details */
-create table contact_details(
+create table contacts(
       id integer auto_increment not null primary key,
       client_id integer not null,
       street varchar(32) not null,
       city varchar(32) not null,
       code varchar(32) not null,
-      postal_address varchar(32) not null,
       suburb varchar(32) not null,
       work_tel_number varchar(32) not null,
-      home_tel_number varchar(32),
       fax_number varchar(32) not null,
-      cell_number varchar(32),
       email varchar(32) not null,
-      contact_person varchar(32) not null,
-      pref_comm varchar(32) not null,
-      constraint contact_details_fk1 foreign key (client_id) references client_details (id)
+      contact_person varchar(32) not null
+);
+
+/* table : client_details */
+create table clients (
+      id integer auto_increment not null primary key,
+      bank_account_id integer not null,
+      contact_id integer not null,
+      company_name varchar(64) not null,
+      reg_no varchar(32) not null,
+      income_tax_number varchar(32),
+      vat_number varchar(32) not null ,
+      constraint clients_fk1 foreign key (bank_account_id) references bank_accounts (id),
+      constraint clients_fk1 foreign key (contact_id) references contact_id (id)
 );
 
 
-/* table : schedule_attachings */
+/* table : schedule_attachings 
 
 create table schedule_attachings(
     id integer auto_increment not null primary key,
