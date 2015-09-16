@@ -285,15 +285,4 @@
 		</complexType>
 	</element>
 
-	<element name="SubAgentQueryModel" type="tns:SubAgentQueryModel" />
-
-	<complexType name="SubAgentQueryModel">
-		<sequence>
-			<element name="id" type="long"></element>
-			<element name="code" type="string"></element>
-			<element name="name" type="string"></element>
-			<element name="email" type="string"></element>
-		</sequence>
-	</complexType>
-
 </schema>

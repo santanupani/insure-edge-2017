@@ -13,8 +13,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "client_policies")
-public class ClientPolicy {
+@Table(name = "policies")
+public class Policy {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class ClientPolicy {
 	
 	@ManyToOne
 	@JoinColumn(name = "underwriter_id")
-    private UnderwriterEmployee underwriterEmployee;
+    private Underwriter underwriter;
 	
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -32,10 +32,6 @@ public class ClientPolicy {
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
     private SubAgent subAgent;
-    
-    @ManyToOne
-    @JoinColumn(name = "insurer_id")
-    private Insurer insurer;
     
     @Column(name = "inception_date")
     private Date inception_date;
@@ -91,15 +87,6 @@ public class ClientPolicy {
 	public void setSubAgent(SubAgent subAgent) {
 		this.subAgent = subAgent;
 	}
-
-	public Insurer getInsurer() {
-		return insurer;
-	}
-
-	public void setInsurer(Insurer insurer) {
-		this.insurer = insurer;
-	}
-
 
 	public Date getInception_date() {
 		return inception_date;

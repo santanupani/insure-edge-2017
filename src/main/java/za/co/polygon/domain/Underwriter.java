@@ -1,33 +1,33 @@
 package za.co.polygon.domain;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "underwriter_employees")
-public class UnderwriterEmployee {
 
+@Entity
+@Table(name = "underwriters")
+public class Underwriter {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-	
-	@OneToMany(mappedBy="underwriterEmployee",fetch=FetchType.EAGER)
-	private List<ClientPolicy> policyDetails;
-	
+
 	@Column(name = "first_name")
     private String firstName;
-    
-    @Column(name = "last_name")
+	
+	@Column(name = "middle_name")
+    private String middleName;
+	
+	@Column(name = "last_name")
     private String lastName;
+	
+	@Column(name = "email")
+    private String email;
 
 	public Long getId() {
 		return id;
@@ -35,14 +35,6 @@ public class UnderwriterEmployee {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public List<ClientPolicy> getPolicyDetails() {
-		return policyDetails;
-	}
-
-	public void setPolicyDetails(List<ClientPolicy> policyDetails) {
-		this.policyDetails = policyDetails;
 	}
 
 	public String getFirstName() {
@@ -53,6 +45,14 @@ public class UnderwriterEmployee {
 		this.firstName = firstName;
 	}
 
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
 	public String getLastName() {
 		return lastName;
 	}
@@ -60,5 +60,14 @@ public class UnderwriterEmployee {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-    
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 }

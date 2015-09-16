@@ -27,7 +27,7 @@ public class Client {
     private Contact contacts;
     
     @OneToMany(mappedBy="client",fetch=FetchType.EAGER)
-    private List<ClientPolicy> clientPolicies;
+    private List<Policy> clientPolicies;
     
     @OneToOne
     @JoinColumn(name = "bank_account_id")
