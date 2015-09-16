@@ -1,12 +1,15 @@
 package za.co.polygon.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -19,6 +22,17 @@ public class Insurer {
     @Column(name = "id")
     private Long id;
 	
+	@OneToMany(mappedBy="insurer",fetch=FetchType.EAGER)
+	private List<ClientPolicy> clientPolicies;
+	
+	public List<ClientPolicy> getClientPolicies() {
+		return clientPolicies;
+	}
+
+	public void setClientPolicies(List<ClientPolicy> clientPolicies) {
+		this.clientPolicies = clientPolicies;
+	}
+
 	@Column(name = "name")
     private Date name;
     

@@ -9,6 +9,8 @@ import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
+//import static za.co.polygon.mapper.Mapper.toClientDetailCommandModel;
+import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 
 import java.io.FileNotFoundException;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.itextpdf.text.DocumentException;
+
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.PolicyRequest;
@@ -45,6 +51,7 @@ import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.SelectedQuotationQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.PolicyRequestRepository;
@@ -57,14 +64,6 @@ import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
-
-import com.itextpdf.text.DocumentException;
-import za.co.polygon.domain.ClientDetail;
-//import static za.co.polygon.mapper.Mapper.toClientDetailCommandModel;
-import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
-import za.co.polygon.model.ClientDetailCommandModel;
-import za.co.polygon.model.SelectedQuotationQueryModel;
-import za.co.polygon.repository.ClientMasterDataRepository;
 
 @RestController
 public class Service {
@@ -100,10 +99,7 @@ public class Service {
 
     @Autowired
     private PolicyRequestRepository policyRequestRepository;
-    
-    @Autowired
-    private ClientMasterDataRepository clientMasterDataRepository;
-
+   
     @Autowired
     private DocumentService reportService;
 
@@ -296,7 +292,7 @@ public class Service {
 //    @RequestMapping(value = "api/client-details", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public void creatClientData(@RequestBody ClientDetailCommandModel clientDetailCommandModel)  {
 //      
-//        ClientDetail clientDetail = toClientDetailCommandModel(clientDetailCommandModel);
+//        Client clientDetail = toClientDetailCommandModel(clientDetailCommandModel);
 //        
 //        clientMasterDataRepository.save(clientDetail);
 //  

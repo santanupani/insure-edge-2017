@@ -133,92 +133,43 @@ create table policy_requests(
 
 
 
-/* table : client_details */
-create table client_details (
-      id integer auto_increment not null primary key,
-      company_name varchar(64) not null,
-      reg_no varchar(32) not null,
-      income_tax_number varchar(32),
-      vat_number varchar(32) not null 
-);
 
-/* table : banking_details */
-create table banking_details(
+
+/* table : bank_accounts */
+create table bank_accounts(
       id integer auto_increment not null primary key,
-      client_id integer not null,
       account_number varchar(32) not null,
       account_name varchar(32) not null,
       branch varchar(32) not null,
       bank_name varchar(32) not null,
-      constraint banking_details_fk1 foreign key (client_id) references client_details (id)
+   
 );
 
-/* table :  contact_details */
-create table contact_details(
+/* table :  contacts */
+create table contacts(
       id integer auto_increment not null primary key,
-      client_id integer not null,
       street varchar(32) not null,
       city varchar(32) not null,
       code varchar(32) not null,
-      postal_address varchar(32) not null,
       suburb varchar(32) not null,
       work_tel_number varchar(32) not null,
-      home_tel_number varchar(32),
       fax_number varchar(32) not null,
-      cell_number varchar(32),
       email varchar(32) not null,
-      contact_person varchar(32) not null,
-      pref_comm varchar(32) not null,
-      constraint contact_details_fk1 foreign key (client_id) references client_details (id)
+      contact_person varchar(32) not null
 );
 
-
-/* table : schedule_attachings 
-
-create table schedule_attachings(
-    id integer auto_increment not null primary key,
-    schedule_attaching_values varchar(1024) not null
+/* table : clients */
+create table clients (
+      id integer auto_increment not null primary key,
+      bank_account_id integer not null,
+      contact_id integer not null,
+      company_name varchar(64) not null,
+      reg_no varchar(32) not null,
+      income_tax_number varchar(32),
+      vat_number varchar(32) not null ,
+      constraint clients_fk1 foreign key (bank_account_id) references bank_accounts (id),
+      constraint clients_fk2 foreign key (contact_id) references contacts(id)
 );
-
- table : subject_matters 
-create table subject_matters(
-    id integer auto_increment not null primary key,
-    subject_matter_values varchar(1024) not null
-);
-
- table : type_of_covers 
-create table type_of_covers(
-    id integer auto_increment not null primary key,
-    type_of_cover_values varchar(1024) not null
-);
-
- table : excess_structures 
-create table excess_structures(
-    id integer auto_increment not null primary key,
-    excess_structure_values varchar(512) not null
-);
-
-table : special_policy_conditions 
-create table special_policy_conditions(
-    id integer auto_increment not null primary key,
-    special_policy_condition_values varchar(1024) not null
-);
-
-table : underwritter_generals 
-create table underwritter_generals(
-    id integer auto_increment not null primary key,
-    schedule_attaching_id integer not null,
-    type_of_cover_id integer not null,
-    subject_matter_id integer not null,
-    excess_structure_id integer not null,
-    special_policy_condition_id integer not null,
-    constraint underwritter_general_fk1 foreign key (schedule_attaching_id) references schedule_attachings (id),
-    constraint underwritter_general_fk2 foreign key (type_of_cover_id) references subject_matters (id),
-    constraint underwritter_general_fk3 foreign key (subject_matter_id) references type_of_covers (id),
-    constraint underwritter_general_fk4 foreign key (excess_structure_id) references excess_structures (id),
-    constraint underwritter_general_fk5 foreign key (special_policy_condition_id) references special_policy_conditions (id)
-);
-*/
 
 /* table : insurers */
 create table insurers(
@@ -267,8 +218,8 @@ create table client_policies(
     underwriter_fee decimal not null,
     broker_fee decimal not null,
     notes varchar(256) not null,
-    constraint policy_masters_details_fk1 foreign key (sub_agent_id) references sub_agents (id),
-    constraint policy_masters_details_fk2 foreign key(insurer_id) references insurers(id),
-    constraint policy_masters_details_fk3 foreign key(client_id) references client_details(id),
-    constraint policy_masters_details_fk4 foreign key(underwriter_id) references underwriters(id),
+    constraint client_policies_details_fk1 foreign key (sub_agent_id) references sub_agents (id),
+    constraint client_policies_details_fk2 foreign key(insurer_id) references insurers(id),
+    constraint client_policies_details_fk3 foreign key(client_id) references clients(id),
+    constraint client_policies_details_fk4 foreign key(underwriter_id) references underwriters(id),
 );

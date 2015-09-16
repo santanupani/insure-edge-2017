@@ -1,23 +1,40 @@
 package za.co.polygon.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "client_details")
-public class ClientDetail {
+@Table(name = "clients")
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    
+    @OneToOne
+    @JoinColumn(name = "contact_id")
+    private Contact contacts;
+    
+    @OneToMany(mappedBy="client",fetch=FetchType.EAGER)
+    private List<ClientPolicy> clientPolicies;
+    
+    @OneToOne
+    @JoinColumn(name = "bank_account_id")
+    private BankAccount bankAccount;
 
-    @Column(name = "company_name")
-    private String companyName;
+    @Column(name = "client_name")
+    private String clientName;
 
     @Column(name = "reg_no")
     private String regNumber;
@@ -36,7 +53,29 @@ public class ClientDetail {
         this.id = id;
     }
 
-   
+    public Contact getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Contact contacts) {
+        this.contacts = contacts;
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
 
     public String getRegNumber() {
         return regNumber;
@@ -61,15 +100,8 @@ public class ClientDetail {
     public void setVatNumber(String vatNumber) {
         this.vatNumber = vatNumber;
     }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
+     
+    
     
 
 }

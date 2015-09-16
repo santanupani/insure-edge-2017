@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -26,10 +25,10 @@ public class ClientPolicy {
 	@JoinColumn(name = "underwriter_id")
     private UnderwriterEmployee underwriterEmployee;
 	
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "client_id")
-    private ClientDetail clientMasterData;
-    
+    private Client client;
+
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
     private SubAgent subAgent;
@@ -68,11 +67,11 @@ public class ClientPolicy {
     @Column(name = "exclude_sasria")
     private boolean exclude_sasria;
     
-    @Column(name = "underwriter_policy_fee")
-    private double underwriter_policy_fee;
+    @Column(name = "underwriter_fee")
+    private double underwriter_fee;
     
-    @Column(name = "broker_policy_fee")
-    private double broker_policy_fee;
+    @Column(name = "broker_fee")
+    private double broker_fee;
     
     @Column(name = "notes")
     private String notes;
@@ -182,22 +181,6 @@ public class ClientPolicy {
 		this.exclude_sasria = exclude_sasria;
 	}
 
-	public double getUnderwriter_policy_fee() {
-		return underwriter_policy_fee;
-	}
-
-	public void setUnderwriter_policy_fee(double underwriter_policy_fee) {
-		this.underwriter_policy_fee = underwriter_policy_fee;
-	}
-
-	public double getBroker_policy_fee() {
-		return broker_policy_fee;
-	}
-
-	public void setBroker_policy_fee(double broker_policy_fee) {
-		this.broker_policy_fee = broker_policy_fee;
-	}
-
 	public String getNotes() {
 		return notes;
 	}
@@ -205,5 +188,7 @@ public class ClientPolicy {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	
+	
 
 }
