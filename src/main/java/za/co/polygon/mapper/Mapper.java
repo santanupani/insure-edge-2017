@@ -11,7 +11,7 @@ import java.util.UUID;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
-import za.co.polygon.domain.ClientDetail;
+import za.co.polygon.domain.Client;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
@@ -331,8 +331,8 @@ public class Mapper {
         }
         
         
-//    public static ClientDetail toClientDetailCommandModel(ClientDetailCommandModel clientDetailCommandModel) {
-//        ClientDetail clientDetail = new ClientDetail();
+//    public static Client toClientDetailCommandModel(ClientDetailCommandModel clientDetailCommandModel) {
+//        Client clientDetail = new Client();
 //
 //        clientDetail.setClientNumber(clientDetailCommandModel.getClientNumber());
 //        clientDetail.setPolicyNumber(clientDetailCommandModel.getPolicyNumber());

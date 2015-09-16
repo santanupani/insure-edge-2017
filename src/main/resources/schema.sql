@@ -172,7 +172,7 @@ create table clients (
 );
 
 
-/* table : schedule_attachings 
+/* table : schedule_attachings */
 
 create table schedule_attachings(
     id integer auto_increment not null primary key,

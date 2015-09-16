@@ -59,7 +59,7 @@ import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
 
 import com.itextpdf.text.DocumentException;
-import za.co.polygon.domain.ClientDetail;
+import za.co.polygon.domain.Client;
 //import static za.co.polygon.mapper.Mapper.toClientDetailCommandModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import za.co.polygon.model.ClientDetailCommandModel;
@@ -296,7 +296,7 @@ public class Service {
 //    @RequestMapping(value = "api/client-details", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public void creatClientData(@RequestBody ClientDetailCommandModel clientDetailCommandModel)  {
 //      
-//        ClientDetail clientDetail = toClientDetailCommandModel(clientDetailCommandModel);
+//        Client clientDetail = toClientDetailCommandModel(clientDetailCommandModel);
 //        
 //        clientMasterDataRepository.save(clientDetail);
 //  

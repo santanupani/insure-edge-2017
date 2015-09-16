@@ -36,7 +36,7 @@ public class PolicyDetail {
     
     @OneToOne
     @JoinColumn(name = "client_master_id")
-    private ClientDetail clientMasterData;
+    private Client clientMasterData;
     
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
