@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "client_policies")
-public class PolicyDetail {
+public class ClientPolicy {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,19 +23,11 @@ public class PolicyDetail {
     private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "underwriter_emp_id")
+	@JoinColumn(name = "underwriter_id")
     private UnderwriterEmployee underwriterEmployee;
 	
     @OneToOne
-    @JoinColumn(name = "policy_request_id")
-    private PolicyRequest policyRequest;
-    
-    @OneToOne
-    @JoinColumn(name = "broker_id")
-    private Broker broker;
-    
-    @OneToOne
-    @JoinColumn(name = "client_master_id")
+    @JoinColumn(name = "client_id")
     private ClientDetail clientMasterData;
     
     @ManyToOne
@@ -45,9 +37,6 @@ public class PolicyDetail {
     @ManyToOne
     @JoinColumn(name = "insurer_id")
     private Insurer insurer;
-    
-    @Column(name = "policy_inception_date")
-    private Date policy_inception_date;
     
     @Column(name = "inception_date")
     private Date inception_date;
@@ -96,22 +85,6 @@ public class PolicyDetail {
 		this.id = id;
 	}
 
-	public PolicyRequest getPolicyRequest() {
-		return policyRequest;
-	}
-
-	public void setPolicyRequest(PolicyRequest policyRequest) {
-		this.policyRequest = policyRequest;
-	}
-
-	public Broker getBroker() {
-		return broker;
-	}
-
-	public void setBroker(Broker broker) {
-		this.broker = broker;
-	}
-
 	public SubAgent getSubAgent() {
 		return subAgent;
 	}
@@ -128,13 +101,6 @@ public class PolicyDetail {
 		this.insurer = insurer;
 	}
 
-	public Date getPolicy_inception_date() {
-		return policy_inception_date;
-	}
-
-	public void setPolicy_inception_date(Date policy_inception_date) {
-		this.policy_inception_date = policy_inception_date;
-	}
 
 	public Date getInception_date() {
 		return inception_date;

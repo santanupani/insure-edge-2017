@@ -26,7 +26,7 @@ public class SubAgent {
     private Long id;
 	
 	@OneToMany(mappedBy="subAgent",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	private List<PolicyDetail> policyMaster;
+	private List<ClientPolicy> policyMaster;
 	
 	@ManyToOne
 	@JoinColumn(name = "underwriter_id")
@@ -35,13 +35,7 @@ public class SubAgent {
     @Column(name = "name")
     private Date name;
     
-    @Column(name = "title")
-    private int title;
-    
-    @Column(name = "job_description")
-    private String job_description;
-
-	public Long getId() {
+    public Long getId() {
 		return id;
 	}
 
@@ -49,11 +43,11 @@ public class SubAgent {
 		this.id = id;
 	}
 
-	public List<PolicyDetail> getPolicyMaster() {
+	public List<ClientPolicy> getPolicyMaster() {
 		return policyMaster;
 	}
 
-	public void setPolicyMaster(List<PolicyDetail> policyMaster) {
+	public void setPolicyMaster(List<ClientPolicy> policyMaster) {
 		this.policyMaster = policyMaster;
 	}
 
@@ -71,22 +65,6 @@ public class SubAgent {
 
 	public void setName(Date name) {
 		this.name = name;
-	}
-
-	public int getTitle() {
-		return title;
-	}
-
-	public void setTitle(int title) {
-		this.title = title;
-	}
-
-	public String getJob_description() {
-		return job_description;
-	}
-
-	public void setJob_description(String job_description) {
-		this.job_description = job_description;
 	}
     
 }

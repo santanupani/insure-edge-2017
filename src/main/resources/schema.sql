@@ -238,47 +238,22 @@ create table underwriters(
     constraint underwriters_details_fk1 foreign key(insurer_id) references insurers(id)
 );
 
-/* table : underwriter_employees */
-create table underwriter_employees(
-    id integer auto_increment not null primary key, 
-    underwriter_id integer not null,
-    first_name varchar(64) not null,
-    last_name varchar(64) not null,
-    constraint underwriter_employees_fk1 foreign key(underwriter_id) references underwriters(id)
-);
-
 /* table : sub_agents */
 create table sub_agents(
     id integer auto_increment not null primary key, 
     broker_id integer not null,
     name varchar(64) not null, 
-    title varchar(45),
-    job_description varchar(128),
     constraint sub_agent_detail_fk1 foreign key(broker_id) references brokers(id),
 );
-
-
-/* table : commissions 
-create table commissions(
-    id integer auto_increment not null primary key,
-    underwriter_id integer not null,
-    broker_id integer not null,
-    inital_admission_fee decimal,
-    constraint commissions_details_fk1 foreign key(underwriter_id) references underwriters(id),
-    constraint commissions_details_fk2 foreign key(broker_id) references brokers(id),
-);
-*/
 
 
 /* table : policy_masters */
 create table client_policies(
     id integer auto_increment not null primary key,
-    policy_request_id varchar(60) not null,
     sub_agent_id integer not null,
-    underwriter_emp_id integer not null,
     insurer_id integer not  null ,
-    client_detail_id integer not  null ,
-    policy_inception_date date not null,
+    client_id integer not  null ,
+    underwriter_id integer not  null ,
     inception_date date not null,
     renewal_date date not null,
     underwriting_year integer not null,
@@ -289,12 +264,11 @@ create table client_policies(
     retroactive_date date not null,
     collect_by_debit_order boolean,
     exclude_sasria boolean,
-    underwriter_policy_fee decimal not null,
-    broker_policy_fee decimal not null,
+    underwriter_fee decimal not null,
+    broker_fee decimal not null,
     notes varchar(256) not null,
-    constraint policy_masters_details_fk2 foreign key (sub_agent_id) references sub_agents (id),
-    constraint policy_masters_details_fk3 foreign key(insurer_id) references insurers(id),
-    constraint policy_masters_details_fk4 foreign key(policy_request_id) references policy_requests(id),
-    constraint policy_masters_details_fk5 foreign key(client_detail_id) references client_details(id),
-    constraint policy_masters_details_fk6 foreign key(underwriter_emp_id) references underwriter_employees(id),
+    constraint policy_masters_details_fk1 foreign key (sub_agent_id) references sub_agents (id),
+    constraint policy_masters_details_fk2 foreign key(insurer_id) references insurers(id),
+    constraint policy_masters_details_fk3 foreign key(client_id) references client_details(id),
+    constraint policy_masters_details_fk4 foreign key(underwriter_id) references underwriters(id),
 );

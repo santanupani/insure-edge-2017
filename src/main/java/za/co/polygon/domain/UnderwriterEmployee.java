@@ -21,7 +21,7 @@ public class UnderwriterEmployee {
     private Long id;
 	
 	@OneToMany(mappedBy="underwriterEmployee",fetch=FetchType.EAGER)
-	private List<PolicyDetail> policyDetails;
+	private List<ClientPolicy> policyDetails;
 	
 	@Column(name = "first_name")
     private String firstName;
@@ -37,11 +37,11 @@ public class UnderwriterEmployee {
 		this.id = id;
 	}
 
-	public List<PolicyDetail> getPolicyDetails() {
+	public List<ClientPolicy> getPolicyDetails() {
 		return policyDetails;
 	}
 
-	public void setPolicyDetails(List<PolicyDetail> policyDetails) {
+	public void setPolicyDetails(List<ClientPolicy> policyDetails) {
 		this.policyDetails = policyDetails;
 	}
 
