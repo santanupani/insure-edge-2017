@@ -27,9 +27,17 @@ public class Client {
     private Contact contact;
     
     @OneToMany(mappedBy="client",fetch=FetchType.EAGER)
-    private List<ClientPolicy> clientPolicies;
+    private List<Policy> policies;
     
-    @OneToOne
+    public List<Policy> getPolicies() {
+		return policies;
+	}
+
+	public void setPolicies(List<Policy> policies) {
+		this.policies = policies;
+	}
+
+	@OneToOne
     @JoinColumn(name = "bank_account_id")
     private BankAccount bankAccount;
 
@@ -108,16 +116,4 @@ public class Client {
     public void setContact(Contact contact) {
         this.contact = contact;
     }
-
-    public List<ClientPolicy> getClientPolicies() {
-        return clientPolicies;
-    }
-
-    public void setClientPolicies(List<ClientPolicy> clientPolicies) {
-        this.clientPolicies = clientPolicies;
-    }
-     
-    
-    
-
 }
