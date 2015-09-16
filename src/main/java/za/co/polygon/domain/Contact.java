@@ -22,9 +22,6 @@ public class Contact {
     @Column(name = "contact_person")
     private String contactPerson;
 
-    @Column(name = "pref_comm")
-    private String prefComm;
-
     @Column(name = "street")
     private String street;
 
@@ -70,14 +67,6 @@ public class Contact {
 
     public void setContactPerson(String contactPerson) {
         this.contactPerson = contactPerson;
-    }
-
-    public String getPrefComm() {
-        return prefComm;
-    }
-
-    public void setPrefComm(String prefComm) {
-        this.prefComm = prefComm;
     }
 
     public String getStreet() {

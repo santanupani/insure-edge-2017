@@ -168,11 +168,7 @@ create table clients (
       income_tax_number varchar(32),
       vat_number varchar(32) not null ,
       constraint clients_fk1 foreign key (bank_account_id) references bank_accounts (id),
-<<<<<<< HEAD
       constraint clients_fk2 foreign key (contact_id) references contacts (id)
-=======
-      constraint clients_fk2 foreign key (contact_id) references contacts(id)
->>>>>>> d3ba23efb7290e5df4a751802e9cd804707eeab6
 );
 
 /* table : insurers */
