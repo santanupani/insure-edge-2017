@@ -131,10 +131,6 @@ create table policy_requests(
     constraint quotation_option_policy_requests_fk foreign key (quotation_option_id) references quotation_options (id)
 );
 
-
-
-
-
 /* table : bank_accounts */
 create table bank_accounts(
       id integer auto_increment not null primary key,
@@ -142,7 +138,6 @@ create table bank_accounts(
       account_name varchar(32) not null,
       branch varchar(32) not null,
       bank_name varchar(32) not null,
-   
 );
 
 /* table :  contacts */
@@ -169,7 +164,9 @@ create table clients (
       vat_number varchar(32) not null ,
       constraint bank_account_clients_fk foreign key (bank_account_id) references bank_accounts (id),
       constraint contact_clients_fk foreign key (contact_id) references contacts(id)
+
 );
+
 
 /* table : underwriters */
 create table underwriters(
