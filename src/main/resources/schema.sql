@@ -153,7 +153,7 @@ create table banking_details(
       constraint banking_details_fk1 foreign key (client_id) references client_details (id)
 );
 
-/* table :  banking_details */
+/* table :  contact_details */
 create table contact_details(
       id integer auto_increment not null primary key,
       client_id integer not null,
@@ -238,6 +238,15 @@ create table underwriters(
     constraint underwriters_details_fk1 foreign key(insurer_id) references insurers(id)
 );
 
+/* table : underwriter_employees */
+create table underwriter_employees(
+    id integer auto_increment not null primary key, 
+    underwriter_id integer not null,
+    first_name varchar(64) not null,
+    last_name varchar(64) not null,
+    constraint underwriter_employees_fk1 foreign key(underwriter_id) references underwriters(id)
+);
+
 /* table : sub_agents */
 create table sub_agents(
     id integer auto_increment not null primary key, 
@@ -266,6 +275,7 @@ create table client_policies(
     id integer auto_increment not null primary key,
     policy_request_id varchar(60) not null,
     sub_agent_id integer not null,
+    underwriter_emp_id integer not null,
     insurer_id integer not  null ,
     client_detail_id integer not  null ,
     policy_inception_date date not null,
@@ -286,4 +296,5 @@ create table client_policies(
     constraint policy_masters_details_fk3 foreign key(insurer_id) references insurers(id),
     constraint policy_masters_details_fk4 foreign key(policy_request_id) references policy_requests(id),
     constraint policy_masters_details_fk5 foreign key(client_detail_id) references client_details(id),
+    constraint policy_masters_details_fk6 foreign key(underwriter_emp_id) references underwriter_employees(id),
 );

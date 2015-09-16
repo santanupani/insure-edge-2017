@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "policy_details")
+@Table(name = "client_policies")
 public class PolicyDetail {
 	
 	@Id
@@ -22,11 +22,9 @@ public class PolicyDetail {
     @Column(name = "id")
     private Long id;
 	
-	@Column(name = "reference_no")
-    private Long reference_no;
-	
-	@Column(name = "int_policy_no")
-    private String int_policy_no;
+	@ManyToOne
+	@JoinColumn(name = "underwriter_emp_id")
+    private UnderwriterEmployee underwriterEmployee;
 	
     @OneToOne
     @JoinColumn(name = "policy_request_id")
@@ -75,9 +73,6 @@ public class PolicyDetail {
     @Column(name = "retroactive_date")
     private Date retroactive_date;
     
-    @Column(name = "approved")
-    private boolean approved;
-    
     @Column(name = "collect_by_debit_order")
     private boolean collect_by_debit_order;
     
@@ -99,22 +94,6 @@ public class PolicyDetail {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getReference_no() {
-		return reference_no;
-	}
-
-	public void setReference_no(Long reference_no) {
-		this.reference_no = reference_no;
-	}
-
-	public String getInt_policy_no() {
-		return int_policy_no;
-	}
-
-	public void setInt_policy_no(String int_policy_no) {
-		this.int_policy_no = int_policy_no;
 	}
 
 	public PolicyRequest getPolicyRequest() {
@@ -220,15 +199,7 @@ public class PolicyDetail {
 	public void setRetroactive_date(Date retroactive_date) {
 		this.retroactive_date = retroactive_date;
 	}
-
-	public boolean isApproved() {
-		return approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
+	
 	public boolean isCollect_by_debit_order() {
 		return collect_by_debit_order;
 	}
