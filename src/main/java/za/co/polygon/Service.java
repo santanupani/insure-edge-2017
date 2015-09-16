@@ -59,12 +59,9 @@ import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
 
 import com.itextpdf.text.DocumentException;
-import za.co.polygon.domain.Client;
 //import static za.co.polygon.mapper.Mapper.toClientDetailCommandModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
-import za.co.polygon.model.ClientDetailCommandModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
-import za.co.polygon.repository.ClientMasterDataRepository;
 
 @RestController
 public class Service {

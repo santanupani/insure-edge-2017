@@ -168,7 +168,7 @@ create table clients (
       income_tax_number varchar(32),
       vat_number varchar(32) not null ,
       constraint clients_fk1 foreign key (bank_account_id) references bank_accounts (id),
-      constraint clients_fk1 foreign key (contact_id) references contact_id (id)
+      constraint clients_fk2 foreign key (contact_id) references contacts (id)
 );
 
 
