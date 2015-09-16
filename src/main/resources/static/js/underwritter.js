@@ -5,13 +5,23 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                 .when('/policy-requests/:reference', {
                     'templateUrl': '/html/underwritter.html',
                     'controller': 'policyCtrl'
-                }).when('/create-policy/:reference', {
-                    'templateUrl': '/html/create-policy.html',
-                    'controller': 'createPolicyCtrl'
+                }).when('/policy-admin', {
+                    'templateUrl': '/html/policy-admin.html',
+                    'controller': 'PolicyCreationCtrl'
+                }).when('/limitofIndemnity', {
+                    'templateUrl': '/html/policy-admin.html',
+                    'controller': 'PolicyCreationCtrl'
+                }).when('/conveyances', {
+                    'templateUrl': '/html/policy-admin.html',
+                    'controller': 'PolicyCreationCtrl'
+                }).when('/geographical', {
+                    'templateUrl': '/html/policy-admin.html',
+                    'controller': 'PolicyCreationCtrl'
                 }).otherwise({
-            redirectTo: '/policy-requests'
-        });
+                    redirectTo: '/policy-requests'
+                });
     }]);
+
 
 $(document).ready(function(){
    $("#regId").mouseout().css("text-transform","uppercase"); 
@@ -27,7 +37,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.init = function () {
         $scope.reference = $routeParams.reference;
         $scope.reject = {};
-        $rootScope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
+        $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
     };
 
 
@@ -40,7 +50,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('policy Request retrived sucessfully');
-                $rootScope.policyRequest = data;
+                $scope.policyRequest = data;
                 console.log(data);
             } else {
                 console.log('status:' + status);
@@ -67,7 +77,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 data: $scope.reject
             }).success(function (data, status) {
                 console.log('get success code:' + status);
-                if (status == 200) {
+                if (status === 200) {
                     console.log('Policy request Rejected. Reason:' + $scope.reject.reason);
                     $scope.init();
                     $rootScope.message = "Policy Request Rejected Successfully";
@@ -90,39 +100,15 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
 });
 
-underwritter.controller('createPolicyCtrl', function ($scope, $rootScope, $http, $routeParams) {
-
+underwritter.controller('PolicyCreationCtrl', function ($scope, $rootScope, $http, $routeParams) {
+    
     $scope.init = function () {
-                
-         if ($rootScope.policyRequest == undefined) {
-            $scope.getPoicyRequest();
-        } else {
-            $scope.policyRequests = $rootScope.policyRequest[$routeParams.reference];
-        }
+        $scope.reference = $routeParams.reference;
+        $scope.reject = {};
+        $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
     };
-
-
-    $scope.getPoicyRequest = function (reference) {
-
-
-        $http({
-            url: '/api/policy-requests/' + reference,
-            method: 'get'
-        }).success(function (data, status) {
-            if (status == 200) {
-                console.log('policy Request retrived sucessfully');
-                $scope.policyRequest = data;
-                console.log(data);
-            } else {
-                console.log('status:' + status);
-                $rootScope.error = "error status code : " + status;
-
-            }
-        }).error(function (error) {
-            console.log(error);
-            $rootScope.error = error;
-        });
-    };
-
-   
+    
+    
+    
 });
+
