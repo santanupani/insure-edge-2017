@@ -9,13 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "client_policies")
-public class PolicyDetail {
+public class ClientPolicy {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +22,13 @@ public class PolicyDetail {
     private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "underwriter_emp_id")
+	@JoinColumn(name = "underwriter_id")
     private UnderwriterEmployee underwriterEmployee;
 	
-    @OneToOne
-    @JoinColumn(name = "policy_request_id")
-    private PolicyRequest policyRequest;
-    
-    @OneToOne
-    @JoinColumn(name = "broker_id")
-    private Broker broker;
-    
-    @OneToOne
-    @JoinColumn(name = "client_master_id")
-    private Client clientMasterData;
-    
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
     private SubAgent subAgent;
@@ -45,9 +36,6 @@ public class PolicyDetail {
     @ManyToOne
     @JoinColumn(name = "insurer_id")
     private Insurer insurer;
-    
-    @Column(name = "policy_inception_date")
-    private Date policy_inception_date;
     
     @Column(name = "inception_date")
     private Date inception_date;
@@ -79,11 +67,11 @@ public class PolicyDetail {
     @Column(name = "exclude_sasria")
     private boolean exclude_sasria;
     
-    @Column(name = "underwriter_policy_fee")
-    private double underwriter_policy_fee;
+    @Column(name = "underwriter_fee")
+    private double underwriter_fee;
     
-    @Column(name = "broker_policy_fee")
-    private double broker_policy_fee;
+    @Column(name = "broker_fee")
+    private double broker_fee;
     
     @Column(name = "notes")
     private String notes;
@@ -94,22 +82,6 @@ public class PolicyDetail {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public PolicyRequest getPolicyRequest() {
-		return policyRequest;
-	}
-
-	public void setPolicyRequest(PolicyRequest policyRequest) {
-		this.policyRequest = policyRequest;
-	}
-
-	public Broker getBroker() {
-		return broker;
-	}
-
-	public void setBroker(Broker broker) {
-		this.broker = broker;
 	}
 
 	public SubAgent getSubAgent() {
@@ -128,13 +100,6 @@ public class PolicyDetail {
 		this.insurer = insurer;
 	}
 
-	public Date getPolicy_inception_date() {
-		return policy_inception_date;
-	}
-
-	public void setPolicy_inception_date(Date policy_inception_date) {
-		this.policy_inception_date = policy_inception_date;
-	}
 
 	public Date getInception_date() {
 		return inception_date;
@@ -216,22 +181,6 @@ public class PolicyDetail {
 		this.exclude_sasria = exclude_sasria;
 	}
 
-	public double getUnderwriter_policy_fee() {
-		return underwriter_policy_fee;
-	}
-
-	public void setUnderwriter_policy_fee(double underwriter_policy_fee) {
-		this.underwriter_policy_fee = underwriter_policy_fee;
-	}
-
-	public double getBroker_policy_fee() {
-		return broker_policy_fee;
-	}
-
-	public void setBroker_policy_fee(double broker_policy_fee) {
-		this.broker_policy_fee = broker_policy_fee;
-	}
-
 	public String getNotes() {
 		return notes;
 	}
@@ -239,5 +188,7 @@ public class PolicyDetail {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	
+	
 
 }

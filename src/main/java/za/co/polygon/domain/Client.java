@@ -1,16 +1,20 @@
 package za.co.polygon.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "client_details")
+@Table(name = "clients")
 public class Client {
 
     @Id
@@ -21,6 +25,9 @@ public class Client {
     @OneToOne
     @JoinColumn(name = "contact_id")
     private Contact contacts;
+    
+    @OneToMany(mappedBy="client",fetch=FetchType.EAGER)
+    private List<ClientPolicy> clientPolicies;
     
     @OneToOne
     @JoinColumn(name = "bank_account_id")
