@@ -22,6 +22,7 @@ create table answer_types(
 );
 
 
+
 /* table : questionnaires */
 create table questionnaires(
     id integer auto_increment not null primary key, 
