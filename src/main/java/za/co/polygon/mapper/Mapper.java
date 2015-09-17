@@ -334,7 +334,7 @@ public class Mapper {
     public static Client toClientDetailCommandModel(ClientDetailCommandModel clientDetailCommandModel) {
         Client client = new Client();
 
-        client.setBankAccount(null);
+        //client.setBankAccount(null);
        
 
         return client;

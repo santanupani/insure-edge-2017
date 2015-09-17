@@ -6,10 +6,10 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/underwritter.html',
                     'controller': 'policyCtrl'
                 }).when('/client-details', {
-            'templateUrl': '/html/client-details.html',
-            'controller': 'clientDetailsCtrl'
-        }).otherwise({
-            redirectTo: '/policy-requests'
+                    'templateUrl': '/html/client-details.html',
+                    'controller': 'clientDetailsCtrl'
+                }).otherwise({
+                    redirectTo: '/policy-requests'
         });
     }]);
 
@@ -91,8 +91,9 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 });
 
 underwritter.controller('clientDetailsCtrl', function ($scope) {
-
-    $scope.policyRequest = {
+    $scope.policyRequest = {};
+    $scope.init = function(){
+        $scope.policyRequest = {
         "quotation": {
             "quotationRequest": {
                 "companyName": "Reverside",
@@ -112,7 +113,9 @@ underwritter.controller('clientDetailsCtrl', function ($scope) {
         "bankName": "FNB",
         "accountNumber": "67890567",
         "branchCode": "7888"
-    }
+    };
 
+    };
+    
 
 });
