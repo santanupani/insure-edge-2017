@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "contact_details")
+@Table(name = "contacts")
 public class Contact {
 
     @Id
@@ -25,8 +25,6 @@ public class Contact {
     @Column(name = "street")
     private String street;
 
-    @Column(name = "city")
-    private String city;
 
     @Column(name = "code")
     private String code;
@@ -36,9 +34,6 @@ public class Contact {
 
     @Column(name = "work_tel_number")
     private String workTelNumber;
-
-    @Column(name = "home_tel_number")
-    private String homeTelNumber;
 
     @Column(name = "fax_number")
     private String faxNumber;
@@ -77,14 +72,6 @@ public class Contact {
         this.street = street;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getCode() {
         return code;
     }
@@ -107,14 +94,6 @@ public class Contact {
 
     public void setWorkTelNumber(String workTelNumber) {
         this.workTelNumber = workTelNumber;
-    }
-
-    public String getHomeTelNumber() {
-        return homeTelNumber;
-    }
-
-    public void setHomeTelNumber(String homeTelNumber) {
-        this.homeTelNumber = homeTelNumber;
     }
 
     public String getFaxNumber() {

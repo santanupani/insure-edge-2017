@@ -41,7 +41,7 @@ public class Client {
     @JoinColumn(name = "bank_account_id")
     private BankAccount bankAccount;
 
-    @Column(name = "client_name")
+    @Column(name = "company_name")
     private String clientName;
 
     @Column(name = "reg_no")

@@ -144,7 +144,6 @@ create table bank_accounts(
 create table contacts(
       id integer auto_increment not null primary key,
       street varchar(32) not null,
-      city varchar(32) not null,
       code varchar(32) not null,
       suburb varchar(32) not null,
       work_tel_number varchar(32) not null,
