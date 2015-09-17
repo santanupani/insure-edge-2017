@@ -251,49 +251,150 @@
 			</sequence>
 		</complexType>
 	</element>
-        
-        
-        <element name="ClientDetailCommandModel">
+
+
+
+	<element name="BankAccountCommandModel" type="tns:BankAccountCommandModel" />
+	<complexType name="BankAccountCommandModel">
+		<sequence>
+			<element name="accountNumber" type="string"></element>
+			<element name="accountName" type="string"></element>
+			<element name="branch" type="string"></element>
+			<element name="bankName" type="string"></element>
+		</sequence>
+
+	</complexType>
+
+
+	<element name="ContactCommandModel" type="tns:ContactCommandModel" />
+	<complexType name="ContactCommandModel">
+		<sequence>
+			<element name="email" type="string" />
+			<element name="contact_person" type="string" />
+			<element name="street" type="string" />
+			<element name="city" type="string" />
+			<element name="code" type="string" />
+			<element name="suburb" type="string" />
+			<element name="work_tel_number" type="string" />
+			<element name="home_tel_number" type="string" />
+			<element name="fax_number" type="string" />
+		</sequence>
+	</complexType>
+
+	<element name="ClientQueryModel" type="tns:ClientQueryModel" />
+	<complexType name="ClientQueryModel">
+		<sequence>
+
+		</sequence>
+	</complexType>
+
+	<element name="ClientDetailCommandModel">
 		<complexType>
 			<sequence>
-				<element name="clientNumber" type="string" />
-				<element name="PolicyNumber" type="string" />
 				<element name="clientName" type="string" />
-				<element name="apCode" type="string" />
-				<element name="street" type="string" />
-				<element name="city" type="string" />
-				<element name="code" type="string" />
-				<element name="postalAddress" type="string" />
-				<element name="suburb" type="string" />
-				<element name="workTelNumber" type="string" />
-				<element name="homeTelNumber" type="string" />
-				<element name="faxNumber" type="string" />
-				<element name="cellNumber" type="string" />
-				<element name="bankCode" type="string" />
-				<element name="accountNumber" type="string" />
-				<element name="accountName" type="string" />
-				<element name="branchCode" type="string" />
-				<element name="bankName" type="string" />
 				<element name="regNumber" type="string" />
 				<element name="incomeTaxNumber" type="string" />
 				<element name="vatNumber" type="string" />
-				<element name="passportNumber" type="string" />
-				<element name="email" type="string" />
-				<element name="contactPerson" type="string" />
-				<element name="prefComm" type="string" />
+				<element name="bankAccount" minOccurs="0" maxOccurs="1"
+					type="tns:BankAccountCommandModel" />
+				<element name="contact" minOccurs="0" maxOccurs="1"
+					type="tns:ContactCommandModel" />
 			</sequence>
 		</complexType>
 	</element>
 
-	<element name="SubAgentQueryModel" type="tns:SubAgentQueryModel" />
 
-	<complexType name="SubAgentQueryModel">
+
+
+	<element name="UnderwriterCommandModel" type="tns:UnderwriterCommandModel" />
+	<complexType name="UnderwriterCommandModel">
 		<sequence>
-			<element name="id" type="long"></element>
-			<element name="code" type="string"></element>
-			<element name="name" type="string"></element>
-			<element name="email" type="string"></element>
+			<element name="firstName" type="string" />
+			<element name="middleName" type="string" />
+			<element name="lastName" type="string" />
+			<element name="email" type="string" />
 		</sequence>
 	</complexType>
 
+	<element name="UnderwriterQueryModel" type="tns:UnderwriterQueryModel" />
+	<complexType name="UnderwriterQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="firstName" type="string" />
+			<element name="middleName" type="string" />
+			<element name="lastName" type="string" />
+			<element name="email" type="string" />
+		</sequence>
+	</complexType>
+
+	<element name="SubAgentQueryModel" type="tns:SubAgentQueryModel" />
+	<complexType name="SubAgentQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="broker" minOccurs="0" maxOccurs="1"
+				type="tns:BrokerQueryModel" />
+			<element name="firstName" type="string" />
+			<element name="middleName" type="string" />
+			<element name="lastName" type="string" />
+			<element name="email" type="string" />
+		</sequence>
+	</complexType>
+
+	<element name="SubAgentCommandModel" type="tns:SubAgentCommandModel" />
+	<complexType name="SubAgentCommandModel">
+		<sequence>
+			<element name="brokerId" type="long" />
+			<element name="firstName" type="string" />
+			<element name="middleName" type="string" />
+			<element name="lastName" type="string" />
+			<element name="email" type="string" />
+		</sequence>
+	</complexType>
+
+	<element name="PolicyCreationCommandModel">
+		<complexType>
+			<sequence>
+				<element name="clientId" type="long" />
+				<element name="subAgentId" type="long" />
+				<element name="underwriterId" type="long" />
+				<element name="inceptionDate" type="string" />
+				<element name="renewalDate" type="string" />
+				<element name="underwritingYear" type="integer" />
+				<element name="status" type="string" />
+				<element name="sasriaFrequency" type="string" />
+				<element name="device" type="string" />
+				<element name="retroActiveDate" type="string" />
+				<element name="collectByDebitOrder" type="boolean" />
+				<element name="excludeSasria" type="boolean" />
+				<element name="underwriterFee" type="string" />
+				<element name="brokerFee" type="string" />
+				<element name="notes" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="PolicyQueryModel" type="tns:PolicyQueryModel" />
+	<complexType name="PolicyQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="inceptionDate" type="string" />
+			<element name="renewalDate" type="string" />
+			<element name="underwritingYear" type="integer" />
+			<element name="status" type="string" />
+			<element name="sasriaFrequency" type="string" />
+			<element name="device" type="string" />
+			<element name="retroActiveDate" type="string" />
+			<element name="collectByDebitOrder" type="boolean" />
+			<element name="excludeSasria" type="boolean" />
+			<element name="underwriterFee" type="string" />
+			<element name="brokerFee" type="string" />
+			<element name="notes" type="string" />
+			<element name="client" minOccurs="0" maxOccurs="1"
+				type="tns:ClientQueryModel" />
+			<element name="subAgent" minOccurs="0" maxOccurs="1"
+				type="tns:SubAgentQueryModel" />
+			<element name="underwriter" minOccurs="0" maxOccurs="1"
+				type="tns:UnderwriterQueryModel" />
+		</sequence>
+	</complexType>
 </schema>

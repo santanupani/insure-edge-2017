@@ -11,7 +11,7 @@ import java.util.UUID;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.Broker;
-import za.co.polygon.domain.ClientDetail;
+import za.co.polygon.domain.Client;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
@@ -331,37 +331,14 @@ public class Mapper {
         }
         
         
-//    public static ClientDetail toClientDetailCommandModel(ClientDetailCommandModel clientDetailCommandModel) {
-//        ClientDetail clientDetail = new ClientDetail();
-//
-//        clientDetail.setClientNumber(clientDetailCommandModel.getClientNumber());
-//        clientDetail.setPolicyNumber(clientDetailCommandModel.getPolicyNumber());
-//        clientDetail.setClientName(clientDetailCommandModel.getClientName());
-//        clientDetail.setApCode(clientDetailCommandModel.getApCode());
-//        clientDetail.setStreet(clientDetailCommandModel.getStreet());
-//        clientDetail.setCity(clientDetailCommandModel.getCity());
-//	clientDetail.setCode(clientDetailCommandModel.getCode());
-//        clientDetail.setPostalAddress(clientDetailCommandModel.getPostalAddress());
-//        clientDetail.setSuburb(clientDetailCommandModel.getSuburb());
-//        clientDetail.setWorkTelNumber(clientDetailCommandModel.getWorkTelNumber());
-//        clientDetail.setHomeTelNumber(clientDetailCommandModel.getHomeTelNumber());
-//        clientDetail.setFaxNumber(clientDetailCommandModel.getFaxNumber());
-//        clientDetail.setCellNumber(clientDetailCommandModel.getCellNumber());
-//        clientDetail.setBankCode(clientDetailCommandModel.getBankCode());
-//        clientDetail.setAccountNumber(clientDetailCommandModel.getAccountNumber());
-//        clientDetail.setAccountName(clientDetailCommandModel.getAccountName());
-//        clientDetail.setBranchCode(clientDetailCommandModel.getBranchCode());
-//        clientDetail.setBankName(clientDetailCommandModel.getBankName());
-//        clientDetail.setRegNumber(clientDetailCommandModel.getRegNumber());
-//        clientDetail.setIncomeTaxNumber(clientDetailCommandModel.getIncomeTaxNumber());
-//        clientDetail.setVatNumber(clientDetailCommandModel.getVatNumber());
-//        clientDetail.setPassportNumber(clientDetailCommandModel.getPassportNumber());
-//	clientDetail.setEmail(clientDetailCommandModel.getEmail());
-//        clientDetail.setContact_person(clientDetailCommandModel.getContactPerson());
-//        clientDetail.setPrefComm(clientDetailCommandModel.getPrefComm());
-//
-//        return clientDetail;
-//    }
+    public static Client toClientDetailCommandModel(ClientDetailCommandModel clientDetailCommandModel) {
+        Client client = new Client();
+
+        //client.setBankAccount(null);
+       
+
+        return client;
+    }
     
 
 }

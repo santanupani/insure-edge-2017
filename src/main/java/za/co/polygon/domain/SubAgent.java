@@ -1,12 +1,9 @@
 package za.co.polygon.domain;
 
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,23 +22,34 @@ public class SubAgent {
     @Column(name = "id")
     private Long id;
 	
-	@OneToMany(mappedBy="subAgent",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	private List<PolicyDetail> policyMaster;
-	
 	@ManyToOne
-	@JoinColumn(name = "underwriter_id")
-    private Underwritter underwriter;
-    
-    @Column(name = "name")
-    private Date name;
-    
-    @Column(name = "title")
-    private int title;
-    
-    @Column(name = "job_description")
-    private String job_description;
+	@JoinColumn(name="broker_id")
+	private Broker broker;
+	
+	@OneToMany(mappedBy="subAgent")
+	private List<Policy> policies;
+	
+	@Column(name = "first_name")
+    private String firstName;
+	
+	@Column(name = "middle_name")
+    private String middleName;
+	
+	@Column(name = "last_name")
+    private String lastName;
+	
+	@Column(name = "email")
+    private String email;
+	
+    public Broker getBroker() {
+		return broker;
+	}
 
-	public Long getId() {
+	public void setBroker(Broker broker) {
+		this.broker = broker;
+	}
+    
+    public Long getId() {
 		return id;
 	}
 
@@ -49,44 +57,38 @@ public class SubAgent {
 		this.id = id;
 	}
 
-	public List<PolicyDetail> getPolicyMaster() {
-		return policyMaster;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setPolicyMaster(List<PolicyDetail> policyMaster) {
-		this.policyMaster = policyMaster;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public Underwritter getUnderwriter() {
-		return underwriter;
+	public String getMiddleName() {
+		return middleName;
 	}
 
-	public void setUnderwriter(Underwritter underwriter) {
-		this.underwriter = underwriter;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
-	public Date getName() {
-		return name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setName(Date name) {
-		this.name = name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public int getTitle() {
-		return title;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setTitle(int title) {
-		this.title = title;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	public String getJob_description() {
-		return job_description;
-	}
-
-	public void setJob_description(String job_description) {
-		this.job_description = job_description;
-	}
+	
+	
     
 }

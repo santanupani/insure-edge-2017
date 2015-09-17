@@ -23,7 +23,7 @@ public class Commission {
 	
 	@OneToOne
 	@JoinColumn(name = "underwriter_id")
-    private Underwritter underwriter;
+    private Underwriter underwriter;
 	
 	@OneToOne
 	@JoinColumn(name = "broker_id")
@@ -40,11 +40,11 @@ public class Commission {
 		this.id = id;
 	}
 
-	public Underwritter getUnderwriter() {
+	public Underwriter getUnderwriter() {
 		return underwriter;
 	}
 
-	public void setUnderwriter(Underwritter underwriter) {
+	public void setUnderwriter(Underwriter underwriter) {
 		this.underwriter = underwriter;
 	}
 
