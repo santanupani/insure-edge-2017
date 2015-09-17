@@ -10,8 +10,10 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                     'controller': 'clientDetailsCtrl'
                 }).otherwise({
                     redirectTo: '/policy-requests'
-        });
+                });
     }]);
+
+
 
 $(document).ready(function () {
     $("#regId").mouseout().css("text-transform", "uppercase");
@@ -23,11 +25,13 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.mode;
     $scope.reference;
     $scope.reject;
+    $scope.accept;
 
     $scope.init = function () {
         $scope.reference = $routeParams.reference;
         $scope.reject = {};
-        $rootScope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
+        $scope.accept = {};
+        $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
     };
 
 
@@ -40,7 +44,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('policy Request retrived sucessfully');
-                $rootScope.policyRequest = data;
+                $scope.policyRequest = data;
                 console.log(data);
             } else {
                 console.log('status:' + status);
@@ -67,7 +71,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 data: $scope.reject
             }).success(function (data, status) {
                 console.log('get success code:' + status);
-                if (status == 200) {
+                if (status === 200) {
                     console.log('Policy request Rejected. Reason:' + $scope.reject.reason);
                     $scope.init();
                     $rootScope.message = "Policy Request Rejected Successfully";
@@ -82,10 +86,22 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                     });
         }
     };
+    
+    $scope.acceptPolicyRequest = function (acceptform) {
+        if (acceptform.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            console.log("Form Validation Success");
+            $scope.init();
+            $scope.mode = undefined;
+        }
+    };
 
     $scope.changeMode = function (mode) {
         $scope.mode = mode;
     };
+    
+    
 
 
 });
@@ -142,6 +158,82 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $http
             "income_tax_number": "TY5555GHHkk999888"
     };
 
-    
-
+   
 });
+
+underwritter.controller('clientPolicyCtrl', function ($scope, $rootScope, $http, $routeParams) {
+	$scope.clientPolicy = $scope.clientPolicy = {
+			'id':'1',
+			'inceptionDate':'29/09/2015',
+			'renewalDate':'12/09/2015',
+			'underwritingYear':'2012',
+			'status':'Active',
+			'notes':'This policy is pending processing, awaiting support documents from the client.',
+			'client':{
+				'id':'1',
+				'regNumber':'CKD2134De',
+				'incomeTaxNumber':'2019938',
+				'bankAccounts':[
+				     {
+				    	 'id':'1',
+				    	 'accountNumber':'',
+				    	 'accountName':'',
+				    	 'branch':'',
+				    	 'bankName':''
+				     }
+				],
+				'contactDetails':{
+					'id':'1',
+					'email':'info@reverside.co.za',
+					'contact_person':'Thabo Sethi',
+					'street':'Piet Retief, 234B, Malibongwe',
+					'city':'Johannesburg'
+				},
+			},
+			'subAgent':{
+				'id':'1',
+				'firstName':'Ardhendu',
+				'lastName':'Patri',
+				'email':'ardhendhu.patri@reverside.co.za',
+				'broker':{
+					'id':'1',
+					'name':'Blue Quanta',
+					'email':'Manmay.Mohanty@reverside.co.za'
+				}
+			},
+			'underwriter':{
+				'id':'1',
+				'firstName':'Thabo',
+				'lastName':'Thulare',
+				'email':'thabothulare68@gmail.com'
+			},
+			
+	};
+
+	$scope.init = function(){
+		
+	};
+	
+	$scope.getClientPolicy = function (policyNo) {
+        $http({
+            url: '/api/client-policy/' + policyNo,
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('Client policy retrived sucessfully');
+                $scope.clientPolicy = data;
+                console.log(data);
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+        });
+    };
+	
+});
+
+

@@ -149,7 +149,15 @@ create table contacts(
       work_tel_number varchar(32) not null,
       fax_number varchar(32) not null,
       email varchar(32) not null,
-      contact_person varchar(32) not null
+      contact_person varchar(32) not null,
+);
+
+/* table : insurers */
+create table insurers(
+    id integer auto_increment not null primary key, 
+    name varchar(64) not null, 
+    business_description varchar(256),
+    contact_person varchar(32) not null
 );
 
 /* table : clients */
