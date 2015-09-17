@@ -394,10 +394,11 @@
 				<element name="underwriterId" type="long" />
 				<element name="inceptionDate" type="string" />
 				<element name="renewalDate" type="string" />
-				<element name="underwritingYear" type="integer" />
+				<element name="underwritingYear" type="long" />
 				<element name="status" type="string" />
 				<element name="sasriaFrequency" type="string" />
 				<element name="device" type="string" />
+				<element name="re_instatement" type="string" />
 				<element name="retroActiveDate" type="string" />
 				<element name="collectByDebitOrder" type="boolean" />
 				<element name="excludeSasria" type="boolean" />
@@ -414,13 +415,15 @@
 			<element name="id" type="long" />
 			<element name="inceptionDate" type="string" />
 			<element name="renewalDate" type="string" />
-			<element name="underwritingYear" type="integer" />
+			<element name="underwritingYear" type="long" />
 			<element name="status" type="string" />
+			<element name="frequency" type="string" />
 			<element name="sasriaFrequency" type="string" />
 			<element name="device" type="string" />
 			<element name="retroActiveDate" type="string" />
 			<element name="collectByDebitOrder" type="boolean" />
 			<element name="excludeSasria" type="boolean" />
+			<element name="re_instatement" type="string" />
 			<element name="underwriterFee" type="string" />
 			<element name="brokerFee" type="string" />
 			<element name="notes" type="string" />
