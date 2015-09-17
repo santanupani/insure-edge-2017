@@ -5,18 +5,6 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                 .when('/policy-requests/:reference', {
                     'templateUrl': '/html/underwritter.html',
                     'controller': 'policyCtrl'
-                }).when('/policy-admin', {
-                    'templateUrl': '/html/policy-admin.html',
-                    'controller': 'PolicyCreationCtrl'
-                }).when('/limitofIndemnity', {
-                    'templateUrl': '/html/policy-admin.html',
-                    'controller': 'PolicyCreationCtrl'
-                }).when('/conveyances', {
-                    'templateUrl': '/html/policy-admin.html',
-                    'controller': 'PolicyCreationCtrl'
-                }).when('/geographical', {
-                    'templateUrl': '/html/policy-admin.html',
-                    'controller': 'PolicyCreationCtrl'
                 }).otherwise({
                     redirectTo: '/policy-requests'
                 });
@@ -33,10 +21,12 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.mode;
     $scope.reference;
     $scope.reject;
+    $scope.accept;
 
     $scope.init = function () {
         $scope.reference = $routeParams.reference;
         $scope.reject = {};
+        $scope.accept = {};
         $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
     };
 
@@ -92,23 +82,21 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                     });
         }
     };
+    
+    $scope.acceptPolicyRequest = function (acceptform) {
+        if (acceptform.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            console.log("Form Validation Success");
+            $scope.init();
+            $scope.mode = undefined;
+        }
+    };
 
     $scope.changeMode = function (mode) {
         $scope.mode = mode;
     };
 
 
-});
-
-underwritter.controller('PolicyCreationCtrl', function ($scope, $rootScope, $http, $routeParams) {
-    
-    $scope.init = function () {
-        $scope.reference = $routeParams.reference;
-        $scope.reject = {};
-        $scope.policyRequest = $scope.getPoicyRequest($routeParams.reference);
-    };
-    
-    
-    
 });
 
