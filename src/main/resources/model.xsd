@@ -252,6 +252,8 @@
 		</complexType>
 	</element>
 
+
+
 	<element name="BankAccountCommandModel" type="tns:BankAccountCommandModel" />
 	<complexType name="BankAccountCommandModel">
 		<sequence>
@@ -279,10 +281,10 @@
 		</sequence>
 	</complexType>
 
-	<element name="ClientQueryModel" type="tns:ClientQueryModel"/>
+	<element name="ClientQueryModel" type="tns:ClientQueryModel" />
 	<complexType name="ClientQueryModel">
 		<sequence>
-			
+
 		</sequence>
 	</complexType>
 
@@ -300,6 +302,9 @@
 			</sequence>
 		</complexType>
 	</element>
+
+
+
 
 	<element name="UnderwriterCommandModel" type="tns:UnderwriterCommandModel" />
 	<complexType name="UnderwriterCommandModel">
@@ -326,14 +331,15 @@
 	<complexType name="SubAgentQueryModel">
 		<sequence>
 			<element name="id" type="long" />
-			<element name="broker" minOccurs="0" maxOccurs="1" type="tns:BrokerQueryModel" />
+			<element name="broker" minOccurs="0" maxOccurs="1"
+				type="tns:BrokerQueryModel" />
 			<element name="firstName" type="string" />
 			<element name="middleName" type="string" />
 			<element name="lastName" type="string" />
 			<element name="email" type="string" />
 		</sequence>
 	</complexType>
-	
+
 	<element name="SubAgentCommandModel" type="tns:SubAgentCommandModel" />
 	<complexType name="SubAgentCommandModel">
 		<sequence>
@@ -344,29 +350,29 @@
 			<element name="email" type="string" />
 		</sequence>
 	</complexType>
-	
+
 	<element name="PolicyCreationCommandModel">
-	<complexType>
-		<sequence>
-			<element name="clientId" type="long"/>
-			<element name="subAgentId" type="long"/>
-			<element name="underwriterId" type="long"/>
-			<element name="inceptionDate" type="string" />
-			<element name="renewalDate" type="string" />
-			<element name="underwritingYear" type="integer" />
-			<element name="status" type="string" />
-			<element name="sasriaFrequency" type="string" />
-			<element name="device" type="string" />
-			<element name="retroActiveDate" type="string" />
-			<element name="collectByDebitOrder" type="boolean" />
-			<element name="excludeSasria" type="boolean" />
-			<element name="underwriterFee" type="string" />
-			<element name="brokerFee" type="string" />
-			<element name="notes" type="string" />
-		</sequence>
-	</complexType>
+		<complexType>
+			<sequence>
+				<element name="clientId" type="long" />
+				<element name="subAgentId" type="long" />
+				<element name="underwriterId" type="long" />
+				<element name="inceptionDate" type="string" />
+				<element name="renewalDate" type="string" />
+				<element name="underwritingYear" type="integer" />
+				<element name="status" type="string" />
+				<element name="sasriaFrequency" type="string" />
+				<element name="device" type="string" />
+				<element name="retroActiveDate" type="string" />
+				<element name="collectByDebitOrder" type="boolean" />
+				<element name="excludeSasria" type="boolean" />
+				<element name="underwriterFee" type="string" />
+				<element name="brokerFee" type="string" />
+				<element name="notes" type="string" />
+			</sequence>
+		</complexType>
 	</element>
-	
+
 	<element name="PolicyQueryModel" type="tns:PolicyQueryModel" />
 	<complexType name="PolicyQueryModel">
 		<sequence>
@@ -383,9 +389,12 @@
 			<element name="underwriterFee" type="string" />
 			<element name="brokerFee" type="string" />
 			<element name="notes" type="string" />
-			<element name="client" minOccurs="0" maxOccurs="1" type="tns:ClientQueryModel"/>
-			<element name="subAgent" minOccurs="0" maxOccurs="1" type="tns:SubAgentQueryModel"/>
-			<element name="underwriter" minOccurs="0" maxOccurs="1" type="tns:UnderwriterQueryModel"/>
+			<element name="client" minOccurs="0" maxOccurs="1"
+				type="tns:ClientQueryModel" />
+			<element name="subAgent" minOccurs="0" maxOccurs="1"
+				type="tns:SubAgentQueryModel" />
+			<element name="underwriter" minOccurs="0" maxOccurs="1"
+				type="tns:UnderwriterQueryModel" />
 		</sequence>
 	</complexType>
 </schema>
