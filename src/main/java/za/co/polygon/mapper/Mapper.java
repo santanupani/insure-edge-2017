@@ -10,8 +10,10 @@ import java.util.Locale;
 import java.util.UUID;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
+import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Client;
+import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
@@ -19,8 +21,13 @@ import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.User;
+import za.co.polygon.model.BankAccountCommandModel;
+import za.co.polygon.model.BankAccountQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
-import za.co.polygon.model.ClientDetailCommandModel;
+import za.co.polygon.model.ClientCommandModel;
+import za.co.polygon.model.ClientQueryModel;
+import za.co.polygon.model.ContactCommandModel;
+import za.co.polygon.model.ContactQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
 import za.co.polygon.model.ProductQueryModel;
@@ -330,14 +337,104 @@ public class Mapper {
             return selectedQuotationQueryModel;
         }
         
+    
+//    public static Contact toContactCommandModel (ContactCommandModel contactCommandModel){
+//        Contact contact = new Contact();
+//        
+//        contact.setCode(contactCommandModel.getCode());
+//        contact.setContactPerson(contactCommandModel.getContactPerson());
+//        contact.setEmail(contactCommandModel.getEmail());
+//        contact.setFaxNumber(contactCommandModel.getFaxNumber());
+//        contact.setStreet(contactCommandModel.getStreet());
+//        contact.setSuburb(contactCommandModel.getSuburb());
+//        contact.setWorkTelNumber(contactCommandModel.getWorkTelNumber());
+//        
+//        return contact;
+//    }
+//    
+//    public static BankAccount toBankAccountCommandModel (BankAccountCommandModel bankAccountCommandModel){
+//        BankAccount bankAccount = new BankAccount();
+//        
+//        bankAccount.setAccountName(bankAccountCommandModel.getAccountName());
+//        bankAccount.setAccountNumber(bankAccountCommandModel.getAccountNumber());
+//        bankAccount.setBankName(bankAccountCommandModel.getBankName());
+//        bankAccount.setBranchCode(bankAccount.getBranchCode());
+//        
+//        return bankAccount;
+//    }
+//        
+//        
+//    public static Client toClientDetailCommandModel(ClientCommandModel clientCommandModel, Contact contact, BankAccount bankAccount) {
+//        Client client = new Client();
+//
+//        client.setContacts(contact);
+//        client.setBankAccount(bankAccount);
+//        client.setClientName(clientCommandModel.getClientName());
+//        client.setIncomeTaxNumber(clientCommandModel.getIncomeTaxNumber());
+//        client.setRegNumber(clientCommandModel.getRegNumber());
+//        client.setVatNumber(clientCommandModel.getVatNumber());
+//
+//        return client;
+//    }
+//    
+    
+     public static BankAccountQueryModel toBankAccountQueryModel(BankAccount from) {
+        BankAccountQueryModel  bankAccountQueryModel = new BankAccountQueryModel();
+        bankAccountQueryModel.setId(from.getId());
+        bankAccountQueryModel.setAccountName(from.getAccountName());
+        bankAccountQueryModel.setAccountNumber(from.getAccountNumber());
+        bankAccountQueryModel.setBankName(from.getBankName());
+        bankAccountQueryModel.setBranch(from.getBranchCode());
+        return bankAccountQueryModel;
+    }
+     
+     public static ContactQueryModel toContactQueryModel(Contact from) {
+        ContactQueryModel  contactQueryModel = new ContactQueryModel();
+        contactQueryModel.setId(from.getId());
+        contactQueryModel.setCode(from.getCode());
+        contactQueryModel.setContactPerson(from.getContactPerson());
+        contactQueryModel.setEmail(from.getEmail());
+        contactQueryModel.setFaxNumber(from.getFaxNumber());
+        contactQueryModel.setStreet(from.getStreet());
+        contactQueryModel.setSuburb(from.getSuburb());
+        contactQueryModel.setWorkTelNumber(from.getWorkTelNumber());
+        return contactQueryModel;
+    }
+    
+    
+    
+      public static ClientQueryModel toClientQueryModel(Client client) {
+
+        ClientQueryModel result = new ClientQueryModel();
         
-    public static Client toClientDetailCommandModel(ClientDetailCommandModel clientDetailCommandModel) {
-        Client client = new Client();
+        result.setClientId(client.getId());
+        result.setClientName(client.getClientName());
+        result.setIncomeTaxNumber(client.getIncomeTaxNumber());
+        result.setRegNumber(client.getRegNumber());
+        result.setVatNumber(client.getVatNumber());
+        
+        BankAccountQueryModel bankAccount = new BankAccountQueryModel();
+        bankAccount.setId(client.getBankAccount().getId());
+        bankAccount.setAccountName(client.getBankAccount().getAccountName());
+        bankAccount.setAccountNumber(client.getBankAccount().getAccountNumber());
+        bankAccount.setBankName(client.getBankAccount().getBankName());
+        bankAccount.setBranch(client.getBankAccount().getBranchCode());
+        result.setBankAccounts(bankAccount);
+        
+        ContactQueryModel contact = new ContactQueryModel();
+        contact.setId(client.getContacts().getId());
+        contact.setCode(client.getContact().getCode());
+        contact.setContactPerson(client.getContact().getContactPerson());
+        contact.setEmail(client.getContact().getEmail());
+        contact.setFaxNumber(client.getContact().getFaxNumber());
+        contact.setStreet(client.getContact().getStreet());
+        contact.setSuburb(client.getContact().getSuburb());
+        contact.setWorkTelNumber(client.getContact().getWorkTelNumber());
+        result.setContact(contact);
+        
+           
 
-        //client.setBankAccount(null);
-       
-
-        return client;
+        return result;
     }
     
 

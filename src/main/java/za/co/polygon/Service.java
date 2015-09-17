@@ -9,8 +9,6 @@ import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
-//import static za.co.polygon.mapper.Mapper.toClientDetailCommandModel;
-import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 
 import java.io.FileNotFoundException;
@@ -66,8 +64,12 @@ import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
 
 import com.itextpdf.text.DocumentException;
+import za.co.polygon.domain.Client;
+import static za.co.polygon.mapper.Mapper.toClientQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
+import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
+import za.co.polygon.repository.ClientRepository;
 
 
 @RestController
@@ -104,6 +106,9 @@ public class Service {
 
     @Autowired
     private PolicyRequestRepository policyRequestRepository;
+    
+    @Autowired
+    private ClientRepository clientRepository;
    
     @Autowired
     private DocumentService reportService;
@@ -291,17 +296,14 @@ public class Service {
         List<Quotation> quotation = quotationRepository.findAll();
         log.info("found all quotations - size:{}", quotation.size());
         return toQuotationQueryModel(quotation);
+    }    
+
+        @RequestMapping(value = "api/clients/{clientId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ClientQueryModel getClient(@PathVariable("clientId") Long clientId) {
+        
+        Client client = clientRepository.findOne(clientId);
+        log.info("client details");
+        return toClientQueryModel(client);
     }
-//    
-//     @Transactional
-//    @RequestMapping(value = "api/client-details", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public void creatClientData(@RequestBody ClientDetailCommandModel clientDetailCommandModel)  {
-//      
-//        Client clientDetail = toClientDetailCommandModel(clientDetailCommandModel);
-//        
-//        clientMasterDataRepository.save(clientDetail);
-//  
-//        log.info("client details Created Successfully !!!");
-//    }
 
 }

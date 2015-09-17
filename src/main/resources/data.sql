@@ -317,3 +317,18 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '165', 'VALUE :'                     ,                    2,    48,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '166', 'TYPE OF LOSS :'                     ,                    1,    48,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '167', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
+
+
+
+insert into bank_accounts(account_number, account_name, branch, bank_name)values('236777262','Thabo','5678','Standard Bank');
+insert into bank_accounts(account_number, account_name, branch, bank_name)values('3425672872','Lenox','6756','Nedbank');
+insert into bank_accounts(account_number, account_name, branch, bank_name)values('2345656','Binod','7889','Standard Bank');
+
+
+insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('umtholo','8909','Birch Acres','011 991 0000','086 575 7876','thabo@gmail.com','Thabo Thulare');
+insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('old road','6765','Oliven','015 787 9788','086 671 7887','Lenox@reverside.co.za','Lenox');
+insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('zurich','9866','Sandton','012 876 7876','012 655 8987','binod@gmail.com','Binod Sethi');
+
+insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('1','1','Reverside','5TTDDFU78','234599','TRUI5555');
+insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('2','2','Zurich','567RRFCD','2345678','TRE123456');
+insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('3','3','Reverside Software Solutions','5TTDDFU78','234599','TRUI5555');

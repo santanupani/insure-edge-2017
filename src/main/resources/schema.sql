@@ -145,15 +145,12 @@ create table bank_accounts(
 create table contacts(
       id integer auto_increment not null primary key,
       street varchar(32) not null,
-      city varchar(32) not null,
       code varchar(32) not null,
       suburb varchar(32) not null,
       work_tel_number varchar(32) not null,
       fax_number varchar(32) not null,
       email varchar(32) not null,
       contact_person varchar(32) not null,
-      pref_comm varchar(32) not null,
-      constraint contact_details_fk1 foreign key (client_id) references client_details (id)
 );
 
 /* table : insurers */
