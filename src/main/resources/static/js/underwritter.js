@@ -35,6 +35,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		$scope.reject = {};
 		$scope.accept = {};
 		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
+		$scope.getPolicy($routeParams.id);
 	};
 
 
@@ -104,16 +105,18 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		$scope.mode = mode;
 	};
 	
+	
 	/*Get request for the details of Policy for a specific Policy Number*/
-	$scope.getClientPolicy = function (policyNo) {
+	$scope.getPolicy = function (policyNo) {
 		$http({
-			url: '/api/client-policy/' + policyNo,
+			url: '/api/policy/' + policyNo,
 			method: 'get'
 		}).success(function (data, status) {
 			if (status == 200) {
-				console.log('Client policy retrived sucessfully');
+				console.log('Policy details retrived sucessfully');
 				$scope.policy = data;
 				console.log(data);
+				$location.path("/policy/"+policyNo);
 			} else {
 				console.log('status:' + status);
 				$rootScope.error = "error status code : " + status;
@@ -133,214 +136,29 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			'umaFee':'0.00'
 	}
 
-	$scope.policy =  {
-			'id':'1',
-			'inceptionDate':'29/09/2015',
-			'renewalDate':'12/09/2015',
-			'underwritingYear':'2012',
-			'status':'Active',
-			'notes':'This policy is pending processing, awaiting support documents from the client.',
-			'frequency':'Declaration',
-			'sasriaFrequency':'N/A',
-			'device':'Nedbank Cameo',
-			'retroActiveDate':'12/10/2015',
-			'collectByDebitOrder':'true',
-			'excludeSasria':'false',
-			'underwriterFee':'0.00',
-			'reInstatement':'',
-			'brokerFee':'0.00',
-			'client':{
-				'id':'1',
-				'regNumber':'CKD2134De',
-				'incomeTaxNumber':'2019938',
-				'bankAccounts':[
-				                {
-				                	'id':'1',
-				                	'accountNumber':'',
-				                	'accountName':'',
-				                	'branch':'',
-				                	'bankName':''
-				                }
-				                ],
-				                'contactDetails':{
-				                	'id':'1',
-				                	'email':'info@reverside.co.za',
-				                	'contact_person':'Thabo Sethi',
-				                	'street':'Piet Retief, 234B, Malibongwe',
-				                	'city':'Johannesburg'
-				                },
-			},
-			'subAgent':{
-				'id':'1',
-				'firstName':'Ardhendu',
-				'lastName':'Patri',
-				'email':'ardhendhu.patri@reverside.co.za',
-				'broker':{
-					'id':'1',
-					'name':'Blue Quanta',
-					'email':'Manmay.Mohanty@reverside.co.za'
-				}
-			},
-			'underwriter':{
-				'id':'1',
-				'firstName':'Thabo',
-				'lastName':'Thulare',
-				'email':'thabothulare68@gmail.com'
-			},
-
-	};
-
 	$scope.policyOptions = {
 			'frequencyOptions':[
-			                    'Declaration',
-			                    'Other',
-			                    ],
-			                    'sasriaFrequencyOptions':[
-			                                              'N/A',
-			                                              'Other',
-			                                              ],
-			                                              'deviceOptions':[
-			                                                               'Nedbank Cameo',
-			                                                               'Standard Bnk',
-			                                                               'N/A',
-			                                                               ],
-			                                                               'reInstatements':[
-			                                                                                 '',
+			        'Declaration',
+			        'Other',
+			 ],
+			 'sasriaFrequencyOptions':[
+			         'N/A',
+			         'Other',
+			  ],
+			  'deviceOptions':[
+			          'Nedbank Cameo',
+			          'Standard Bnk',
+			          'N/A',
+			  ],
+			   'reInstatements':[
+			           '',
 
-			                                                                                 ],
+			  ],
 	};
 
 
 });
 
-underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $http, $routeParams) {
 
-
-//	$scope.init = function () {
-//	$rootScope.clients = $scope.getClient($routeParams.clientId);
-//	};
-
-
-
-//	$scope.getClient = function (clientId) {
-
-//	$http({
-//	url: '/api/clients/' + clientId,
-//	method: 'get'
-//	}).success(function (data, status) {
-//	if (status == 200) {
-//	console.log('client retrived sucessfully');
-//	$rootScope.client = data;
-//	console.log(data);
-//	} else {
-//	console.log('status:' + status);
-//	$rootScope.error = "error status code : " + status;
-
-//	}
-//	}).error(function (error) {
-//	console.log(error);
-//	$rootScope.error = error;
-//	});
-//	};
-
-	$scope.client = {
-			"bankAccount": {
-				"accountHolder": "Thabo",
-				"accountName": "Thulare",
-				"bankName": "FNB",
-				"accountNumber": "67890567",
-				"branchCode": "7888"
-			},
-			"contact": {
-				"contactPerson": "Thabo",
-				"email": "thabothulare68@gmail.com",
-				"streetAddress": "Small",
-				"suburb": "Midrand",
-				"postalCode": "099"
-			},
-			"clientId": "1",
-			"companyName": "Reverside Software Solutions",
-			"companyRegNumber": "34RRRTGDEFXCWS",
-			"vatRegNumber": "TY5555GHHkk",
-			"income_tax_number": "TY5555GHHkk999888"
-	};
-
-
-});
-
-underwritter.controller('clientPolicyCtrl', function ($scope, $rootScope, $http, $routeParams) {
-	$scope.clientPolicy = $scope.clientPolicy = {
-			'id':'1',
-			'inceptionDate':'29/09/2015',
-			'renewalDate':'12/09/2015',
-			'underwritingYear':'2012',
-			'status':'Active',
-			'notes':'This policy is pending processing, awaiting support documents from the client.',
-			'client':{
-				'id':'1',
-				'regNumber':'CKD2134De',
-				'incomeTaxNumber':'2019938',
-				'bankAccounts':[
-				                {
-				                	'id':'1',
-				                	'accountNumber':'',
-				                	'accountName':'',
-				                	'branch':'',
-				                	'bankName':''
-				                }
-				                ],
-				                'contactDetails':{
-				                	'id':'1',
-				                	'email':'info@reverside.co.za',
-				                	'contact_person':'Thabo Sethi',
-				                	'street':'Piet Retief, 234B, Malibongwe',
-				                	'city':'Johannesburg'
-				                },
-			},
-			'subAgent':{
-				'id':'1',
-				'firstName':'Ardhendu',
-				'lastName':'Patri',
-				'email':'ardhendhu.patri@reverside.co.za',
-				'broker':{
-					'id':'1',
-					'name':'Blue Quanta',
-					'email':'Manmay.Mohanty@reverside.co.za'
-				}
-			},
-			'underwriter':{
-				'id':'1',
-				'firstName':'Thabo',
-				'lastName':'Thulare',
-				'email':'thabothulare68@gmail.com'
-			},
-
-	};
-
-	$scope.init = function(){
-
-	};
-
-	$scope.getClientPolicy = function (policyNo) {
-		$http({
-			url: '/api/client-policy/' + policyNo,
-			method: 'get'
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('Client policy retrived sucessfully');
-				$scope.clientPolicy = data;
-				console.log(data);
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
-
-			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.error = error;
-		});
-	};
-
-});
 
 
