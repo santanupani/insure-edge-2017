@@ -109,54 +109,56 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $http, $routeParams) {
    
    
-//    $scope.init = function () {
-//        $rootScope.clients = $scope.getClient($routeParams.clientId);
-//    };
-//    
-//
-//
-//    $scope.getClient = function (clientId) {
-//
-//        $http({
-//            url: '/api/clients/' + clientId,
-//            method: 'get'
-//        }).success(function (data, status) {
-//            if (status == 200) {
-//                console.log('client retrived sucessfully');
-//                $rootScope.client = data;
-//                console.log(data);
-//            } else {
-//                console.log('status:' + status);
-//                $rootScope.error = "error status code : " + status;
-//
-//            }
-//        }).error(function (error) {
-//            console.log(error);
-//            $rootScope.error = error;
-//        });
-//    };
-    
-    $scope.client = {
-        "bankAccount": {
-                "accountHolder": "Thabo",
-                "accountName": "Thulare",
-                "bankName": "FNB",
-                "accountNumber": "67890567",
-                "branchCode": "7888"
-        },
-        "contact": {
-                "contactPerson": "Thabo",
-                "email": "thabothulare68@gmail.com",
-                "streetAddress": "Small",
-                "suburb": "Midrand",
-                "postalCode": "099"
-        },
-            "clientId": "1",
-            "companyName": "Reverside Software Solutions",
-            "companyRegNumber": "34RRRTGDEFXCWS",
-            "vatRegNumber": "TY5555GHHkk",
-            "income_tax_number": "TY5555GHHkk999888"
+    $scope.init = function () {
+        
+       $scope.getClient($routeParams.id);
+      
     };
+    
+
+
+    $scope.getClient = function (clientId) {
+
+        $http({
+            url: '/api/clients/' + clientId,
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('client retrived sucessfully');
+                $rootScope.client = data;
+                console.log(data);
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+        });
+    };
+    
+//    $scope.client = {
+//        "bankAccount": {
+//                "accountHolder": "Thabo",
+//                "accountName": "Thulare",
+//                "bankName": "FNB",
+//                "accountNumber": "67890567",
+//                "branchCode": "7888"
+//        },
+//        "contact": {
+//                "contactPerson": "Thabo",
+//                "email": "thabothulare68@gmail.com",
+//                "streetAddress": "Small",
+//                "suburb": "Midrand",
+//                "postalCode": "099"
+//        },
+//            "clientId": "1",
+//            "companyName": "Reverside Software Solutions",
+//            "companyRegNumber": "34RRRTGDEFXCWS",
+//            "vatRegNumber": "TY5555GHHkk",
+//            "income_tax_number": "TY5555GHHkk999888"
+//    };
 
    
 });

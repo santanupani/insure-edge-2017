@@ -412,27 +412,9 @@ public class Mapper {
         result.setIncomeTaxNumber(client.getIncomeTaxNumber());
         result.setRegNumber(client.getRegNumber());
         result.setVatNumber(client.getVatNumber());
-        
-        BankAccountQueryModel bankAccount = new BankAccountQueryModel();
-        bankAccount.setId(client.getBankAccount().getId());
-        bankAccount.setAccountName(client.getBankAccount().getAccountName());
-        bankAccount.setAccountNumber(client.getBankAccount().getAccountNumber());
-        bankAccount.setBankName(client.getBankAccount().getBankName());
-        bankAccount.setBranch(client.getBankAccount().getBranchCode());
-        result.setBankAccounts(bankAccount);
-        
-        ContactQueryModel contact = new ContactQueryModel();
-        contact.setId(client.getContacts().getId());
-        contact.setCode(client.getContact().getCode());
-        contact.setContactPerson(client.getContact().getContactPerson());
-        contact.setEmail(client.getContact().getEmail());
-        contact.setFaxNumber(client.getContact().getFaxNumber());
-        contact.setStreet(client.getContact().getStreet());
-        contact.setSuburb(client.getContact().getSuburb());
-        contact.setWorkTelNumber(client.getContact().getWorkTelNumber());
-        result.setContact(contact);
-        
-           
+        result.setBankAccounts(toBankAccountQueryModel(client.getBankAccount()));
+        result.setContact(toContactQueryModel(client.getContact()));
+                 
 
         return result;
     }
