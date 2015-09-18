@@ -332,3 +332,17 @@ insert into contacts(street, code, suburb, work_tel_number, fax_number, email, c
 insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('1','1','Reverside','5TTDDFU78','234599','TRUI5555');
 insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('2','2','Zurich','567RRFCD','2345678','TRE123456');
 insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('3','3','Reverside Software Solutions','5TTDDFU78','234599','TRUI5555');
+
+/*Test Data for Policy details per clients */
+insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Binod','Biny','Sethi','Binod.Sethi@reverside.co.za');
+insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Thabo','Tbos','Thulare','Thabo.Thulare@reverside.co.za');
+
+insert into underwriters(first_name,middle_name,last_name,email) values('Lizaan','Lizy','Botha','Lizaan.Botha@reverside.co.za');
+insert into underwriters(first_name,middle_name,last_name,email) values('Cressundra','Cress','Alves','Cressundra.Alves@reverside.co.za');
+
+insert into policies(sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
+values(1,1,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
+insert into policies(sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
+values(2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
+
+

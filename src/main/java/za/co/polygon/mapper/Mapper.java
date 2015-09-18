@@ -8,18 +8,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
+import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.SubAgent;
+import za.co.polygon.domain.Underwriter;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BankAccountCommandModel;
 import za.co.polygon.model.BankAccountQueryModel;
@@ -28,6 +32,7 @@ import za.co.polygon.model.ClientCommandModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.ContactCommandModel;
 import za.co.polygon.model.ContactQueryModel;
+import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
 import za.co.polygon.model.ProductQueryModel;
@@ -40,6 +45,8 @@ import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
+import za.co.polygon.model.SubAgentQueryModel;
+import za.co.polygon.model.UnderwriterQueryModel;
 import za.co.polygon.model.UserQueryModel;
 
 public class Mapper {
@@ -174,14 +181,14 @@ public class Mapper {
         for (Answer answer : quotationRequest.getAnswers()) {
             QuotationRequestQueryModel.Questionnaire q = new QuotationRequestQueryModel.Questionnaire();
             q.setQuestion(answer.getQuestion());
-            if(answer.getQuestion().contains("What is the maximum amount you wish to insure ?")){
-            	try{
-            	q.setAnswer(nft.format(nft.parse(answer.getAnswer())));
-            	}catch(ParseException pex){
-            		
-            	}
-            }else{
-            	 q.setAnswer(answer.getAnswer());
+            if (answer.getQuestion().contains("What is the maximum amount you wish to insure ?")) {
+                try {
+                    q.setAnswer(nft.format(nft.parse(answer.getAnswer())));
+                } catch (ParseException pex) {
+
+                }
+            } else {
+                q.setAnswer(answer.getAnswer());
             }
             result.getQuestionnaire().add(q);
         }
@@ -204,7 +211,7 @@ public class Mapper {
         Quotation quotation = new Quotation();
         quotation.setCreatedDate(new Date());
         quotation.setQuotationRequest(quotationRequest);
-        
+
         List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();
         for (Options options : quotationCommandModel.getOptions()) {
             QuotationOption quotationOption = new QuotationOption();
@@ -245,9 +252,8 @@ public class Mapper {
         }
         return result;
     }
-    
-    
-     public static List<QuotationQueryModel> toQuotationQueryModel(List<Quotation> fromList) {
+
+    public static List<QuotationQueryModel> toQuotationQueryModel(List<Quotation> fromList) {
         List<QuotationQueryModel> quotationQueryModel = new ArrayList<QuotationQueryModel>();
         for (Quotation quotation : fromList) {
             quotationQueryModel.add(toQuotationQueryModel(quotation));
@@ -256,11 +262,9 @@ public class Mapper {
         return quotationQueryModel;
     }
 
-
     public static PolicyRequest toPolicyRequest(PolicyRequestCommandModel policyRequestCommandModel, Quotation quotation, QuotationOption quotationOption) {
         PolicyRequest policyRequest = new PolicyRequest();
 
-        
         policyRequest.setCompanyRegNumber(policyRequestCommandModel.getCompanyRegNumber());
         policyRequest.setVatRegNumber(policyRequestCommandModel.getVatRegNumber());
         policyRequest.setTelephoneNumber(policyRequestCommandModel.getTelephoneNumber());
@@ -283,103 +287,101 @@ public class Mapper {
 
         return policyRequest;
     }
-    
-    public static QuotationOptionQueryModel toQuotationOptionQueryModel(QuotationOption quotationOption){
-        
-    	QuotationOptionQueryModel quotationOptionQueryModel = new QuotationOptionQueryModel();
-    	quotationOptionQueryModel.setQuotationOptionId(quotationOption.getId());
-    	quotationOptionQueryModel.setCommodity(quotationOption.getCommodity());
-    	quotationOptionQueryModel.setCover(quotationOption.getCover());
-    	quotationOptionQueryModel.setExcess(quotationOption.getExcess());
-    	quotationOptionQueryModel.setLimit(quotationOption.getLimit());
-    	quotationOptionQueryModel.setLocation(quotationOption.getLocation());
-    	quotationOptionQueryModel.setPremium(quotationOption.getPremium());
+
+    public static QuotationOptionQueryModel toQuotationOptionQueryModel(QuotationOption quotationOption) {
+
+        QuotationOptionQueryModel quotationOptionQueryModel = new QuotationOptionQueryModel();
+        quotationOptionQueryModel.setQuotationOptionId(quotationOption.getId());
+        quotationOptionQueryModel.setCommodity(quotationOption.getCommodity());
+        quotationOptionQueryModel.setCover(quotationOption.getCover());
+        quotationOptionQueryModel.setExcess(quotationOption.getExcess());
+        quotationOptionQueryModel.setLimit(quotationOption.getLimit());
+        quotationOptionQueryModel.setLocation(quotationOption.getLocation());
+        quotationOptionQueryModel.setPremium(quotationOption.getPremium());
         quotationOptionQueryModel.setPavement(quotationOption.getPavements());
         quotationOptionQueryModel.setStaticLimit(quotationOption.getStaticLimit());
-    	
-    	return quotationOptionQueryModel;
+
+        return quotationOptionQueryModel;
     }
-    
-    public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest,Quotation quotation,QuotationOption quotationOption){
-    	
-    	PolicyRequestQueryModel policyRequestQueryModel = new PolicyRequestQueryModel();
-  
-    	policyRequestQueryModel.setQuotation(toQuotationQueryModel(quotation));
-    	policyRequestQueryModel.setQuotationOption(toQuotationOptionQueryModel(quotationOption));
-    	policyRequestQueryModel.setCompanyRegNumber(policyRequest.getCompanyRegNumber());
-    	policyRequestQueryModel.setVatRegNumber(policyRequest.getVatRegNumber());
-    	policyRequestQueryModel.setTelephoneNumber(policyRequest.getTelephoneNumber());
-    	policyRequestQueryModel.setFaxNumber(policyRequest.getFaxNumber());
-    	policyRequestQueryModel.setStreetAddress(policyRequest.getStreetAddress());
-    	policyRequestQueryModel.setSuburb(policyRequest.getSuburb());
-    	policyRequestQueryModel.setPostalCode(policyRequest.getPostalCode());
-    	policyRequestQueryModel.setDesignation(policyRequest.getDesignation());
-    	policyRequestQueryModel.setBuisnessDesc(policyRequest.getBuisnessDesc());
-    	policyRequestQueryModel.setAccountHolder(policyRequest.getAccountHolder());
-    	policyRequestQueryModel.setAccountName(policyRequest.getAccountName());
-    	policyRequestQueryModel.setBankName(policyRequest.getBankName());
-    	policyRequestQueryModel.setAccountNumber(policyRequest.getAccountNumber());
-    	policyRequestQueryModel.setBranchCode(policyRequest.getBranchCode());
-    	policyRequestQueryModel.setAccType(policyRequest.getAccType());
-    	policyRequestQueryModel.setDebitOrderDate(policyRequest.getDebitOrderDate());
-    	policyRequestQueryModel.setBankStatement(policyRequest.getBankStatement());
+
+    public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest, Quotation quotation, QuotationOption quotationOption) {
+
+        PolicyRequestQueryModel policyRequestQueryModel = new PolicyRequestQueryModel();
+
+        policyRequestQueryModel.setQuotation(toQuotationQueryModel(quotation));
+        policyRequestQueryModel.setQuotationOption(toQuotationOptionQueryModel(quotationOption));
+        policyRequestQueryModel.setCompanyRegNumber(policyRequest.getCompanyRegNumber());
+        policyRequestQueryModel.setVatRegNumber(policyRequest.getVatRegNumber());
+        policyRequestQueryModel.setTelephoneNumber(policyRequest.getTelephoneNumber());
+        policyRequestQueryModel.setFaxNumber(policyRequest.getFaxNumber());
+        policyRequestQueryModel.setStreetAddress(policyRequest.getStreetAddress());
+        policyRequestQueryModel.setSuburb(policyRequest.getSuburb());
+        policyRequestQueryModel.setPostalCode(policyRequest.getPostalCode());
+        policyRequestQueryModel.setDesignation(policyRequest.getDesignation());
+        policyRequestQueryModel.setBuisnessDesc(policyRequest.getBuisnessDesc());
+        policyRequestQueryModel.setAccountHolder(policyRequest.getAccountHolder());
+        policyRequestQueryModel.setAccountName(policyRequest.getAccountName());
+        policyRequestQueryModel.setBankName(policyRequest.getBankName());
+        policyRequestQueryModel.setAccountNumber(policyRequest.getAccountNumber());
+        policyRequestQueryModel.setBranchCode(policyRequest.getBranchCode());
+        policyRequestQueryModel.setAccType(policyRequest.getAccType());
+        policyRequestQueryModel.setDebitOrderDate(policyRequest.getDebitOrderDate());
+        policyRequestQueryModel.setBankStatement(policyRequest.getBankStatement());
         policyRequestQueryModel.setStatus(policyRequest.getStatus());
-    	
-    	return policyRequestQueryModel;
-    	
+
+        return policyRequestQueryModel;
+
+    }
+
+    public static SelectedQuotationQueryModel toSelectedQuotationQueryModel(Quotation quotation, QuotationOption quotationOption) {
+        SelectedQuotationQueryModel selectedQuotationQueryModel = new SelectedQuotationQueryModel();
+        selectedQuotationQueryModel.setQuotation(toQuotationQueryModel(quotation));
+        selectedQuotationQueryModel.setSelectedQuotation(toQuotationOptionQueryModel(quotationOption));
+
+        return selectedQuotationQueryModel;
+    }
+
+    public static Contact toContactCommandModel (ContactCommandModel contactCommandModel){
+        Contact contact = new Contact();
+        
+        contact.setCode(contactCommandModel.getCode());
+        contact.setContactPerson(contactCommandModel.getContactPerson());
+        contact.setEmail(contactCommandModel.getEmail());
+        contact.setFaxNumber(contactCommandModel.getFaxNumber());
+        contact.setStreet(contactCommandModel.getStreet());
+        contact.setSuburb(contactCommandModel.getSuburb());
+        contact.setWorkTelNumber(contactCommandModel.getWorkTelNumber());
+        
+        return contact;
     }
     
-        public static SelectedQuotationQueryModel toSelectedQuotationQueryModel(Quotation quotation,QuotationOption quotationOption) {
-            SelectedQuotationQueryModel selectedQuotationQueryModel = new SelectedQuotationQueryModel();
-            selectedQuotationQueryModel.setQuotation(toQuotationQueryModel(quotation));
-            selectedQuotationQueryModel.setSelectedQuotation(toQuotationOptionQueryModel(quotationOption));
-            
-            return selectedQuotationQueryModel;
-        }
+    public static BankAccount toBankAccountCommandModel (BankAccountCommandModel bankAccountCommandModel){
+        BankAccount bankAccount = new BankAccount();
         
+        bankAccount.setAccountName(bankAccountCommandModel.getAccountName());
+        bankAccount.setAccountNumber(bankAccountCommandModel.getAccountNumber());
+        bankAccount.setBankName(bankAccountCommandModel.getBankName());
+        bankAccount.setBranchCode(bankAccount.getBranchCode());
+        
+        return bankAccount;
+    }
+        
+        
+    public static Client toClientDetailCommandModel(ClientCommandModel clientCommandModel, Contact contact, BankAccount bankAccount) {
+        Client client = new Client();
+
+        client.setContacts(contact);
+        client.setBankAccount(bankAccount);
+        client.setClientName(clientCommandModel.getClientName());
+        client.setIncomeTaxNumber(clientCommandModel.getIncomeTaxNumber());
+        client.setRegNumber(clientCommandModel.getRegNumber());
+        client.setVatNumber(clientCommandModel.getVatNumber());
+
+        return client;
+    }
     
-//    public static Contact toContactCommandModel (ContactCommandModel contactCommandModel){
-//        Contact contact = new Contact();
-//        
-//        contact.setCode(contactCommandModel.getCode());
-//        contact.setContactPerson(contactCommandModel.getContactPerson());
-//        contact.setEmail(contactCommandModel.getEmail());
-//        contact.setFaxNumber(contactCommandModel.getFaxNumber());
-//        contact.setStreet(contactCommandModel.getStreet());
-//        contact.setSuburb(contactCommandModel.getSuburb());
-//        contact.setWorkTelNumber(contactCommandModel.getWorkTelNumber());
-//        
-//        return contact;
-//    }
-//    
-//    public static BankAccount toBankAccountCommandModel (BankAccountCommandModel bankAccountCommandModel){
-//        BankAccount bankAccount = new BankAccount();
-//        
-//        bankAccount.setAccountName(bankAccountCommandModel.getAccountName());
-//        bankAccount.setAccountNumber(bankAccountCommandModel.getAccountNumber());
-//        bankAccount.setBankName(bankAccountCommandModel.getBankName());
-//        bankAccount.setBranchCode(bankAccount.getBranchCode());
-//        
-//        return bankAccount;
-//    }
-//        
-//        
-//    public static Client toClientDetailCommandModel(ClientCommandModel clientCommandModel, Contact contact, BankAccount bankAccount) {
-//        Client client = new Client();
-//
-//        client.setContacts(contact);
-//        client.setBankAccount(bankAccount);
-//        client.setClientName(clientCommandModel.getClientName());
-//        client.setIncomeTaxNumber(clientCommandModel.getIncomeTaxNumber());
-//        client.setRegNumber(clientCommandModel.getRegNumber());
-//        client.setVatNumber(clientCommandModel.getVatNumber());
-//
-//        return client;
-//    }
-//    
-    
-     public static BankAccountQueryModel toBankAccountQueryModel(BankAccount from) {
-        BankAccountQueryModel  bankAccountQueryModel = new BankAccountQueryModel();
+    public static BankAccountQueryModel toBankAccountQueryModel(BankAccount from) {
+        BankAccountQueryModel bankAccountQueryModel = new BankAccountQueryModel();
         bankAccountQueryModel.setId(from.getId());
         bankAccountQueryModel.setAccountName(from.getAccountName());
         bankAccountQueryModel.setAccountNumber(from.getAccountNumber());
@@ -387,9 +389,9 @@ public class Mapper {
         bankAccountQueryModel.setBranch(from.getBranchCode());
         return bankAccountQueryModel;
     }
-     
-     public static ContactQueryModel toContactQueryModel(Contact from) {
-        ContactQueryModel  contactQueryModel = new ContactQueryModel();
+
+    public static ContactQueryModel toContactQueryModel(Contact from) {
+        ContactQueryModel contactQueryModel = new ContactQueryModel();
         contactQueryModel.setId(from.getId());
         contactQueryModel.setCode(from.getCode());
         contactQueryModel.setContactPerson(from.getContactPerson());
@@ -400,13 +402,11 @@ public class Mapper {
         contactQueryModel.setWorkTelNumber(from.getWorkTelNumber());
         return contactQueryModel;
     }
-    
-    
-    
-      public static ClientQueryModel toClientQueryModel(Client client) {
+
+    public static ClientQueryModel toClientQueryModel(Client client) {
 
         ClientQueryModel result = new ClientQueryModel();
-        
+
         result.setClientId(client.getId());
         result.setClientName(client.getClientName());
         result.setIncomeTaxNumber(client.getIncomeTaxNumber());
@@ -414,10 +414,68 @@ public class Mapper {
         result.setVatNumber(client.getVatNumber());
         result.setBankAccounts(toBankAccountQueryModel(client.getBankAccount()));
         result.setContact(toContactQueryModel(client.getContact()));
-                 
 
         return result;
     }
-    
+
+
+    /* @Description: Setting up Sub-Agent Query Model for querying SubAgent Entity for querying
+     * @Method: toSubAgentQueryModel
+     * @Args: subAgent Entity*/
+    public static SubAgentQueryModel toSubAgentQueryModel(SubAgent subAgent) {
+        SubAgentQueryModel subAgentQueryModel = new SubAgentQueryModel();
+        subAgentQueryModel.setId(subAgent.getId());
+        subAgentQueryModel.setFirstName(subAgent.getFirstName());
+        subAgentQueryModel.setMiddleName(subAgent.getMiddleName());
+        subAgentQueryModel.setLastName(subAgent.getLastName());
+        subAgentQueryModel.setEmail(subAgent.getEmail());
+        subAgentQueryModel.setBroker(toBrokerQueryModel(subAgent.getBroker()));
+
+        return subAgentQueryModel;
+    }
+
+    /* @Description: Setting up Underwriter Query Model for querying Underwriter Entity for querying
+     * @Method: toUnderWriterQueryModel
+     * @Args: underwriter Entity*/
+    public static UnderwriterQueryModel toUnderwriterQueryModel(Underwriter underwriter) {
+        UnderwriterQueryModel underwriterQueryModel = new UnderwriterQueryModel();
+        underwriterQueryModel.setId(underwriter.getId());
+        underwriterQueryModel.setFirstName(underwriter.getFirstName());
+        underwriterQueryModel.setMiddleName(underwriter.getMiddleName());
+        underwriterQueryModel.setLastName(underwriter.getLastName());
+        underwriterQueryModel.setEmail(underwriter.getEmail());
+
+        return underwriterQueryModel;
+    }
+
+    /* @Description: Setting up Policy Query Model for querying Policy Entity for querying
+     * @Method: toPolicyQueryModel
+     * @Args: policy Entity*/
+    public static PolicyQueryModel toPolicyQueryModel(Policy policy) {
+        PolicyQueryModel policyQueryModel = new PolicyQueryModel();
+
+        policyQueryModel.setId(policy.getId());
+        policyQueryModel.setCollectByDebitOrder(policy.isCollectByDebitOrder());
+        policyQueryModel.setBrokerFee(Double.toString(policy.getBrokerFee()));
+        policyQueryModel.setDevice(policy.getDevice());
+        policyQueryModel.setCollectByDebitOrder(policy.isCollectByDebitOrder());
+        policyQueryModel.setExcludeSasria(policy.isExclude_sasria());
+        policyQueryModel.setInceptionDate(policy.getInceptionDate().toString());
+        policyQueryModel.setNotes(policy.getNotes());
+        policyQueryModel.setStatus(policy.getStatus());
+        policyQueryModel.setReInstatement(policy.getReInstatement());
+        policyQueryModel.setRenewalDate(policy.getRenewalDate().toString());
+        policyQueryModel.setRetroActiveDate(policy.getRetroactiveDate().toString());
+        policyQueryModel.setUnderwriterFee(Double.toString(policy.getUnderwriterFee()));
+        policyQueryModel.setUnderwritingYear(policy.getUnderwriting_year());
+        policyQueryModel.setFrequency(policy.getFrequency());
+        policyQueryModel.setSasriaFrequency(policy.getSasriaFrequency());
+
+        policyQueryModel.setSubAgent(toSubAgentQueryModel(policy.getSubAgent()));
+        policyQueryModel.setClient(toClientQueryModel(policy.getClient()));
+        policyQueryModel.setUnderwriter(toUnderwriterQueryModel(policy.getUnderwriter()));
+
+        return policyQueryModel;
+    }
 
 }
