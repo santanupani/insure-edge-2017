@@ -15,8 +15,10 @@ import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
+import za.co.polygon.domain.IndemnityOption;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
+import za.co.polygon.domain.PolicySchedule;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
@@ -32,9 +34,11 @@ import za.co.polygon.model.ClientCommandModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.ContactCommandModel;
 import za.co.polygon.model.ContactQueryModel;
+import za.co.polygon.model.IndemnityOptionQueryModel;
 import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
+import za.co.polygon.model.PolicyScheduleQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
@@ -341,9 +345,9 @@ public class Mapper {
         return selectedQuotationQueryModel;
     }
 
-    public static Contact toContactCommandModel (ContactCommandModel contactCommandModel){
+    public static Contact toContactCommandModel(ContactCommandModel contactCommandModel) {
         Contact contact = new Contact();
-        
+
         contact.setCode(contactCommandModel.getCode());
         contact.setContactPerson(contactCommandModel.getContactPerson());
         contact.setEmail(contactCommandModel.getEmail());
@@ -351,22 +355,21 @@ public class Mapper {
         contact.setStreet(contactCommandModel.getStreet());
         contact.setSuburb(contactCommandModel.getSuburb());
         contact.setWorkTelNumber(contactCommandModel.getWorkTelNumber());
-        
+
         return contact;
     }
-    
-    public static BankAccount toBankAccountCommandModel (BankAccountCommandModel bankAccountCommandModel){
+
+    public static BankAccount toBankAccountCommandModel(BankAccountCommandModel bankAccountCommandModel) {
         BankAccount bankAccount = new BankAccount();
-        
+
         bankAccount.setAccountName(bankAccountCommandModel.getAccountName());
         bankAccount.setAccountNumber(bankAccountCommandModel.getAccountNumber());
         bankAccount.setBankName(bankAccountCommandModel.getBankName());
         bankAccount.setBranchCode(bankAccount.getBranchCode());
-        
+
         return bankAccount;
     }
-        
-        
+
     public static Client toClientDetailCommandModel(ClientCommandModel clientCommandModel, Contact contact, BankAccount bankAccount) {
         Client client = new Client();
 
@@ -379,7 +382,7 @@ public class Mapper {
 
         return client;
     }
-    
+
     public static BankAccountQueryModel toBankAccountQueryModel(BankAccount from) {
         BankAccountQueryModel bankAccountQueryModel = new BankAccountQueryModel();
         bankAccountQueryModel.setId(from.getId());
@@ -419,9 +422,6 @@ public class Mapper {
     }
 
 
-    /* @Description: Setting up Sub-Agent Query Model for querying SubAgent Entity for querying
-     * @Method: toSubAgentQueryModel
-     * @Args: subAgent Entity*/
     public static SubAgentQueryModel toSubAgentQueryModel(SubAgent subAgent) {
         SubAgentQueryModel subAgentQueryModel = new SubAgentQueryModel();
         subAgentQueryModel.setId(subAgent.getId());
@@ -434,9 +434,6 @@ public class Mapper {
         return subAgentQueryModel;
     }
 
-    /* @Description: Setting up Underwriter Query Model for querying Underwriter Entity for querying
-     * @Method: toUnderWriterQueryModel
-     * @Args: underwriter Entity*/
     public static UnderwriterQueryModel toUnderwriterQueryModel(Underwriter underwriter) {
         UnderwriterQueryModel underwriterQueryModel = new UnderwriterQueryModel();
         underwriterQueryModel.setId(underwriter.getId());
@@ -448,9 +445,6 @@ public class Mapper {
         return underwriterQueryModel;
     }
 
-    /* @Description: Setting up Policy Query Model for querying Policy Entity for querying
-     * @Method: toPolicyQueryModel
-     * @Args: policy Entity*/
     public static PolicyQueryModel toPolicyQueryModel(Policy policy) {
         PolicyQueryModel policyQueryModel = new PolicyQueryModel();
 
@@ -470,12 +464,47 @@ public class Mapper {
         policyQueryModel.setUnderwritingYear(policy.getUnderwriting_year());
         policyQueryModel.setFrequency(policy.getFrequency());
         policyQueryModel.setSasriaFrequency(policy.getSasriaFrequency());
-
         policyQueryModel.setSubAgent(toSubAgentQueryModel(policy.getSubAgent()));
         policyQueryModel.setClient(toClientQueryModel(policy.getClient()));
         policyQueryModel.setUnderwriter(toUnderwriterQueryModel(policy.getUnderwriter()));
 
         return policyQueryModel;
+    }
+
+    public static IndemnityOptionQueryModel toIndemnityOptionQueryModel(IndemnityOption indemnityOption) {
+        IndemnityOptionQueryModel indemnityOptionQueryModel = new IndemnityOptionQueryModel();
+
+        indemnityOptionQueryModel.setId(indemnityOption.getId());
+        indemnityOptionQueryModel.setIndemnityItemOption(indemnityOption.getIndemnityItemOption());
+        indemnityOptionQueryModel.setIndemnityValue(indemnityOption.getIndemnityValue());
+        indemnityOptionQueryModel.setPremium(indemnityOption.getPremium());
+        indemnityOptionQueryModel.setSumInsured(indemnityOption.getSumInsured());
+
+        return indemnityOptionQueryModel;
+    }
+
+    public static PolicyScheduleQueryModel toPolicyScheduleQueryModel(PolicySchedule policySchedule) {
+        
+        PolicyScheduleQueryModel policyScheduleQueryModel = new PolicyScheduleQueryModel();
+        
+        policyScheduleQueryModel.setId(policySchedule.getId());
+        policyScheduleQueryModel.setBrokerCommission(policySchedule.getBrokerCommission());
+        policyScheduleQueryModel.setConveyances(policySchedule.getConvenyances());
+        policyScheduleQueryModel.setExcessStructure(policySchedule.getExcessSturcture());
+        policyScheduleQueryModel.setGeographicalDuration(policySchedule.getGeographicalDuration());
+        policyScheduleQueryModel.setMaximumSumInsured(policySchedule.getMaximumSumInsured());
+        policyScheduleQueryModel.setPremium(policySchedule.getPremoium());
+        policyScheduleQueryModel.setSasriaPremium(policySchedule.getSasriaPremium());
+        policyScheduleQueryModel.setScheduleAttaching(policySchedule.getScheduleAttaching());
+        policyScheduleQueryModel.setSpecialCondition(policySchedule.getSpecialCondition());
+        policyScheduleQueryModel.setSubjectMatter(policySchedule.getSubjectMatter());
+        policyScheduleQueryModel.setTypeOfCover(policySchedule.getTypeOfCover());
+        policyScheduleQueryModel.setSumInsured(policySchedule.getSumInsured());
+        policyScheduleQueryModel.setUACommission(policySchedule.getUACommission());
+        
+        List<IndemnityOption> indemnityOptionList = new ArrayList<IndemnityOption>();
+            
+        return policyScheduleQueryModel;
     }
 
 }

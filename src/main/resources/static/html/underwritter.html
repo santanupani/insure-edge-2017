@@ -141,25 +141,17 @@
                     </div>
                     <div class="panel-body" >
                         <div class="row">
-                            <div class="col-md-3">
-                                <label>Reference No:<span><input type="text" class="form-control" readonly/></span></label>
-                                <label>Policy Reference No:<span><input type="text" class="form-control" readonly/></span></label>
-                                <label>Int Policy No:<span><input type="text" class="form-control" readonly/></span></label>       
+                            <div class="col-md-12">
+                                <label>Policy No:<span><input type="text" class="form-control"/></span></label> 
+                                <label>Broker Commission:<span><input type="text" class="form-control"/></span></label>
+                                <label>UA Commission:<span><input type="text" class="form-control" /></span></label> 
+                                <label>Policy Section:<span><input type="text" class="form-control" /></span></label>
+                                <label>Sum Insured:<span><input type="text" class="form-control" /></span></label>
+                                <label>Maximum Sum Insured:<span><input type="text" class="form-control" /></span></label>
+                                <label>Premium:<span><input type="text" class="form-control" /></span></label>
+                                <label>SASRIA Premium:<span><input type="text" class="form-control" /></span></label>
                             </div>
-                            <div class="col-md-3">
-                                <label>Client:<span><input type="text" class="form-control" readonly/></span></label>
-                                <label>Broker Commission:<span><input type="text" class="form-control" readonly/></span></label>
-                                <label>UA Commission:<span><input type="text" class="form-control" readonly/></span></label>       
-                            </div>
-                            <div class="col-md-3">
-                                <label>Policy Section:<span><input type="text" class="form-control" readonly/></span></label>
-                                <label>Sum Insured:<span><input type="text" class="form-control" readonly/></span></label>
-                                <label>Maximum Sum Insured:<span><input type="text" class="form-control" readonly/></span></label>       
-                            </div>
-                            <div class="col-md-3">
-                                <label>Premium:<span><input type="text" class="form-control" readonly/></span></label>
-                                <label>SASRIA Premium:<span><input type="text" class="form-control" readonly/></span></label>
-                            </div>
+
                         </div>
                     </div>
 
@@ -169,14 +161,14 @@
                     <div class="panel-body">
                         <div id="policy-admin" class="tab-pane fade in active">
                             <h4><b>Schedule attaching to and forming part of:</b></h4>
-                            <textarea class="form-control" readonly></textarea>
-                            <p align="right"><button class="btn btn-default">Edit</button>
-                                <button class="btn btn-default">Update</button>
-                            </p>
+                            <div class="form-inline">
+                                <textarea class="form-control" readonly></textarea>
+                                <button class="btn btn-default">Edit</button>
+                               <button class="btn btn-default">Cancel</button>
+                            </div>
                             <h4><b>Type of Cover:</b></h4>
                             <textarea class="form-control" readonly/></textarea>
                             <p align="right"><button class="btn btn-default">Edit</button>
-                                <button class="btn btn-default">Update</button>
                             </p>
                             <h4><b>Subject Matter:</b></h4>
                             <input type="text" class="form-control" readonly>
@@ -185,27 +177,48 @@
                             <h4><b>Special Policy Conditions:</b></h4>
                             <textarea class="form-control" readonly/></textarea>
                             <p align="right"><button class="btn btn-default">Edit</button>
-                                <button class="btn btn-default">Update</button>
                             </p><br>
                         </div>
                     </div>
-                    
+
                     <div class="panel-heading">
                         <h4>Limit Of Indemnity</h4>
                     </div>
                     <div class="panel-body">
                         <div id="policy-admin" class="tab-pane fade in active">
-                            <h4><b>Indemnity Options:</b></h4>
-                            <input type="text" class="form-control" readonly>
-                            <h4><b>Indemnity Value:</b></h4>
-                            <input type="text" class="form-control" readonly>
-                            <h4><b>Sum Insured:</b></h4>
-                            <input type="text" class="form-control" readonly>
-                            <h4><b>Premium:</b></h4>
-                            <input type="text" class="form-control" readonly>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Indemnity Option</th>
+                                        <th>Indemnity Value</th>
+                                        <th>Sum Insured</th>
+                                        <th>Premium</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="text" class="form-control"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    
+
                     <div class="panel-heading">
                         <h4>Conveyances</h4>
                     </div>
@@ -304,4 +317,3 @@
         </div>
     </div>
 </div>
-

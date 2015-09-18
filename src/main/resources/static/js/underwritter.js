@@ -36,7 +36,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		$scope.reject = {};
 		$scope.accept = {};
 		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
-		$scope.getPolicy($routeParams.id);
+//		$scope.getPolicy($routeParams.id);
                 
 	};
 

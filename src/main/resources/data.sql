@@ -345,4 +345,10 @@ values(1,1,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedban
 insert into policies(sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
 values(2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
 
+insert into policy_schedules(policy_id,sum_insured,maximum_sum_insured,broker_commission,UA_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration)
+values(1,0,100000,0,20,350,0,'The attached schedule','Cash and Valuables in Transit','Cash','By product','As discussed','Voltage','Discussion Value');
+
+insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
+values(1,'Policy Vault','Per vehicle per transit (6* weekly)',230404,2300);
+
 
