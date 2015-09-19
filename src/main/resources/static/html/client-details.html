@@ -1,138 +1,133 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
 
 
-    <div class="col-md-12">
+	<div class="col-md-12">
 
 
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Client Details</h4>
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Client Details</h4>
 
-            </div>
-            <div class="panel-body">
+			</div>
+			<div class="panel-body">
 
-                <div class="row">
-                    <div class="col-md-4">
+				<div class="row">
+					<div class="col-md-4">
 
-                        <div class="panel panel-default" >
-                            <div class="panel-heading">
-                                <h4>Client</h4>
-                            </div>
-                            <div class="panel-body">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4>Client</h4>
+							</div>
+							<div class="panel-body">
 
-                                <div class="form-group">
-                                    <label>Client Name</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.clientName" readonly="readonly" />
-                                </div>
+								<div class="form-group">
+									<label>Client Name</label> <input type="text"
+										class="form-control" ng-model="client.clientName"
+										readonly="readonly" />
+								</div>
 
-                                <div class="form-group">
-                                    <label>Reg no</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.regNumber" readonly="readonly"/>
-                                </div>
+								<div class="form-group">
+									<label>Reg no</label> <input type="text" class="form-control"
+										ng-model="client.regNumber" readonly="readonly" />
+								</div>
 
-                                <div class="form-group">
-                                    <label>Vat  No</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.vatNumber" readonly="readonly" />
-                                </div>
-                            </div>
-                        </div>
+								<div class="form-group">
+									<label>Vat No</label> <input type="text" class="form-control"
+										ng-model="client.vatNumber" readonly="readonly" />
+								</div>
+							</div>
+						</div>
 
-                    </div>
+					</div>
 
 
-                    <div class="col-md-4">
+					<div class="col-md-4">
 
-                        <div class="panel panel-default" >
-                            <div class="panel-heading">
-                                <h4>Bank Account</h4>
-                            </div>
-                            <div class="panel-body">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4>Bank Account</h4>
+							</div>
+							<div class="panel-body">
 
-                                <div class="form-group">
-                                    <label>Account No </label>
-                                    <input type="text" class="form-control" 
-                                           ng-model="client.bankAccounts.accountNumber" readonly="readonly"/>
-                                </div>
+								<div class="form-group">
+									<label>Account No </label> <input type="text"
+										class="form-control"
+										ng-model="client.bankAccounts.accountNumber"
+										readonly="readonly" />
+								</div>
 
-                                <div class="form-group">
-                                    <label>Account Name</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.bankAccounts.accountName" readonly="readonly"/>
-                                </div>
+								<div class="form-group">
+									<label>Account Name</label> <input type="text"
+										class="form-control"
+										ng-model="client.bankAccounts.accountName" readonly="readonly" />
+								</div>
 
-                                <div class="form-group">
-                                    <label>Branch </label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.bankAccounts.branch" readonly="readonly"/>
-                                </div>
+								<div class="form-group">
+									<label>Branch </label> <input type="text" class="form-control"
+										ng-model="client.bankAccounts.branch" readonly="readonly" />
+								</div>
 
-                                <div class="form-group">
-                                    <label>Bank Name</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.bankAccounts.bankName" readonly="readonly" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-4">
-
-                        <div class="panel panel-default" >
-                            <div class="panel-heading">
-                                <h4>Client</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.contact.email" readonly="readonly" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Contact Person </label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.contact.contactPerson" readonly="readonly" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Street </label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.contact.street" readonly="readonly"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Suburb</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.contact.suburb" readonly="readonly" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Code</label>
-                                    <input type="text" class="form-control"
-                                           ng-model="client.contact.code"  readonly="readonly"/>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+								<div class="form-group">
+									<label>Bank Name</label> <input type="text"
+										class="form-control" ng-model="client.bankAccounts.bankName"
+										readonly="readonly" />
+								</div>
+							</div>
+						</div>
+					</div>
 
 
-                </div>               
-            </div>
-            <div class="panel-footer text-right">
-                <p>
-                    <button class="btn-info">OK</button>
-                    <button class="btn-warning">Cancel</button>
-                </p>
-            </div>
-        </div>
+					<div class="col-md-4">
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4>Client</h4>
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<label>Email</label> <input type="text" class="form-control"
+										ng-model="client.contact.email" readonly="readonly" />
+								</div>
+
+								<div class="form-group">
+									<label>Contact Person </label> <input type="text"
+										class="form-control" ng-model="client.contact.contactPerson"
+										readonly="readonly" />
+								</div>
+								<div class="form-group">
+									<label>Street </label> <input type="text" class="form-control"
+										ng-model="client.contact.street" readonly="readonly" />
+								</div>
+
+								<div class="form-group">
+									<label>Suburb</label> <input type="text" class="form-control"
+										ng-model="client.contact.suburb" readonly="readonly" />
+								</div>
+
+								<div class="form-group">
+									<label>Code</label> <input type="text" class="form-control"
+										ng-model="client.contact.code" readonly="readonly" />
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="panel-footer text-right">
+				<p>
+
+					<a class="btn btn-info" ng-href="#/policy/{{policy.id}}" role="button">Back</a>
+					<button class="btn btn-info">Update</button>
+				</p>
+			</div>
+		</div>
 
 
 
-    </div>
+	</div>
 
 
 </div>

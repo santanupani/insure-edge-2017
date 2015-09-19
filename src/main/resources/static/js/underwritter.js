@@ -29,15 +29,15 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.reference;
 	$scope.reject;
 	$scope.accept;
-        $rootScope.policy={};
+	$rootScope.policy={};
 
 	$scope.init = function () {
 		$scope.reference = $routeParams.reference;
 		$scope.reject = {};
 		$scope.accept = {};
 		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
-//		$scope.getPolicy($routeParams.id);
-                
+		$scope.getPolicy($routeParams.id);
+
 	};
 
 
@@ -104,8 +104,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.changeMode = function (mode) {
 		$scope.mode = mode;
 	};
-	
-	
+
+
 	/*Get request for the details of Policy for a specific Policy Number*/
 	$rootScope.getPolicy = function (policyNo) {
 		$http({
@@ -138,41 +138,41 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
 	$scope.policyOptions = {
 			'frequencyOptions':[
-			        'Declaration',
-			        'Other',
-			 ],
-			 'sasriaFrequencyOptions':[
-			         'N/A',
-			         'Other',
-			  ],
-			  'deviceOptions':[
-			          'Nedbank Cameo',
-			          'Standard Bnk',
-			          'N/A',
-			  ],
-			   'reInstatements':[
-			           '',
+			                    'Declaration',
+			                    'Other',
+			                    ],
+			                    'sasriaFrequencyOptions':[
+			                                              'N/A',
+			                                              'Other',
+			                                              ],
+			                                              'deviceOptions':[
+			                                                               'Nedbank Cameo',
+			                                                               'Standard Bnk',
+			                                                               'N/A',
+			                                                               ],
+			                                                               'reInstatements':[
+			                                                                                 '',
 
-			  ],
+			                                                                                 ],
 	};
 
 
 });
 
 underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $routeParams) {
-  
-    $scope.init = function () {
-       $scope.getClient();
-      
-    };
-    
-    $scope.getClient = function () {
-        if($rootScope.policy === undefined){
-            $rootScope.getPolicy($routeParams.id);
-        }else{
-            $scope.client = $rootScope.policy.client;
-        }
-    };
+
+	$scope.init = function () {
+		$scope.getClient();
+
+	};
+
+	$scope.getClient = function () {
+		if($rootScope.policy === undefined){
+			$rootScope.getPolicy($routeParams.id);
+		}else{
+			$scope.client = $rootScope.policy.client;
+		}
+	};
 });
 
 
