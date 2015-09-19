@@ -6,8 +6,8 @@
 
 				<div class="panel-heading">
 					<h4>
-						Policy Details: <b>{{policy.client.clientName}}</b> <span
-							class="pull-right" style="font: 14px Lucinda red">Logged-In:
+						<b>Policy Summary for</b> - {{policy.client.clientName}} <span
+							class="pull-right" style="font: 14px Lucinda red"><b>Logged-In:</b>
 							{{policy.underwriter.firstName}} {{policy.underwriter.lastName}}</span>
 					</h4>
 				</div>
@@ -146,17 +146,41 @@
 
 												<div class="panel-body">
 
-													<p>General info goes here</p>
+													<div class="form-group">
+														<label>Schedule attaching to and forming part of</label>
+														<textarea class="form-control" readonly></textarea>
+													</div>
+													<div class="form-group">
+														<label>Type of Cover:</label>
+														<textarea class="form-control" readonly /></textarea>
+													</div>
+
+													<div class="form-group">
+														<label>Subject Matter:</label> <input type="text"
+															class="form-control" readonly>
+													</div>
+													<div class="form-group">
+														<label>Excess Structure:</label>
+														</h4>
+														<input type="text" class="form-control" readonly>
+													</div>
+
+													<div class="form-group">
+														<label>Special Policy Conditions</label>
+														</h4>
+														<input type="text" class="form-control" readonly>
+													</div>
+
 													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a>
-														<a ng-href="#/client" role="link">Cancel</a>
+														<a ng-href="#/client" role="link">Update</a> <a
+															ng-href="#/client" role="link">Cancel</a>
 													</div>
 
 												</div>
 											</div>
 
 										</div>
-										
+
 										<div class="panel panel-default">
 
 											<div class="panel-heading">
@@ -193,8 +217,8 @@
 													</table>
 
 													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a>
-														<a ng-href="#/client" role="link">Cancel</a>
+														<a ng-href="#/client" role="link">Update</a> <a
+															ng-href="#/client" role="link">Cancel</a>
 													</div>
 
 												</div>
@@ -220,10 +244,14 @@
 
 												<div class="panel-body">
 
-													<p>Conveyances goes here</p>
+													<div class="form-group">
+														<label>Description</label>
+														<textarea class="form-control" readonly></textarea>
+													</div>
+													
 													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a>
-														<a ng-href="#/client" role="link">Cancel</a>
+														<a ng-href="#/client" role="link">Update</a> <a
+															ng-href="#/client" role="link">Cancel</a>
 													</div>
 
 												</div>
@@ -249,13 +277,16 @@
 
 												<div class="panel-body">
 
-													<p>Geographical wording going here...</p>
+													<div class="form-group">
+														<label>Description</label>
+														<textarea class="form-control" readonly></textarea>
+													</div>
 													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a>
-														<a ng-href="#/client" role="link">Cancel</a>
+														<a ng-href="#/client" role="link">Update</a> <a
+															ng-href="#/client" role="link">Cancel</a>
 													</div>
 												</div>
-												</div>
+											</div>
 
 										</div>
 
