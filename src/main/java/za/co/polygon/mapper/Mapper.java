@@ -467,6 +467,7 @@ public class Mapper {
         policyQueryModel.setSubAgent(toSubAgentQueryModel(policy.getSubAgent()));
         policyQueryModel.setClient(toClientQueryModel(policy.getClient()));
         policyQueryModel.setUnderwriter(toUnderwriterQueryModel(policy.getUnderwriter()));
+        policyQueryModel.setPolicySchedule(toPolicyScheduleQueryModel(policy.getPolicySchedule()));
 
         return policyQueryModel;
     }
@@ -480,6 +481,15 @@ public class Mapper {
         indemnityOptionQueryModel.setPremium(indemnityOption.getPremium());
         indemnityOptionQueryModel.setSumInsured(indemnityOption.getSumInsured());
 
+        return indemnityOptionQueryModel;
+    }
+    
+    public static List<IndemnityOptionQueryModel> toIndemnityOptionListQueryModel(PolicySchedule policySchedule) {
+        List<IndemnityOptionQueryModel> indemnityOptionQueryModel = new ArrayList<IndemnityOptionQueryModel>();
+
+        for(IndemnityOption indemnityOption: policySchedule.getIndemnityOptions()){
+        	indemnityOptionQueryModel.add(toIndemnityOptionQueryModel(indemnityOption));
+        }
         return indemnityOptionQueryModel;
     }
 
@@ -502,8 +512,10 @@ public class Mapper {
         policyScheduleQueryModel.setSumInsured(policySchedule.getSumInsured());
         policyScheduleQueryModel.setUACommission(policySchedule.getUACommission());
         
-        List<IndemnityOption> indemnityOptionList = new ArrayList<IndemnityOption>();
-            
+        for(IndemnityOption indemnityOption: policySchedule.getIndemnityOptions()){
+        	policyScheduleQueryModel.getIndemnityOption().add(toIndemnityOptionQueryModel(indemnityOption));
+        }
+        
         return policyScheduleQueryModel;
     }
 

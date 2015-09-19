@@ -348,7 +348,16 @@ values(2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Ned
 insert into policy_schedules(policy_id,sum_insured,maximum_sum_insured,broker_commission,UA_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration)
 values(1,0,100000,0,20,350,0,'The attached schedule','Cash and Valuables in Transit','Cash','By product','As discussed','Voltage','Discussion Value');
 
+insert into policy_schedules(policy_id,sum_insured,maximum_sum_insured,broker_commission,UA_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration)
+values(2,0,210000,0,20,450,0,'The attached schedule','Cash and Valuables in Transit','Art','By Artery','As discussed','Limit','Discussion Value');
+
 insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
 values(1,'Policy Vault','Per vehicle per transit (6* weekly)',230404,2300);
+
+insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
+values(2,'Policy Vault','Per vehicle(3* weekly)',3450404,300);
+
+insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
+values(1,'Policy Limit','Per Cash per transit (4* weekly)',120404,4100);
 
 
