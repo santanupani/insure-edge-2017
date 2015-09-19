@@ -6,7 +6,7 @@
 
 				<div class="panel-heading">
 					<h4>
-						<b>Policy Summary for</b> - {{policy.client.clientName}} <span
+						<b>Policy Summary for Policy Ref.: </b>{{policy.policyReference}} <span
 							class="pull-right" style="font: 14px Lucinda red"><b>Logged-In:</b>
 							{{policy.underwriter.firstName}} {{policy.underwriter.lastName}}</span>
 					</h4>
@@ -115,6 +115,45 @@
 
 										</div>
 									</div>
+									<div class="row">
+
+										<div class="panel-default" style="box-shadow: 0 0 30px #ffff;">
+											<div class="panel-heading">
+												<h5>
+													<b>Accounting Summary</b>
+												</h5>
+											</div>
+
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-sm-3">
+														<div class="form-group">
+															<label>Sum Insured</label> <input type="text"
+																class="form-control" ng-model="policy.policySchedule.sumInsured" readonly/>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="form-group">
+															<label>Max Sum Insured</label> <input type="text"
+																class="form-control" ng-model="policy.policySchedule.maximumSumInsured" readonly/>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="form-group">
+															<label>Premium</label> <input type="text"
+																class="form-control" ng-model="policy.policySchedule.premium" readonly/>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="form-group">
+															<label>UA Commission</label> <input type="text"
+																class="form-control" ng-model="policy.policySchedule.uacommission" readonly/>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 
@@ -147,28 +186,35 @@
 												<div class="panel-body">
 
 													<div class="form-group">
-														<label>Schedule attaching to and forming part of</label>
-														<textarea class="form-control" readonly></textarea>
+														<label>Schedule Attaching to and Forming Part of</label>
+														<textarea class="form-control"
+															ng-model="policy.policySchedule.scheduleAttaching"
+															readonly></textarea>
 													</div>
 													<div class="form-group">
 														<label>Type of Cover:</label>
-														<textarea class="form-control" readonly /></textarea>
+														<textarea class="form-control"
+															ng-model="policy.policySchedule.typeOfCover" readonly /></textarea>
 													</div>
 
 													<div class="form-group">
 														<label>Subject Matter:</label> <input type="text"
-															class="form-control" readonly>
+															class="form-control"
+															ng-model="policy.policySchedule.subjectMatter" readonly>
 													</div>
 													<div class="form-group">
 														<label>Excess Structure:</label>
 														</h4>
-														<input type="text" class="form-control" readonly>
+														<input type="text" class="form-control"
+															ng-model="policy.policySchedule.excessStructure" readonly>
 													</div>
 
 													<div class="form-group">
 														<label>Special Policy Conditions</label>
 														</h4>
-														<input type="text" class="form-control" readonly>
+														<input type="text" class="form-control"
+															ng-model="policy.policySchedule.specialCondition"
+															readonly>
 													</div>
 
 													<div class="pull-right">
@@ -207,11 +253,16 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr>
-																<td><input type="text" class="form-control"></td>
-																<td><input type="text" class="form-control"></td>
-																<td><input type="text" class="form-control"></td>
-																<td><input type="text" class="form-control"></td>
+															<tr
+																ng-repeat="indemnity in policy.policySchedule.indemnityOption">
+																<td><input type="text" class="form-control"
+																	ng-model="indemnity.indemnityItemOption"></td>
+																<td><input type="text" class="form-control"
+																	ng-model="indemnity.indemnityValue"></td>
+																<td><input type="text" class="form-control"
+																	ng-model="indemnity.sumInsured"></td>
+																<td><input type="text" class="form-control"
+																	ng-model="indemnity.premium"></td>
 															</tr>
 														</tbody>
 													</table>
@@ -246,9 +297,10 @@
 
 													<div class="form-group">
 														<label>Description</label>
-														<textarea class="form-control" readonly></textarea>
+														<textarea class="form-control"
+															ng-model="policy.policySchedule.conveyances" readonly></textarea>
 													</div>
-													
+
 													<div class="pull-right">
 														<a ng-href="#/client" role="link">Update</a> <a
 															ng-href="#/client" role="link">Cancel</a>
@@ -279,7 +331,9 @@
 
 													<div class="form-group">
 														<label>Description</label>
-														<textarea class="form-control" readonly></textarea>
+														<textarea class="form-control"
+															ng-model="policy.policySchedule.geographicalDuration"
+															readonly></textarea>
 													</div>
 													<div class="pull-right">
 														<a ng-href="#/client" role="link">Update</a> <a

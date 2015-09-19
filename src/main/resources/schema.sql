@@ -200,6 +200,7 @@ create table sub_agents(
 /* table : policy_masters */
 create table policies(
     id integer auto_increment not null primary key,
+    policy_reference varchar(32) not null,
     sub_agent_id integer not null,
     client_id integer not  null ,
     underwriter_id integer not  null ,

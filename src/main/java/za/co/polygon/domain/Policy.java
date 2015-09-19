@@ -31,6 +31,9 @@ public class Policy {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @Column(name = "policy_reference")
+    private String policyReference;
+    
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
     private SubAgent subAgent;
@@ -88,7 +91,15 @@ public class Policy {
         this.id = id;
     }
 
-    public Underwriter getUnderwriter() {
+    public String getPolicyReference() {
+		return policyReference;
+	}
+
+	public void setPolicyReference(String policyReference) {
+		this.policyReference = policyReference;
+	}
+
+	public Underwriter getUnderwriter() {
         return underwriter;
     }
 

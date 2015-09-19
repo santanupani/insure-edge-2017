@@ -449,6 +449,7 @@ public class Mapper {
         PolicyQueryModel policyQueryModel = new PolicyQueryModel();
 
         policyQueryModel.setId(policy.getId());
+        policyQueryModel.setPolicyReference(policy.getPolicyReference());
         policyQueryModel.setCollectByDebitOrder(policy.isCollectByDebitOrder());
         policyQueryModel.setBrokerFee(Double.toString(policy.getBrokerFee()));
         policyQueryModel.setDevice(policy.getDevice());

@@ -413,6 +413,7 @@
 	<complexType name="PolicyQueryModel">
 		<sequence>
 			<element name="id" type="long" />
+			<element name="policyReference" type="string" />
 			<element name="inceptionDate" type="string" />
 			<element name="renewalDate" type="string" />
 			<element name="underwritingYear" type="long" />
