@@ -34,13 +34,17 @@
 											</div>
 
 											<div class="form-group">
-												<label>Retro Active Date</label> <input type="text"
-													class="form-control" ng-model="policy.retroActiveDate"
+												<label>Inception Date</label> <input type="text"
+													class="form-control" ng-model="policy.inceptionDate"
 													readonly />
 											</div>
 											<div class="form-group">
 												<label>Renewal Date</label> <input type="text"
 													class="form-control" ng-model="policy.renewalDate" />
+											</div>
+											<div class="form-group">
+												<label>Retroactive Date</label> <input type="text"
+													class="form-control" ng-model="policy.retroActiveDate" />
 											</div>
 
 											<div class="form-group">
@@ -49,11 +53,6 @@
 													ng-options="deviceOption for deviceOption in policyOptions.deviceOptions">
 													<option value=""></option>
 												</select>
-											</div>
-
-											<div class="form-group">
-												<label>Retroactive Date</label> <input type="text"
-													class="form-control" ng-model="policy.retroActiveDate" />
 											</div>
 
 										</div>
@@ -256,20 +255,19 @@
 															<tr
 																ng-repeat="indemnity in policy.policySchedule.indemnityOption">
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityItemOption"></td>
+																	ng-model="indemnity.indemnityItemOption" readonly></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityValue"></td>
+																	ng-model="indemnity.indemnityValue" readonly></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.sumInsured"></td>
+																	ng-model="indemnity.sumInsured" readonly></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.premium"></td>
+																	ng-model="indemnity.premium" readonly></td>
 															</tr>
 														</tbody>
 													</table>
 
 													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a> <a
-															ng-href="#/client" role="link">Cancel</a>
+														<a ng-href="#" role="link">Add Indemnity</a> 
 													</div>
 
 												</div>
@@ -385,7 +383,7 @@
 											ng-model="policy.client.contact.workTelNumber" readonly />
 									</div>
 									<div class="pull-right">
-										<a class="btn btn-info" ng-href="#/client" role="button">View
+										<a ng-href="#/client" role="button">View
 											Details</a>
 									</div>
 

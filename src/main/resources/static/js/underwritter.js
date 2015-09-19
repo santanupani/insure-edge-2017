@@ -8,7 +8,7 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
 	}).when('/client', {
 		'templateUrl': '/html/client-details.html',
 		'controller': 'clientDetailsCtrl'
-	}).when('/policy/:id', {
+	}).when('/policy/:policyReference', {
 		'templateUrl': '/html/policy.html',
 		'controller': 'policyCtrl'
 	}).otherwise({
@@ -36,7 +36,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		$scope.reject = {};
 		$scope.accept = {};
 		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
-		$scope.getPolicy($routeParams.id);
+		$scope.getPolicy($routeParams.policyReference);
 
 	};
 
@@ -107,16 +107,16 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
 
 	/*Get request for the details of Policy for a specific Policy Number*/
-	$rootScope.getPolicy = function (policyNo) {
+	$rootScope.getPolicy = function (reference) {
 		$http({
-			url: '/api/policy/' + policyNo,
+			url: '/api/policy/' + reference,
 			method: 'get'
 		}).success(function (data, status) {
 			if (status == 200) {
 				console.log('Policy details retrived sucessfully');
 				$rootScope.policy = data;
 				console.log(data);
-				$location.path("/policy/"+policyNo);
+				$location.path("/policy/"+reference);
 			} else {
 				console.log('status:' + status);
 				$rootScope.error = "error status code : " + status;

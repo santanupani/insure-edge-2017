@@ -311,10 +311,10 @@ public class Service {
 	}
 
 	/*The get service to return the policy details per specific policy ID*/
-	@RequestMapping(value = "api/policy/{policyId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public PolicyQueryModel getPolicy(@PathVariable("policyId") long policyId) {
+	@RequestMapping(value = "api/policy/{policyReference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public PolicyQueryModel getPolicy(@PathVariable("policyReference") String policyReference) {
 		log.info("Find the details of specific policy");
-		Policy policy = policyRepository.findOne(policyId);
+		Policy policy = policyRepository.findByPolicyReference(policyReference);
 		log.info("find all the questions and answers inserted for a product using the reference");
 		return toPolicyQueryModel(policy);
 	}
