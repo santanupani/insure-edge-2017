@@ -167,7 +167,8 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $rout
 	};
 
 	$scope.getClient = function () {
-		if($scope.policy === undefined){
+		if($rootScope.policy == undefined){
+			console.log('Policy object doesn\'t exists. Calling one ');
 			$rootScope.getPolicy($routeParams.policyReference);
 		}else{
 			$scope.client = $rootScope.policy.client;

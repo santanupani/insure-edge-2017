@@ -6,17 +6,17 @@
 
 		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 			<div class="panel-heading">
-				<h4>Client Details</h4>
+				<h4><b>Client Details</b></h4>
 
 			</div>
 			<div class="panel-body">
 
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-6">
 
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h4>Client</h4>
+								<h4><b>Client Information</b></h4>
 							</div>
 							<div class="panel-body">
 
@@ -35,17 +35,22 @@
 									<label>Vat No</label> <input type="text" class="form-control"
 										ng-model="client.vatNumber" readonly="readonly" />
 								</div>
+								
+								<div class="form-group">
+									<label>Income Tax Number</label> <input type="text" class="form-control"
+										ng-model="client.incomeTaxNumber" readonly="readonly" />
+								</div>
 							</div>
 						</div>
 
 					</div>
 
 
-					<div class="col-md-4">
+					<div class="col-md-6">
 
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h4>Bank Account</h4>
+								<h4><b>Bank Account</b></h4>
 							</div>
 							<div class="panel-body">
 
@@ -76,12 +81,14 @@
 						</div>
 					</div>
 
-
-					<div class="col-md-4">
+				</div>
+				
+				<div class="row">
+					<div class="col-md-12">
 
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h4>Contact Details</h4>
+								<h4><b>Contact Details</b></h4>
 							</div>
 							<div class="panel-body">
 								<div class="form-group">
@@ -112,8 +119,6 @@
 
 						</div>
 					</div>
-
-
 				</div>
 			</div>
 			<div class="panel-footer text-right">
