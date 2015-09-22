@@ -11,6 +11,9 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
 	}).when('/policy/:policyReference', {
 		'templateUrl': '/html/policy.html',
 		'controller': 'policyCtrl'
+	}).when('/policies', {
+		'templateUrl': '/html/policy.html',
+		'controller': 'policyCtrl'
 	}).otherwise({
 		redirectTo: '/policy-requests'
 	});
@@ -44,7 +47,6 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		$scope.reject = {};
 		$scope.accept = {};
 		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
-//		$scope.getPolicy($routeParams.policyReference);
 		$scope.getPolicies();
 
 	};
@@ -125,33 +127,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			
 	}
 
-	$scope.commissionInfo = {
-			'brokerCommission':'20%',
-			'adminFee':'0.00',
-			'initialFee':'0.00',
-			'policyFee':'0.00',
-			'umaFee':'0.00'
-	}
-
-	$scope.policyOptions = {
-			'frequencyOptions':[
-			                    'Declaration',
-			                    'Other',
-			                    ],
-			                    'sasriaFrequencyOptions':[
-			                                              'N/A',
-			                                              'Other',
-			                                              ],
-			                                              'deviceOptions':[
-			                                                               'Nedbank Cameo',
-			                                                               'Standard Bnk',
-			                                                               'N/A',
-			                                                               ],
-			                                                               'reInstatements':[
-			                                                                                 '',
-
-			                                                                                 ],
-	};
+	
 
 	/*Get all list of policies*/
 	$scope.getPolicies = function () {
@@ -164,7 +140,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 				$scope.policies = data;
 				console.log($scope.policies);
 				$scope.getPolicy($routeParams.policyReference);
-				$location.path('/policy/'+$routeParams.policyReference);
+
 			} else {
 				console.log('status:' + status);
 				$rootScope.error = "error status code : " + status;
@@ -219,6 +195,42 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.setPage = function(n) {
 		$scope.currentPage = n;
 	};
+	
+	$scope.commissionInfo = {
+			'brokerCommission':'20%',
+			'adminFee':'0.00',
+			'initialFee':'0.00',
+			'policyFee':'0.00',
+			'umaFee':'0.00'
+	}
+
+	$scope.policyOptions = {
+			'frequencyOptions':[
+			                    'Declaration',
+			                    'Other',
+			                    ],
+			                    'sasriaFrequencyOptions':[
+			                                              'N/A',
+			                                              'Other',
+			                                              ],
+			                                              'deviceOptions':[
+			                                                               'Nedbank Cameo',
+			                                                               'Standard Bnk',
+			                                                               'N/A',
+			                                                               ],
+			                                                               'reInstatements':[
+			                                                                                 '',
+
+			                                                                                 ],
+	};
+	
+	$scope.wording = {
+			'scheduleAttaching':'1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS\n 2) POLYGON GENERAL',
+			'typeOfCover':'Armed robbery, hijacking, and accidental damage...',
+			'geographicalDuration':'refer to special conditions',
+			'specialCondition':'Geographical and duration: Cash - once cash has recorded...'
+			
+	}
 });
 
 underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $routeParams) {

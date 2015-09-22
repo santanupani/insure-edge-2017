@@ -133,127 +133,14 @@
         </form>
 
 
-        <form data-toggle="validator" role="form" name="acceptform" id="acceptform">
-            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-                <div ng-if="mode == 'accept'" class="panel panel-default" style="box-shadow: 0 0 30px black;">			
-                    <div class="panel-heading">
-                        <h4>Underwriting</h4>
-                    </div>
-                    <div class="panel-body" >
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Policy No:<span><input type="text" class="form-control"/></span></label> 
-                                <label>Broker Commission:<span><input type="text" class="form-control"/></span></label>
-                                <label>UA Commission:<span><input type="text" class="form-control" /></span></label> 
-                                <label>Policy Section:<span><input type="text" class="form-control" /></span></label>
-                                <label>Sum Insured:<span><input type="text" class="form-control" /></span></label>
-                                <label>Maximum Sum Insured:<span><input type="text" class="form-control" /></span></label>
-                                <label>Premium:<span><input type="text" class="form-control" /></span></label>
-                                <label>SASRIA Premium:<span><input type="text" class="form-control" /></span></label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="panel-heading">
-                        <h4>General</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="policy-admin" class="tab-pane fade in active">
-                            <h4><b>Schedule attaching to and forming part of:</b></h4>
-                            <div class="form-inline">
-                                <textarea class="form-control" readonly></textarea>
-                                <button class="btn btn-default">Edit</button>
-                               <button class="btn btn-default">Cancel</button>
-                            </div>
-                            <h4><b>Type of Cover:</b></h4>
-                            <textarea class="form-control" readonly/></textarea>
-                            <p align="right"><button class="btn btn-default">Edit</button>
-                            </p>
-                            <h4><b>Subject Matter:</b></h4>
-                            <input type="text" class="form-control" readonly>
-                            <h4><b>Excess Structure:</b></h4>
-                            <input type="text" class="form-control" readonly>
-                            <h4><b>Special Policy Conditions:</b></h4>
-                            <textarea class="form-control" readonly/></textarea>
-                            <p align="right"><button class="btn btn-default">Edit</button>
-                            </p><br>
-                        </div>
-                    </div>
-
-                    <div class="panel-heading">
-                        <h4>Limit Of Indemnity</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="policy-admin" class="tab-pane fade in active">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Indemnity Option</th>
-                                        <th>Indemnity Value</th>
-                                        <th>Sum Insured</th>
-                                        <th>Premium</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="text" class="form-control"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="panel-heading">
-                        <h4>Conveyances</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="policy-admin" class="tab-pane fade in active">
-                            <h4><b>Description:</b></h4>
-                            <input type="text" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="panel-heading">
-                        <h4>Geographical and Duration</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="policy-admin" class="tab-pane fade in active">
-                            <h4><b>Description:</b></h4>
-                            <input type="text" class="form-control" readonly>
-                        </div>
-                    </div>
-
-
-                    <div class="panel-footer text-right">
-                        <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
-                        <button type="submit" class="btn btn-success">Create Policy Schedule</button>
-                    </div>
-                </div>
-        </form>
-
-
+       
 
         <div>
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 
                 <div class="panel-heading text-right" ng-if="mode == undefined && policyRequest.status == 'APPLIED'">
                     <p>
-                        <button class="btn btn-success"   ng-click="changeMode('accept')">Accept</button>
+                        <a class="btn btn-info" ng-href="#/policies" role="button">Proceed</a>
                         <button class="btn btn-danger"   ng-click="changeMode('reject')">Reject</button>
                     </p>
                 </div>
