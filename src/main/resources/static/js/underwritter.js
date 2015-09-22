@@ -16,7 +16,12 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
 	});
 }]);
 
-
+underwritter.filter('offset', function() {
+	return function(input, start) {
+		start = parseInt(start, 10);
+		return input.slice(start);
+	};
+});
 
 $(document).ready(function () {
 	$("#regId").mouseout().css("text-transform", "uppercase");
@@ -30,13 +35,17 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.reject;
 	$scope.accept;
 	$rootScope.policy={};
+	$scope.itemsPerPage = 5;
+	$scope.currentPage = 0;
+	$scope.policies = [];
 
 	$scope.init = function () {
 		$scope.reference = $routeParams.reference;
 		$scope.reject = {};
 		$scope.accept = {};
 		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
-		$scope.getPolicy($routeParams.policyReference);
+//		$scope.getPolicy($routeParams.policyReference);
+		$scope.getPolicies();
 
 	};
 
@@ -104,29 +113,17 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.changeMode = function (mode) {
 		$scope.mode = mode;
 	};
-
-
-	/*Get request for the details of Policy for a specific Policy Number*/
-	$rootScope.getPolicy = function (reference) {
-		$http({
-			url: '/api/policy/' + reference,
-			method: 'get'
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('Policy details retrived sucessfully');
-				$rootScope.policy = data;
-				console.log(data);
-				$location.path("/policy/"+reference);
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
-
+	
+	/* A UI selected policy to be displayed*/
+	$scope.getPolicy = function(reference){
+		angular.forEach($scope.policies,function(policy){
+			if(angular.equals(reference,policy.policyReference)){
+				$scope.policy = policy; // Assign a newly selected policy
+				$location.path('/policy/'+$routeParams.policyReference);
 			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.error = error;
 		});
-	};
+			
+	}
 
 	$scope.commissionInfo = {
 			'brokerCommission':'20%',
@@ -156,7 +153,72 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			                                                                                 ],
 	};
 
+	/*Get all list of policies*/
+	$scope.getPolicies = function () {
+		$http({
+			url: '/api/policies',
+			method: 'get'
+		}).success(function (data, status) {
+			if (status == 200) {
+				console.log('All policies retrived sucessfully');
+				$scope.policies = data;
+				console.log($scope.policies);
+				$scope.getPolicy($routeParams.policyReference);
+				$location.path('/policy/'+$routeParams.policyReference);
+			} else {
+				console.log('status:' + status);
+				$rootScope.error = "error status code : " + status;
 
+			}
+		}).error(function (error) {
+			console.log(error);
+			$rootScope.error = error;
+		});
+	};
+
+	$scope.range = function() {
+		var rangeSize = 2;
+		var ret = [];
+		var start;
+
+		start = $scope.currentPage;
+		if ( start > $scope.pageCount()-rangeSize ) {
+			start = $scope.pageCount()-rangeSize+1;
+		}
+
+		for (var i=start; i<start+rangeSize; i++) {
+			ret.push(i);
+		}
+		return ret;
+	};
+
+	$scope.prevPage = function() {
+		if ($scope.currentPage > 0) {
+			$scope.currentPage--;
+		}
+	};
+
+	$scope.prevPageDisabled = function() {
+		return $scope.currentPage === 0 ? "disabled" : "";
+	};
+
+	$scope.pageCount = function() {
+		return Math.ceil($scope.policies.length/$scope.itemsPerPage)-1;
+	};
+
+	$scope.nextPage = function() {
+		if ($scope.currentPage < $scope.pageCount()) {
+			$scope.currentPage++;
+		}
+	};
+
+	$scope.nextPageDisabled = function() {
+		return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+	};
+
+	$scope.setPage = function(n) {
+		$scope.currentPage = n;
+	};
 });
 
 underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $routeParams) {

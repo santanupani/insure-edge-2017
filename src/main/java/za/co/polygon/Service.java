@@ -315,8 +315,18 @@ public class Service {
 	public PolicyQueryModel getPolicy(@PathVariable("policyReference") String policyReference) {
 		log.info("Find the details of specific policy");
 		Policy policy = policyRepository.findByPolicyReference(policyReference);
-		log.info("find all the questions and answers inserted for a product using the reference");
+		
 		return toPolicyQueryModel(policy);
+	}
+	
+	/*The all the policies*/
+	@RequestMapping(value = "api/policies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<PolicyQueryModel> getPolicies() {
+		log.info("Find all policies");
+		List<Policy> policy = policyRepository.findAll();
+		List<PolicyQueryModel> policies =  toPolicyQueryModel(policy);
+		log.info("Number of policies returned: "+policies.size());
+		return policies;
 	}
 
 }

@@ -44,5 +44,10 @@ div[name=blueQHeader]{
     padding:5px; 
 }
 
+#navi ul li{
+	display: inline;
+	padding: .2em 1em;
+}
+
 
 

@@ -519,5 +519,13 @@ public class Mapper {
         
         return policyScheduleQueryModel;
     }
+    
+    public static List<PolicyQueryModel> toPolicyQueryModel(List<Policy> fromPolicies){
+    	List<PolicyQueryModel> policiesQueryResult = new ArrayList<PolicyQueryModel>();
+    	for(Policy policy:fromPolicies){
+    		policiesQueryResult.add(toPolicyQueryModel(policy));
+    	}
+    	return policiesQueryResult;
+    }
 
 }

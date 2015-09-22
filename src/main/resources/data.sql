@@ -341,9 +341,18 @@ insert into underwriters(first_name,middle_name,last_name,email) values('Lizaan'
 insert into underwriters(first_name,middle_name,last_name,email) values('Cressundra','Cress','Alves','Cressundra.Alves@reverside.co.za');
 
 insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
-values('TASDF-DAL34-DAOO-0909-23DS3-2343',1,1,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
+values('BINOD-DAL34-DAOO-0909-23DS3-2343',1,1,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
 insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
-values('JLEN3-SHANW-DAOO-0909-23DS3-2343',2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
+values('THABO-SHANW-DAOO-0909-23DS3-2343',2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
+--insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
+--values('TAGO-DAL34-DAOO-0909-23DS3-2343',1,3,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
+--insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
+--values('SHAWN-SHANW-DAOO-0909-23DS3-2343',2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
+--insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
+--values('CHARZ-DAL34-DAOO-0909-23DS3-2343',1,1,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
+--insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
+--values('NDHIV-SHANW-DAOO-0909-23DS3-2343',2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
+
 
 insert into policy_schedules(policy_id,sum_insured,maximum_sum_insured,broker_commission,UA_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration)
 values(1,3209000,100000,0,20,350,0,'The attached schedule','Cash and Valuables in Transit','Cash','By product','As discussed','Voltage','Discussion Value');
