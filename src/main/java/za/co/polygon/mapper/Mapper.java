@@ -38,6 +38,8 @@ import za.co.polygon.model.IndemnityOptionQueryModel;
 import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
+import za.co.polygon.model.PolicyScheduleCommandModel;
+import za.co.polygon.model.PolicyScheduleCommandModel.IndemOptions;
 import za.co.polygon.model.PolicyScheduleQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
@@ -45,6 +47,7 @@ import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationCommandModel.Options;
 import za.co.polygon.model.QuotationOptionQueryModel;
 import za.co.polygon.model.QuotationQueryModel;
+import za.co.polygon.model.QuotationQueryModel.Option;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
@@ -471,6 +474,43 @@ public class Mapper {
         policyQueryModel.setPolicySchedule(toPolicyScheduleQueryModel(policy.getPolicySchedule()));
 
         return policyQueryModel;
+    }
+    
+    
+    
+    public static PolicySchedule toPolicyScheduleCommandModel(PolicyScheduleCommandModel policyScheduleCommandModel) {
+        
+        PolicySchedule policySchedule = new PolicySchedule();
+        
+        policySchedule.setId(policyScheduleCommandModel.getId());
+        policySchedule.setBrokerCommission(policyScheduleCommandModel.getBrokerCommission());
+        policySchedule.setConvenyances(policyScheduleCommandModel.getConveyances());
+        policySchedule.setExcessSturcture(policyScheduleCommandModel.getExcessStructure());
+        policySchedule.setGeographicalDuration(policyScheduleCommandModel.getGeographicalDuration());
+        policySchedule.setMaximumSumInsured(policyScheduleCommandModel.getMaximumSumInsured());
+        policySchedule.setPremoium(policyScheduleCommandModel.getPremium());
+        policySchedule.setSasriaPremium(policyScheduleCommandModel.getSasriaPremium());
+        policySchedule.setScheduleAttaching(policyScheduleCommandModel.getScheduleAttaching());
+        policySchedule.setSpecialCondition(policyScheduleCommandModel.getSpecialCondition());
+        policySchedule.setSubjectMatter(policyScheduleCommandModel.getSubjectMatter());
+        policySchedule.setTypeOfCover(policyScheduleCommandModel.getTypeOfCover());
+        policySchedule.setSumInsured(policyScheduleCommandModel.getSumInsured());
+        policySchedule.setUACommission(policyScheduleCommandModel.getUACommission());
+        
+    
+        List<IndemnityOption> indemnityOptionsList = new ArrayList<IndemnityOption>();
+        for (IndemOptions options : policyScheduleCommandModel.getIndemOptions()) {
+            IndemnityOption indemnityOption = new IndemnityOption();
+            indemnityOption.setIndemnityItemOption(options.getIndemnityItemOption());
+            indemnityOption.setIndemnityValue(options.getIndemnityValue());
+            indemnityOption.setPremium(options.getPremium());
+            indemnityOption.setSumInsured(options.getSumInsured());
+            indemnityOption.setPolicySchedule(policySchedule);
+            indemnityOptionsList.add(indemnityOption);
+        }
+        policySchedule.setIndemnityOptions(indemnityOptionsList);
+        
+        return policySchedule;
     }
 
     public static IndemnityOptionQueryModel toIndemnityOptionQueryModel(IndemnityOption indemnityOption) {
