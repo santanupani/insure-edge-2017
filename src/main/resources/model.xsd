@@ -438,6 +438,38 @@
 				type="tns:PolicyScheduleQueryModel" />
 		</sequence>
 	</complexType>
+        
+        
+        <element name="PolicyScheduleCommandModel">
+	<complexType>
+		<sequence>
+			<element name="id" type="long" />
+			<element name="sumInsured" type="double" />
+			<element name="maximumSumInsured" type="double" />
+			<element name="brokerCommission" type="double" />
+			<element name="premium" type="double" />
+			<element name="UACommission" type="double" />
+			<element name="sasriaPremium" type="double" />
+			<element name="scheduleAttaching" type="string" />
+			<element name="typeOfCover" type="string" />
+			<element name="subjectMatter" type="string" />
+			<element name="excessStructure" type="string" />
+			<element name="specialCondition" type="string" />
+			<element name="conveyances" type="string" />
+			<element name="geographicalDuration" type="string" />
+			<element name="IndemOptions" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+                                            <element name="indemnityItemOption" type="string" />
+                                            <element name="indemnityValue" type="string" />
+                                            <element name="sumInsured" type="double" />
+                                            <element name="premium" type="double" />
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+    </element>
 
 	<element name="PolicyScheduleQueryModel" type="tns:PolicyScheduleQueryModel" />
 	<complexType name="PolicyScheduleQueryModel">
