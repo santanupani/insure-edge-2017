@@ -369,4 +369,6 @@ values(2,'Policy Vault','Per vehicle(3* weekly)',3450404,300);
 insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
 values(1,'Policy Limit','Per Cash per transit (4* weekly)',120404,4100);
 
+insert into underwriters(first_name,middle_name,last_name,email) values('Thabo','Tbos','Thulare','thabothulare68@gmail.com');
+
 

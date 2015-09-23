@@ -153,7 +153,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	};
 
 	$scope.range = function() {
-		var rangeSize = 2;
+		var rangeSize = 3;
 		var ret = [];
 		var start;
 
@@ -233,7 +233,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	}
 });
 
-underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $routeParams) {
+underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $routeParams,$location) {
 
 	$scope.init = function () {
 		$scope.getClient();
@@ -244,6 +244,7 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $rout
 		if($rootScope.policy == undefined){
 			console.log('Policy object doesn\'t exists. Calling one ');
 			$rootScope.getPolicy($routeParams.policyReference);
+			
 		}else{
 			$scope.client = $rootScope.policy.client;
 		}

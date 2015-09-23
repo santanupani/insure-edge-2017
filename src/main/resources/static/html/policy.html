@@ -402,7 +402,7 @@
 																ng-click="prevPage()">« Prev</a></li>
 															<li ng-repeat="n in range()"
 																ng-class="{active: n == currentPage}"
-																ng-click="setPage(n)"><a href="#">{{n+1}}</a></li>
+																ng-click="setPage(n)"><a href="#/policy/{{policy.policyReference}}">{{n+1}}</a></li>
 															<li ng-class="nextPageDisabled()"><a href
 																ng-click="nextPage()">Next »</a></li>
 														</ul>

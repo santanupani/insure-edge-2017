@@ -1,5 +1,8 @@
 package za.co.polygon;
 
+import static za.co.polygon.mapper.Mapper.fromBankAccountCommandModel;
+import static za.co.polygon.mapper.Mapper.fromClientCommandModel;
+import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
 import static za.co.polygon.mapper.Mapper.toClientQueryModel;
@@ -13,9 +16,12 @@ import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+import static za.co.polygon.mapper.Mapper.fromPolicyScheduleCommandModel;
+import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,17 +42,23 @@ import org.springframework.web.multipart.MultipartFile;
 import com.itextpdf.text.DocumentException;
 
 import za.co.polygon.domain.Answer;
+import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.Client;
+import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
+import za.co.polygon.domain.PolicySchedule;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.SubAgent;
+import za.co.polygon.domain.Underwriter;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClientQueryModel;
+import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
@@ -58,16 +70,21 @@ import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
 import za.co.polygon.model.UserQueryModel;
+import za.co.polygon.repository.BankAccountRepository;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.ClientRepository;
+import za.co.polygon.repository.ContactRepository;
 import za.co.polygon.repository.PolicyRepository;
 import za.co.polygon.repository.PolicyRequestRepository;
+import za.co.polygon.repository.PolicyScheduleRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationOptionRepository;
 import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
+import za.co.polygon.repository.SubAgentRepository;
+import za.co.polygon.repository.UnderwriterRepository;
 import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
@@ -117,6 +134,22 @@ public class Service {
 	@Autowired
 	private DocumentService reportService;
 
+	@Autowired
+	private UnderwriterRepository underwriterRepository;
+	
+	@Autowired
+	private SubAgentRepository subAgentRepository;
+	
+	@Autowired
+	private BankAccountRepository bankAccountRepository;
+	
+	@Autowired
+	private ContactRepository contactRepository;
+	
+	@Autowired
+	private PolicyScheduleRepository policyScheduleRepository;
+	
+	
 
 	@RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<UserQueryModel> findAllUsers() {
@@ -327,6 +360,24 @@ public class Service {
 		List<PolicyQueryModel> policies =  toPolicyQueryModel(policy);
 		log.info("Number of policies returned: "+policies.size());
 		return policies;
+	}
+	
+	@Transactional
+	@RequestMapping(value = "api/policy", method = RequestMethod.POST)
+	public String createPolicy(@RequestBody PolicyCreationCommandModel policyCreationCommandModel) throws IOException, ParseException {
+		
+		Underwriter underwriter = underwriterRepository.findOne(policyCreationCommandModel.getUnderwriterId());
+		SubAgent subAgent = subAgentRepository.findOne(policyCreationCommandModel.getSubAgentId());
+		
+		BankAccount bankAccount = bankAccountRepository.save(fromBankAccountCommandModel(policyCreationCommandModel));
+		Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
+		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
+		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
+		
+		PolicySchedule policySchedule = policyScheduleRepository.save(fromPolicyScheduleCommandModel(policyCreationCommandModel,policy));
+		
+		log.info("Policy reference: "+policySchedule.getId());
+		return policy.getPolicyReference();
 	}
 
 }

@@ -35,11 +35,11 @@ import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.ContactCommandModel;
 import za.co.polygon.model.ContactQueryModel;
 import za.co.polygon.model.IndemnityOptionQueryModel;
+import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
-import za.co.polygon.model.PolicyScheduleCommandModel;
-import za.co.polygon.model.PolicyScheduleCommandModel.IndemOptions;
+import za.co.polygon.model.PolicyScheduleCommandModel.IndemnityOptions;
 import za.co.polygon.model.PolicyScheduleQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
@@ -47,7 +47,6 @@ import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationCommandModel.Options;
 import za.co.polygon.model.QuotationOptionQueryModel;
 import za.co.polygon.model.QuotationQueryModel;
-import za.co.polygon.model.QuotationQueryModel.Option;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
@@ -478,28 +477,27 @@ public class Mapper {
     
     
     
-    public static PolicySchedule toPolicyScheduleCommandModel(PolicyScheduleCommandModel policyScheduleCommandModel) {
+    public static PolicySchedule fromPolicyScheduleCommandModel(PolicyCreationCommandModel policyCreationCommandModel,Policy policy) {
         
         PolicySchedule policySchedule = new PolicySchedule();
-        
-        policySchedule.setId(policyScheduleCommandModel.getId());
-        policySchedule.setBrokerCommission(policyScheduleCommandModel.getBrokerCommission());
-        policySchedule.setConvenyances(policyScheduleCommandModel.getConveyances());
-        policySchedule.setExcessSturcture(policyScheduleCommandModel.getExcessStructure());
-        policySchedule.setGeographicalDuration(policyScheduleCommandModel.getGeographicalDuration());
-        policySchedule.setMaximumSumInsured(policyScheduleCommandModel.getMaximumSumInsured());
-        policySchedule.setPremoium(policyScheduleCommandModel.getPremium());
-        policySchedule.setSasriaPremium(policyScheduleCommandModel.getSasriaPremium());
-        policySchedule.setScheduleAttaching(policyScheduleCommandModel.getScheduleAttaching());
-        policySchedule.setSpecialCondition(policyScheduleCommandModel.getSpecialCondition());
-        policySchedule.setSubjectMatter(policyScheduleCommandModel.getSubjectMatter());
-        policySchedule.setTypeOfCover(policyScheduleCommandModel.getTypeOfCover());
-        policySchedule.setSumInsured(policyScheduleCommandModel.getSumInsured());
-        policySchedule.setUACommission(policyScheduleCommandModel.getUACommission());
+        policySchedule.setPolicy(policy);
+        policySchedule.setBrokerCommission(policyCreationCommandModel.getPolicySchedule().getBrokerCommission());
+        policySchedule.setConvenyances(policyCreationCommandModel.getPolicySchedule().getConveyances());
+        policySchedule.setExcessSturcture(policyCreationCommandModel.getPolicySchedule().getExcessStructure());
+        policySchedule.setGeographicalDuration(policyCreationCommandModel.getPolicySchedule().getGeographicalDuration());
+        policySchedule.setMaximumSumInsured(policyCreationCommandModel.getPolicySchedule().getMaximumSumInsured());
+        policySchedule.setPremoium(policyCreationCommandModel.getPolicySchedule().getPremium());
+        policySchedule.setSasriaPremium(policyCreationCommandModel.getPolicySchedule().getSasriaPremium());
+        policySchedule.setScheduleAttaching(policyCreationCommandModel.getPolicySchedule().getScheduleAttaching());
+        policySchedule.setSpecialCondition(policyCreationCommandModel.getPolicySchedule().getSpecialCondition());
+        policySchedule.setSubjectMatter(policyCreationCommandModel.getPolicySchedule().getSubjectMatter());
+        policySchedule.setTypeOfCover(policyCreationCommandModel.getPolicySchedule().getTypeOfCover());
+        policySchedule.setSumInsured(policyCreationCommandModel.getPolicySchedule().getSumInsured());
+        policySchedule.setUACommission(policyCreationCommandModel.getPolicySchedule().getUACommission());
         
     
         List<IndemnityOption> indemnityOptionsList = new ArrayList<IndemnityOption>();
-        for (IndemOptions options : policyScheduleCommandModel.getIndemOptions()) {
+        for (IndemnityOptions options : policyCreationCommandModel.getPolicySchedule().getIndemnityOptions()) {
             IndemnityOption indemnityOption = new IndemnityOption();
             indemnityOption.setIndemnityItemOption(options.getIndemnityItemOption());
             indemnityOption.setIndemnityValue(options.getIndemnityValue());
@@ -566,6 +564,71 @@ public class Mapper {
     		policiesQueryResult.add(toPolicyQueryModel(policy));
     	}
     	return policiesQueryResult;
+    }
+    
+    /*New Policy Creation command models*/
+    
+    public static BankAccount fromBankAccountCommandModel(PolicyCreationCommandModel policyCreationCommandModel){
+    	BankAccount bankAccountResult = new BankAccount();
+    	
+    	bankAccountResult.setAccountName(policyCreationCommandModel.getClient().getBankAccount().getAccountName());
+    	bankAccountResult.setAccountNumber(policyCreationCommandModel.getClient().getBankAccount().getAccountNumber());
+    	bankAccountResult.setBranchCode(policyCreationCommandModel.getClient().getBankAccount().getBranch());
+    	bankAccountResult.setBankName(policyCreationCommandModel.getClient().getBankAccount().getBankName());
+    	
+    	return bankAccountResult;
+    }
+    
+    public static Contact fromContactCommandModel(PolicyCreationCommandModel policyCreationCommandModel){
+    	Contact contactResult = new Contact();
+    	
+    	contactResult.setCode(policyCreationCommandModel.getClient().getContact().getCode());
+    	contactResult.setContactPerson(policyCreationCommandModel.getClient().getContact().getContactPerson());
+    	contactResult.setEmail(policyCreationCommandModel.getClient().getContact().getEmail());
+    	contactResult.setFaxNumber(policyCreationCommandModel.getClient().getContact().getFaxNumber());
+    	contactResult.setStreet(policyCreationCommandModel.getClient().getContact().getStreet());
+    	contactResult.setSuburb(policyCreationCommandModel.getClient().getContact().getSuburb());
+    	contactResult.setWorkTelNumber(policyCreationCommandModel.getClient().getContact().getWorkTelNumber());
+    	
+    	return contactResult;
+    }
+    
+    public static Client fromClientCommandModel(PolicyCreationCommandModel policyCreationCommandModel,Contact contact,BankAccount bankAccount){
+    	Client clientResult = new Client();
+    	
+    	clientResult.setBankAccount(bankAccount);
+    	clientResult.setContact(contact);
+    	clientResult.setClientName(policyCreationCommandModel.getClient().getClientName());
+    	clientResult.setIncomeTaxNumber(policyCreationCommandModel.getClient().getIncomeTaxNumber());
+    	clientResult.setRegNumber(policyCreationCommandModel.getClient().getRegNumber());
+    	clientResult.setVatNumber(policyCreationCommandModel.getClient().getVatNumber());
+    	
+    	return clientResult;
+    }
+    
+    public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel,Client client,SubAgent subAgent,Underwriter underwriter,Contact contact,BankAccount bankAccount) throws ParseException{
+    	Policy policyResult = new Policy();
+    	
+    	policyResult.setClient(client);
+    	policyResult.setSubAgent(subAgent);
+    	policyResult.setUnderwriter(underwriter);
+    	policyResult.setBrokerFee(Double.parseDouble(policyCreationCommandModel.getBrokerFee()));
+    	policyResult.setDevice(policyCreationCommandModel.getDevice());
+    	policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
+    	policyResult.setInceptionDate(new SimpleDateFormat("dd-MM-yyy").parse(policyCreationCommandModel.getInceptionDate()));
+    	policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
+    	policyResult.setPolicyReference(UUID.randomUUID().toString());
+    	policyResult.setRenewalDate(new SimpleDateFormat("dd-MM-yyy").parse(policyCreationCommandModel.getRenewalDate()));
+    	policyResult.setStatus(policyCreationCommandModel.getStatus());
+    	policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
+    	policyResult.setRetroactiveDate(new SimpleDateFormat("dd-MM-yyy").parse(policyCreationCommandModel.getRetroActiveDate()));
+    	policyResult.setNotes(policyCreationCommandModel.getNotes());
+    	policyResult.setReInstatement(policyCreationCommandModel.getReInstatement());
+    	policyResult.setUnderwriting_year(policyCreationCommandModel.getUnderwritingYear());
+    	policyResult.setFrequency(policyCreationCommandModel.getFrequency());
+    	policyResult.setUnderwriterFee(policyCreationCommandModel.getUnderwriterFee());
+    	    	
+    	return policyResult;
     }
 
 }
