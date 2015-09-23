@@ -5,7 +5,7 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
 	.when('/policy-requests/:reference', {
 		'templateUrl': '/html/underwritter.html',
 		'controller': 'policyCtrl'
-	}).when('/client', {
+	}).when('/client/:policyReference', {
 		'templateUrl': '/html/client-details.html',
 		'controller': 'clientDetailsCtrl'
 	}).when('/policy/:policyReference', {
@@ -40,13 +40,14 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$rootScope.policy={};
 	$scope.itemsPerPage = 5;
 	$scope.currentPage = 0;
-	$scope.policies = [];
+	$rootScope.policies = [];
+        $rootScope.client = {};
 
 	$scope.init = function () {
 		$scope.reference = $routeParams.reference;
 		$scope.reject = {};
 		$scope.accept = {};
-		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
+//		$scope.policyRequest = $scope.getPolicyRequest($routeParams.reference);
 		$scope.getPolicies();
 
 	};
@@ -117,17 +118,15 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	};
 	
 	/* A UI selected policy to be displayed*/
-	$scope.getPolicy = function(reference){
+	$rootScope.getPolicy = function(reference){
 		angular.forEach($scope.policies,function(policy){
 			if(angular.equals(reference,policy.policyReference)){
-				$scope.policy = policy; // Assign a newly selected policy
+				$scope.policy = policy; 
 				$location.path('/policy/'+$routeParams.policyReference);
 			}
 		});
 			
-	}
-
-	
+	};
 
 	/*Get all list of policies*/
 	$scope.getPolicies = function () {
@@ -137,9 +136,9 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		}).success(function (data, status) {
 			if (status == 200) {
 				console.log('All policies retrived sucessfully');
-				$scope.policies = data;
-				console.log($scope.policies);
-				$scope.getPolicy($routeParams.policyReference);
+				$rootScope.policies = data;
+				console.log($rootScope.policies);
+				$rootScope.getPolicy($routeParams.policyReference);
 
 			} else {
 				console.log('status:' + status);
@@ -230,24 +229,27 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			'geographicalDuration':'refer to special conditions',
 			'specialCondition':'Geographical and duration: Cash - once cash has recorded...'
 			
-	}
+	};
 });
 
-underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $routeParams,$location) {
-
+underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $location,$routeParams) {
+        $scope.client = {};
+        $scope.policy = {};
 	$scope.init = function () {
 		$scope.getClient();
 
 	};
 
 	$scope.getClient = function () {
-		if($rootScope.policy == undefined){
-			console.log('Policy object doesn\'t exists. Calling one ');
-			$rootScope.getPolicy($routeParams.policyReference);
-			
-		}else{
-			$scope.client = $rootScope.policy.client;
+            angular.forEach($scope.policies,function(policy){
+		if(angular.equals($routeParams.policyReference,policy.policyReference)){
+                        $scope.policy = policy;
+                        $scope.client = policy.client; 
+			console.log('Client :'+$rootScope.client);
+                        $location.path('/client/'+$routeParams.policyReference);
 		}
+            });
+           
 	};
 });
 
