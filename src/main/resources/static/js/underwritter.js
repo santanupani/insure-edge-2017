@@ -256,6 +256,20 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			'specialCondition': 'Geographical and duration: Cash - once cash has recorded...'
 
 	};
+        
+        
+        
+        $scope.schedulleAttaching = "1) SPECIALISED VALUABLES INSURANCE POLICY WORDING - GENERAL TERMS AND CONDITIONS\n\
+                              2) POLYGON GENERAL COMPUTER NUCLEAR EXCEPTIONS \n\
+                              3) POLYGON CASH AND VALUABLES IN TRANSIT WORDING \n\
+                              4) VAULT AND STATIC RISK COVER WORDING";
+    
+        
+        $scope.typeOfCover = "Theft, armed robbery, hijacking and accidental damages to the subject matter.  Excluding fraud, dishonesty or criminal  involvement of the\n\
+                              Insured or their employees. \n\
+                               Always subject to the terms and conditions of the policy.";
+    
+        $scope.specialPolicyConditions = "";
 });
 
 underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $location, $routeParams) {
