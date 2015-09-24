@@ -30,21 +30,21 @@ $(document).ready(function () {
 	$("#regId").mouseout().css("text-transform", "uppercase");
 });
 
-underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, $routeParams, $location){
+underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, $routeParams){
 	$scope.mode;
 	$scope.reference;
 	$scope.reject;
 	$scope.accept;
-	$rootScope.policyRequest;
-	
+//	$rootScope.policyRequest;
+
 	$scope.init = function(){
 		$scope.reference = $routeParams.reference;
 		$scope.reject = {};
 		$scope.accept = {};
-		$rootScope.policyRequest = {};
+//		$rootScope.policyRequest = {};
 		$scope.getPolicyRequest($routeParams.reference);
 	};
-	
+
 	$scope.getPolicyRequest = function (reference) {
 		$http({
 			url: '/api/policy-requests/' + reference,
@@ -53,7 +53,7 @@ underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, 
 			if (status == 200) {
 				console.log('policy Request retrived sucessfully');
 				$rootScope.policyRequest = data;
-				console.log('Returned policy request: '+$rootScope.policyRequest);
+				console.log('Returned policy request: '+data);
 			} else {
 				console.log('status:' + status);
 				$rootScope.error = "error status code : " + status;
@@ -112,31 +112,85 @@ underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, 
 
 
 underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
-	
+
 	$rootScope.policy = {};
 	$scope.itemsPerPage = 5;
 	$scope.currentPage = 0;
 	$rootScope.policies = [];
-	
+
+	$scope.policy = {};
+	$scope.policy.client = {};
+	$scope.policy.client.contact = {};
+	$scope.policy.client.bankAccount = {};
+	$scope.policy.policySchedule = {};
+	$scope.policy.policySchedule.indemnityOption = [{}];
+
 	$scope.init = function () {
-		
+		console.log('Client Policy request: '+$rootScope.policyRequest.quotation.quotationRequest.reference);
 		$scope.getPolicies();
-		$scope.initNewPolicy();
+		console.log('Policies size :'+$rootScope.policies.length);
+		$scope.initNewPolicy($rootScope.policy,$rootScope.policyRequest);
+
 	};
 
 	/*Initialize new policy*/
 	$scope.initNewPolicy = function (policy,policyRequest) {
-		$rootScope.policy.client = {};
-		$rootScope.policy.client.contact = {};
-		$rootScope.policy.client.bankAccount = {};
-		$rootScope.policy.policySchedule = {};
-		
-		if (policy == undefined) {
-			console.log('Policy request :'+policy);
-			$rootScope.policy.policyReference = 'New Policy';
-			$rootScope.policy.brokerFee = 20;
-			$rootScope.policy.client = {};
-			$rootScope.policy.client.clientName = 'Reverside';
+
+
+		if (policy != undefined) {
+			console.log('Policy request :'+policyRequest);
+			$scope.policy.policyReference = 'newre-feren-ce-0000-000';
+			$scope.policy.brokerFee = 20;
+
+			/*Initializing the Policy contact details*/
+			$scope.policy.underwritingYear = 2015;
+			$scope.policy.renewalDate = '7/12/2015';
+			$scope.policy.retroActiveDate = '7/12/2015';
+			$scope.policy.notes = $scope.wording.notes;
+
+			/*Initializing the Client's contact details*/
+			$scope.policy.client.clientName = $rootScope.policyRequest.quotation.quotationRequest.companyName;
+			$scope.policy.client.contact.contactPerson = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
+			$scope.policy.client.contact.email = $rootScope.policyRequest.quotation.quotationRequest.applicantEmail;
+			$scope.policy.client.contact.street = $rootScope.policyRequest.streetAddress;
+			$scope.policy.client.contact.workTelNumber = $rootScope.policyRequest.telephoneNumber;
+			$scope.policy.client.contact.faxNumber = $rootScope.policyRequest.faxNumber;
+			$scope.policy.client.contact.code = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
+			$scope.policy.client.contact.street = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
+
+			/*Initializing the Client's bankAccoutn details*/
+			$scope.policy.client.bankAccount.branch = $rootScope.policyRequest.branchCode;
+			$scope.policy.client.bankAccount.accountName = $rootScope.policyRequest.accountName;
+			$scope.policy.client.bankAccount.bankName = $rootScope.policyRequest.bankName;
+			$scope.policy.client.bankAccount.accountNumber = $rootScope.policyRequest.accountNumber;
+
+			/*Initializing the Client's PolicySchedule details*/
+			$scope.policy.policySchedule.scheduleAttaching = $scope.wording.scheduleAttaching;
+			$scope.policy.policySchedule.premium = $rootScope.policyRequest.quotationOption.premium;
+			$scope.policy.policySchedule.excessStructure = $rootScope.policyRequest.quotationOption.excess;
+                        
+                  
+
+			angular.forEach($rootScope.policyRequest.quotation.quotationRequest.questionnaire,function(questionnairre){
+				switch(questionnairre.question){
+				case 'What do you wish to insure ?':
+					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
+					$scope.policy.policySchedule.subjectMatter = questionnairre.answer;
+				case 'What is the maximum amount you wish to insure ?':
+					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
+					$scope.policy.policySchedule.maximumSumInsured = questionnairre.answer;
+					$scope.policy.policySchedule.sumInsured = $scope.policy.policySchedule.maximumSumInsured;
+				case 'Please specify policy insecption date for annual cover :':
+					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
+					$scope.policy.inceptionDate = questionnairre.answer;
+				}
+			});
+			$scope.policy.policySchedule.typeOfCover = $scope.wording.typeOfCover;
+			$scope.policy.policySchedule.geographicalDuration = $scope.wording.geographicalDuration;
+			$scope.policy.policySchedule.specialCondition = $scope.wording.specialCondition;
+
+			$rootScope.policies.push($scope.policy);
+			console.log('Policies size :'+$rootScope.policies.length);
 
 		} else {
 			$scope.policy = $rootScope.policy;
@@ -144,12 +198,34 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		}
 	};
 
+	$scope.submitForPolicy = function (form) {
+		$http({
+			url: '/api/policy',
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			data: $scope.policy
+		}).success(function (data, status) {
+			if (status == 200) {
+				console.log('All the questions and answers saved succesfullly');
+				$rootScope.message = "Reference Number : " + data;
+				$location.path("/products");
+			} else {
+				console.log('status:' + status);
+			}
+		}).error(function (error) {
+			console.log(error);
+			$rootScope.message = error;
+		});
+	};
+
 	/* A UI selected policy to be displayed*/
 	$rootScope.getPolicy = function (reference) {
 		angular.forEach($scope.policies, function (policy) {
 			if (angular.equals(reference, policy.policyReference)) {
 				$scope.policy = policy;
-				$location.path('/policy/' + $routeParams.policyReference);
+				$location.path('/policy/' + reference);
 			}
 		});
 
@@ -165,6 +241,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 				console.log('All policies retrived sucessfully');
 				$rootScope.policies = data;
 				console.log($rootScope.policies);
+				console.log('Policies size :'+$rootScope.policies.length);
 				$rootScope.getPolicy($routeParams.policyReference);
 
 			} else {
@@ -234,7 +311,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			'frequencyOptions': [
 			                     'Declaration',
 			                     'Other',
-			                     ],
+			                     ],			    
 			                     'sasriaFrequencyOptions': [
 			                                                'N/A',
 			                                                'Other',
@@ -245,24 +322,38 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			                                                                  'N/A',
 			                                                                  ],
 			                                                                  'reInstatements': [
-			                                                                                     '',
+			                                                                                     'Nedbank Cameo',
+			                                                                                     'Standard Bnk',
+			                                                                                     'N/A',
 			                                                                                     ],
+			                                                                                     'stats': [
+			                                                                                                  'Active',
+			                                                                                                  'Terminated',
+			                                                                                                  'Cancelled',
+			                                                                                                  ],
+			 			                                                                                     'subAgentNames': [
+						                                                                                                  'Thabo',
+						                                                                                                  'Binod',
+						                                                                                                  'Manmay',
+						                                                                                                  'Ardhendu'
+						                                                                                                  ]
 	};
 
 	$scope.wording = {
-			'scheduleAttaching': '1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS\n 2) POLYGON GENERAL',
+			'scheduleAttaching': '1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS\n2) POLYGON GENERAL',
 			'typeOfCover': 'Armed robbery, hijacking, and accidental damage...',
 			'geographicalDuration': 'refer to special conditions',
-			'specialCondition': 'Geographical and duration: Cash - once cash has recorded...'
+			'specialCondition': 'Geographical and duration: Cash - once cash has recorded...',
+			'notes':'[Add notes for this policy]'
 
 	};
         
         
         
-        $scope.schedulleAttaching = "1) SPECIALISED VALUABLES INSURANCE POLICY WORDING - GENERAL TERMS AND CONDITIONS\n\
-                              2) POLYGON GENERAL COMPUTER NUCLEAR EXCEPTIONS \n\
-                              3) POLYGON CASH AND VALUABLES IN TRANSIT WORDING \n\
-                              4) VAULT AND STATIC RISK COVER WORDING";
+        $scope.schedulleAttaching = "1) SPECIALISED VALUABLES INSURANCE POLICY WORDING - GENERAL TERMS AND CONDITIONS" +
+                                     "\n2) POLYGON GENERAL COMPUTER NUCLEAR EXCEPTIONS" +
+                                     "\n3) POLYGON CASH AND VALUABLES IN TRANSIT WORDING" +
+                                     "\n4) VAULT AND STATIC RISK COVER WORDING";
     
         
         $scope.typeOfCover = "Theft, armed robbery, hijacking and accidental damages to the subject matter.  Excluding fraud, dishonesty or criminal  involvement of the\n\
@@ -285,8 +376,8 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $loca
 		angular.forEach($scope.policies, function (policy) {
 			if (angular.equals($routeParams.policyReference, policy.policyReference)) {
 				$scope.policy = policy;
-				$scope.client = policy.client;
-				console.log('Client :' + $scope.client);
+				$scope.policy.client = policy.client;
+				console.log('Client :' + $scope.policy.client);
 				$location.path('/client/' + $routeParams.policyReference);
 			}
 		});

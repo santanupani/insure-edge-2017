@@ -74,8 +74,11 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<label>Status</label> <input type="text"
-													class="form-control" ng-model="policy.status" />
+												<label>Status</label> <select class="form-control"
+													ng-model="policy.status"
+													ng-options="statusOption for statusOption in policyOptions.stats">
+													<option value=""></option>
+												</select>
 											</div>
 											<div class="form-group">
 												<label>Underwriter Fee</label> <input type="text"
@@ -96,6 +99,7 @@
 												<textarea class="form-control" rows="8"
 													ng-model="policy.notes"></textarea>
 											</div>
+
 											<div class="form-group">
 												<label>Broker Fee</label> <input type="text"
 													class="form-control" ng-model="policy.brokerFee" />
@@ -157,8 +161,8 @@
 												</div>
 											</div>
 										</div>
-										
-										
+
+
 										<div class="panel-default" style="box-shadow: 0 0 30px #ffff;">
 											<div class="panel-heading">
 												<h5>
@@ -170,38 +174,44 @@
 												<div class="row">
 													<div class="col-md-12">
 														<table class="table table-boarded">
-														<thead>
-															<tr>
-																<th>Agent Name</th>
-																<th>Commission</th>
-																<th>Status</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td><input type="text" class="form-control"
-																	ng-model="t"></td>
-																<td><input type="text" class="form-control"
-																	ng-model="t" ></td>
-																<td><input type="text" class="form-control"
-																	ng-model="t" ></td>
-															</tr>
-															<tr>
-																<td><input type="text" class="form-control"
-																	ng-model="t"></td>
-																<td><input type="text" class="form-control"
-																	ng-model="t" ></td>
-																<td><input type="text" class="form-control"
-																	ng-model="t" ></td>
-															</tr>
-														</tbody>
-													</table>
+															<thead>
+																<tr>
+																	<th>Agent Name</th>
+																	<th>Commission</th>
+																	<th>Status</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td><select class="form-control"
+																		ng-model="subAgent.id"
+																		ng-options="subAgentName for subAgentName in policyOptions.subAgentNames">
+																			<option value=""></option>
+																	</select></td>
+																	<td><input type="text" class="form-control"
+																		ng-model="t"></td>
+																	<td><input type="text" class="form-control"
+																		ng-model="t"></td>
+																</tr>
+																<tr>
+																	<td><select class="form-control"
+																		ng-model="subAgent.ids"
+																		ng-options="subAgentName for subAgentName in policyOptions.subAgentNames">
+																			<option value=""></option>
+																	</select></td>
+																	<td><input type="text" class="form-control"
+																		ng-model="t"></td>
+																	<td><input type="text" class="form-control"
+																		ng-model="t"></td>
+																</tr>
+															</tbody>
+														</table>
 
 													</div>
 												</div>
 											</div>
 										</div>
-										
+
 									</div>
 								</div>
 							</div>
@@ -238,13 +248,12 @@
 													<div class="form-group">
 														<label>Schedule Attaching to and Forming Part of</label>
 														<textarea class="form-control"
-															ng-model="policy.policySchedule.scheduleAttaching"
-															readonly></textarea>
+															ng-model="schedulleAttaching"></textarea>
 													</div>
 													<div class="form-group">
 														<label>Type of Cover:</label>
 														<textarea class="form-control"
-															ng-model="policy.policySchedule.typeOfCover" readonly /></textarea>
+															ng-model="typeOfCover" /></textarea>
 													</div>
 
 													<div class="form-group">
@@ -263,8 +272,7 @@
 														<label>Special Policy Conditions</label>
 														</h4>
 														<input type="text" class="form-control"
-															ng-model="policy.policySchedule.specialCondition"
-															readonly>
+															ng-model="policy.policySchedule.specialCondition">
 													</div>
 
 													<div class="pull-right">
@@ -306,13 +314,13 @@
 															<tr
 																ng-repeat="indemnity in policy.policySchedule.indemnityOption">
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityItemOption" readonly></td>
+																	ng-model="indemnity.indemnityItemOption"></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityValue" readonly></td>
+																	ng-model="indemnity.indemnityValue"></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.sumInsured" readonly></td>
+																	ng-model="indemnity.sumInsured"></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.premium" readonly></td>
+																	ng-model="indemnity.premium"></td>
 															</tr>
 														</tbody>
 													</table>
@@ -347,7 +355,7 @@
 													<div class="form-group">
 														<label>Description</label>
 														<textarea class="form-control"
-															ng-model="policy.policySchedule.conveyances" readonly></textarea>
+															ng-model="policy.policySchedule.conveyances"></textarea>
 													</div>
 
 													<div class="pull-right">
@@ -381,8 +389,7 @@
 													<div class="form-group">
 														<label>Description</label>
 														<textarea class="form-control"
-															ng-model="policy.policySchedule.geographicalDuration"
-															readonly></textarea>
+															ng-model="policy.policySchedule.geographicalDuration"></textarea>
 													</div>
 													<div class="pull-right">
 														<a ng-href="#/client" role="link">Update</a> <a
@@ -476,7 +483,8 @@
 
 										<div class="form-group">
 											<label>Client Name</label> <input type="text"
-												class="form-control" ng-model="policy.client.clientName" />
+												class="form-control" ng-model="policy.client.clientName"
+												readonly />
 										</div>
 
 										<div class="form-group">
@@ -504,8 +512,8 @@
 
 								</div>
 
-								<div ng-if="policy.subAgent.firstname!=null" class="panel panel-default"
-									style="box-shadow: 0 0 30px #ffff;">
+								<div ng-if="policy.subAgent.firstname!=null"
+									class="panel panel-default" style="box-shadow: 0 0 30px #ffff;">
 									<div class="panel-heading">
 										<h5>
 											<a data-toggle="collapse" data-parent="#entities"
@@ -569,7 +577,8 @@
 				</div>
 
 				<div class="panel-footer text-right">
-					<button class="btn btn-success">Approve</button>
+					<button class="btn btn-success" type="submit"
+						ng-click="submitForPolicy(form)">Approve</button>
 					<button class="btn btn-danger">Reject</button>
 				</div>
 
