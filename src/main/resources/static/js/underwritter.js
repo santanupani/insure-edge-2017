@@ -1,4 +1,4 @@
-var underwritter = angular.module('underwritter', ['ngRoute']);
+var underwritter = angular.module('underwritter', ['ngRoute','ngCookies']);
 
 underwritter.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
@@ -30,18 +30,16 @@ $(document).ready(function () {
 	$("#regId").mouseout().css("text-transform", "uppercase");
 });
 
-underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, $routeParams){
+underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, $routeParams,$cookieStore){
 	$scope.mode;
 	$scope.reference;
 	$scope.reject;
 	$scope.accept;
-//	$rootScope.policyRequest;
 
 	$scope.init = function(){
 		$scope.reference = $routeParams.reference;
 		$scope.reject = {};
 		$scope.accept = {};
-//		$rootScope.policyRequest = {};
 		$scope.getPolicyRequest($routeParams.reference);
 	};
 
@@ -53,6 +51,7 @@ underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, 
 			if (status == 200) {
 				console.log('policy Request retrived sucessfully');
 				$rootScope.policyRequest = data;
+				$cookieStore.put('reference',$rootScope.policyRequest.quotation.quotationRequest.reference);
 				console.log('Returned policy request: '+data);
 			} else {
 				console.log('status:' + status);
@@ -111,12 +110,13 @@ underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, 
 });
 
 
-underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
+underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location,$cookieStore) {
 
 	$rootScope.policy = {};
 	$scope.itemsPerPage = 5;
 	$scope.currentPage = 0;
 	$rootScope.policies = [];
+	$rootScope.policyRequest;
 
 	$scope.policy = {};
 	$scope.policy.client = {};
@@ -126,30 +126,62 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.policy.policySchedule.indemnityOption = [{}];
 
 	$scope.init = function () {
-		console.log('Client Policy request: '+$rootScope.policyRequest.quotation.quotationRequest.reference);
+
 		$scope.getPolicies();
+		if($rootScope.policyRequest == undefined){
+			$scope.getPolicyRequest(''+$cookieStore.get('reference'));
+			$scope.initNewPolicy($rootScope.policy,$rootScope.policyRequest);
+		}
+
+		$rootScope.policies.push($scope.initNewPolicy($rootScope.policy,$rootScope.policyRequest));
 		console.log('Policies size :'+$rootScope.policies.length);
-		$scope.initNewPolicy($rootScope.policy,$rootScope.policyRequest);
 
 	};
+
+	$scope.getPolicyRequest = function (reference) {
+		$http({
+			url: '/api/policy-requests/' + reference,
+			method: 'get'
+		}).success(function (data, status) {
+			if (status == 200) {
+				console.log('policy Request retrived sucessfully');
+				$rootScope.policyRequest = data;
+				console.log('Returned policy request: '+data);
+			} else {
+				console.log('status:' + status);
+				$rootScope.error = "error status code : " + status;
+
+			}
+		}).error(function (error) {
+			console.log(error);
+			$rootScope.error = error;
+		});
+	};
+
 
 	/*Initialize new policy*/
 	$scope.initNewPolicy = function (policy,policyRequest) {
 
-
 		if (policy != undefined) {
+
 			console.log('Policy request :'+policyRequest);
-			$scope.policy.policyReference = 'newre-feren-ce-0000-000';
+			$scope.policy.policyReference = '[New-Policy-Creation]';
 			$scope.policy.brokerFee = 20;
 
-			/*Initializing the Policy contact details*/
+			/*Initializing the Policy details*/
 			$scope.policy.underwritingYear = 2015;
 			$scope.policy.renewalDate = '7/12/2015';
 			$scope.policy.retroActiveDate = '7/12/2015';
 			$scope.policy.notes = $scope.wording.notes;
+			$scope.policy.subAgentId = 1;
+			$scope.policy.underwriterId = 1;
 
 			/*Initializing the Client's contact details*/
 			$scope.policy.client.clientName = $rootScope.policyRequest.quotation.quotationRequest.companyName;
+			$scope.policy.client.regNumber = $rootScope.policyRequest.vatRegNumber;
+			$scope.policy.client.incomeTaxNumber = $rootScope.policyRequest.accountName;
+			$scope.policy.client.vatNumber = $rootScope.policyRequest.vatRegNumber;
+			/*Client Contact details*/
 			$scope.policy.client.contact.contactPerson = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
 			$scope.policy.client.contact.email = $rootScope.policyRequest.quotation.quotationRequest.applicantEmail;
 			$scope.policy.client.contact.street = $rootScope.policyRequest.streetAddress;
@@ -157,6 +189,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			$scope.policy.client.contact.faxNumber = $rootScope.policyRequest.faxNumber;
 			$scope.policy.client.contact.code = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
 			$scope.policy.client.contact.street = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
+			$scope.policy.client.contact.suburb = $rootScope.policyRequest.suburb;
 
 			/*Initializing the Client's bankAccoutn details*/
 			$scope.policy.client.bankAccount.branch = $rootScope.policyRequest.branchCode;
@@ -176,8 +209,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 					$scope.policy.policySchedule.subjectMatter = questionnairre.answer;
 				case 'What is the maximum amount you wish to insure ?':
 					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
-					$scope.policy.policySchedule.maximumSumInsured = questionnairre.answer;
-					$scope.policy.policySchedule.sumInsured = $scope.policy.policySchedule.maximumSumInsured;
+					$scope.policy.policySchedule.maximumSumInsured = 2121212; //questionnairre.answer;
+					$scope.policy.policySchedule.sumInsured = 121212; //$scope.policy.policySchedule.maximumSumInsured;
 				case 'Please specify policy insecption date for annual cover :':
 					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
 					$scope.policy.inceptionDate = questionnairre.answer;
@@ -185,15 +218,13 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			});
 			$scope.policy.policySchedule.typeOfCover = $scope.wording.typeOfCover;
 			$scope.policy.policySchedule.geographicalDuration = $scope.wording.geographicalDuration;
-			$scope.policy.policySchedule.specialCondition = $scope.wording.specialCondition;
-
-			$rootScope.policies.push($scope.policy);
-			console.log('Policies size :'+$rootScope.policies.length);
 
 		} else {
 			$scope.policy = $rootScope.policy;
 			console.log('Existing Policy :'+$rootScope.policy.client.clientName);
 		}
+
+		return $scope.policy;
 	};
 
 	$scope.submitForPolicy = function (form) {
@@ -206,9 +237,9 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			data: $scope.policy
 		}).success(function (data, status) {
 			if (status == 200) {
-				console.log('All the questions and answers saved succesfullly');
+				console.log('New policy saved successfully');
 				$rootScope.message = "Reference Number : " + data;
-				$location.path("/products");
+				$location.path("/policies");
 			} else {
 				console.log('status:' + status);
 			}
@@ -325,16 +356,16 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			                                                                                     'N/A',
 			                                                                                     ],
 			                                                                                     'stats': [
-			                                                                                                  'Active',
-			                                                                                                  'Terminated',
-			                                                                                                  'Cancelled',
-			                                                                                                  ],
-			 			                                                                                     'subAgentNames': [
-						                                                                                                  'Thabo',
-						                                                                                                  'Binod',
-						                                                                                                  'Manmay',
-						                                                                                                  'Ardhendu'
-						                                                                                                  ]
+			                                                                                               'Active',
+			                                                                                               'Terminated',
+			                                                                                               'Cancelled',
+			                                                                                               ],
+			                                                                                               'subAgentNames': [
+			                                                                                                                 'Thabo',
+			                                                                                                                 'Binod',
+			                                                                                                                 'Manmay',
+			                                                                                                                 'Ardhendu'
+			                                                                                                                 ]
 	};
 
 	$scope.wording = {

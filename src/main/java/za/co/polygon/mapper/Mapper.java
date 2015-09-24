@@ -485,14 +485,14 @@ public class Mapper {
         policySchedule.setConvenyances(policyCreationCommandModel.getPolicySchedule().getConveyances());
         policySchedule.setExcessSturcture(policyCreationCommandModel.getPolicySchedule().getExcessStructure());
         policySchedule.setGeographicalDuration(policyCreationCommandModel.getPolicySchedule().getGeographicalDuration());
-        policySchedule.setMaximumSumInsured(policyCreationCommandModel.getPolicySchedule().getMaximumSumInsured());
-        policySchedule.setPremoium(policyCreationCommandModel.getPolicySchedule().getPremium());
+        policySchedule.setMaximumSumInsured(Double.valueOf(policyCreationCommandModel.getPolicySchedule().getMaximumSumInsured()));
+        policySchedule.setPremoium(Double.valueOf(policyCreationCommandModel.getPolicySchedule().getPremium()));
         policySchedule.setSasriaPremium(policyCreationCommandModel.getPolicySchedule().getSasriaPremium());
         policySchedule.setScheduleAttaching(policyCreationCommandModel.getPolicySchedule().getScheduleAttaching());
         policySchedule.setSpecialCondition(policyCreationCommandModel.getPolicySchedule().getSpecialCondition());
         policySchedule.setSubjectMatter(policyCreationCommandModel.getPolicySchedule().getSubjectMatter());
         policySchedule.setTypeOfCover(policyCreationCommandModel.getPolicySchedule().getTypeOfCover());
-        policySchedule.setSumInsured(policyCreationCommandModel.getPolicySchedule().getSumInsured());
+        policySchedule.setSumInsured(Double.valueOf(policyCreationCommandModel.getPolicySchedule().getSumInsured()));
         policySchedule.setUACommission(policyCreationCommandModel.getPolicySchedule().getUACommission());
         
     
@@ -501,8 +501,8 @@ public class Mapper {
             IndemnityOption indemnityOption = new IndemnityOption();
             indemnityOption.setIndemnityItemOption(options.getIndemnityItemOption());
             indemnityOption.setIndemnityValue(options.getIndemnityValue());
-            indemnityOption.setPremium(options.getPremium());
-            indemnityOption.setSumInsured(options.getSumInsured());
+            indemnityOption.setPremium(Double.valueOf(options.getPremium()));
+            indemnityOption.setSumInsured(Double.valueOf(options.getSumInsured()));
             indemnityOption.setPolicySchedule(policySchedule);
             indemnityOptionsList.add(indemnityOption);
         }
@@ -517,8 +517,8 @@ public class Mapper {
         indemnityOptionQueryModel.setId(indemnityOption.getId());
         indemnityOptionQueryModel.setIndemnityItemOption(indemnityOption.getIndemnityItemOption());
         indemnityOptionQueryModel.setIndemnityValue(indemnityOption.getIndemnityValue());
-        indemnityOptionQueryModel.setPremium(indemnityOption.getPremium());
-        indemnityOptionQueryModel.setSumInsured(indemnityOption.getSumInsured());
+        indemnityOptionQueryModel.setPremium(Double.valueOf(indemnityOption.getPremium()));
+        indemnityOptionQueryModel.setSumInsured(Double.valueOf(indemnityOption.getSumInsured()));
 
         return indemnityOptionQueryModel;
     }
