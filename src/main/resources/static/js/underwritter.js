@@ -128,6 +128,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.init = function () {
 
 		$scope.getPolicies();
+		$scope.getSubAgents();
 		if($rootScope.policyRequest == undefined){
 			$scope.getPolicyRequest(''+$cookieStore.get('reference'));
 			$scope.initNewPolicy($rootScope.policy,$rootScope.policyRequest);
@@ -170,10 +171,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
 			/*Initializing the Policy details*/
 			$scope.policy.underwritingYear = 2015;
-			$scope.policy.renewalDate = '7/12/2015';
-			$scope.policy.retroActiveDate = '7/12/2015';
 			$scope.policy.notes = $scope.wording.notes;
-			$scope.policy.subAgentId = 1;
 			$scope.policy.underwriterId = 1;
 
 			/*Initializing the Client's contact details*/
@@ -201,6 +199,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			$scope.policy.policySchedule.scheduleAttaching = $scope.wording.scheduleAttaching;
 			$scope.policy.policySchedule.premium = $rootScope.policyRequest.quotationOption.premium;
 			$scope.policy.policySchedule.excessStructure = $rootScope.policyRequest.quotationOption.excess;
+                        
+                  
 
 			angular.forEach($rootScope.policyRequest.quotation.quotationRequest.questionnaire,function(questionnairre){
 				switch(questionnairre.question){
@@ -209,8 +209,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 					$scope.policy.policySchedule.subjectMatter = questionnairre.answer;
 				case 'What is the maximum amount you wish to insure ?':
 					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
-					$scope.policy.policySchedule.maximumSumInsured = 2121212; //questionnairre.answer;
-					$scope.policy.policySchedule.sumInsured = 121212; //$scope.policy.policySchedule.maximumSumInsured;
+					$scope.policy.policySchedule.maximumSumInsured = questionnairre.answer;
+					$scope.policy.policySchedule.sumInsured = $scope.policy.policySchedule.maximumSumInsured;
 				case 'Please specify policy insecption date for annual cover :':
 					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
 					$scope.policy.inceptionDate = questionnairre.answer;
@@ -239,7 +239,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			if (status == 200) {
 				console.log('New policy saved successfully');
 				$rootScope.message = "Reference Number : " + data;
-				$location.path("/policies");
+				$scope.getPolicies()
+//				$location.path("/policies");
 			} else {
 				console.log('status:' + status);
 			}
@@ -283,9 +284,31 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			$rootScope.error = error;
 		});
 	};
+	
+	
+	$scope.getSubAgents = function () {
+		$http({
+			url: '/api/sub-agents',
+			method: 'get'
+		}).success(function (data, status) {
+			if (status == 200) {
+				console.log('All policies retrived sucessfully');
+				$scope.subAgents = data;
+				console.log($scope.subAgents );
+
+			} else {
+				console.log('status:' + status);
+				$rootScope.error = "error status code : " + status;
+
+			}
+		}).error(function (error) {
+			console.log(error);
+			$rootScope.error = error;
+		});
+	};
 
 	$scope.range = function () {
-		var rangeSize = 3;
+		var rangeSize = 0;
 		var ret = [];
 		var start;
 
@@ -369,19 +392,31 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	};
 
 	$scope.wording = {
-			'scheduleAttaching': '1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS\n2) POLYGON GENERAL',
-			'typeOfCover': 'Armed robbery, hijacking, and accidental damage...',
+			'scheduleAttaching': '1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS'+
+			'\n2) POLYGON GENERAL COMPUTER NUCLEAR EXCEPTIONS\n3) POLYGON CASH AND VALUABLES IN TRANSIT WORDING'+
+			'\n4) VAULT AND STATIC RISK COVER WORDING',
+			'typeOfCover': 'Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured. '+
+			'whilst in the custody and care of Protea Coin Group and/or whilst within the Nedbank Camera Managed Unit at the premises declared'+
+			'to Insurers, Excluding fraud, dishonesty or criminal involvement of the Insured or their employees.',
 			'geographicalDuration': 'refer to special conditions',
-			'specialCondition': 'Geographical and duration: Cash - once cash has recorded...',
+			'specialCondition': 'Geographical and duration: Cash - once cash has recorded',
 			'notes':'[Add notes for this policy]'
 
 	};
+    
 });
 
-underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $location, $routeParams) {
+underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $location, $routeParams,$http,$routeParams) {
 	$scope.client = {};
 	$scope.policy = {};
+	
 	$scope.init = function () {
+		
+		if($scope.policies == undefined){
+			console.log('Policies don\'t exists.');
+			$scope.getPolicies();
+			
+		}
 		$scope.getClient();
 
 
@@ -397,6 +432,29 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $loca
 			}
 		});
 
+	};
+	
+	/*Get all list of policies*/
+	$scope.getPolicies = function () {
+		$http({
+			url: '/api/policies',
+			method: 'get'
+		}).success(function (data, status) {
+			if (status == 200) {
+				console.log('All policies retrived sucessfully');
+				$rootScope.policies = data;
+				console.log($rootScope.policies);
+				console.log('Policies size :'+$rootScope.policies.length);
+
+			} else {
+				console.log('status:' + status);
+				$rootScope.error = "error status code : " + status;
+
+			}
+		}).error(function (error) {
+			console.log(error);
+			$rootScope.error = error;
+		});
 	};
 });
 

@@ -630,5 +630,14 @@ public class Mapper {
     	    	
     	return policyResult;
     }
+    
+    
+    public static List<SubAgentQueryModel> toSubAgentQueryModel(List<SubAgent> subAgents){
+    	List<SubAgentQueryModel> subAgentList = new ArrayList<SubAgentQueryModel>();
+    	for(SubAgent agent:subAgents){
+    		subAgentList.add(toSubAgentQueryModel(agent));
+    	}
+    	return subAgentList;
+    }
 
 }

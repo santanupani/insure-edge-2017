@@ -18,6 +18,7 @@ import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyScheduleCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
+import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -69,6 +70,7 @@ import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
+import za.co.polygon.model.SubAgentQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BankAccountRepository;
 import za.co.polygon.repository.BrokerRepository;
@@ -378,6 +380,14 @@ public class Service {
 		
 		log.info("Policy reference: "+policySchedule.getId());
 		return policy.getPolicyReference();
+	}
+	
+	@RequestMapping(value = "api/sub-agents", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<SubAgentQueryModel> getSubAgents() {
+		log.info("Find all sub agents");
+		List<SubAgent> subAgent = subAgentRepository.findAll();
+		List<SubAgentQueryModel> subAgents =  toSubAgentQueryModel(subAgent);
+		return subAgents;
 	}
 
 }

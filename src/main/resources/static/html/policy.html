@@ -191,26 +191,16 @@
 															<tbody>
 																<tr>
 																	<td><select class="form-control"
-																		ng-model="subAgent.id"
-																		ng-options="subAgentName for subAgentName in policyOptions.subAgentNames">
+																		ng-model="policy.subAgentId"
+																		ng-options="subAgent.id as subAgent.firstName for subAgent in subAgents">
 																			<option value=""></option>
 																	</select></td>
 																	<td><input type="text" class="form-control"
-																		ng-model="t"></td>
+																		ng-model="policy.policySchedule.commission"></td>
 																	<td><input type="text" class="form-control"
-																		ng-model="t"></td>
+																		ng-model="policy.policySchedule.status"></td>
 																</tr>
-																<tr>
-																	<td><select class="form-control"
-																		ng-model="subAgent.ids"
-																		ng-options="subAgentName for subAgentName in policyOptions.subAgentNames">
-																			<option value=""></option>
-																	</select></td>
-																	<td><input type="text" class="form-control"
-																		ng-model="t"></td>
-																	<td><input type="text" class="form-control"
-																		ng-model="t"></td>
-																</tr>
+																
 															</tbody>
 														</table>
 
