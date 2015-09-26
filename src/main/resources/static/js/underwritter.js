@@ -26,9 +26,9 @@ underwritter.filter('offset', function () {
 	};
 });
 
-$(document).ready(function () {
-	$("#regId").mouseout().css("text-transform", "uppercase");
-});
+//$(document).ready(function () {
+//	$("#regId").mouseout().css("text-transform", "uppercase");
+//});
 
 underwritter.controller('policyRequestCtrl',function($scope, $rootScope, $http, $routeParams,$cookieStore){
 	$scope.mode;
@@ -116,41 +116,42 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.itemsPerPage = 5;
 	$scope.currentPage = 0;
 	$rootScope.policies = [];
-	$rootScope.policyRequest;
-
+	
 	$scope.policy = {};
 	$scope.policy.client = {};
 	$scope.policy.client.contact = {};
 	$scope.policy.client.bankAccount = {};
 	$scope.policy.policySchedule = {};
 	$scope.policy.policySchedule.indemnityOption = [{}];
+	$scope.btnValue;
+	
 
 	$scope.init = function () {
-
+		$scope.isUpdate = false;
+		$scope.getClient();
+		$scope.btnValue = (angular.equals($scope.policy.policyReference,'New-Policy-Creation'))? 'Update':'Create Policy';
 		$scope.getPolicies();
+		$scope.getPolicyRequest($cookieStore.get('reference'))
 		$scope.getSubAgents();
-		if($rootScope.policyRequest == undefined){
-			$scope.getPolicyRequest(''+$cookieStore.get('reference'));
-			$scope.initNewPolicy($rootScope.policy,$rootScope.policyRequest);
-		}
-
-		$rootScope.policies.push($scope.initNewPolicy($rootScope.policy,$rootScope.policyRequest));
-		console.log('Policies size :'+$rootScope.policies.length);
+		$scope.initNewPolicy($rootScope.policy);
+		$scope.policies.push($rootScope.policy);
 
 	};
-
+	
 	$scope.getPolicyRequest = function (reference) {
+		console.log('Ref: '+reference);
+		
 		$http({
 			url: '/api/policy-requests/' + reference,
 			method: 'get'
 		}).success(function (data, status) {
 			if (status == 200) {
-				console.log('policy Request retrived sucessfully');
+				console.log('Retrieving policyRequest for policy creation');
 				$rootScope.policyRequest = data;
-				console.log('Returned policy request: '+data);
+				console.log('Returned policy request: '+$rootScope.policyRequest.quotation.quotationRequest.reference);
 			} else {
 				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
+				$scope.error = "error status code : " + status;
 
 			}
 		}).error(function (error) {
@@ -159,17 +160,15 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		});
 	};
 
-
 	/*Initialize new policy*/
-	$scope.initNewPolicy = function (policy,policyRequest) {
-
+	$scope.initNewPolicy = function (policy) {
+		
 		if (policy != undefined) {
-
-			console.log('Policy request :'+policyRequest);
-			$scope.policy.policyReference = '[New-Policy-Creation]';
-			$scope.policy.brokerFee = 20;
-
+			$scope.getPolicyRequest($cookieStore.get('reference'));
+			console.log('initializing new policy state');
 			/*Initializing the Policy details*/
+//			$scope.policy.policyReference = 'New-Policy-Creation';
+			$scope.policy.brokerFee = 20;
 			$scope.policy.underwritingYear = 2015;
 			$scope.policy.notes = $scope.wording.notes;
 			$scope.policy.underwriterId = 1;
@@ -202,18 +201,25 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                         
                   
 
-			angular.forEach($rootScope.policyRequest.quotation.quotationRequest.questionnaire,function(questionnairre){
+			angular.forEach($scope.policyRequest.quotation.quotationRequest.questionnaire,function(questionnairre){
 				switch(questionnairre.question){
 				case 'What do you wish to insure ?':
 					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
 					$scope.policy.policySchedule.subjectMatter = questionnairre.answer;
 				case 'What is the maximum amount you wish to insure ?':
 					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
-					$scope.policy.policySchedule.maximumSumInsured = questionnairre.answer;
+					var maxSumToken = questionnairre.answer.split(',');
+					var tokenMax ='';
+					for(i=0;i<maxSumToken.length;i++){
+						tokenMax += maxSumToken[i];
+					}
+					$scope.policy.policySchedule.maximumSumInsured = tokenMax;
 					$scope.policy.policySchedule.sumInsured = $scope.policy.policySchedule.maximumSumInsured;
+					
 				case 'Please specify policy insecption date for annual cover :':
 					console.log('Question:'+questionnairre.question+', answer is: '+questionnairre.answer);
 					$scope.policy.inceptionDate = questionnairre.answer;
+				case '':
 				}
 			});
 			$scope.policy.policySchedule.typeOfCover = $scope.wording.typeOfCover;
@@ -221,40 +227,49 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
 		} else {
 			$scope.policy = $rootScope.policy;
-			console.log('Existing Policy :'+$rootScope.policy.client.clientName);
+			console.log('Existing Policy :'+$scope.policy.client.clientName);
 		}
-
-		return $scope.policy;
+	};
+	
+	$scope.update = function(isUpdated){
+		$scope.isUpdate = isUpdated;
 	};
 
-	$scope.submitForPolicy = function (form) {
-		$http({
-			url: '/api/policy',
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			data: $scope.policy
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('New policy saved successfully');
-				$rootScope.message = "Reference Number : " + data;
-				$scope.getPolicies()
-//				$location.path("/policies");
-			} else {
-				console.log('status:' + status);
-			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.message = error;
-		});
+	$scope.submitForPolicy = function (isValid) {
+		if (!isValid) {
+			console.log("Form Validation Failure");
+		} else {
+			$http({
+				url: '/api/policy',
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				data: $scope.policy
+			}).success(function (data, status) {
+				if (status == 200) {
+					console.log('New policy saved successfully');
+					$rootScope.message = "Reference Number : " + data;
+					$scope.getPolicies()
+//					$location.path("/policies");
+				} else {
+					console.log('status:' + status);
+				}
+			}).error(function (error) {
+				console.log(error);
+				$rootScope.message = error;
+			});
+		}
+		
 	};
 
 	/* A UI selected policy to be displayed*/
 	$rootScope.getPolicy = function (reference) {
-		angular.forEach($scope.policies, function (policy) {
+		angular.forEach($rootScope.policies, function (policy) {
 			if (angular.equals(reference, policy.policyReference)) {
 				$scope.policy = policy;
+				$scope.update(true);
+				$scope.btnValue = 'Save Changes'
 				$location.path('/policy/' + reference);
 			}
 		});
@@ -292,7 +307,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			method: 'get'
 		}).success(function (data, status) {
 			if (status == 200) {
-				console.log('All policies retrived sucessfully');
+				console.log('All subAgents retrived sucessfully');
 				$scope.subAgents = data;
 				console.log($scope.subAgents );
 
@@ -403,30 +418,43 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			'notes':'[Add notes for this policy]'
 
 	};
+	
+	$scope.getClient = function () {
+		angular.forEach($rootScope.policies, function (policy) {
+			if (angular.equals($routeParams.policyReference, policy.policyReference)) {
+				$scope.policy = policy;
+				$scope.policy.client = policy.client;
+				console.log('Client UI policies size: '+$rootScope.policies.length);
+				console.log('Client :' + $scope.policy.client);
+				$location.path('/client/' + $routeParams.policyReference);
+			}
+		});
+
+	};
     
 });
 
-underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $location, $routeParams,$http,$routeParams) {
+underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $location, $routeParams,$http,$routeParams,$cookieStore) {
 	$scope.client = {};
 	$scope.policy = {};
 	
 	$scope.init = function () {
 		
-		if($scope.policies == undefined){
+		if($rootScope.policies == undefined){
 			console.log('Policies don\'t exists.');
 			$scope.getPolicies();
 			
 		}
 		$scope.getClient();
 
-
 	};
 
 	$scope.getClient = function () {
-		angular.forEach($scope.policies, function (policy) {
+		angular.forEach($rootScope.policies, function (policy) {
 			if (angular.equals($routeParams.policyReference, policy.policyReference)) {
 				$scope.policy = policy;
 				$scope.policy.client = policy.client;
+				console.log('Client UI policies size: '+$rootScope.policies.length);
 				console.log('Client :' + $scope.policy.client);
 				$location.path('/client/' + $routeParams.policyReference);
 			}
@@ -444,6 +472,7 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $loca
 				console.log('All policies retrived sucessfully');
 				$rootScope.policies = data;
 				console.log($rootScope.policies);
+				$scope.getClient();
 				console.log('Policies size :'+$rootScope.policies.length);
 
 			} else {
@@ -456,6 +485,8 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $loca
 			$rootScope.error = error;
 		});
 	};
+	
+
 });
 
 
