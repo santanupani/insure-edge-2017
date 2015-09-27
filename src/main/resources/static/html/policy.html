@@ -1,13 +1,15 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-	<div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Success ! </strong>{{message}}
-    </div>
+	<div class="alert alert-success alert-dismissible" role="alert"
+		ng-if="message">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close" ng-click="closeNotification()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Success ! </strong>{{message}}
+	</div>
 
 	<div class="col-md-12">
-		<form role="form" name="form" ng-submit="submitForPolicy(form$.valid)" novalidate class="css-form">
+		<form name="form" ng-submit="submitForPolicy(form.$valid)" novalidate>
 			<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 
 				<div class="panel-heading">
@@ -42,20 +44,23 @@
 											<div class="form-group">
 												<label>Inception Date</label> <input type="text"
 													class="form-control" ng-model="policy.inceptionDate"
-													 />
+													ng-readonly="isUpdate" />
 											</div>
 											<div class="form-group">
-												<label>Renewal Date</label> <input type="text"
-													class="form-control" ng-model="policy.renewalDate" />
+												<label>Renewal Date</label> <input type="text" form="form"
+													class="form-control" ng-model="policy.renewalDate"
+													ng-readonly="isUpdate" />
 											</div>
 											<div class="form-group">
 												<label>Retroactive Date</label> <input type="text"
-													class="form-control" ng-model="policy.retroActiveDate" />
+													form="form" class="form-control"
+													ng-model="policy.retroActiveDate" ng-readonly="isUpdate" />
 											</div>
 
 											<div class="form-group">
 												<label>Device</label> <select class="form-control"
 													ng-model="policy.device" id="dev" required
+													ng-readonly="isUpdate"
 													ng-options="deviceOption for deviceOption in policyOptions.deviceOptions">
 													<option value=""></option>
 												</select>
@@ -68,6 +73,7 @@
 											<div class="form-group">
 												<label>Sasria Frequency</label> <select class="form-control"
 													ng-model="policy.sasriaFrequency" id="sas" required
+													ng-readonly="isUpdate"
 													ng-options="sasriaOption for sasriaOption in policyOptions.sasriaFrequencyOptions">
 													<option value=""></option>
 												</select>
@@ -75,26 +81,28 @@
 											<div class="form-group">
 												<label>Frequency</label> <select class="form-control"
 													ng-model="policy.frequency" id="fre" required
+													ng-readonly="isUpdate"
 													ng-options="frequencyOption for frequencyOption in policyOptions.frequencyOptions">
 													<option value=""></option>
 												</select>
 											</div>
 											<div class="form-group">
 												<label>Status</label> <select class="form-control"
-													ng-model="policy.status" required
+													ng-model="policy.status" required ng-readonly="isUpdate"
 													ng-options="statusOption for statusOption in policyOptions.stats">
 													<option value=""></option>
 												</select>
 											</div>
 											<div class="form-group">
 												<label>Underwriter Fee</label> <input type="text"
-													class="form-control" ng-model="policy.underwriterFee"
-													required />
+													ng-readonly="isUpdate" class="form-control"
+													ng-model="policy.underwriterFee" required />
 											</div>
 
 											<div class="form-group">
 												<label>Re-Instatement</label> <select class="form-control"
 													ng-model="policy.reInstatement" id="dev" required
+													ng-readonly="isUpdate"
 													ng-options="reInstatementOption for reInstatementOption in policyOptions.reInstatements">
 													<option value=""></option>
 												</select>
@@ -104,23 +112,25 @@
 											<div class="form-group">
 												<label>Notes</label>
 												<textarea class="form-control" rows="8"
-													ng-model="policy.notes" required></textarea>
+													ng-readonly="isUpdate" ng-model="policy.notes" required></textarea>
 											</div>
 
 											<div class="form-group">
 												<label>Broker Fee</label> <input type="text"
-													class="form-control" ng-model="policy.brokerFee" />
+													ng-readonly="isUpdate" class="form-control"
+													ng-model="policy.brokerFee" />
 											</div>
 
 											<div class="form-group form-inline">
 												<input type="checkbox" class="form-control"
-													ng-model="policy.collectByDebitOrder" /> <label>Collect
-													By Debit Order</label>
+													ng-model="policy.collectByDebitOrder" required
+													ng-readonly="isUpdate" /> <label>Collect By Debit
+													Order</label>
 											</div>
 											<div class="form-group form-inline">
-												<input type="checkbox" class="form-control"
-													ng-model="policy.excludeSasria" /> <label>Exclude
-													Sasria</label>
+												<input type="checkbox" class="form-control" 
+													ng-readonly="isUpdate" ng-model="policy.excludeSasria" />
+												<label>Exclude Sasria</label>
 											</div>
 
 										</div>
@@ -162,7 +172,8 @@
 														<div class="form-group">
 															<label>UA Commission</label> <input type="text"
 																class="form-control"
-																ng-model="policy.policySchedule.uacommission" />
+																ng-model="policy.policySchedule.uacommission"
+																ng-readonly="isUpdate" required />
 														</div>
 													</div>
 												</div>
@@ -191,16 +202,19 @@
 															<tbody>
 																<tr>
 																	<td><select class="form-control"
-																		ng-model="policy.subAgentId"
+																		ng-model="policy.subAgentId" ng-readonly="isUpdate"
+																		required
 																		ng-options="subAgent.id as subAgent.firstName for subAgent in subAgents">
 																			<option value=""></option>
 																	</select></td>
 																	<td><input type="text" class="form-control"
+																		required ng-readonly="isUpdate"
 																		ng-model="policy.policySchedule.commission"></td>
 																	<td><input type="text" class="form-control"
+																		required ng-readonly="isUpdate"
 																		ng-model="policy.policySchedule.status"></td>
 																</tr>
-																
+
 															</tbody>
 														</table>
 
@@ -244,13 +258,14 @@
 
 													<div class="form-group">
 														<label>Schedule Attaching to and Forming Part of</label>
-														<textarea class="form-control"
+														<textarea class="form-control" ng-readonly="isUpdate"
 															ng-model="policy.policySchedule.scheduleAttaching"></textarea>
 													</div>
 													<div class="form-group">
 														<label>Type of Cover:</label>
 														<textarea class="form-control"
-															ng-model="policy.policySchedule.typeOfCover" /></textarea>
+															ng-model="policy.policySchedule.typeOfCover"
+															ng-readonly="isUpdate" /></textarea>
 													</div>
 
 													<div class="form-group">
@@ -262,20 +277,18 @@
 														<label>Excess Structure:</label>
 														</h4>
 														<input type="text" class="form-control"
-															ng-model="policy.policySchedule.excessStructure" readonly>
+															ng-model="policy.policySchedule.excessStructure"
+															ng-readonly="isUpdate" required />
 													</div>
 
 													<div class="form-group">
 														<label>Special Policy Conditions</label>
 														</h4>
 														<input type="text" class="form-control"
+															ng-readonly="isUpdate" required
 															ng-model="policy.policySchedule.specialCondition">
 													</div>
 
-													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a> <a
-															ng-href="#/client" role="link">Cancel</a>
-													</div>
 
 												</div>
 											</div>
@@ -570,11 +583,14 @@
 						</div>
 
 					</div>
-
+					<div class="pull-center">
+						<a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(false)" role="link">Update</a>
+						<a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(true)" role="link">Cancel</a>
+					</div>
 				</div>
 
 				<div class="panel-footer text-right">
-					<button class="btn btn-success" type="submit">Approve</button>
+					<button class="btn btn-success" type="submit">{{btnValue}}</button>
 					<button class="btn btn-danger">Reject</button>
 				</div>
 
