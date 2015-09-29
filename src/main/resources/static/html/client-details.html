@@ -10,7 +10,7 @@
 
 			</div>
 			<div class="panel-body">
-
+                            <form role="form" name="form" id="form">
 				<div class="row">
 					<div class="col-md-6">
 
@@ -21,24 +21,24 @@
 							<div class="panel-body">
 
 								<div class="form-group">
-									<label>Client Name</label> <input type="text"
+									<label>Company Name</label> <input type="text"
 										class="form-control" ng-model="policy.client.clientName"
-										readonly="readonly" />
+										ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Reg no</label> <input type="text" class="form-control"
-										ng-model="policy.client.regNumber" readonly="readonly" />
+										ng-model="policy.client.regNumber" ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Vat No</label> <input type="text" class="form-control"
-										ng-model="policy.client.vatNumber" readonly="readonly" />
+										ng-model="policy.client.vatNumber" ng-readonly="is_readonly" />
 								</div>
 								
 								<div class="form-group">
 									<label>Income Tax Number</label> <input type="text" class="form-control"
-										ng-model="policy.client.incomeTaxNumber" readonly="readonly" />
+										ng-model="policy.client.incomeTaxNumber" ng-readonly="is_readonly" />
 								</div>
 							</div>
 						</div>
@@ -58,24 +58,24 @@
 									<label>Account No </label> <input type="text"
 										class="form-control"
 										ng-model="policy.client.bankAccounts.accountNumber"
-										readonly="readonly" />
+										ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Account Name</label> <input type="text"
 										class="form-control"
-										ng-model="policy.client.bankAccounts.accountName" readonly="readonly" />
+										ng-model="policy.client.bankAccounts.accountName" ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Branch </label> <input type="text" class="form-control"
-										ng-model="policy.client.bankAccounts.branch" readonly="readonly" />
+										ng-model="policy.client.bankAccounts.branch" ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Bank Name</label> <input type="text"
 										class="form-control" ng-model="policy.client.bankAccounts.bankName"
-										readonly="readonly" />
+										ng-readonly="is_readonly" />
 								</div>
 							</div>
 						</div>
@@ -93,39 +93,41 @@
 							<div class="panel-body">
 								<div class="form-group">
 									<label>Email</label> <input type="text" class="form-control"
-										ng-model="policy.client.contact.email" readonly="readonly" />
+										ng-model="policy.client.contact.email" ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Contact Person </label> <input type="text"
 										class="form-control" ng-model="policy.client.contact.contactPerson"
-										readonly="readonly" />
+										ng-readonly="is_readonly" />
 								</div>
 								<div class="form-group">
 									<label>Street </label> <input type="text" class="form-control"
-										ng-model="policy.client.contact.street" readonly="readonly" />
+										ng-model="policy.client.contact.street" ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Suburb</label> <input type="text" class="form-control"
-										ng-model="policy.client.contact.suburb" readonly="readonly" />
+										ng-model="policy.client.contact.suburb" ng-readonly="is_readonly" />
 								</div>
 
 								<div class="form-group">
 									<label>Code</label> <input type="text" class="form-control"
-										ng-model="policy.client.contact.code" readonly="readonly" />
+										ng-model="policy.client.contact.code" ng-readonly="is_readonly" />
 								</div>
 							</div>
 
 						</div>
 					</div>
 				</div>
+                        </form>
 			</div>
 			<div class="panel-footer text-right">
 				<p>
 
 					<a class="btn btn-info" ng-href="#/policy/{{policy.policyReference}}" role="button">Back</a>
-					<button class="btn btn-info">Update</button>
+                                        <button type="submit" class="btn btn-info" form="form"  ng-click="updateClient()">Update</button>
+                                        <button type="submit" class="btn btn-info" form="form"  ng-disabled="isDisabled" ng-click="edit(false,true)">Edit</button>
 				</p>
 			</div>
 		</div>

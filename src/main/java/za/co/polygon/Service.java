@@ -41,6 +41,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.DocumentException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import org.hibernate.jpamodelgen.xml.jaxb.PersistenceUnitDefaults;
 
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
@@ -57,7 +60,9 @@ import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
+import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.ClientCommandModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
@@ -151,6 +156,8 @@ public class Service {
 	@Autowired
 	private PolicyScheduleRepository policyScheduleRepository;
 	
+        @Autowired
+        private EntityManager entityManager;
 	
 
 	@RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -388,6 +395,16 @@ public class Service {
 		List<SubAgent> subAgent = subAgentRepository.findAll();
 		List<SubAgentQueryModel> subAgents =  toSubAgentQueryModel(subAgent);
 		return subAgents;
+	}
+        
+        
+        @Transactional
+	@RequestMapping(value = "api/client/{policyReference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+	public void updateClient(@PathVariable("policyReference") String policyReference, @RequestBody PolicyQueryModel policyQueryModel) throws ParseException {
+	 
+                Policy policy = policyRepository.findByPolicyReference(policyReference);
+                Client client = policy.getClient();
+                clientRepository.save(toClientCommandModel(policyQueryModel,client));
 	}
 
 }

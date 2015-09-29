@@ -347,27 +347,27 @@ public class Mapper {
         return selectedQuotationQueryModel;
     }
 
-    public static Contact toContactCommandModel(ContactCommandModel contactCommandModel) {
+    public static Contact toContactCommandModel(ClientCommandModel clientCommandModel) {
         Contact contact = new Contact();
 
-        contact.setCode(contactCommandModel.getCode());
-        contact.setContactPerson(contactCommandModel.getContactPerson());
-        contact.setEmail(contactCommandModel.getEmail());
-        contact.setFaxNumber(contactCommandModel.getFaxNumber());
-        contact.setStreet(contactCommandModel.getStreet());
-        contact.setSuburb(contactCommandModel.getSuburb());
-        contact.setWorkTelNumber(contactCommandModel.getWorkTelNumber());
+        contact.setCode(clientCommandModel.getContact().getCode());
+        contact.setContactPerson(clientCommandModel.getContact().getContactPerson());
+        contact.setEmail(clientCommandModel.getContact().getEmail());
+        contact.setFaxNumber(clientCommandModel.getContact().getFaxNumber());
+        contact.setStreet(clientCommandModel.getContact().getStreet());
+        contact.setSuburb(clientCommandModel.getContact().getSuburb());
+        contact.setWorkTelNumber(clientCommandModel.getContact().getWorkTelNumber());
 
         return contact;
     }
 
-    public static BankAccount toBankAccountCommandModel(BankAccountCommandModel bankAccountCommandModel) {
+    public static BankAccount toBankAccountCommandModel(ClientCommandModel clientCommandModel) {
         BankAccount bankAccount = new BankAccount();
 
-        bankAccount.setAccountName(bankAccountCommandModel.getAccountName());
-        bankAccount.setAccountNumber(bankAccountCommandModel.getAccountNumber());
-        bankAccount.setBankName(bankAccountCommandModel.getBankName());
-        bankAccount.setBranchCode(bankAccount.getBranchCode());
+        bankAccount.setAccountName(clientCommandModel.getBankAccount().getAccountName());
+        bankAccount.setAccountNumber(clientCommandModel.getBankAccount().getAccountNumber());
+        bankAccount.setBankName(clientCommandModel.getBankAccount().getBankName());
+        bankAccount.setBranchCode(clientCommandModel.getBankAccount().getBranch());
 
         return bankAccount;
     }
@@ -638,6 +638,33 @@ public class Mapper {
     		subAgentList.add(toSubAgentQueryModel(agent));
     	}
     	return subAgentList;
+    }
+    
+    public static Client toClientCommandModel(PolicyQueryModel policyQueryModel, Client client){
+        
+        client.setClientName(policyQueryModel.getClient().getClientName());
+        client.setIncomeTaxNumber(policyQueryModel.getClient().getIncomeTaxNumber());
+        client.setRegNumber(policyQueryModel.getClient().getRegNumber());
+        client.setVatNumber(policyQueryModel.getClient().getVatNumber());
+        //Bank
+        BankAccount bankAccount = client.getBankAccount();
+        bankAccount.setAccountName(policyQueryModel.getClient().getBankAccounts().getAccountName());
+        bankAccount.setAccountNumber(policyQueryModel.getClient().getBankAccounts().getAccountNumber());
+        bankAccount.setBankName(policyQueryModel.getClient().getBankAccounts().getBankName());
+        bankAccount.setBranchCode(policyQueryModel.getClient().getBankAccounts().getBranch());
+        
+        Contact contact = client.getContact();
+        contact.setCode(policyQueryModel.getClient().getContact().getCode());
+        contact.setContactPerson(policyQueryModel.getClient().getContact().getContactPerson());
+        contact.setEmail(policyQueryModel.getClient().getContact().getEmail());
+        contact.setFaxNumber(policyQueryModel.getClient().getContact().getFaxNumber());
+        contact.setStreet(policyQueryModel.getClient().getContact().getStreet());
+        contact.setSuburb(policyQueryModel.getClient().getContact().getSuburb());
+        contact.setWorkTelNumber(policyQueryModel.getClient().getContact().getWorkTelNumber());
+        
+        Client updatedClient = client;
+        
+        return updatedClient;
     }
 
 }
