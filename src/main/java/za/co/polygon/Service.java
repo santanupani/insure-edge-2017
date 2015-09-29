@@ -42,8 +42,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.DocumentException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import org.hibernate.jpamodelgen.xml.jaxb.PersistenceUnitDefaults;
 
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
@@ -62,7 +60,6 @@ import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
 import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import za.co.polygon.model.BrokerQueryModel;
-import za.co.polygon.model.ClientCommandModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
@@ -306,7 +303,7 @@ public class Service {
 		log.info("saved all the values");
 		log.info("Policy Request Object :" + policyRequest.toString());
 
-		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "thabo.thulare@reverside.co.za", "Thabo Thulare");
+		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "polygon.testing@gmail.com", "Polygon Underwritter");
 	}
 
 	@RequestMapping(value = "api/policy-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
