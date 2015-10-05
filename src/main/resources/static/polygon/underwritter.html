@@ -22,9 +22,17 @@
         <div id="wrapper" class="container-fluid" > 
 
             <div id="header" ng-include="'/html/underwritter-header.html'"></div>
-
-            <div id="content" ng-view>Loading....</div>
-
+            
+            <div class="row" >
+                
+                <div class="col-md-3">
+                    <div  ng-include="'/html/underwritter-menu.html'"></div>
+                </div>
+                <div class="col-md-9">
+                    <div id="content" ng-view>Loading....</div>
+                </div>
+            </div>
+            
             <div id="footer" ng-include="'/html/underwritter-footer.html'"></div>
 
         </div>

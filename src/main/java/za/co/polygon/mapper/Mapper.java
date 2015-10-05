@@ -310,12 +310,12 @@ public class Mapper {
         return quotationOptionQueryModel;
     }
 
-    public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest, Quotation quotation, QuotationOption quotationOption) {
+    public static PolicyRequestQueryModel toPolicyRequestQueryModel(PolicyRequest policyRequest) {
 
         PolicyRequestQueryModel policyRequestQueryModel = new PolicyRequestQueryModel();
 
-        policyRequestQueryModel.setQuotation(toQuotationQueryModel(quotation));
-        policyRequestQueryModel.setQuotationOption(toQuotationOptionQueryModel(quotationOption));
+        policyRequestQueryModel.setQuotation(toQuotationQueryModel(policyRequest.getQuotation()));
+        policyRequestQueryModel.setQuotationOption(toQuotationOptionQueryModel(policyRequest.getQuotationOption()));
         policyRequestQueryModel.setCompanyRegNumber(policyRequest.getCompanyRegNumber());
         policyRequestQueryModel.setVatRegNumber(policyRequest.getVatRegNumber());
         policyRequestQueryModel.setTelephoneNumber(policyRequest.getTelephoneNumber());
@@ -337,6 +337,15 @@ public class Mapper {
 
         return policyRequestQueryModel;
 
+    }
+    
+    public static List<PolicyRequestQueryModel> toPolicyRequestQueryModel(List<PolicyRequest> fromList ){
+        List<PolicyRequestQueryModel> policyRequestList = new ArrayList<PolicyRequestQueryModel>();
+        
+        for (PolicyRequest policyRequest : fromList){
+            policyRequestList.add(toPolicyRequestQueryModel(policyRequest));
+        }
+        return policyRequestList;
     }
 
     public static SelectedQuotationQueryModel toSelectedQuotationQueryModel(Quotation quotation, QuotationOption quotationOption) {

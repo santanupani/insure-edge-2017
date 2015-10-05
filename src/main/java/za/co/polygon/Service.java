@@ -316,7 +316,7 @@ public class Service {
 		log.info("PolicyRequest object: " + policyRequest.toString());
 		QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequest.getQuotationOption().getId());
 		log.info("QuotationOption object: " + quotationOption.toString() + "\nSelected Option ID: " + quotationOption.getId());
-		return toPolicyRequestQueryModel(policyRequest, quotation, quotationOption);
+		return toPolicyRequestQueryModel(policyRequest);
 
 	}
 
@@ -357,6 +357,15 @@ public class Service {
 		
 		return toPolicyQueryModel(policy);
 	}
+        
+        @RequestMapping(value = "api/policy-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public List<PolicyRequestQueryModel> getAllPolicyRequests(){
+            log.info("Find all Policy Requests");
+            List<PolicyRequest> policyRequests = policyRequestRepository.findAll();
+            List<PolicyRequestQueryModel> policyRequestQueryModel = toPolicyRequestQueryModel(policyRequests);
+            
+            return  policyRequestQueryModel;
+        }
 	
 	/*The all the policies*/
 	@RequestMapping(value = "api/policies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

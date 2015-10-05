@@ -1,601 +1,537 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-	<div class="alert alert-success alert-dismissible" role="alert"
-		ng-if="message">
-		<button type="button" class="close" data-dismiss="alert"
-			aria-label="Close" ng-click="closeNotification()">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		<strong>Success ! </strong>{{message}}
-	</div>
-
-	<div class="col-md-12">
-		<form name="form" ng-submit="submitForPolicy(form.$valid)" novalidate>
-			<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-
-				<div class="panel-heading">
-					<h4>
-						<b>Policy Summary for Policy Ref.: </b>{{policy.policyReference}}
-						<span class="pull-right" style="font: 14px Lucinda red"><b>Logged-In:</b>
-							{{policy.underwriter.firstName}} {{policy.underwriter.lastName}}</span>
-					</h4>
-				</div>
-
-				<div class="panel-body">
-
-					<div class="row">
-
-						<div class="col-md-8">
-							<div class="panel panel-default"
-								style="box-shadow: 0 0 30px #ffff;">
-								<div class="panel-heading">
-									<h5>
-										<b>Policy Details</b>
-									</h5>
-								</div>
-								<div class="panel-body">
-									<div class="row">
-										<div class="col-md-3">
-											<div class="form-group">
-												<label>Underwritting Year</label> <input type="text"
-													class="form-control" ng-model="policy.underwritingYear"
-													readonly />
-											</div>
-
-											<div class="form-group">
-												<label>Inception Date</label> <input type="text"
-													class="form-control" ng-model="policy.inceptionDate"
-													ng-readonly="isUpdate" />
-											</div>
-											<div class="form-group">
-												<label>Renewal Date</label> <input type="text" form="form"
-													class="form-control" ng-model="policy.renewalDate"
-													ng-readonly="isUpdate" />
-											</div>
-											<div class="form-group">
-												<label>Retroactive Date</label> <input type="text"
-													form="form" class="form-control"
-													ng-model="policy.retroActiveDate" ng-readonly="isUpdate" />
-											</div>
-
-											<div class="form-group">
-												<label>Device</label> <select class="form-control"
-													ng-model="policy.device" id="dev" required
-													ng-readonly="isUpdate"
-													ng-options="deviceOption for deviceOption in policyOptions.deviceOptions">
-													<option value=""></option>
-												</select>
-											</div>
-
-										</div>
-
-										<div class="col-md-3">
-
-											<div class="form-group">
-												<label>Sasria Frequency</label> <select class="form-control"
-													ng-model="policy.sasriaFrequency" id="sas" required
-													ng-readonly="isUpdate"
-													ng-options="sasriaOption for sasriaOption in policyOptions.sasriaFrequencyOptions">
-													<option value=""></option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label>Frequency</label> <select class="form-control"
-													ng-model="policy.frequency" id="fre" required
-													ng-readonly="isUpdate"
-													ng-options="frequencyOption for frequencyOption in policyOptions.frequencyOptions">
-													<option value=""></option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label>Status</label> <select class="form-control"
-													ng-model="policy.status" required ng-readonly="isUpdate"
-													ng-options="statusOption for statusOption in policyOptions.stats">
-													<option value=""></option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label>Underwriter Fee</label> <input type="text"
-													ng-readonly="isUpdate" class="form-control"
-													ng-model="policy.underwriterFee" required />
-											</div>
-
-											<div class="form-group">
-												<label>Re-Instatement</label> <select class="form-control"
-													ng-model="policy.reInstatement" id="dev" required
-													ng-readonly="isUpdate"
-													ng-options="reInstatementOption for reInstatementOption in policyOptions.reInstatements">
-													<option value=""></option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Notes</label>
-												<textarea class="form-control" rows="8"
-													ng-readonly="isUpdate" ng-model="policy.notes" required></textarea>
-											</div>
-
-											<div class="form-group">
-												<label>Broker Fee</label> <input type="text"
-													ng-readonly="isUpdate" class="form-control"
-													ng-model="policy.brokerFee" />
-											</div>
-
-											<div class="form-group form-inline">
-												<input type="checkbox" class="form-control"
-													ng-model="policy.collectByDebitOrder" required
-													ng-readonly="isUpdate" /> <label>Collect By Debit
-													Order</label>
-											</div>
-											<div class="form-group form-inline">
-												<input type="checkbox" class="form-control" 
-													ng-readonly="isUpdate" ng-model="policy.excludeSasria" />
-												<label>Exclude Sasria</label>
-											</div>
-
-										</div>
-									</div>
-									<div class="row">
-
-										<div class="panel-default" style="box-shadow: 0 0 30px #ffff;">
-											<div class="panel-heading">
-												<h5>
-													<b>Accounting Summary</b>
-												</h5>
-											</div>
-
-											<div class="panel-body">
-												<div class="row">
-													<div class="col-sm-3">
-														<div class="form-group">
-															<label>Sum Insured</label> <input type="text"
-																class="form-control"
-																ng-model="policy.policySchedule.sumInsured" readonly />
-														</div>
-													</div>
-													<div class="col-sm-3">
-														<div class="form-group">
-															<label>Max Sum Insured</label> <input type="text"
-																class="form-control"
-																ng-model="policy.policySchedule.maximumSumInsured"
-																readonly />
-														</div>
-													</div>
-													<div class="col-sm-3">
-														<div class="form-group">
-															<label>Premium</label> <input type="text"
-																class="form-control"
-																ng-model="policy.policySchedule.premium" readonly />
-														</div>
-													</div>
-													<div class="col-sm-3">
-														<div class="form-group">
-															<label>UA Commission</label> <input type="text"
-																class="form-control"
-																ng-model="policy.policySchedule.uacommission"
-																ng-readonly="isUpdate" required />
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-
-										<div class="panel-default" style="box-shadow: 0 0 30px #ffff;">
-											<div class="panel-heading">
-												<h5>
-													<b>SubAgent Details</b>
-												</h5>
-											</div>
-
-											<div class="panel-body">
-												<div class="row">
-													<div class="col-md-12">
-														<table class="table table-boarded">
-															<thead>
-																<tr>
-																	<th>Agent Name</th>
-																	<th>Commission</th>
-																	<th>Status</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td><select class="form-control"
-																		ng-model="policy.subAgentId" ng-readonly="isUpdate"
-																		required
-																		ng-options="subAgent.id as subAgent.firstName for subAgent in subAgents">
-																			<option value=""></option>
-																	</select></td>
-																	<td><input type="text" class="form-control"
-																		required ng-readonly="isUpdate"
-																		ng-model="policy.policySchedule.commission"></td>
-																	<td><input type="text" class="form-control"
-																		required ng-readonly="isUpdate"
-																		ng-model="policy.policySchedule.status"></td>
-																</tr>
-
-															</tbody>
-														</table>
-
-													</div>
-												</div>
-											</div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-
-							<div class="panel panel-default"
-								style="box-shadow: 0 0 30px #ffff;">
-								<div class="panel-heading">
-									<h5>
-										<b>Policy Schedule Summary</b>
-									</h5>
-								</div>
-
-								<div class="panel-body">
-
-									<div id="accordion" class="panel-group">
-
-										<div class="panel panel-default">
-
-											<div class="panel-heading">
-
-												<h4 class="panel-title">
-
-													<a data-toggle="collapse" data-parent="#accordion"
-														href="/#collapseOne">General</a>
-
-												</h4>
-
-											</div>
-
-											<div id="collapseOne" class="panel-collapse collapse in">
-
-												<div class="panel-body">
-
-													<div class="form-group">
-														<label>Schedule Attaching to and Forming Part of</label>
-														<textarea class="form-control" ng-readonly="isUpdate"
-															ng-model="policy.policySchedule.scheduleAttaching"></textarea>
-													</div>
-													<div class="form-group">
-														<label>Type of Cover:</label>
-														<textarea class="form-control"
-															ng-model="policy.policySchedule.typeOfCover"
-															ng-readonly="isUpdate" /></textarea>
-													</div>
-
-													<div class="form-group">
-														<label>Subject Matter:</label> <input type="text"
-															class="form-control"
-															ng-model="policy.policySchedule.subjectMatter" readonly>
-													</div>
-													<div class="form-group">
-														<label>Excess Structure:</label>
-														</h4>
-														<input type="text" class="form-control"
-															ng-model="policy.policySchedule.excessStructure"
-															ng-readonly="isUpdate" required />
-													</div>
-
-													<div class="form-group">
-														<label>Special Policy Conditions</label>
-														</h4>
-														<input type="text" class="form-control"
-															ng-readonly="isUpdate" required
-															ng-model="policy.policySchedule.specialCondition">
-													</div>
-
-
-												</div>
-											</div>
-
-										</div>
-
-										<div class="panel panel-default">
-
-											<div class="panel-heading">
-
-												<h4 class="panel-title">
-
-													<a data-toggle="collapse" data-parent="#accordion"
-														href="/#collapseTwo">Limit of Indemnity</a>
-
-												</h4>
-
-											</div>
-
-											<div id="collapseTwo" class="panel-collapse collapse">
-
-												<div class="panel-body">
-													<table class="table table-bordered">
-														<thead>
-															<tr>
-																<th>Indemnity Option</th>
-																<th>Indemnity Value</th>
-																<th>Sum Insured</th>
-																<th>Premium</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr
-																ng-repeat="indemnity in policy.policySchedule.indemnityOption">
-																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityItemOption"></td>
-																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityValue"></td>
-																<td><input type="text" class="form-control"
-																	ng-model="indemnity.sumInsured"></td>
-																<td><input type="text" class="form-control"
-																	ng-model="indemnity.premium"></td>
-															</tr>
-														</tbody>
-													</table>
-
-													<div class="pull-right">
-														<a ng-href="#" role="link">Add Indemnity</a>
-													</div>
-
-												</div>
-
-											</div>
-
-										</div>
-
-										<div class="panel panel-default">
-
-											<div class="panel-heading">
-
-												<h4 class="panel-title">
-
-													<a data-toggle="collapse" data-parent="#accordion"
-														href="/#collapseThree">Conveyances</a>
-
-												</h4>
-
-											</div>
-
-											<div id="collapseThree" class="panel-collapse collapse">
-
-												<div class="panel-body">
-
-													<div class="form-group">
-														<label>Description</label>
-														<textarea class="form-control"
-															ng-model="policy.policySchedule.conveyances"></textarea>
-													</div>
-
-													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a> <a
-															ng-href="#/client" role="link">Cancel</a>
-													</div>
-
-												</div>
-
-											</div>
-
-										</div>
-
-										<div class="panel panel-default">
-
-											<div class="panel-heading">
-
-												<h4 class="panel-title">
-
-													<a data-toggle="collapse" data-parent="#accordion"
-														href="/#collapseFour">Geographical and Durations</a>
-
-												</h4>
-
-											</div>
-
-											<div id="collapseFour" class="panel-collapse collapse">
-
-												<div class="panel-body">
-
-													<div class="form-group">
-														<label>Description</label>
-														<textarea class="form-control"
-															ng-model="policy.policySchedule.geographicalDuration"></textarea>
-													</div>
-													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a> <a
-															ng-href="#/client" role="link">Cancel</a>
-													</div>
-												</div>
-											</div>
-
-										</div>
-
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-						<div class="col-md-4">
-							<!-- Entities Accordion Start -->
-
-
-							<div id="entities" class="panel-group">
-								<div class="panel panel-default"
-									style="box-shadow: 0 0 30px #ffff;">
-									<div class="panel-heading">
-										<h5>
-											<a data-toggle="collapse" data-parent="#entities"
-												href="/#search"><b>Policy List and Search</b></a>
-										</h5>
-									</div>
-									<div id="search" class="panel-body panel-collapse collapse in">
-
-										<div class="input-group">
-											<input type="text" class="form-control"
-												ng-model="clientPolicy"
-												placeholder="Search for PolicyRef or Client"> <span
-												class="input-group-btn">
-												<button type="submit" class="btn btn-default">
-													<span class="glyphicon glyphicon-search"></span>
-												</button>
-											</span>
-										</div>
-										<div>
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th>Client Name</th>
-														<th>Policy Reference</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr
-														ng-repeat="policy in policies | offset: currentPage*itemsPerPage | limitTo: itemsPerPage | filter:clientPolicy">
-
-														<td>{{policy.client.clientName}}</td>
-														<td><a ng-href="#/policy/{{policy.policyReference}}"
-															ng-click="getPolicy(policy.policyReference)">{{policy.policyReference}}</a></td>
-													</tr>
-												</tbody>
-												<tfoot>
-													<td colspan="3">
-														<div class="pagination" id="navi">
-															<ul>
-																<li ng-class="prevPageDisabled()"><a href
-																	ng-click="prevPage()">« Prev</a></li>
-																<li ng-repeat="n in range()"
-																	ng-class="{active: n == currentPage}"
-																	ng-click="setPage(n)"><a
-																	href="#/policy/{{policy.policyReference}}">{{n+1}}</a></li>
-																<li ng-class="nextPageDisabled()"><a href
-																	ng-click="nextPage()">Next »</a></li>
-															</ul>
-														</div>
-													</td>
-												</tfoot>
-											</table>
-										</div>
-										<div id="search"></div>
-									</div>
-								</div>
-
-								<div class="panel panel-default"
-									style="box-shadow: 0 0 30px #ffff;">
-									<div class="panel-heading">
-										<h5>
-											<a data-toggle="collapse" data-parent="#entities"
-												href="/#client"><b>Client Summary</b></a>
-										</h5>
-									</div>
-
-									<div id="client" class="panel-body panel-collapse collapse">
-
-										<div class="form-group">
-											<label>Company Name</label> <input type="text"
-												class="form-control" ng-model="policy.client.clientName"
-												readonly />
-										</div>
-
-										<div class="form-group">
-											<label>Contact Person</label> <input type="text"
-												class="form-control"
-												ng-model="policy.client.contact.contactPerson" readonly />
-										</div>
-
-										<div class="form-group">
-											<label>Email Address</label> <input type="text"
-												class="form-control" ng-model="policy.client.contact.email"
-												readonly />
-										</div>
-										<div class="form-group">
-											<label>Tel Number</label> <input type="text"
-												class="form-control"
-												ng-model="policy.client.contact.workTelNumber" readonly />
-										</div>
-										<div class="pull-right">
-											<a ng-href="#/client/{{policy.policyReference}}"
-												role="button">View Details</a>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div ng-if="policy.subAgent.firstname!=null"
-									class="panel panel-default" style="box-shadow: 0 0 30px #ffff;">
-									<div class="panel-heading">
-										<h5>
-											<a data-toggle="collapse" data-parent="#entities"
-												href="/#sub-agent"><b>Sub-Agent Details</b></a>
-										</h5>
-									</div>
-
-									<div id="sub-agent" class="panel-body panel-collapse collapse">
-
-										<div class="form-group">
-											<label>First Name</label> <input type="text"
-												class="form-control" ng-model="policy.subAgent.firstName"
-												readonly />
-										</div>
-
-										<div class="form-group">
-											<label>Last Name</label> <input type="text"
-												class="form-control" ng-model="policy.subAgent.lastName"
-												readonly />
-										</div>
-
-										<div class="form-group">
-											<label>Email Address</label> <input type="text"
-												class="form-control" ng-model="policy.subAgent.email"
-												readonly />
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="panel panel-default"
-									style="box-shadow: 0 0 30px #ffff;">
-									<div class="panel-heading">
-										<h5>
-											<a data-toggle="collapse" data-parent="#entities"
-												href="/#broker"><b>Underwriter Summary</b></a>
-										</h5>
-									</div>
-									<div id="broker" class="panel-body panel-collapse collapse">
-
-										<div class="form-group">
-											<label>Name</label> <input type="text" class="form-control"
-												ng-model="policy.subAgent.broker.name" readonly />
-										</div>
-										<div class="form-group">
-											<label>Email</label> <input type="text" class="form-control"
-												ng-model="policy.subAgent.broker.email" readonly />
-										</div>
-									</div>
-								</div>
-							</div>
-
-
-
-							<!-- Entity Accordion Ends -->
-						</div>
-
-					</div>
-					<div class="pull-center">
-						<a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(false)" role="link">Update</a>
-						<a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(true)" role="link">Cancel</a>
-					</div>
-				</div>
-
-				<div class="panel-footer text-right">
-					<button class="btn btn-success" type="submit">{{btnValue}}</button>
-					<button class="btn btn-danger">Reject</button>
-				</div>
-
-			</div>
-		</form>
-	</div>
+    <div class="alert alert-success alert-dismissible" role="alert"
+         ng-if="message">
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close" ng-click="closeNotification()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Success ! </strong>{{message}}
+    </div>
+
+    <div class="col-md-12">
+        <form name="form" ng-submit="submitForPolicy(form.$valid)" novalidate>
+
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+
+                <div class="panel-heading">
+                    <h4>
+                        <b>Policy Summary for Policy Ref.: </b>{{policy.policyReference}}
+                        <span class="pull-right" style="font: 14px Lucinda red"><b>Logged-In:</b>
+                            {{policy.underwriter.firstName}} {{policy.underwriter.lastName}}</span>
+                    </h4>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                        <div id="entities" class="panel-group">
+
+                            <div class="panel panel-default"
+                                 style="box-shadow: 0 0 30px #ffff;">
+                                <div class="panel-heading">
+                                    <h5>
+                                        <a data-toggle="collapse" data-parent="#entities"
+                                           href="/#client"><b>Client Summary</b></a>
+                                    </h5>
+                                </div>
+
+                                <div id="client" class="panel-body panel-collapse collapse">
+
+                                    <div class="form-group">
+                                        <label>Company Name</label> <input type="text"
+                                                                           class="form-control" ng-model="policy.client.clientName"
+                                                                           readonly />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Contact Person</label> <input type="text"
+                                                                             class="form-control"
+                                                                             ng-model="policy.client.contact.contactPerson" readonly />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Email Address</label> <input type="text"
+                                                                            class="form-control" ng-model="policy.client.contact.email"
+                                                                            readonly />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tel Number</label> <input type="text"
+                                                                         class="form-control"
+                                                                         ng-model="policy.client.contact.workTelNumber" readonly />
+                                    </div>
+                                    <div class="pull-right">
+                                        <a ng-href="#/client/{{policy.policyReference}}"
+                                           role="button">View Details</a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div ng-if="policy.subAgent.firstname != null"
+                                 class="panel panel-default" style="box-shadow: 0 0 30px #ffff;">
+                                <div class="panel-heading">
+                                    <h5>
+                                        <a data-toggle="collapse" data-parent="#entities"
+                                           href="/#sub-agent"><b>Sub-Agent Details</b></a>
+                                    </h5>
+                                </div>
+
+                                <div id="sub-agent" class="panel-body panel-collapse collapse">
+
+                                    <div class="form-group">
+                                        <label>First Name</label> <input type="text"
+                                                                         class="form-control" ng-model="policy.subAgent.firstName"
+                                                                         readonly />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Last Name</label> <input type="text"
+                                                                        class="form-control" ng-model="policy.subAgent.lastName"
+                                                                        readonly />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Email Address</label> <input type="text"
+                                                                            class="form-control" ng-model="policy.subAgent.email"
+                                                                            readonly />
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="panel panel-default"
+                                 style="box-shadow: 0 0 30px #ffff;">
+                                <div class="panel-heading">
+                                    <h5>
+                                        <a data-toggle="collapse" data-parent="#entities"
+                                           href="/#broker"><b>Underwriter Summary</b></a>
+                                    </h5>
+                                </div>
+                                <div id="broker" class="panel-body panel-collapse collapse">
+
+                                    <div class="form-group">
+                                        <label>Name</label> <input type="text" class="form-control"
+                                                                   ng-model="policy.subAgent.broker.name" readonly />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label> <input type="text" class="form-control"
+                                                                    ng-model="policy.subAgent.broker.email" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="col-md-12">
+                            <div class="panel panel-default"
+                                 style="box-shadow: 0 0 30px #ffff;">
+                                <div class="panel-heading">
+                                    <h5>
+                                        <b>Policy Details</b>
+                                    </h5>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Underwritting Year</label> <input type="text"
+                                                                                         class="form-control" ng-model="policy.underwritingYear"
+                                                                                         readonly />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Inception Date</label> <input type="text"
+                                                                                     class="form-control" ng-model="policy.inceptionDate"
+                                                                                     ng-readonly="isUpdate" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Renewal Date</label> <input type="text" form="form"
+                                                                                   class="form-control" ng-model="policy.renewalDate"
+                                                                                   ng-readonly="isUpdate" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Retroactive Date</label> <input type="text"
+                                                                                       form="form" class="form-control"
+                                                                                       ng-model="policy.retroActiveDate" ng-readonly="isUpdate" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Device</label> <select class="form-control"
+                                                                              ng-model="policy.device" id="dev" required
+                                                                              ng-readonly="isUpdate"
+                                                                              ng-options="deviceOption for deviceOption in policyOptions.deviceOptions">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <div class="form-group">
+                                                <label>Sasria Frequency</label> <select class="form-control"
+                                                                                        ng-model="policy.sasriaFrequency" id="sas" required
+                                                                                        ng-readonly="isUpdate"
+                                                                                        ng-options="sasriaOption for sasriaOption in policyOptions.sasriaFrequencyOptions">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Frequency</label> <select class="form-control"
+                                                                                 ng-model="policy.frequency" id="fre" required
+                                                                                 ng-readonly="isUpdate"
+                                                                                 ng-options="frequencyOption for frequencyOption in policyOptions.frequencyOptions">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Status</label> <select class="form-control"
+                                                                              ng-model="policy.status" required ng-readonly="isUpdate"
+                                                                              ng-options="statusOption for statusOption in policyOptions.stats">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Underwriter Fee</label> <input type="text"
+                                                                                      ng-readonly="isUpdate" class="form-control"
+                                                                                      ng-model="policy.underwriterFee" required />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Re-Instatement</label> <select class="form-control"
+                                                                                      ng-model="policy.reInstatement" id="dev" required
+                                                                                      ng-readonly="isUpdate"
+                                                                                      ng-options="reInstatementOption for reInstatementOption in policyOptions.reInstatements">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Notes</label>
+                                                <textarea class="form-control" rows="8"
+                                                          ng-readonly="isUpdate" ng-model="policy.notes" required></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Broker Fee</label> <input type="text"
+                                                                                 ng-readonly="isUpdate" class="form-control"
+                                                                                 ng-model="policy.brokerFee" />
+                                            </div>
+
+                                            <div class="form-group form-inline">
+                                                <input type="checkbox" class="form-control"
+                                                       ng-model="policy.collectByDebitOrder" required
+                                                       ng-readonly="isUpdate" /> <label>Collect By Debit
+                                                    Order</label>
+                                            </div>
+                                            <div class="form-group form-inline">
+                                                <input type="checkbox" class="form-control" 
+                                                       ng-readonly="isUpdate" ng-model="policy.excludeSasria" />
+                                                <label>Exclude Sasria</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="panel-default" style="box-shadow: 0 0 30px #ffff;">
+                                            <div class="panel-heading">
+                                                <h5>
+                                                    <b>Accounting Summary</b>
+                                                </h5>
+                                            </div>
+
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>Sum Insured</label> <input type="text"
+                                                                                              class="form-control"
+                                                                                              ng-model="policy.policySchedule.sumInsured" readonly />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>Max Sum Insured</label> <input type="text"
+                                                                                                  class="form-control"
+                                                                                                  ng-model="policy.policySchedule.maximumSumInsured"
+                                                                                                  readonly />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>Premium</label> <input type="text"
+                                                                                          class="form-control"
+                                                                                          ng-model="policy.policySchedule.premium" readonly />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>UA Commission</label> <input type="text"
+                                                                                                class="form-control"
+                                                                                                ng-model="policy.policySchedule.uacommission"
+                                                                                                ng-readonly="isUpdate" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="panel-default" style="box-shadow: 0 0 30px #ffff;">
+                                            <div class="panel-heading">
+                                                <h5>
+                                                    <b>SubAgent Details</b>
+                                                </h5>
+                                            </div>
+
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table class="table table-boarded">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Agent Name</th>
+                                                                    <th>Commission</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><select class="form-control"
+                                                                                ng-model="policy.subAgentId" ng-readonly="isUpdate"
+                                                                                required
+                                                                                ng-options="subAgent.id as subAgent.firstName for subAgent in subAgents">
+                                                                            <option value=""></option>
+                                                                        </select></td>
+                                                                    <td><input type="text" class="form-control"
+                                                                               required ng-readonly="isUpdate"
+                                                                               ng-model="policy.policySchedule.commission"></td>
+                                                                    <td><input type="text" class="form-control"
+                                                                               required ng-readonly="isUpdate"
+                                                                               ng-model="policy.policySchedule.status"></td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default"
+                                 style="box-shadow: 0 0 30px #ffff;">
+                                <div class="panel-heading">
+                                    <h5>
+                                        <b>Policy Schedule Summary</b>
+                                    </h5>
+                                </div>
+
+                                <div class="panel-body">
+
+                                    <div id="accordion" class="panel-group">
+
+                                        <div class="panel panel-default">
+
+                                            <div class="panel-heading">
+
+                                                <h4 class="panel-title">
+
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                       href="/#collapseOne">General</a>
+
+                                                </h4>
+
+                                            </div>
+
+                                            <div id="collapseOne" class="panel-collapse collapse in">
+
+                                                <div class="panel-body">
+
+                                                    <div class="form-group">
+                                                        <label>Schedule Attaching to and Forming Part of</label>
+                                                        <textarea class="form-control" ng-readonly="isUpdate"
+                                                                  ng-model="policy.policySchedule.scheduleAttaching"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Type of Cover:</label>
+                                                        <textarea class="form-control"
+                                                                  ng-model="policy.policySchedule.typeOfCover"
+                                                                  ng-readonly="isUpdate" /></textarea>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Subject Matter:</label> <input type="text"
+                                                                                              class="form-control"
+                                                                                              ng-model="policy.policySchedule.subjectMatter" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Excess Structure:</label>
+                                                        </h4>
+                                                        <input type="text" class="form-control"
+                                                               ng-model="policy.policySchedule.excessStructure"
+                                                               ng-readonly="isUpdate" required />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Special Policy Conditions</label>
+                                                        </h4>
+                                                        <input type="text" class="form-control"
+                                                               ng-readonly="isUpdate" required
+                                                               ng-model="policy.policySchedule.specialCondition">
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="panel panel-default">
+
+                                            <div class="panel-heading">
+
+                                                <h4 class="panel-title">
+
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                       href="/#collapseTwo">Limit of Indemnity</a>
+
+                                                </h4>
+
+                                            </div>
+
+                                            <div id="collapseTwo" class="panel-collapse collapse">
+
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Indemnity Option</th>
+                                                                <th>Indemnity Value</th>
+                                                                <th>Sum Insured</th>
+                                                                <th>Premium</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                ng-repeat="indemnity in policy.policySchedule.indemnityOption">
+                                                                <td><input type="text" class="form-control"
+                                                                           ng-model="indemnity.indemnityItemOption"></td>
+                                                                <td><input type="text" class="form-control"
+                                                                           ng-model="indemnity.indemnityValue"></td>
+                                                                <td><input type="text" class="form-control"
+                                                                           ng-model="indemnity.sumInsured"></td>
+                                                                <td><input type="text" class="form-control"
+                                                                           ng-model="indemnity.premium"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <div class="pull-right">
+                                                        <a ng-href="#" role="link">Add Indemnity</a>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="panel panel-default">
+
+                                            <div class="panel-heading">
+
+                                                <h4 class="panel-title">
+
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                       href="/#collapseThree">Conveyances</a>
+
+                                                </h4>
+
+                                            </div>
+
+                                            <div id="collapseThree" class="panel-collapse collapse">
+
+                                                <div class="panel-body">
+
+                                                    <div class="form-group">
+                                                        <label>Description</label>
+                                                        <textarea class="form-control"
+                                                                  ng-model="policy.policySchedule.conveyances"></textarea>
+                                                    </div>
+
+                                                    <div class="pull-right">
+                                                        <a ng-href="#/client" role="link">Update</a> <a
+                                                            ng-href="#/client" role="link">Cancel</a>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="panel panel-default">
+
+                                            <div class="panel-heading">
+
+                                                <h4 class="panel-title">
+
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                       href="/#collapseFour">Geographical and Durations</a>
+
+                                                </h4>
+
+                                            </div>
+
+                                            <div id="collapseFour" class="panel-collapse collapse">
+
+                                                <div class="panel-body">
+
+                                                    <div class="form-group">
+                                                        <label>Description</label>
+                                                        <textarea class="form-control"
+                                                                  ng-model="policy.policySchedule.geographicalDuration"></textarea>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a ng-href="#/client" role="link">Update</a> <a
+                                                            ng-href="#/client" role="link">Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="pull-center">
+                        <a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(false)" role="link">Update</a>
+                        <a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(true)" role="link">Cancel</a>
+                    </div>
+                </div>
+
+                <div class="panel-footer text-right">
+                    <button class="btn btn-success" type="submit">{{btnValue}}</button>
+                    <button class="btn btn-danger">Reject</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
 </div>
 
