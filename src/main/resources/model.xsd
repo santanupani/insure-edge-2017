@@ -1,506 +1,486 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://polygon.co.za/model"
-	xmlns:tns="http://polygon.co.za/model" elementFormDefault="qualified">
+        xmlns:tns="http://polygon.co.za/model" elementFormDefault="qualified">
 
-	<!-- Query Models for Entities -->
-	<element name="UserQueryModel">
-		<complexType>
-			<sequence>
-				<element name="id" type="long"></element>
-				<element name="userName" type="string"></element>
-				<element name="role" type="string"></element>
-			</sequence>
-		</complexType>
-	</element>
+    <element name="UserQueryModel">
+        <complexType>
+            <sequence>
+                <element name="id" type="long"></element>
+                <element name="userName" type="string"></element>
+                <element name="role" type="string"></element>
+            </sequence>
+        </complexType>
+    </element>
 
-	<element name="ProductQueryModel" type="tns:ProductQueryModel" />
-	<complexType name="ProductQueryModel">
-		<sequence>
-			<element name="id" type="long"></element>
-			<element name="name" type="string"></element>
-			<element name="description" type="string"></element>
-			<element name="image" type="string"></element>
-		</sequence>
-	</complexType>
+    <element name="ProductQueryModel" type="tns:ProductQueryModel" />
+    <complexType name="ProductQueryModel">
+        <sequence>
+            <element name="id" type="long"></element>
+            <element name="name" type="string"></element>
+            <element name="description" type="string"></element>
+            <element name="image" type="string"></element>
+        </sequence>
+    </complexType>
 
-	<element name="QuestionnaireQuery">
-		<complexType>
-			<sequence>
-				<element name="id" type="long"></element>
-				<element name="sequenceNumber" type="long"></element>
-				<element name="question" type="string"></element>
-				<element name="answerType" type="string"></element>
-				<element name="dependsOn" type="long" minOccurs="0"></element>
-				<element name="onAnswer" type="string" minOccurs="0"></element>
-				<element name="answerValues" type="string" minOccurs="0"
-					maxOccurs="unbounded">
-				</element>
-				<element name="isRequired" type="boolean"></element>
-			</sequence>
-		</complexType>
-	</element>
+    <element name="QuestionnaireQuery">
+        <complexType>
+            <sequence>
+                <element name="id" type="long"></element>
+                <element name="sequenceNumber" type="long"></element>
+                <element name="question" type="string"></element>
+                <element name="answerType" type="string"></element>
+                <element name="dependsOn" type="long" minOccurs="0"></element>
+                <element name="onAnswer" type="string" minOccurs="0"></element>
+                <element name="answerValues" type="string" minOccurs="0"
+                                         maxOccurs="unbounded">
+                </element>
+                <element name="isRequired" type="boolean"></element>
+            </sequence>
+        </complexType>
+    </element>
 
-	<element name="BrokerQueryModel" type="tns:BrokerQueryModel" />
-	<complexType name="BrokerQueryModel">
-		<sequence>
-			<element name="id" type="long"></element>
-			<element name="code" type="string"></element>
-			<element name="name" type="string"></element>
-			<element name="email" type="string"></element>
-		</sequence>
-	</complexType>
+    <element name="BrokerQueryModel" type="tns:BrokerQueryModel" />
+    <complexType name="BrokerQueryModel">
+        <sequence>
+            <element name="id" type="long"></element>
+            <element name="code" type="string"></element>
+            <element name="name" type="string"></element>
+            <element name="email" type="string"></element>
+        </sequence>
+    </complexType>
 
-	<element name="QuotationRequestQueryModel" type="tns:QuotationRequestQueryModel" />
-	<complexType name="QuotationRequestQueryModel">
-		<sequence>
-			<element name="reference" type="string" />
-			<element name="status" type="string" />
-			<element name="createDate" type="string" />
-			<element name="companyName" type="string" />
-			<element name="applicantName" type="string" />
-			<element name="applicantEmail" type="string" />
-			<element name="product" minOccurs="0" maxOccurs="1"
-				type="tns:ProductQueryModel" />
-			<element name="broker" minOccurs="0" maxOccurs="1"
-				type="tns:BrokerQueryModel" />
-			<element name="questionnaire" minOccurs="0" maxOccurs="unbounded">
-				<complexType>
-					<sequence>
-						<element name="question" type="string" />
-						<element name="answer" type="string" />
-					</sequence>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
-
-
-	<element name="SelectedQuotationQueryModel" type="tns:SelectedQuotationQueryModel" />
-	<complexType name="SelectedQuotationQueryModel">
-		<sequence>
-			<element name="quotation" minOccurs="0" maxOccurs="1"
-				type="tns:QuotationQueryModel" />
-			<element name="selectedQuotation" minOccurs="0" maxOccurs="1"
-				type="tns:QuotationOptionQueryModel" />
-		</sequence>
-	</complexType>
-
-	<element name="QuotationQueryModel" type="tns:QuotationQueryModel" />
-	<complexType name="QuotationQueryModel">
-		<sequence>
-			<element name="quotationId" type="long" />
-			<element name="createdDate" type="string" />
-			<element name="quotationRequest" minOccurs="0" maxOccurs="1"
-				type="tns:QuotationRequestQueryModel" />
-			<element name="option" minOccurs="0" maxOccurs="unbounded">
-				<complexType>
-					<sequence>
-						<element name="quotationOptionId" type="long" />
-						<element name="location" type="string" />
-						<element name="commodity" type="string" />
-						<element name="limit" type="string" />
-						<element name="cover" type="string" />
-						<element name="duration" type="string" />
-						<element name="excess" type="string" />
-						<element name="premium" type="string" />
-						<element name="pavement" type="string" />
-						<element name="staticLimit" type="string" />
-					</sequence>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
-
-	<element name="QuotationOptionQueryModel" type="tns:QuotationOptionQueryModel" />
-	<complexType name="QuotationOptionQueryModel">
-		<sequence>
-			<element name="quotationOptionId" type="long" />
-			<element name="location" type="string" />
-			<element name="commodity" type="string" />
-			<element name="limit" type="string" />
-			<element name="cover" type="string" />
-			<element name="duration" type="string" />
-			<element name="excess" type="string" />
-			<element name="premium" type="string" />
-			<element name="pavement" type="string" />
-			<element name="staticLimit" type="string" />
-		</sequence>
-	</complexType>
-
-	<element name="PolicyRequestQueryModel">
-		<complexType>
-			<sequence>
-				<element name="quotation" minOccurs="0" maxOccurs="1"
-					type="tns:QuotationQueryModel" />
-				<element name="quotationOption" minOccurs="0" maxOccurs="1"
-					type="tns:QuotationOptionQueryModel" />
-				<element name="companyRegNumber" type="string" />
-				<element name="vatRegNumber" type="string" />
-				<element name="telephoneNumber" type="string" />
-				<element name="faxNumber" type="string" />
-				<element name="streetAddress" type="string" />
-				<element name="suburb" type="string" />
-				<element name="postalCode" type="string" />
-				<element name="designation" type="string" />
-				<element name="buisnessDesc" type="string" />
-				<element name="representive" type="string" />
-				<element name="accountHolder" type="string" />
-				<element name="accountName" type="string" />
-				<element name="bankName" type="string" />
-				<element name="accountNumber" type="string" />
-				<element name="branchCode" type="string" />
-				<element name="accType" type="string" />
-				<element name="debitOrderDate" type="string" />
-				<element name="bankStatement" type="hexBinary" />
-				<element name="status" type="string" />
-			</sequence>
-		</complexType>
-	</element>
-
-	<element name="BankAccountQueryModel" type="tns:BankAccountQueryModel" />
-	<complexType name="BankAccountQueryModel">
-		<sequence>
-			<element name="id" type="long"></element>
-			<element name="account_number" type="string"></element>
-			<element name="accountName" type="string"></element>
-			<element name="branch" type="string"></element>
-			<element name="bankName" type="string"></element>
-		</sequence>
-
-	</complexType>
+    <element name="QuotationRequestQueryModel" type="tns:QuotationRequestQueryModel" />
+    <complexType name="QuotationRequestQueryModel">
+        <sequence>
+            <element name="reference" type="string" />
+            <element name="status" type="string" />
+            <element name="createDate" type="string" />
+            <element name="companyName" type="string" />
+            <element name="applicantName" type="string" />
+            <element name="applicantEmail" type="string" />
+            <element name="product" minOccurs="0" maxOccurs="1"
+                                 type="tns:ProductQueryModel" />
+            <element name="broker" minOccurs="0" maxOccurs="1"
+                                 type="tns:BrokerQueryModel" />
+            <element name="questionnaire" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="question" type="string" />
+                        <element name="answer" type="string" />
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
 
 
+    <element name="SelectedQuotationQueryModel" type="tns:SelectedQuotationQueryModel" />
+    <complexType name="SelectedQuotationQueryModel">
+        <sequence>
+            <element name="quotation" minOccurs="0" maxOccurs="1"
+                                 type="tns:QuotationQueryModel" />
+            <element name="selectedQuotation" minOccurs="0" maxOccurs="1"
+                                 type="tns:QuotationOptionQueryModel" />
+        </sequence>
+    </complexType>
 
-	<element name="ContactQueryModel" type="tns:ContactQueryModel" />
-	<complexType name="ContactQueryModel">
-		<sequence>
-			<element name="id" type="long"></element>
-			<element name="email" type="string" />
-			<element name="contact_person" type="string" />
-			<element name="street" type="string" />
-			<element name="code" type="string" />
-			<element name="suburb" type="string" />
-			<element name="work_tel_number" type="string" />
-			<element name="fax_number" type="string" />
-		</sequence>
-	</complexType>
+    <element name="QuotationQueryModel" type="tns:QuotationQueryModel" />
+    <complexType name="QuotationQueryModel">
+        <sequence>
+            <element name="quotationId" type="long" />
+            <element name="createdDate" type="string" />
+            <element name="quotationRequest" minOccurs="0" maxOccurs="1"
+                                 type="tns:QuotationRequestQueryModel" />
+            <element name="option" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="quotationOptionId" type="long" />
+                        <element name="location" type="string" />
+                        <element name="commodity" type="string" />
+                        <element name="limit" type="string" />
+                        <element name="cover" type="string" />
+                        <element name="duration" type="string" />
+                        <element name="excess" type="string" />
+                        <element name="premium" type="string" />
+                        <element name="pavement" type="string" />
+                        <element name="staticLimit" type="string" />
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
 
-	<element name="ClientQueryModel" type="tns:ClientQueryModel" />
-	<complexType name="ClientQueryModel">
-		<sequence>
-			<element name="clientId" type="long" />
-			<element name="clientName" type="string" />
-			<element name="regNumber" type="string" />
-			<element name="incomeTaxNumber" type="string" />
-			<element name="vatNumber" type="string" />
-			<element name="bankAccounts" minOccurs="0" maxOccurs="1"
-				type="tns:BankAccountQueryModel" />
-			<element name="contact" minOccurs="0" maxOccurs="1"
-				type="tns:ContactQueryModel" />
-		</sequence>
-	</complexType>
+    <element name="QuotationOptionQueryModel" type="tns:QuotationOptionQueryModel" />
+    <complexType name="QuotationOptionQueryModel">
+        <sequence>
+            <element name="quotationOptionId" type="long" />
+            <element name="location" type="string" />
+            <element name="commodity" type="string" />
+            <element name="limit" type="string" />
+            <element name="cover" type="string" />
+            <element name="duration" type="string" />
+            <element name="excess" type="string" />
+            <element name="premium" type="string" />
+            <element name="pavement" type="string" />
+            <element name="staticLimit" type="string" />
+        </sequence>
+    </complexType>
 
-	<element name="UnderwriterQueryModel" type="tns:UnderwriterQueryModel" />
-	<complexType name="UnderwriterQueryModel">
-		<sequence>
-			<element name="id" type="long" />
-			<element name="firstName" type="string" />
-			<element name="middleName" type="string" />
-			<element name="lastName" type="string" />
-			<element name="email" type="string" />
-		</sequence>
-	</complexType>
+    <element name="PolicyRequestQueryModel">
+        <complexType>
+            <sequence>
+                <element name="quotation" minOccurs="0" maxOccurs="1"
+                                         type="tns:QuotationQueryModel" />
+                <element name="quotationOption" minOccurs="0" maxOccurs="1"
+                                         type="tns:QuotationOptionQueryModel" />
+                <element name="companyRegNumber" type="string" />
+                <element name="vatRegNumber" type="string" />
+                <element name="telephoneNumber" type="string" />
+                <element name="faxNumber" type="string" />
+                <element name="streetAddress" type="string" />
+                <element name="suburb" type="string" />
+                <element name="postalCode" type="string" />
+                <element name="designation" type="string" />
+                <element name="buisnessDesc" type="string" />
+                <element name="representive" type="string" />
+                <element name="accountHolder" type="string" />
+                <element name="accountName" type="string" />
+                <element name="bankName" type="string" />
+                <element name="accountNumber" type="string" />
+                <element name="branchCode" type="string" />
+                <element name="accType" type="string" />
+                <element name="debitOrderDate" type="string" />
+                <element name="bankStatement" type="hexBinary" />
+                <element name="status" type="string" />
+            </sequence>
+        </complexType>
+    </element>
 
-	<element name="SubAgentQueryModel" type="tns:SubAgentQueryModel" />
-	<complexType name="SubAgentQueryModel">
-		<sequence>
-			<element name="id" type="long" />
-			<element name="broker" minOccurs="0" maxOccurs="1"
-				type="tns:BrokerQueryModel" />
-			<element name="firstName" type="string" />
-			<element name="middleName" type="string" />
-			<element name="lastName" type="string" />
-			<element name="email" type="string" />
-		</sequence>
-	</complexType>
+    <element name="BankAccountQueryModel" type="tns:BankAccountQueryModel" />
+    <complexType name="BankAccountQueryModel">
+        <sequence>
+            <element name="id" type="long"></element>
+            <element name="account_number" type="string"></element>
+            <element name="accountName" type="string"></element>
+            <element name="branch" type="string"></element>
+            <element name="bankName" type="string"></element>
+        </sequence>
 
-	<element name="PolicyQueryModel" type="tns:PolicyQueryModel" />
-	<complexType name="PolicyQueryModel">
-		<sequence>
-			<element name="id" type="long" />
-			<element name="policyReference" type="string" />
-			<element name="inceptionDate" type="string" />
-			<element name="renewalDate" type="string" />
-			<element name="underwritingYear" type="long" />
-			<element name="status" type="string" />
-			<element name="frequency" type="string" />
-			<element name="sasriaFrequency" type="string" />
-			<element name="device" type="string" />
-			<element name="retroActiveDate" type="string" />
-			<element name="collectByDebitOrder" type="boolean" />
-			<element name="excludeSasria" type="boolean" />
-			<element name="re_instatement" type="string" />
-			<element name="underwriterFee" type="string" />
-			<element name="brokerFee" type="string" />
-			<element name="notes" type="string" />
-			<element name="client" minOccurs="0" maxOccurs="1"
-				type="tns:ClientQueryModel" />
-			<element name="subAgent" minOccurs="0" maxOccurs="1"
-				type="tns:SubAgentQueryModel" />
-			<element name="underwriter" minOccurs="0" maxOccurs="1"
-				type="tns:UnderwriterQueryModel" />
-			<element name="policySchedule" minOccurs="0" maxOccurs="1"
-				type="tns:PolicyScheduleQueryModel" />
-		</sequence>
-	</complexType>
-
-	<element name="PolicyScheduleQueryModel" type="tns:PolicyScheduleQueryModel" />
-	<complexType name="PolicyScheduleQueryModel">
-		<sequence>
-			<element name="id" type="long" />
-			<element name="sumInsured" type="double" />
-			<element name="maximumSumInsured" type="double" />
-			<element name="brokerCommission" type="double" />
-			<element name="premium" type="double" />
-			<element name="UACommission" type="double" />
-			<element name="sasriaPremium" type="double" />
-			<element name="scheduleAttaching" type="string" />
-			<element name="typeOfCover" type="string" />
-			<element name="subjectMatter" type="string" />
-			<element name="excessStructure" type="string" />
-			<element name="specialCondition" type="string" />
-			<element name="conveyances" type="string" />
-			<element name="geographicalDuration" type="string" />
-			<element name="indemnityOption" minOccurs="0" maxOccurs="unbounded"
-				type="tns:IndemnityOptionQueryModel" />
-		</sequence>
-	</complexType>
-
-	<element name="IndemnityOptionQueryModel" type="tns:IndemnityOptionQueryModel" />
-	<complexType name="IndemnityOptionQueryModel">
-		<sequence>
-			<element name="id" type="long" />
-			<element name="indemnityItemOption" type="string" />
-			<element name="indemnityValue" type="string" />
-			<element name="sumInsured" type="double" />
-			<element name="premium" type="double" />
-		</sequence>
-	</complexType>
-
-	<!-- Command Models from Entities -->
-
-	<element name="UserCommandModel">
-		<complexType>
-			<sequence>
-				<element name="userName" type="string"></element>
-				<element name="password" type="string"></element>
-				<element name="role" type="string"></element>
-			</sequence>
-		</complexType>
-	</element>
-
-	<element name="BrokerCommandModel" type="tns:BrokerQueryModel" />
-	<complexType name="BrokerCommandModel">
-		<sequence>
-			<element name="id" type="long"></element>
-			<element name="code" type="string"></element>
-			<element name="name" type="string"></element>
-			<element name="email" type="string"></element>
-		</sequence>
-	</complexType>
-
-	<element name="QuotationRequestCommandModel">
-		<complexType>
-			<sequence>
-				<element name="applicantName" type="string" />
-				<element name="companyName" type="string" />
-				<element name="applicantEmail" type="string" />
-				<element name="brokerId" type="long" />
-				<element name="productId" type="long" />
-				<element name="questionnaires" minOccurs="0" maxOccurs="unbounded">
-					<complexType>
-						<sequence>
-							<element name="question" type="string" />
-							<element name="answer" type="string" />
-						</sequence>
-					</complexType>
-				</element>
-			</sequence>
-		</complexType>
-	</element>
-
-
-	<element name="QuotationCommandModel">
-		<complexType>
-			<sequence>
-				<element name="reference" type="string" />
-				<element name="options" minOccurs="0" maxOccurs="unbounded">
-					<complexType>
-						<sequence>
-							<element name="location" type="string" />
-							<element name="commodity" type="string" />
-							<element name="limit" type="string" />
-							<element name="cover" type="string" />
-							<element name="duration" type="string" />
-							<element name="excess" type="string" />
-							<element name="premium" type="string" />
-							<element name="pavement" type="string" />
-							<element name="staticLimit" type="string" />
-						</sequence>
-					</complexType>
-				</element>
-			</sequence>
-		</complexType>
-	</element>
-
-	<element name="PolicyRequestCommandModel">
-		<complexType>
-			<sequence>
-				<element name="reference" type="string" />
-				<element name="companyRegNumber" type="string" />
-				<element name="vatRegNumber" type="string" />
-				<element name="telephoneNumber" type="string" />
-				<element name="faxNumber" type="string" />
-				<element name="streetAddress" type="string" />
-				<element name="suburb" type="string" />
-				<element name="postalCode" type="string" />
-				<element name="designation" type="string" />
-				<element name="buisnessDesc" type="string" />
-				<element name="representive" type="string" />
-				<element name="accountHolder" type="string" />
-				<element name="accountName" type="string" />
-				<element name="bankName" type="string" />
-				<element name="accountNumber" type="string" />
-				<element name="branchCode" type="string" />
-				<element name="accType" type="string" />
-				<element name="debitOrderDate" type="string" />
-				<element name="bankStatement" type="hexBinary" />
-				<element name="quotationId" type="long" />
-				<element name="quotationOptionId" type="long" />
-			</sequence>
-		</complexType>
-	</element>
-
-	<element name="BankAccountCommandModel" type="tns:BankAccountCommandModel" />
-	<complexType name="BankAccountCommandModel">
-		<sequence>
-			<element name="account_number" type="string"></element>
-			<element name="accountName" type="string"></element>
-			<element name="branch" type="string"></element>
-			<element name="bankName" type="string"></element>
-		</sequence>
-
-	</complexType>
-
-	<element name="ContactCommandModel" type="tns:ContactCommandModel" />
-	<complexType name="ContactCommandModel">
-		<sequence>
-			<element name="email" type="string" />
-			<element name="contact_person" type="string" />
-			<element name="street" type="string" />
-			<element name="code" type="string" />
-			<element name="suburb" type="string" />
-			<element name="work_tel_number" type="string" />
-			<element name="fax_number" type="string" />
-		</sequence>
-	</complexType>
+    </complexType>
 
 
 
-	<element name="ClientCommandModel" type="tns:ClientCommandModel" />
-	<complexType name="ClientCommandModel">
-		<sequence>
-			<element name="clientName" type="string" />
-			<element name="regNumber" type="string" />
-			<element name="incomeTaxNumber" type="string" />
-			<element name="vatNumber" type="string" />
-			<element name="bankAccount" minOccurs="0" maxOccurs="1"
-				type="tns:BankAccountCommandModel" />
-			<element name="contact" minOccurs="0" maxOccurs="1"
-				type="tns:ContactCommandModel" />
-		</sequence>
-	</complexType>
+    <element name="ContactQueryModel" type="tns:ContactQueryModel" />
+    <complexType name="ContactQueryModel">
+        <sequence>
+            <element name="id" type="long"></element>
+            <element name="email" type="string" />
+            <element name="contact_person" type="string" />
+            <element name="street" type="string" />
+            <element name="code" type="string" />
+            <element name="suburb" type="string" />
+            <element name="work_tel_number" type="string" />
+            <element name="fax_number" type="string" />
+        </sequence>
+    </complexType>
+
+    <element name="ClientQueryModel" type="tns:ClientQueryModel" />
+    <complexType name="ClientQueryModel">
+        <sequence>
+            <element name="clientId" type="long" />
+            <element name="clientName" type="string" />
+            <element name="regNumber" type="string" />
+            <element name="incomeTaxNumber" type="string" />
+            <element name="vatNumber" type="string" />
+            <element name="bankAccounts" minOccurs="0" maxOccurs="1"
+                                 type="tns:BankAccountQueryModel" />
+            <element name="contact" minOccurs="0" maxOccurs="1"
+                                 type="tns:ContactQueryModel" />
+        </sequence>
+    </complexType>
+
+    <element name="UnderwriterQueryModel" type="tns:UnderwriterQueryModel" />
+    <complexType name="UnderwriterQueryModel">
+        <sequence>
+            <element name="id" type="long" />
+            <element name="firstName" type="string" />
+            <element name="middleName" type="string" />
+            <element name="lastName" type="string" />
+            <element name="email" type="string" />
+        </sequence>
+    </complexType>
+
+    <element name="SubAgentQueryModel" type="tns:SubAgentQueryModel" />
+    <complexType name="SubAgentQueryModel">
+        <sequence>
+            <element name="id" type="long" />
+            <element name="broker" minOccurs="0" maxOccurs="1"
+                                 type="tns:BrokerQueryModel" />
+            <element name="firstName" type="string" />
+            <element name="middleName" type="string" />
+            <element name="lastName" type="string" />
+            <element name="email" type="string" />
+        </sequence>
+    </complexType>
+
+    <element name="PolicyQueryModel" type="tns:PolicyQueryModel" />
+    <complexType name="PolicyQueryModel">
+        <sequence>
+            <element name="id" type="long" />
+            <element name="policyReference" type="string" />
+            <element name="inceptionDate" type="string" />
+            <element name="renewalDate" type="string" />
+            <element name="underwritingYear" type="long" />
+            <element name="status" type="string" />
+            <element name="frequency" type="string" />
+            <element name="sasriaFrequency" type="string" />
+            <element name="device" type="string" />
+            <element name="retroActiveDate" type="string" />
+            <element name="collectByDebitOrder" type="boolean" />
+            <element name="excludeSasria" type="boolean" />
+            <element name="re_instatement" type="string" />
+            <element name="underwriterFee" type="string" />
+            <element name="brokerFee" type="string" />
+            <element name="notes" type="string" />
+            <element name="client" minOccurs="0" maxOccurs="1"
+                                 type="tns:ClientQueryModel" />
+            <element name="subAgent" minOccurs="0" maxOccurs="1"
+                                 type="tns:SubAgentQueryModel" />
+            <element name="underwriter" minOccurs="0" maxOccurs="1"
+                                 type="tns:UnderwriterQueryModel" />
+            <element name="sumInsured" type="double" />
+            <element name="maximumSumInsured" type="double" />
+            <element name="brokerCommission" type="double" />
+            <element name="premium" type="double" />
+            <element name="UACommission" type="double" />
+            <element name="sasriaPremium" type="double" />
+            <element name="scheduleAttaching" type="string" />
+            <element name="typeOfCover" type="string" />
+            <element name="subjectMatter" type="string" />
+            <element name="excessStructure" type="string" />
+            <element name="specialCondition" type="string" />
+            <element name="conveyances" type="string" />
+            <element name="geographicalDuration" type="string" />
+            <element name="indemnityOption" minOccurs="0" maxOccurs="unbounded"
+                                 type="tns:IndemnityOptionQueryModel" />
+        </sequence>
+    </complexType>
+
+    <element name="IndemnityOptionQueryModel" type="tns:IndemnityOptionQueryModel" />
+    <complexType name="IndemnityOptionQueryModel">
+        <sequence>
+            <element name="id" type="long" />
+            <element name="indemnityItemOption" type="string" />
+            <element name="indemnityValue" type="string" />
+            <element name="sumInsured" type="double" />
+            <element name="premium" type="double" />
+        </sequence>
+    </complexType>
+
+
+    <element name="UserCommandModel">
+        <complexType>
+            <sequence>
+                <element name="userName" type="string"></element>
+                <element name="password" type="string"></element>
+                <element name="role" type="string"></element>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="BrokerCommandModel" type="tns:BrokerQueryModel" />
+    <complexType name="BrokerCommandModel">
+        <sequence>
+            <element name="id" type="long"></element>
+            <element name="code" type="string"></element>
+            <element name="name" type="string"></element>
+            <element name="email" type="string"></element>
+        </sequence>
+    </complexType>
+
+    <element name="QuotationRequestCommandModel">
+        <complexType>
+            <sequence>
+                <element name="applicantName" type="string" />
+                <element name="companyName" type="string" />
+                <element name="applicantEmail" type="string" />
+                <element name="brokerId" type="long" />
+                <element name="productId" type="long" />
+                <element name="questionnaires" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <sequence>
+                            <element name="question" type="string" />
+                            <element name="answer" type="string" />
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+
+
+    <element name="QuotationCommandModel">
+        <complexType>
+            <sequence>
+                <element name="reference" type="string" />
+                <element name="options" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <sequence>
+                            <element name="location" type="string" />
+                            <element name="commodity" type="string" />
+                            <element name="limit" type="string" />
+                            <element name="cover" type="string" />
+                            <element name="duration" type="string" />
+                            <element name="excess" type="string" />
+                            <element name="premium" type="string" />
+                            <element name="pavement" type="string" />
+                            <element name="staticLimit" type="string" />
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="PolicyRequestCommandModel">
+        <complexType>
+            <sequence>
+                <element name="reference" type="string" />
+                <element name="companyRegNumber" type="string" />
+                <element name="vatRegNumber" type="string" />
+                <element name="telephoneNumber" type="string" />
+                <element name="faxNumber" type="string" />
+                <element name="streetAddress" type="string" />
+                <element name="suburb" type="string" />
+                <element name="postalCode" type="string" />
+                <element name="designation" type="string" />
+                <element name="buisnessDesc" type="string" />
+                <element name="representive" type="string" />
+                <element name="accountHolder" type="string" />
+                <element name="accountName" type="string" />
+                <element name="bankName" type="string" />
+                <element name="accountNumber" type="string" />
+                <element name="branchCode" type="string" />
+                <element name="accType" type="string" />
+                <element name="debitOrderDate" type="string" />
+                <element name="bankStatement" type="hexBinary" />
+                <element name="quotationId" type="long" />
+                <element name="quotationOptionId" type="long" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="BankAccountCommandModel" type="tns:BankAccountCommandModel" />
+    <complexType name="BankAccountCommandModel">
+        <sequence>
+            <element name="account_number" type="string"></element>
+            <element name="accountName" type="string"></element>
+            <element name="branch" type="string"></element>
+            <element name="bankName" type="string"></element>
+        </sequence>
+
+    </complexType>
+
+    <element name="ContactCommandModel" type="tns:ContactCommandModel" />
+    <complexType name="ContactCommandModel">
+        <sequence>
+            <element name="email" type="string" />
+            <element name="contact_person" type="string" />
+            <element name="street" type="string" />
+            <element name="code" type="string" />
+            <element name="suburb" type="string" />
+            <element name="work_tel_number" type="string" />
+            <element name="fax_number" type="string" />
+        </sequence>
+    </complexType>
 
 
 
-	<element name="UnderwriterCommandModel" type="tns:UnderwriterCommandModel" />
-	<complexType name="UnderwriterCommandModel">
-		<sequence>
-			<element name="firstName" type="string" />
-			<element name="middleName" type="string" />
-			<element name="lastName" type="string" />
-			<element name="email" type="string" />
-		</sequence>
-	</complexType>
+    <element name="ClientCommandModel" type="tns:ClientCommandModel" />
+    <complexType name="ClientCommandModel">
+        <sequence>
+            <element name="clientName" type="string" />
+            <element name="regNumber" type="string" />
+            <element name="incomeTaxNumber" type="string" />
+            <element name="vatNumber" type="string" />
+            <element name="bankAccount" minOccurs="0" maxOccurs="1"
+                                 type="tns:BankAccountCommandModel" />
+            <element name="contact" minOccurs="0" maxOccurs="1"
+                                 type="tns:ContactCommandModel" />
+        </sequence>
+    </complexType>
 
 
 
-	<element name="SubAgentCommandModel" type="tns:SubAgentCommandModel" />
-	<complexType name="SubAgentCommandModel">
-		<sequence>
-			<element name="brokerId" type="long"/>
-			<element name="firstName" type="string" />
-			<element name="middleName" type="string" />
-			<element name="lastName" type="string" />
-			<element name="email" type="string" />
-		</sequence>
-	</complexType>
+    <element name="UnderwriterCommandModel" type="tns:UnderwriterCommandModel" />
+    <complexType name="UnderwriterCommandModel">
+        <sequence>
+            <element name="firstName" type="string" />
+            <element name="middleName" type="string" />
+            <element name="lastName" type="string" />
+            <element name="email" type="string" />
+        </sequence>
+    </complexType>
 
-	<element name="PolicyCreationCommandModel">
-		<complexType>
-			<sequence>
-				<element name="client" minOccurs="0" maxOccurs="1"
-					type="tns:ClientCommandModel" />
-				<element name="subAgentId" type="long" />
-				<element name="underwriterId" type="long" />
-				<element name="policySchedule" minOccurs="0" maxOccurs="1"
-					type="tns:PolicyScheduleCommandModel" />
-				<element name="inceptionDate" type="string" />
-				<element name="renewalDate" type="string" />
-				<element name="underwritingYear" type="int" />
-				<element name="status" type="string" />
-				<element name="sasriaFrequency" type="string" />
-				<element name="device" type="string" />
-				<element name="frequency" type="string" />
-				<element name="re_instatement" type="string" />
-				<element name="retroActiveDate" type="string" />
-				<element name="collectByDebitOrder" type="boolean" />
-				<element name="excludeSasria" type="boolean" />
-				<element name="underwriterFee" type="double" />
-				<element name="brokerFee" type="string" />
-				<element name="notes" type="string" />
-			</sequence>
-		</complexType>
-	</element>
 
-	<element name="PolicyScheduleCommandModel" type="tns:PolicyScheduleCommandModel" />
-	<complexType name="PolicyScheduleCommandModel">
-		<sequence>
-			<element name="policyId" type="long" />
-			<element name="sumInsured" type="double" />
-			<element name="maximumSumInsured" type="double" />
-			<element name="brokerCommission" type="double" />
-			<element name="premium" type="double" />
-			<element name="UACommission" type="double" />
-			<element name="sasriaPremium" type="double" />
-			<element name="scheduleAttaching" type="string" />
-			<element name="typeOfCover" type="string" />
-			<element name="subjectMatter" type="string" />
-			<element name="excessStructure" type="string" />
-			<element name="specialCondition" type="string" />
-			<element name="conveyances" type="string" />
-			<element name="geographicalDuration" type="string" />
-			<element name="IndemnityOptions" minOccurs="0" maxOccurs="unbounded">
-				<complexType>
-					<sequence>
-						<element name="indemnityItemOption" type="string" />
-						<element name="indemnityValue" type="string" />
-						<element name="sumInsured" type="double" />
-						<element name="premium" type="double" />
-					</sequence>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
+
+    <element name="SubAgentCommandModel" type="tns:SubAgentCommandModel" />
+    <complexType name="SubAgentCommandModel">
+        <sequence>
+            <element name="brokerId" type="long"/>
+            <element name="firstName" type="string" />
+            <element name="middleName" type="string" />
+            <element name="lastName" type="string" />
+            <element name="email" type="string" />
+        </sequence>
+    </complexType>
+
+    <element name="PolicyCreationCommandModel">
+        <complexType>
+            <sequence>
+                <element name="client" minOccurs="0" maxOccurs="1"
+                                         type="tns:ClientCommandModel" />
+                <element name="subAgentId" type="long" />
+                <element name="underwriterId" type="long" />
+                <element name="inceptionDate" type="string" />
+                <element name="renewalDate" type="string" />
+                <element name="underwritingYear" type="int" />
+                <element name="status" type="string" />
+                <element name="sasriaFrequency" type="string" />
+                <element name="device" type="string" />
+                <element name="frequency" type="string" />
+                <element name="re_instatement" type="string" />
+                <element name="retroActiveDate" type="string" />
+                <element name="collectByDebitOrder" type="boolean" />
+                <element name="excludeSasria" type="boolean" />
+                <element name="underwriterFee" type="double" />
+                <element name="brokerFee" type="string" />
+                <element name="sumInsured" type="double" />
+                <element name="maximumSumInsured" type="double" />
+                <element name="brokerCommission" type="double" />
+                <element name="premium" type="double" />
+                <element name="UACommission" type="double" />
+                <element name="sasriaPremium" type="double" />
+                <element name="scheduleAttaching" type="string" />
+                <element name="typeOfCover" type="string" />
+                <element name="subjectMatter" type="string" />
+                <element name="excessStructure" type="string" />
+                <element name="specialCondition" type="string" />
+                <element name="conveyances" type="string" />
+                <element name="geographicalDuration" type="string" />
+                <element name="IndemnityOption" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <sequence>
+                            <element name="indemnityItemOption" type="string" />
+                            <element name="indemnityValue" type="string" />
+                            <element name="sumInsured" type="double" />
+                            <element name="premium" type="double" />
+                        </sequence>
+                    </complexType>
+                </element>
+                <element name="notes" type="string" />
+            </sequence>
+        </complexType>
+    </element>
 
 </schema>

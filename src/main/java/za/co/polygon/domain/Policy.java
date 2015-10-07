@@ -1,6 +1,7 @@
 package za.co.polygon.domain;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,15 +33,15 @@ public class Policy {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @Column(name = "policy_reference")
+    @Column(name = "reference")
     private String policyReference;
     
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
     private SubAgent subAgent;
     
-    @OneToOne(mappedBy="policy",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private PolicySchedule policySchedule;
+    @OneToMany(mappedBy="policy",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<IndemnityOption> indemnityOptions;
 
     @Column(name = "inception_date")
     private Date inceptionDate;
@@ -65,9 +67,6 @@ public class Policy {
     @Column(name = "device")
     private String device;
 
-    @Column(name = "retro_active_date")
-    private Date retroactiveDate;
-
     @Column(name = "collect_by_debit_order")
     private boolean collectByDebitOrder;
 
@@ -79,6 +78,45 @@ public class Policy {
 
     @Column(name = "broker_fee")
     private double brokerFee;
+    
+    @Column(name = "sum_insured")
+    private double sumInsured;
+    
+    @Column(name = "max_sum_insured")
+    private double maximumSumInsured;
+    
+    @Column(name = "broker_commission")
+    private double brokerCommission;
+    
+    @Column(name = "ua_commission")
+    private double UACommission;
+    
+    @Column(name = "premium")
+    private double premoium;
+    
+    @Column(name = "sasria_premium")
+    private double sasriaPremium;
+    
+    @Column(name = "schedule_attaching")
+    private String scheduleAttaching;
+    
+    @Column(name = "type_of_cover")
+    private String typeOfCover;
+    
+    @Column(name = "subject_matter")
+    private String subjectMatter;
+    
+   @Column(name = "excess_structure")
+    private String excessSturcture;
+   
+   @Column(name = "special_condition")
+    private String specialCondition;
+   
+   @Column(name = "conveyances")
+    private String convenyances;
+   
+   @Column(name = "geographical_duration")
+    private String geographicalDuration;
 
     @Column(name = "notes")
     private String notes;
@@ -123,6 +161,14 @@ public class Policy {
         this.subAgent = subAgent;
     }
 
+    public List<IndemnityOption> getIndemnityOptions() {
+        return indemnityOptions;
+    }
+
+    public void setIndemnityOptions(List<IndemnityOption> indemnityOptions) {
+        this.indemnityOptions = indemnityOptions;
+    }
+    
     public Date getInceptionDate() {
         return inceptionDate;
     }
@@ -186,15 +232,7 @@ public class Policy {
     public void setDevice(String device) {
         this.device = device;
     }
-
-    public Date getRetroactiveDate() {
-        return retroactiveDate;
-    }
-
-    public void setRetroactiveDate(Date retroactiveDate) {
-        this.retroactiveDate = retroactiveDate;
-    }
-
+    
     public boolean isCollectByDebitOrder() {
         return collectByDebitOrder;
     }
@@ -227,20 +265,116 @@ public class Policy {
         this.brokerFee = brokerFee;
     }
 
+    public double getSumInsured() {
+        return sumInsured;
+    }
+
+    public void setSumInsured(double sumInsured) {
+        this.sumInsured = sumInsured;
+    }
+
+    public double getMaximumSumInsured() {
+        return maximumSumInsured;
+    }
+
+    public void setMaximumSumInsured(double maximumSumInsured) {
+        this.maximumSumInsured = maximumSumInsured;
+    }
+
+    public double getBrokerCommission() {
+        return brokerCommission;
+    }
+
+    public void setBrokerCommission(double brokerCommission) {
+        this.brokerCommission = brokerCommission;
+    }
+
+    public double getUACommission() {
+        return UACommission;
+    }
+
+    public void setUACommission(double UACommission) {
+        this.UACommission = UACommission;
+    }
+
+    public double getPremoium() {
+        return premoium;
+    }
+
+    public void setPremoium(double premoium) {
+        this.premoium = premoium;
+    }
+
+    public double getSasriaPremium() {
+        return sasriaPremium;
+    }
+
+    public void setSasriaPremium(double sasriaPremium) {
+        this.sasriaPremium = sasriaPremium;
+    }
+
+    public String getScheduleAttaching() {
+        return scheduleAttaching;
+    }
+
+    public void setScheduleAttaching(String scheduleAttaching) {
+        this.scheduleAttaching = scheduleAttaching;
+    }
+
+    public String getTypeOfCover() {
+        return typeOfCover;
+    }
+
+    public void setTypeOfCover(String typeOfCover) {
+        this.typeOfCover = typeOfCover;
+    }
+
+    public String getSubjectMatter() {
+        return subjectMatter;
+    }
+
+    public void setSubjectMatter(String subjectMatter) {
+        this.subjectMatter = subjectMatter;
+    }
+
+    public String getExcessSturcture() {
+        return excessSturcture;
+    }
+
+    public void setExcessSturcture(String excessSturcture) {
+        this.excessSturcture = excessSturcture;
+    }
+
+    public String getSpecialCondition() {
+        return specialCondition;
+    }
+
+    public void setSpecialCondition(String specialCondition) {
+        this.specialCondition = specialCondition;
+    }
+
+    public String getConvenyances() {
+        return convenyances;
+    }
+
+    public void setConvenyances(String convenyances) {
+        this.convenyances = convenyances;
+    }
+
+    public String getGeographicalDuration() {
+        return geographicalDuration;
+    }
+
+    public void setGeographicalDuration(String geographicalDuration) {
+        this.geographicalDuration = geographicalDuration;
+    }
+    
     public String getNotes() {
         return notes;
     }
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public PolicySchedule getPolicySchedule() {
-        return policySchedule;
-    }
-
-    public void setPolicySchedule(PolicySchedule policySchedule) {
-        this.policySchedule = policySchedule;
     }
     
 }

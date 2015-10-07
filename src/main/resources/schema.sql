@@ -33,8 +33,8 @@ create table questionnaires(
     depends_on integer,
     on_answer varchar(128),
     is_required boolean not null,
-    constraint product_questionnaires_fk foreign key (product_id) references products (id),
-    constraint answer_type_questionnaires_fk foreign key (answer_type_id) references answer_types (id)
+    constraint questionnaires_fk1 foreign key (product_id) references products (id),
+    constraint questionnaires_fk2 foreign key (answer_type_id) references answer_types (id)
 );
 
 /* table : answer_values */
@@ -42,7 +42,7 @@ create table answer_values(
     id integer auto_increment not null primary key,
     questionnaire_id integer not null,
     answer_value varchar(128) not null,
-    constraint questionnaire_answer_values_fk foreign key (questionnaire_id) references questionnaires (id)
+    constraint answer_values_fk1 foreign key (questionnaire_id) references questionnaires (id)
 );
 
 
@@ -65,8 +65,8 @@ create table quotation_requests(
     product_id integer not null,
     create_date date not null,
     status varchar(16) not null,
-    constraint broker_quotation_requests_fk foreign key (broker_id) references brokers (id),
-    constraint product_quotation_requests_fk foreign key (product_id) references products (id)
+    constraint quotation_requests_fk1 foreign key (broker_id) references brokers (id),
+    constraint quotation_requests_fk2 foreign key (product_id) references products (id)
 );
 
 /* table : quotation_questoionnaires */
@@ -75,7 +75,7 @@ create table answers(
     quotation_request_id integer not null,
     question varchar(256) not null,
     answer varchar(256),
-    constraint quotation_request_answers_fk1 foreign key (quotation_request_id) references quotation_requests (id)   
+    constraint answers_fk1 foreign key (quotation_request_id) references quotation_requests (id)   
 );
 
 
@@ -85,7 +85,7 @@ create table quotations(
     quotation_request_id integer not null,
     created_date date not null,
     expired_date date null,
-    constraint quotation_request_quotations_fk foreign key (quotation_request_id) references quotation_requests (id)
+    constraint quotations_fk1 foreign key (quotation_request_id) references quotation_requests (id)
     
 );
 
@@ -102,7 +102,7 @@ create table quotation_options(
     cross_pavement varchar(32),
     static_limit varchar(32),
     premium varchar(256) not null,
-    constraint quotation_quotation_options_fk foreign key (quotation_id) references quotations (id)
+    constraint quotation_options_fk1 foreign key (quotation_id) references quotations (id)
 );
 
 /*table : policy_requests */
@@ -128,9 +128,11 @@ create table policy_requests(
     debit_order_date varchar(32) not null,
     bank_statement longblob not null,
     status varchar(32) not null,
-    constraint quotation_policy_requests_fk foreign key (quotation_id) references quotations (id),
-    constraint quotation_option_policy_requests_fk foreign key (quotation_option_id) references quotation_options (id)
+    constraint policy_requests_fk1 foreign key (quotation_id) references quotations (id),
+    constraint policy_requests_fk2 foreign key (quotation_option_id) references quotation_options (id)
 );
+
+
 
 /* table : bank_accounts */
 create table bank_accounts(
@@ -170,8 +172,8 @@ create table clients (
       reg_no varchar(32) not null,
       income_tax_number varchar(32),
       vat_number varchar(32) not null ,
-      constraint bank_account_clients_fk foreign key (bank_account_id) references bank_accounts (id),
-      constraint contact_clients_fk foreign key (contact_id) references contacts(id)
+      constraint clients_fk1 foreign key (bank_account_id) references bank_accounts (id),
+      constraint clients_fk2 foreign key (contact_id) references contacts(id)
 
 );
 
@@ -193,14 +195,14 @@ create table sub_agents(
     middle_name varchar(64) not null,
     last_name varchar(64) not null,
     email varchar(64) not null,
-    constraint broker_sub_agents_fk foreign key(broker_id) references brokers(id),
+    constraint sub_agents_fk1 foreign key(broker_id) references brokers(id),
 );
 
 
 /* table : policy_masters */
 create table policies(
     id integer auto_increment not null primary key,
-    policy_reference varchar(45) not null,
+    reference varchar(45) not null,
     sub_agent_id integer not null,
     client_id integer not null,
     underwriter_id integer,
@@ -211,27 +213,15 @@ create table policies(
     frequency varchar(30) not null,
     sasria_frequency varchar(30) not null,
     device varchar(30) not null,
-    retro_active_date varchar(30) not null,
     re_instatement varchar(45) not null,
     collect_by_debit_order boolean not null,
     exclude_sasria boolean,
     underwriter_fee decimal not null,
     broker_fee decimal not null,
-    notes varchar(256) not null,
-    constraint sub_agent_policies_fk foreign key (sub_agent_id) references sub_agents (id),
-    constraint client_policies_fk foreign key(client_id) references clients(id),
-    constraint underwriter_policies_fk foreign key(underwriter_id) references underwriters(id),
-);
-
-
-/* table : policy_schedule */
-create table policy_schedules(
-    id integer auto_increment not null primary key,
-    policy_id varchar(16) not null,
     sum_insured decimal not null,
-    maximum_sum_insured decimal not null,
+    max_sum_insured decimal not null,
     broker_commission decimal not null,
-    UA_commission decimal not null,
+    ua_commission decimal not null,
     premium decimal not null,
     sasria_premium decimal not null,
     schedule_attaching varchar(1024) not null,
@@ -241,17 +231,21 @@ create table policy_schedules(
     special_condition varchar(1024) not null,
     conveyances varchar(64) not null,
     geographical_duration varchar(2048) not null,
-    constraint policies_policy_schedules_fk foreign key (policy_id) references policies (id)
+    notes varchar(256) not null,
+    constraint policies_fk1 foreign key (sub_agent_id) references sub_agents (id),
+    constraint policies_fk2 foreign key(client_id) references clients(id),
+    constraint policies_fk3 foreign key(underwriter_id) references underwriters(id)
 );
 
 /* table : indemnity_option */
 
 create table indemnity_options(
     id integer auto_increment not null primary key,
-    policy_schedule_id integer not null,
+    policy_id integer not null,
     indemity_item_option varchar(64) not null,   
     indemnity_value varchar(64) not null,
     sum_insured decimal not null,
     premium decimal not null,
-    constraint policy_schedules_indemnity_options_fk foreign key (policy_schedule_id) references policy_schedules (id)
+    constraint indemnity_options_fk1 foreign key (policy_id) references policies (id)
 );
+
