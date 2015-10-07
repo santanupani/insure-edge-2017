@@ -324,14 +324,14 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.client.clientName = $rootScope.policyRequest.quotation.quotationRequest.companyName;
             $scope.policy.client.regNumber = $rootScope.policyRequest.vatRegNumber;
             $scope.policy.client.incomeTaxNumber = $rootScope.policyRequest.accountName;
+            $scope.policy.client.designation = $rootScope.policyRequest.designation;
             $scope.policy.client.vatNumber = $rootScope.policyRequest.vatRegNumber;
             $scope.policy.client.contact.contactPerson = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
             $scope.policy.client.contact.email = $rootScope.policyRequest.quotation.quotationRequest.applicantEmail;
             $scope.policy.client.contact.street = $rootScope.policyRequest.streetAddress;
             $scope.policy.client.contact.workTelNumber = $rootScope.policyRequest.telephoneNumber;
             $scope.policy.client.contact.faxNumber = $rootScope.policyRequest.faxNumber;
-            $scope.policy.client.contact.code = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
-            $scope.policy.client.contact.street = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
+            $scope.policy.client.contact.code = $rootScope.policyRequest.postalCode;
             $scope.policy.client.contact.suburb = $rootScope.policyRequest.suburb;
             $scope.policy.client.bankAccount.branch = $rootScope.policyRequest.branchCode;
             $scope.policy.client.bankAccount.accountName = $rootScope.policyRequest.accountName;

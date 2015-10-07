@@ -49,6 +49,9 @@ public class Client {
 
     @Column(name = "income_tax_number")
     private String incomeTaxNumber;
+    
+    @Column(name = "designation")
+    private String designation;
 
     @Column(name = "vat_number")
     private String vatNumber;
@@ -100,6 +103,16 @@ public class Client {
     public void setIncomeTaxNumber(String incomeTaxNumber) {
         this.incomeTaxNumber = incomeTaxNumber;
     }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+    
+    
 
     public String getVatNumber() {
         return vatNumber;

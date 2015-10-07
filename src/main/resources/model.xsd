@@ -191,6 +191,7 @@
             <element name="clientName" type="string" />
             <element name="regNumber" type="string" />
             <element name="incomeTaxNumber" type="string" />
+            <element name="designation" type="string" />
             <element name="vatNumber" type="string" />
             <element name="bankAccounts" minOccurs="0" maxOccurs="1"
                                  type="tns:BankAccountQueryModel" />
@@ -235,7 +236,6 @@
             <element name="frequency" type="string" />
             <element name="sasriaFrequency" type="string" />
             <element name="device" type="string" />
-            <element name="retroActiveDate" type="string" />
             <element name="collectByDebitOrder" type="boolean" />
             <element name="excludeSasria" type="boolean" />
             <element name="re_instatement" type="string" />
@@ -402,6 +402,7 @@
             <element name="clientName" type="string" />
             <element name="regNumber" type="string" />
             <element name="incomeTaxNumber" type="string" />
+            <element name="designation" type="string" />
             <element name="vatNumber" type="string" />
             <element name="bankAccount" minOccurs="0" maxOccurs="1"
                                  type="tns:BankAccountCommandModel" />
@@ -450,7 +451,6 @@
                 <element name="device" type="string" />
                 <element name="frequency" type="string" />
                 <element name="re_instatement" type="string" />
-                <element name="retroActiveDate" type="string" />
                 <element name="collectByDebitOrder" type="boolean" />
                 <element name="excludeSasria" type="boolean" />
                 <element name="underwriterFee" type="double" />

@@ -331,11 +331,11 @@ public class Mapper {
         return policyRequestQueryModel;
 
     }
-    
-    public static List<PolicyRequestQueryModel> toPolicyRequestQueryModel(List<PolicyRequest> fromList ){
+
+    public static List<PolicyRequestQueryModel> toPolicyRequestQueryModel(List<PolicyRequest> fromList) {
         List<PolicyRequestQueryModel> policyRequestList = new ArrayList<PolicyRequestQueryModel>();
-        
-        for (PolicyRequest policyRequest : fromList){
+
+        for (PolicyRequest policyRequest : fromList) {
             policyRequestList.add(toPolicyRequestQueryModel(policyRequest));
         }
         return policyRequestList;
@@ -381,6 +381,7 @@ public class Mapper {
         client.setBankAccount(bankAccount);
         client.setClientName(clientCommandModel.getClientName());
         client.setIncomeTaxNumber(clientCommandModel.getIncomeTaxNumber());
+        client.setDesignation(clientCommandModel.getDesignation());
         client.setRegNumber(clientCommandModel.getRegNumber());
         client.setVatNumber(clientCommandModel.getVatNumber());
 
@@ -417,6 +418,7 @@ public class Mapper {
         result.setClientId(client.getId());
         result.setClientName(client.getClientName());
         result.setIncomeTaxNumber(client.getIncomeTaxNumber());
+        result.setDesignation(client.getDesignation());
         result.setRegNumber(client.getRegNumber());
         result.setVatNumber(client.getVatNumber());
         result.setBankAccounts(toBankAccountQueryModel(client.getBankAccount()));
@@ -424,16 +426,15 @@ public class Mapper {
 
         return result;
     }
-    
-    public  static List<ClientQueryModel> toClientQueryModel(List<Client> fromList){
+
+    public static List<ClientQueryModel> toClientQueryModel(List<Client> fromList) {
         List<ClientQueryModel> clientList = new ArrayList<ClientQueryModel>();
-        
-        for(Client client : fromList){
-              clientList.add(toClientQueryModel(client));
+
+        for (Client client : fromList) {
+            clientList.add(toClientQueryModel(client));
         }
         return clientList;
     }
-
 
     public static SubAgentQueryModel toSubAgentQueryModel(SubAgent subAgent) {
         SubAgentQueryModel subAgentQueryModel = new SubAgentQueryModel();
@@ -493,15 +494,14 @@ public class Mapper {
         policyQueryModel.setSubAgent(toSubAgentQueryModel(policy.getSubAgent()));
         policyQueryModel.setClient(toClientQueryModel(policy.getClient()));
         policyQueryModel.setUnderwriter(toUnderwriterQueryModel(policy.getUnderwriter()));
-        
-        for(IndemnityOption indemnityOption: policy.getIndemnityOptions()){
-        	//policyQueryModel.getIndemnityOption().add(toIndemnityOptionQueryModel(indemnityOption));
+
+        for (IndemnityOption indemnityOption : policy.getIndemnityOptions()) {
+            policyQueryModel.getIndemnityOption().add(toIndemnityOptionQueryModel(indemnityOption));
         }
-        
+
         return policyQueryModel;
     }
-    
-    
+
     public static IndemnityOptionQueryModel toIndemnityOptionQueryModel(IndemnityOption indemnityOption) {
         IndemnityOptionQueryModel indemnityOptionQueryModel = new IndemnityOptionQueryModel();
 
@@ -513,82 +513,83 @@ public class Mapper {
 
         return indemnityOptionQueryModel;
     }
-    
+
     public static List<IndemnityOptionQueryModel> toIndemnityOptionListQueryModel(Policy policy) {
         List<IndemnityOptionQueryModel> indemnityOptionQueryModel = new ArrayList<IndemnityOptionQueryModel>();
 
-        for(IndemnityOption indemnityOption: policy.getIndemnityOptions()){
-        	indemnityOptionQueryModel.add(toIndemnityOptionQueryModel(indemnityOption));
+        for (IndemnityOption indemnityOption : policy.getIndemnityOptions()) {
+            indemnityOptionQueryModel.add(toIndemnityOptionQueryModel(indemnityOption));
         }
         return indemnityOptionQueryModel;
     }
 
-    public static List<PolicyQueryModel> toPolicyQueryModel(List<Policy> fromPolicies){
-    	List<PolicyQueryModel> policiesQueryResult = new ArrayList<PolicyQueryModel>();
-    	for(Policy policy:fromPolicies){
-    		policiesQueryResult.add(toPolicyQueryModel(policy));
-    	}
-    	return policiesQueryResult;
+    public static List<PolicyQueryModel> toPolicyQueryModel(List<Policy> fromPolicies) {
+        List<PolicyQueryModel> policiesQueryResult = new ArrayList<PolicyQueryModel>();
+        for (Policy policy : fromPolicies) {
+            policiesQueryResult.add(toPolicyQueryModel(policy));
+        }
+        return policiesQueryResult;
     }
-    
-    public static BankAccount fromBankAccountCommandModel(PolicyCreationCommandModel policyCreationCommandModel){
-    	BankAccount bankAccountResult = new BankAccount();
-    	
-    	bankAccountResult.setAccountName(policyCreationCommandModel.getClient().getBankAccount().getAccountName());
-    	bankAccountResult.setAccountNumber(policyCreationCommandModel.getClient().getBankAccount().getAccountNumber());
-    	bankAccountResult.setBranchCode(policyCreationCommandModel.getClient().getBankAccount().getBranch());
-    	bankAccountResult.setBankName(policyCreationCommandModel.getClient().getBankAccount().getBankName());
-    	
-    	return bankAccountResult;
+
+    public static BankAccount fromBankAccountCommandModel(PolicyCreationCommandModel policyCreationCommandModel) {
+        BankAccount bankAccountResult = new BankAccount();
+
+        bankAccountResult.setAccountName(policyCreationCommandModel.getClient().getBankAccount().getAccountName());
+        bankAccountResult.setAccountNumber(policyCreationCommandModel.getClient().getBankAccount().getAccountNumber());
+        bankAccountResult.setBranchCode(policyCreationCommandModel.getClient().getBankAccount().getBranch());
+        bankAccountResult.setBankName(policyCreationCommandModel.getClient().getBankAccount().getBankName());
+
+        return bankAccountResult;
     }
-    
-    public static Contact fromContactCommandModel(PolicyCreationCommandModel policyCreationCommandModel){
-    	Contact contactResult = new Contact();
-    	
-    	contactResult.setCode(policyCreationCommandModel.getClient().getContact().getCode());
-    	contactResult.setContactPerson(policyCreationCommandModel.getClient().getContact().getContactPerson());
-    	contactResult.setEmail(policyCreationCommandModel.getClient().getContact().getEmail());
-    	contactResult.setFaxNumber(policyCreationCommandModel.getClient().getContact().getFaxNumber());
-    	contactResult.setStreet(policyCreationCommandModel.getClient().getContact().getStreet());
-    	contactResult.setSuburb(policyCreationCommandModel.getClient().getContact().getSuburb());
-    	contactResult.setWorkTelNumber(policyCreationCommandModel.getClient().getContact().getWorkTelNumber());
-    	
-    	return contactResult;
+
+    public static Contact fromContactCommandModel(PolicyCreationCommandModel policyCreationCommandModel) {
+        Contact contactResult = new Contact();
+
+        contactResult.setCode(policyCreationCommandModel.getClient().getContact().getCode());
+        contactResult.setContactPerson(policyCreationCommandModel.getClient().getContact().getContactPerson());
+        contactResult.setEmail(policyCreationCommandModel.getClient().getContact().getEmail());
+        contactResult.setFaxNumber(policyCreationCommandModel.getClient().getContact().getFaxNumber());
+        contactResult.setStreet(policyCreationCommandModel.getClient().getContact().getStreet());
+        contactResult.setSuburb(policyCreationCommandModel.getClient().getContact().getSuburb());
+        contactResult.setWorkTelNumber(policyCreationCommandModel.getClient().getContact().getWorkTelNumber());
+
+        return contactResult;
     }
-    
-    public static Client fromClientCommandModel(PolicyCreationCommandModel policyCreationCommandModel,Contact contact,BankAccount bankAccount){
-    	Client clientResult = new Client();
-    	
-    	clientResult.setBankAccount(bankAccount);
-    	clientResult.setContact(contact);
-    	clientResult.setClientName(policyCreationCommandModel.getClient().getClientName());
-    	clientResult.setIncomeTaxNumber(policyCreationCommandModel.getClient().getIncomeTaxNumber());
-    	clientResult.setRegNumber(policyCreationCommandModel.getClient().getRegNumber());
-    	clientResult.setVatNumber(policyCreationCommandModel.getClient().getVatNumber());
-    	
-    	return clientResult;
+
+    public static Client fromClientCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Contact contact, BankAccount bankAccount) {
+        Client clientResult = new Client();
+
+        clientResult.setBankAccount(bankAccount);
+        clientResult.setContact(contact);
+        clientResult.setClientName(policyCreationCommandModel.getClient().getClientName());
+        clientResult.setIncomeTaxNumber(policyCreationCommandModel.getClient().getIncomeTaxNumber());
+        clientResult.setDesignation(policyCreationCommandModel.getClient().getDesignation());
+        clientResult.setRegNumber(policyCreationCommandModel.getClient().getRegNumber());
+        clientResult.setVatNumber(policyCreationCommandModel.getClient().getVatNumber());
+
+        return clientResult;
     }
-    
-    public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel,Client client,SubAgent subAgent,Underwriter underwriter,Contact contact,BankAccount bankAccount) throws ParseException{
-    	Policy policyResult = new Policy();
-    	
-    	policyResult.setClient(client);
-    	policyResult.setSubAgent(subAgent);
-    	policyResult.setUnderwriter(underwriter);
-    	policyResult.setBrokerFee(Double.parseDouble(policyCreationCommandModel.getBrokerFee()));
-    	policyResult.setDevice(policyCreationCommandModel.getDevice());
-    	policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
-    	policyResult.setInceptionDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getInceptionDate()));
-    	policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
-    	policyResult.setPolicyReference(UUID.randomUUID().toString());
-    	policyResult.setRenewalDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getRenewalDate()));
-    	policyResult.setStatus(policyCreationCommandModel.getStatus());
-    	policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
-    	policyResult.setNotes(policyCreationCommandModel.getNotes());
-    	policyResult.setReInstatement(policyCreationCommandModel.getReInstatement());
-    	policyResult.setUnderwriting_year(policyCreationCommandModel.getUnderwritingYear());
-    	policyResult.setFrequency(policyCreationCommandModel.getFrequency());
-    	policyResult.setUnderwriterFee(policyCreationCommandModel.getUnderwriterFee());
+
+    public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount) throws ParseException {
+        Policy policyResult = new Policy();
+
+        policyResult.setClient(client);
+        policyResult.setSubAgent(subAgent);
+        policyResult.setUnderwriter(underwriter);
+        policyResult.setBrokerFee(Double.parseDouble(policyCreationCommandModel.getBrokerFee()));
+        policyResult.setDevice(policyCreationCommandModel.getDevice());
+        policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
+        policyResult.setInceptionDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getInceptionDate()));
+        policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
+        policyResult.setPolicyReference(UUID.randomUUID().toString());
+        policyResult.setRenewalDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getRenewalDate()));
+        policyResult.setStatus(policyCreationCommandModel.getStatus());
+        policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
+        policyResult.setNotes(policyCreationCommandModel.getNotes());
+        policyResult.setReInstatement(policyCreationCommandModel.getReInstatement());
+        policyResult.setUnderwriting_year(policyCreationCommandModel.getUnderwritingYear());
+        policyResult.setFrequency(policyCreationCommandModel.getFrequency());
+        policyResult.setUnderwriterFee(policyCreationCommandModel.getUnderwriterFee());
         policyResult.setBrokerCommission(policyCreationCommandModel.getBrokerCommission());
         policyResult.setConvenyances(policyCreationCommandModel.getConveyances());
         policyResult.setExcessSturcture(policyCreationCommandModel.getExcessStructure());
@@ -602,72 +603,44 @@ public class Mapper {
         policyResult.setTypeOfCover(policyCreationCommandModel.getTypeOfCover());
         policyResult.setSumInsured(policyCreationCommandModel.getSumInsured());
         policyResult.setUACommission(policyCreationCommandModel.getUACommission());
-        
+
         List<IndemnityOption> indemnityOptionsList = new ArrayList<IndemnityOption>();
-         for (PolicyCreationCommandModel.IndemnityOption options : policyCreationCommandModel.getIndemnityOption()) {
-             
-             IndemnityOption indemnityOption = new IndemnityOption();
-             indemnityOption.setIndemnityItemOption(options.getIndemnityItemOption());
-             indemnityOption.setIndemnityValue(options.getIndemnityValue());
-             indemnityOption.setPremium(options.getPremium());
-             indemnityOption.setSumInsured(options.getSumInsured());
-             indemnityOption.setPolicy(policyResult);
-             indemnityOptionsList.add(indemnityOption);
-             
-         }
-         policyResult.setIndemnityOptions(indemnityOptionsList);  	
-    	return policyResult;
+        for (PolicyCreationCommandModel.IndemnityOption options : policyCreationCommandModel.getIndemnityOption()) {
+
+            IndemnityOption indemnityOption = new IndemnityOption();
+            indemnityOption.setIndemnityItemOption(options.getIndemnityItemOption());
+            indemnityOption.setIndemnityValue(options.getIndemnityValue());
+            indemnityOption.setPremium(options.getPremium());
+            indemnityOption.setSumInsured(options.getSumInsured());
+            indemnityOption.setPolicy(policyResult);
+            indemnityOptionsList.add(indemnityOption);
+
+        }
+        policyResult.setIndemnityOptions(indemnityOptionsList);
+        return policyResult;
     }
-    
-    
-    public static List<SubAgentQueryModel> toSubAgentQueryModel(List<SubAgent> subAgents){
-    	List<SubAgentQueryModel> subAgentList = new ArrayList<SubAgentQueryModel>();
-    	for(SubAgent agent:subAgents){
-    		subAgentList.add(toSubAgentQueryModel(agent));
-    	}
-    	return subAgentList;
+
+    public static List<SubAgentQueryModel> toSubAgentQueryModel(List<SubAgent> subAgents) {
+        List<SubAgentQueryModel> subAgentList = new ArrayList<SubAgentQueryModel>();
+        for (SubAgent agent : subAgents) {
+            subAgentList.add(toSubAgentQueryModel(agent));
+        }
+        return subAgentList;
     }
-    
-    public static Client toClientCommandModel(PolicyQueryModel policyQueryModel, Client client){
-        
-        client.setClientName(policyQueryModel.getClient().getClientName());
-        client.setIncomeTaxNumber(policyQueryModel.getClient().getIncomeTaxNumber());
-        client.setRegNumber(policyQueryModel.getClient().getRegNumber());
-        client.setVatNumber(policyQueryModel.getClient().getVatNumber());
-        //Bank
-        BankAccount bankAccount = client.getBankAccount();
-        bankAccount.setAccountName(policyQueryModel.getClient().getBankAccounts().getAccountName());
-        bankAccount.setAccountNumber(policyQueryModel.getClient().getBankAccounts().getAccountNumber());
-        bankAccount.setBankName(policyQueryModel.getClient().getBankAccounts().getBankName());
-        bankAccount.setBranchCode(policyQueryModel.getClient().getBankAccounts().getBranch());
-        
-        Contact contact = client.getContact();
-        contact.setCode(policyQueryModel.getClient().getContact().getCode());
-        contact.setContactPerson(policyQueryModel.getClient().getContact().getContactPerson());
-        contact.setEmail(policyQueryModel.getClient().getContact().getEmail());
-        contact.setFaxNumber(policyQueryModel.getClient().getContact().getFaxNumber());
-        contact.setStreet(policyQueryModel.getClient().getContact().getStreet());
-        contact.setSuburb(policyQueryModel.getClient().getContact().getSuburb());
-        contact.setWorkTelNumber(policyQueryModel.getClient().getContact().getWorkTelNumber());
-        
-        Client updatedClient = client;
-        
-        return updatedClient;
-    }
-    
-        public static Client toClientCommandModel(ClientQueryModel clientQueryModel,Client client ){
-        
+
+    public static Client toClientCommandModel(ClientQueryModel clientQueryModel, Client client) {
+
         client.setClientName(clientQueryModel.getClientName());
         client.setIncomeTaxNumber(clientQueryModel.getIncomeTaxNumber());
+         client.setDesignation(clientQueryModel.getDesignation());
         client.setRegNumber(clientQueryModel.getRegNumber());
         client.setVatNumber(clientQueryModel.getVatNumber());
-        //Bank
         BankAccount bankAccount = client.getBankAccount();
         bankAccount.setAccountName(clientQueryModel.getBankAccounts().getAccountName());
         bankAccount.setAccountNumber(clientQueryModel.getBankAccounts().getAccountNumber());
         bankAccount.setBankName(clientQueryModel.getBankAccounts().getBankName());
         bankAccount.setBranchCode(clientQueryModel.getBankAccounts().getBranch());
-        
+
         Contact contact = client.getContact();
         contact.setCode(clientQueryModel.getContact().getCode());
         contact.setContactPerson(clientQueryModel.getContact().getContactPerson());
@@ -676,9 +649,9 @@ public class Mapper {
         contact.setStreet(clientQueryModel.getContact().getStreet());
         contact.setSuburb(clientQueryModel.getContact().getSuburb());
         contact.setWorkTelNumber(clientQueryModel.getContact().getWorkTelNumber());
-        
+
         Client updatedClient = client;
-        
+
         return updatedClient;
     }
 
