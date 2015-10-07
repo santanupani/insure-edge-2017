@@ -131,6 +131,7 @@ underwritter.controller('getAllPolicyRequestCtrl', function ($scope, $http, $roo
 
 
     $scope.getAllPolicyRequest = function () {
+        $scope.request = [];
         $http({
             url: '/api/policy-requests',
             method: 'get'
@@ -138,7 +139,10 @@ underwritter.controller('getAllPolicyRequestCtrl', function ($scope, $http, $roo
             if (status == 200) {
                 console.log(' all policy Request retrived sucessfully');
                 $scope.policyRequest = data;
+                $scope.request = data;
+                $scope.policyRequestSize = $scope.request.length;
                 console.log('Returned policy request: ' + data);
+                console.log('Returned policy request: ' + $scope.request.length);
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
