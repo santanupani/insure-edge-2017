@@ -348,6 +348,14 @@ public class Service {
 		log.info("client details");
 		return toClientQueryModel(client);
 	}
+        
+        @RequestMapping(value = "api/clients", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public List<ClientQueryModel> findAllClients(){
+            log.info("Find all Clients");
+            List<Client> client = clientRepository.findAll();
+            log.info("Found all Cleints - size : ", client.size());
+            return toClientQueryModel(client);
+        }
 
 	/*The get service to return the policy details per specific policy ID*/
 	@RequestMapping(value = "api/policy/{policyReference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -404,13 +412,14 @@ public class Service {
 	}
         
         
+        
         @Transactional
-	@RequestMapping(value = "api/client/{policyReference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
-	public void updateClient(@PathVariable("policyReference") String policyReference, @RequestBody PolicyQueryModel policyQueryModel) throws ParseException {
+	@RequestMapping(value = "api/client/{clientId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+	public void updateClient(@PathVariable("clientId") Long clientId, @RequestBody ClientQueryModel clientQueryModel) throws ParseException {
 	 
-                Policy policy = policyRepository.findByPolicyReference(policyReference);
-                Client client = policy.getClient();
-                clientRepository.save(toClientCommandModel(policyQueryModel,client));
+                Client client = clientRepository.findOne(clientId);
+             
+                clientRepository.save(toClientCommandModel(clientQueryModel, client));
 	}
 
 }

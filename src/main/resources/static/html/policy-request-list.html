@@ -1,0 +1,43 @@
+<div class="row" style="padding: 25px;" ng-init="init()">
+
+
+    <div class="col-md-12">
+
+        
+           <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Policy Requests</h4>
+            </div>
+        <div class="table-bordered">          
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Company Name</th>
+                        <th>Client Name</th>
+                        <th>Ref number</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="policyRequests in policyRequest">
+                    <tr>
+                        <td>{{$index + 1}}</td>
+                        <td id="q_{{index}}">{{policyRequests.quotation.quotationRequest.companyName}}</td>
+                        <td id="q_{{index}}">{{policyRequests.quotation.quotationRequest.applicantName}}</td>
+                        <td id="q_{{index}}"><a ng-href="#/policy/{{policyRequests.quotation.quotationRequest.reference}}"
+                                                ng-click="getPolicy(policyRequests.quotation.quotationRequest.reference)">{{policyRequests.quotation.quotationRequest.reference}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+           </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+

@@ -5,17 +5,20 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
                 .when('/policy-requests/:reference', {
                     'templateUrl': '/html/underwritter.html',
                     'controller': 'policyRequestCtrl'
-                }).when('/client/:policyReference', {
-            'templateUrl': '/html/client-details.html',
-            'controller': 'clientDetailsCtrl'
+                }).when('/clients', {
+            'templateUrl': '/html/client-list.html',
+            'controller': 'listClientCtrl'
+        }).when('/clients/:clientId', {
+            'templateUrl': '/html/clients.html',
+            'controller': 'viewClientCtrl'
         }).when('/policy/:policyReference', {
             'templateUrl': '/html/policy.html',
             'controller': 'policyCtrl'
         }).when('/policies', {
             'templateUrl': '/html/policy.html',
             'controller': 'policyCtrl'
-        }).when('/all-policy-request', {
-            'templateUrl': '/html/policy-requests.html',
+        }).when('/policy-request-list', {
+            'templateUrl': '/html/policy-request-list.html',
             'controller': 'getAllPolicyRequestCtrl'
         }).when('/policy-list', {
             'templateUrl': '/html/policy-list.html',
@@ -148,51 +151,24 @@ underwritter.controller('getAllPolicyRequestCtrl', function ($scope, $http, $roo
     };
 });
 
-underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $location, $routeParams, $http, $routeParams) {
-    $scope.client = {};
-    $scope.policy = {};
 
-    $scope.isDisabled = false;
+underwritter.controller('listClientCtrl', function ($scope, $rootScope, $http) {
 
+    $scope.clients = {};
     $scope.init = function () {
-
-        $scope.is_readonly = true;
-
-        if ($scope.policies == undefined) {
-            console.log('Policies don\'t exists.');
-            $scope.getPolicies();
-
-        }
-        $scope.getClient();
-
-
+        $scope.getAllClients();
     };
 
-    $scope.getClient = function () {
-        angular.forEach($scope.policies, function (policy) {
-            if (angular.equals($routeParams.policyReference, policy.policyReference)) {
-                $scope.policy = policy;
-                $scope.policy.client = policy.client;
-                console.log('Client :' + $scope.policy.client);
-                $location.path('/client/' + $routeParams.policyReference);
-            }
-        });
 
-    };
-
-    /*Get all list of policies*/
-    $scope.getPolicies = function () {
+    $scope.getAllClients = function () {
         $http({
-            url: '/api/policies',
+            url: '/api/clients',
             method: 'get'
         }).success(function (data, status) {
             if (status == 200) {
-                console.log('All policies retrived sucessfully');
-                $rootScope.policies = data;
-                console.log($rootScope.policies);
-                $scope.getClient();
-                console.log('Policies size :' + $rootScope.policies.length);
-
+                console.log(' all clients retrived sucessfully');
+                $scope.clients = data;
+                console.log('Returned Cleint: ' + data);
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
@@ -204,6 +180,46 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $loca
         });
     };
 
+});
+
+underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
+
+    $scope.client = {};
+
+    $scope.isDisabled = false;
+
+    $scope.init = function () {
+
+        $scope.is_readonly = true;
+        $scope.clientId = $routeParams.clientId;
+
+        $scope.getClient($scope.clientId);
+    };
+
+
+    $rootScope.getClient = function () {
+
+        $http({
+            url: '/api/clients/' + $scope.clientId,
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('Client retrived');
+                $scope.client = data;
+                console.log('Client : ' + $scope.client.clientName);
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+        });
+
+    };
+
+
     $scope.edit = function (isReadonly, isDisabled) {
 
         $scope.is_readonly = isReadonly;
@@ -212,29 +228,35 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $loca
 
     $scope.updateClient = function () {
 
-        console.log("client " + $scope.policy.policyReference);
+        console.log("client " + $scope.client.clientId);
         console.log('update client');
         $http({
-            url: '/api/client/' + $scope.policy.policyReference,
+            url: '/api/client/' + $scope.client.clientId,
             method: 'put',
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: $scope.policy
+            data: $scope.client
         }).success(function (data, status) {
             console.log('get success code:' + status);
             if (status == 200) {
+                $rootScope.message = "Client Updated Successfully";
                 console.log('Client Updated');
             } else {
                 console.log('status:' + status);
             }
         })
                 .error(function (error) {
-                    $rootScope.message = "";
+                    $rootScope.message = "Oops we recieved your request but there was a problem processing it";
                     console.log(error);
                 });
     };
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
 });
+
 
 underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $cookieStore) {
 
