@@ -163,11 +163,6 @@ underwritter.controller('listClientCtrl', function ($scope, $rootScope, $http) {
         $scope.getAllClients();
     };
     
-        if ($scope.policies == undefined) {
-            console.log('Policies don\'t exists.');
-            $scope.getPolicies();
-        }
-        $scope.getClient();
 
     $scope.getAllClients = function () {
         $http({
