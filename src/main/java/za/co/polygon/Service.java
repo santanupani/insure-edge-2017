@@ -18,14 +18,12 @@ import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +36,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.itextpdf.text.DocumentException;
 import javax.persistence.EntityManager;
-
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
@@ -146,9 +142,6 @@ public class Service {
 	
 	@Autowired
 	private ContactRepository contactRepository;
-
-        @Autowired
-        private EntityManager entityManager;
 	
 
 	@RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -342,6 +335,14 @@ public class Service {
 		log.info("client details");
 		return toClientQueryModel(client);
 	}
+        
+        @RequestMapping(value = "api/clients", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public List<ClientQueryModel> findAllClients(){
+            log.info("Find all Clients");
+            List<Client> client = clientRepository.findAll();
+            log.info("Found all Cleints - size : ", client.size());
+            return toClientQueryModel(client);
+        }
 
 	/*The get service to return the policy details per specific policy ID*/
 	@RequestMapping(value = "api/policy/{policyReference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -382,10 +383,6 @@ public class Service {
 		Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
-		
-		//PolicySchedule policySchedule = policyScheduleRepository.save(fromPolicyScheduleCommandModel(policyCreationCommandModel,policy));
-		
-		//log.info("Policy reference: "+policySchedule.getId());
 		return policy.getPolicyReference();
 	}
 	
@@ -398,13 +395,14 @@ public class Service {
 	}
         
         
+        
         @Transactional
-	@RequestMapping(value = "api/client/{policyReference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
-	public void updateClient(@PathVariable("policyReference") String policyReference, @RequestBody PolicyQueryModel policyQueryModel) throws ParseException {
+	@RequestMapping(value = "api/client/{clientId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+	public void updateClient(@PathVariable("clientId") Long clientId, @RequestBody ClientQueryModel clientQueryModel) throws ParseException {
 	 
-                Policy policy = policyRepository.findByPolicyReference(policyReference);
-                Client client = policy.getClient();
-                clientRepository.save(toClientCommandModel(policyQueryModel,client));
+                Client client = clientRepository.findOne(clientId);
+             
+                clientRepository.save(toClientCommandModel(clientQueryModel, client));
 	}
 
 }

@@ -424,6 +424,15 @@ public class Mapper {
 
         return result;
     }
+    
+    public  static List<ClientQueryModel> toClientQueryModel(List<Client> fromList){
+        List<ClientQueryModel> clientList = new ArrayList<ClientQueryModel>();
+        
+        for(Client client : fromList){
+              clientList.add(toClientQueryModel(client));
+        }
+        return clientList;
+    }
 
 
     public static SubAgentQueryModel toSubAgentQueryModel(SubAgent subAgent) {
@@ -640,6 +649,33 @@ public class Mapper {
         contact.setStreet(policyQueryModel.getClient().getContact().getStreet());
         contact.setSuburb(policyQueryModel.getClient().getContact().getSuburb());
         contact.setWorkTelNumber(policyQueryModel.getClient().getContact().getWorkTelNumber());
+        
+        Client updatedClient = client;
+        
+        return updatedClient;
+    }
+    
+        public static Client toClientCommandModel(ClientQueryModel clientQueryModel,Client client ){
+        
+        client.setClientName(clientQueryModel.getClientName());
+        client.setIncomeTaxNumber(clientQueryModel.getIncomeTaxNumber());
+        client.setRegNumber(clientQueryModel.getRegNumber());
+        client.setVatNumber(clientQueryModel.getVatNumber());
+        //Bank
+        BankAccount bankAccount = client.getBankAccount();
+        bankAccount.setAccountName(clientQueryModel.getBankAccounts().getAccountName());
+        bankAccount.setAccountNumber(clientQueryModel.getBankAccounts().getAccountNumber());
+        bankAccount.setBankName(clientQueryModel.getBankAccounts().getBankName());
+        bankAccount.setBranchCode(clientQueryModel.getBankAccounts().getBranch());
+        
+        Contact contact = client.getContact();
+        contact.setCode(clientQueryModel.getContact().getCode());
+        contact.setContactPerson(clientQueryModel.getContact().getContactPerson());
+        contact.setEmail(clientQueryModel.getContact().getEmail());
+        contact.setFaxNumber(clientQueryModel.getContact().getFaxNumber());
+        contact.setStreet(clientQueryModel.getContact().getStreet());
+        contact.setSuburb(clientQueryModel.getContact().getSuburb());
+        contact.setWorkTelNumber(clientQueryModel.getContact().getWorkTelNumber());
         
         Client updatedClient = client;
         

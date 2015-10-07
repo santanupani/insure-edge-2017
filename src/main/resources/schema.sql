@@ -237,27 +237,6 @@ create table policies(
     constraint policies_fk3 foreign key(underwriter_id) references underwriters(id)
 );
 
-
-/* table : policy_schedule */
-create table policy_schedules(
-    id integer auto_increment not null primary key,
-    policy_id varchar(16) not null,
-    sum_insured decimal not null,
-    max_sum_insured decimal not null,
-    broker_commission decimal not null,
-    ua_commission decimal not null,
-    premium decimal not null,
-    sasria_premium decimal not null,
-    schedule_attaching varchar(1024) not null,
-    type_of_cover varchar(1024) not null,
-    subject_matter varchar(16) not null,
-    excess_structure varchar(256) not null,
-    special_condition varchar(1024) not null,
-    conveyances varchar(64) not null,
-    geographical_duration varchar(2048) not null,
-    constraint policy_schedules_fk1 foreign key (policy_id) references policies (id)
-);
-
 /* table : indemnity_option */
 
 create table indemnity_options(
