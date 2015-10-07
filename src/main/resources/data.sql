@@ -319,56 +319,13 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '167', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 
 
-
-insert into bank_accounts(account_number, account_name, branch, bank_name)values('236777262','Thabo','5678','Standard Bank');
-insert into bank_accounts(account_number, account_name, branch, bank_name)values('3425672872','Lenox','6756','Nedbank');
-insert into bank_accounts(account_number, account_name, branch, bank_name)values('2345656','Binod','7889','Standard Bank');
-
-
-insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('umtholo','8909','Birch Acres','011 991 0000','086 575 7876','thabo@gmail.com','Thabo Thulare');
-insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('old road','6765','Oliven','015 787 9788','086 671 7887','Lenox@reverside.co.za','Lenox');
-insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('zurich','9866','Sandton','012 876 7876','012 655 8987','binod@gmail.com','Binod Sethi');
-
-insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('1','1','Reverside','5TTDDFU78','234599','TRUI5555');
-insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('2','2','Zurich','567RRFCD','2345678','TRE123456');
-insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, vat_number) values('3','3','Reverside Software Solutions','5TTDDFU78','234599','TRUI5555');
-
-/*Test Data for Policy details per clients */
 insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Binod','Biny','Sethi','Binod.Sethi@reverside.co.za');
 insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Thabo','Tbos','Thulare','Thabo.Thulare@reverside.co.za');
 
 insert into underwriters(first_name,middle_name,last_name,email) values('Lizaan','Lizy','Botha','Lizaan.Botha@reverside.co.za');
 insert into underwriters(first_name,middle_name,last_name,email) values('Cressundra','Cress','Alves','Cressundra.Alves@reverside.co.za');
 
-insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
-values('BINOD-DAL34-DAOO-0909-23DS3-2343',1,1,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
-insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
-values('THABO-SHANW-DAOO-0909-23DS3-2343',2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
---insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
---values('TAGO-DAL34-DAOO-0909-23DS3-2343',1,3,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
---insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
---values('SHAWN-SHANW-DAOO-0909-23DS3-2343',2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
---insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
---values('CHARZ-DAL34-DAOO-0909-23DS3-2343',1,1,2,'2015-09-17','2015-09-17',2015,'Active','Declaration','N/A','Nedbank Cameo','2015-09-17','',true,false,0,0,'This policy has qualified for cover, but pending documentation');
---insert into policies(policy_reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,retro_active_date,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,notes) 
---values('NDHIV-SHANW-DAOO-0909-23DS3-2343',2,2,1,'2015-09-17','2015-09-17',2015,'Cancelled','Declaration','N/A','Nedbank Cameo','2015-09-17','',false,false,0,0,'This policy has qualified for cover, await approval from Manager');
 
 
-insert into policy_schedules(policy_id,sum_insured,maximum_sum_insured,broker_commission,UA_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration)
-values(1,3209000,100000,0,20,350,0,'The attached schedule','Cash and Valuables in Transit','Cash','By product','As discussed','Voltage','Discussion Value');
-
-insert into policy_schedules(policy_id,sum_insured,maximum_sum_insured,broker_commission,UA_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration)
-values(2,73200010,210000,0,20,450,0,'The attached schedule','Cash and Valuables in Transit','Art','By Artery','As discussed','Limit','Discussion Value');
-
-insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
-values(1,'Policy Vault','Per vehicle per transit (6* weekly)',230404,2300);
-
-insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
-values(2,'Policy Vault','Per vehicle(3* weekly)',3450404,300);
-
-insert into indemnity_options(policy_schedule_id,indemity_item_option,indemnity_value,sum_insured,premium)
-values(1,'Policy Limit','Per Cash per transit (4* weekly)',120404,4100);
-
-insert into underwriters(first_name,middle_name,last_name,email) values('Thabo','Tbos','Thulare','thabothulare68@gmail.com');
 
 

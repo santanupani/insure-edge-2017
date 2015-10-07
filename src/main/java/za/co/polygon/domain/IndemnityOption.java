@@ -31,8 +31,8 @@ public class IndemnityOption {
     private double premium;
     
     @ManyToOne
-    @JoinColumn(name = "policy_schedule_id")
-    private PolicySchedule policySchedule;
+    @JoinColumn(name = "policy_id")
+    private Policy policy;
     
 
     public Long getId() {
@@ -77,11 +77,12 @@ public class IndemnityOption {
         this.premium = premium;
     }
 
-    public PolicySchedule getPolicySchedule() {
-        return policySchedule;
+    public Policy getPolicy() {
+        return policy;
     }
 
-    public void setPolicySchedule(PolicySchedule policySchedule) {
-        this.policySchedule = policySchedule;
+    public void setPolicy(Policy policy) {
+        this.policy = policy;
     }
+   
 }

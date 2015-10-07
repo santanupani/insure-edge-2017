@@ -15,99 +15,7 @@
         <strong>Success ! </strong>{{message}}
     </div>
 
-    <div class="col-md-12">
-        
-        
-                <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Product</h4>
-            </div>
-            <div class="panel-body" align="center" style="height: 300px;">
-                <img class="img-circle" ng-src="{{policyRequest.quotation.quotationRequest.product.image}}"
-                     width="140" height="140">
-                <h3>{{policyRequest.quotation.quotationRequest.product.name}}</h3>
-                <p>{{policyRequest.quotation.quotationRequest.product.description}}</p>
-            </div>
-        </div>
-
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Client Details</h4>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <label class="control-label" for="reference">Reference</label> <input
-                            type="text" class="form-control" id="reference"
-                            ng-model="policyRequest.quotation.quotationRequest.reference" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="companyName">Company</label> <input
-                            type="text" class="form-control" id="companyName"
-                            ng-model="policyRequest.quotation.quotationRequest.companyName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="applicant">Applicant</label> <input
-                            type="text" class="form-control" id="applicant"
-                            ng-model="policyRequest.quotation.quotationRequest.applicantName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="appliedOn">Applied On</label> <input
-                            type="text" class="form-control" id="appliedOn"
-                            ng-model="policyRequest.quotation.quotationRequest.createDate" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="status">Status</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.quotation.quotationRequest.status" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="telephoneNumber">Telephone Number</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.telephoneNumber" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="faxNumber">Fax Number</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.faxNumber" readonly="readonly"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel-heading">
-                <h4>Client Bank Details</h4>
-            </div>
-
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <label class="control-label" for="bankName">Bank Name</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.bankName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="accountNumber">Account Number</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.accountNumber" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="branchCode">Branch Code</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.branchCode" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="accountType">Account Type</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.accType" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="debitorder">Debit Order Date</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.debitOrderDate" readonly="readonly"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
 
         <form data-toggle="validator" role="form" name="rejectform" id="rejectform">
             <div ng-if="mode == 'reject'" class="panel panel-default"
@@ -178,6 +86,103 @@
                 </div>
             </div>
         </div>
+    
+
+        
+        
+                <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Product</h4>
+            </div>
+            <div class="panel-body" align="center" style="height: 300px;">
+                <img class="img-circle" ng-src="{{policyRequest.quotation.quotationRequest.product.image}}"
+                     width="140" height="140">
+                <h3>{{policyRequest.quotation.quotationRequest.product.name}}</h3>
+                <p>{{policyRequest.quotation.quotationRequest.product.description}}</p>
+            </div>
+        </div>
+
+        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+            <div class="panel-heading">
+                <h4>Client Details</h4>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <div class="form-group">
+                        <label class="control-label" for="reference">Reference</label> <input
+                            type="text" class="form-control" id="reference"
+                            ng-model="policyRequest.quotation.quotationRequest.reference" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="companyName">Company</label> <input
+                            type="text" class="form-control" id="companyName"
+                            ng-model="policyRequest.quotation.quotationRequest.companyName" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="applicant">Applicant</label> <input
+                            type="text" class="form-control" id="applicant"
+                            ng-model="policyRequest.quotation.quotationRequest.applicantName" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="appliedOn">Applied On</label> <input
+                            type="text" class="form-control" id="appliedOn"
+                            ng-model="policyRequest.quotation.quotationRequest.createDate" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="status">Status</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.quotation.quotationRequest.status" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="telephoneNumber">Telephone Number</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.telephoneNumber" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="faxNumber">Fax Number</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.faxNumber" readonly="readonly"/>
+                    </div>
+                </div>
+            </div>
+            </div>
+    
+    <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+
+            <div class="panel-heading">
+                <h4>Client Bank Details</h4>
+            </div>
+
+            <div class="panel-body">
+                <div>
+                    <div class="form-group">
+                        <label class="control-label" for="bankName">Bank Name</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.bankName" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="accountNumber">Account Number</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.accountNumber" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="branchCode">Branch Code</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.branchCode" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="accountType">Account Type</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.accType" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="debitorder">Debit Order Date</label> <input
+                            type="text" class="form-control" id="status"
+                            ng-model="policyRequest.debitOrderDate" readonly="readonly"/>
+                    </div>
+                </div>
+            </div>
+    </div>
 
         <div>
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
@@ -200,5 +205,5 @@
                 </div>
             </div>
         </div>
-    </div>
+  
 </div>

@@ -161,7 +161,6 @@ underwritter.controller('clientDetailsCtrl', function ($scope, $rootScope, $loca
         if ($scope.policies == undefined) {
             console.log('Policies don\'t exists.');
             $scope.getPolicies();
-
         }
         $scope.getClient();
 
@@ -247,8 +246,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.policy.client = {};
     $scope.policy.client.contact = {};
     $scope.policy.client.bankAccount = {};
-    $scope.policy.policySchedule = {};
-    $scope.policy.policySchedule.indemnityOption = [{}];
+    $scope.policy.indemnityOption = [{}];
     $scope.btnValue;
 
 
@@ -292,19 +290,14 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         if (policy != undefined) {
             $scope.getPolicyRequest($cookieStore.get('reference'));
             console.log('initializing new policy state');
-            /*Initializing the Policy details*/
-//			$scope.policy.policyReference = 'New-Policy-Creation';
             $scope.policy.brokerFee = 20;
             $scope.policy.underwritingYear = 2015;
             $scope.policy.notes = $scope.wording.notes;
             $scope.policy.underwriterId = 1;
-
-            /*Initializing the Client's contact details*/
             $scope.policy.client.clientName = $rootScope.policyRequest.quotation.quotationRequest.companyName;
             $scope.policy.client.regNumber = $rootScope.policyRequest.vatRegNumber;
             $scope.policy.client.incomeTaxNumber = $rootScope.policyRequest.accountName;
             $scope.policy.client.vatNumber = $rootScope.policyRequest.vatRegNumber;
-            /*Client Contact details*/
             $scope.policy.client.contact.contactPerson = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
             $scope.policy.client.contact.email = $rootScope.policyRequest.quotation.quotationRequest.applicantEmail;
             $scope.policy.client.contact.street = $rootScope.policyRequest.streetAddress;
@@ -313,17 +306,14 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.client.contact.code = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
             $scope.policy.client.contact.street = $rootScope.policyRequest.quotation.quotationRequest.applicantName;
             $scope.policy.client.contact.suburb = $rootScope.policyRequest.suburb;
-
-            /*Initializing the Client's bankAccoutn details*/
             $scope.policy.client.bankAccount.branch = $rootScope.policyRequest.branchCode;
             $scope.policy.client.bankAccount.accountName = $rootScope.policyRequest.accountName;
             $scope.policy.client.bankAccount.bankName = $rootScope.policyRequest.bankName;
             $scope.policy.client.bankAccount.accountNumber = $rootScope.policyRequest.accountNumber;
 
-            /*Initializing the Client's PolicySchedule details*/
-            $scope.policy.policySchedule.scheduleAttaching = $scope.wording.scheduleAttaching;
-            $scope.policy.policySchedule.premium = $rootScope.policyRequest.quotationOption.premium;
-            $scope.policy.policySchedule.excessStructure = $rootScope.policyRequest.quotationOption.excess;
+            $scope.policy.scheduleAttaching = $scope.wording.scheduleAttaching;
+            $scope.policy.premium = $rootScope.policyRequest.quotationOption.premium;
+            $scope.policy.excessStructure = $rootScope.policyRequest.quotationOption.excess;
 
 
 
@@ -331,7 +321,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 switch (questionnairre.question) {
                     case 'What do you wish to insure ?':
                         console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
-                        $scope.policy.policySchedule.subjectMatter = questionnairre.answer;
+                        $scope.policy.subjectMatter = questionnairre.answer;
                     case 'What is the maximum amount you wish to insure ?':
                         console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
                         var maxSumToken = questionnairre.answer.split(',');
@@ -339,8 +329,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                         for (i = 0; i < maxSumToken.length; i++) {
                             tokenMax += maxSumToken[i];
                         }
-                        $scope.policy.policySchedule.maximumSumInsured = tokenMax;
-                        $scope.policy.policySchedule.sumInsured = $scope.policy.policySchedule.maximumSumInsured;
+                        $scope.policy.maximumSumInsured = tokenMax;
+                        $scope.policy.sumInsured = $scope.policy.maximumSumInsured;
 
                     case 'Please specify policy insecption date for annual cover :':
                         console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
@@ -348,8 +338,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                     case '':
                 }
             });
-            $scope.policy.policySchedule.typeOfCover = $scope.wording.typeOfCover;
-            $scope.policy.policySchedule.geographicalDuration = $scope.wording.geographicalDuration;
+            $scope.policy.typeOfCover = $scope.wording.typeOfCover;
+            $scope.policy.geographicalDuration = $scope.wording.geographicalDuration;
 
         } else {
             $scope.policy = $rootScope.policy;

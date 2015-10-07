@@ -16,7 +16,6 @@ import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
-import static za.co.polygon.mapper.Mapper.fromPolicyScheduleCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 
@@ -50,7 +49,6 @@ import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
-import za.co.polygon.domain.PolicySchedule;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
@@ -80,7 +78,6 @@ import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
 import za.co.polygon.repository.PolicyRepository;
 import za.co.polygon.repository.PolicyRequestRepository;
-import za.co.polygon.repository.PolicyScheduleRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationOptionRepository;
@@ -149,10 +146,7 @@ public class Service {
 	
 	@Autowired
 	private ContactRepository contactRepository;
-	
-	@Autowired
-	private PolicyScheduleRepository policyScheduleRepository;
-	
+
         @Autowired
         private EntityManager entityManager;
 	
@@ -389,9 +383,9 @@ public class Service {
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
 		
-		PolicySchedule policySchedule = policyScheduleRepository.save(fromPolicyScheduleCommandModel(policyCreationCommandModel,policy));
+		//PolicySchedule policySchedule = policyScheduleRepository.save(fromPolicyScheduleCommandModel(policyCreationCommandModel,policy));
 		
-		log.info("Policy reference: "+policySchedule.getId());
+		//log.info("Policy reference: "+policySchedule.getId());
 		return policy.getPolicyReference();
 	}
 	
