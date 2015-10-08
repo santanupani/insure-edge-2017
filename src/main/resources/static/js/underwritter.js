@@ -42,7 +42,7 @@ $(document).ready(function () {
 
 underwritter.controller('policyRequestCtrl', function ($scope, $rootScope, $http, $routeParams, $cookieStore) {
     $scope.mode;
-    $scope.reference;
+    $rootScope.reference;
     $scope.reject;
     $scope.accept;
 
@@ -318,6 +318,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.getPolicyRequest($cookieStore.get('reference'));
             console.log('initializing new policy state');
             $scope.policy.brokerFee = 20;
+             $scope.policy.underwriterFee = 12.5;
             $scope.policy.underwritingYear = 2015;
             $scope.policy.notes = $scope.wording.notes;
             $scope.policy.underwriterId = 1;
@@ -341,6 +342,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.scheduleAttaching = $scope.wording.scheduleAttaching;
             $scope.policy.premium = $rootScope.policyRequest.quotationOption.premium;
             $scope.policy.excessStructure = $rootScope.policyRequest.quotationOption.excess;
+            $scope.policy.specialCondition = $scope.wording.specialCondition;
 
 
 
@@ -537,12 +539,6 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             'Active',
             'Terminated',
             'Cancelled',
-        ],
-        'subAgentNames': [
-            'Thabo',
-            'Binod',
-            'Manmay',
-            'Ardhendu'
         ]
     };
 
