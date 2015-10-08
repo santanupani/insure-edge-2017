@@ -370,6 +370,7 @@ public class Mapper {
         bankAccount.setAccountNumber(clientCommandModel.getBankAccount().getAccountNumber());
         bankAccount.setBankName(clientCommandModel.getBankAccount().getBankName());
         bankAccount.setBranchCode(clientCommandModel.getBankAccount().getBranch());
+        bankAccount.setAccountType(clientCommandModel.getBankAccount().getAccountType());
 
         return bankAccount;
     }
@@ -395,6 +396,7 @@ public class Mapper {
         bankAccountQueryModel.setAccountNumber(from.getAccountNumber());
         bankAccountQueryModel.setBankName(from.getBankName());
         bankAccountQueryModel.setBranch(from.getBranchCode());
+        bankAccountQueryModel.setAccountType(from.getAccountType());
         return bankAccountQueryModel;
     }
 
@@ -538,6 +540,7 @@ public class Mapper {
         bankAccountResult.setAccountNumber(policyCreationCommandModel.getClient().getBankAccount().getAccountNumber());
         bankAccountResult.setBranchCode(policyCreationCommandModel.getClient().getBankAccount().getBranch());
         bankAccountResult.setBankName(policyCreationCommandModel.getClient().getBankAccount().getBankName());
+        bankAccountResult.setAccountType(policyCreationCommandModel.getClient().getBankAccount().getAccountType());
 
         return bankAccountResult;
     }
@@ -640,6 +643,7 @@ public class Mapper {
         bankAccount.setAccountNumber(clientQueryModel.getBankAccounts().getAccountNumber());
         bankAccount.setBankName(clientQueryModel.getBankAccounts().getBankName());
         bankAccount.setBranchCode(clientQueryModel.getBankAccounts().getBranch());
+        bankAccount.setAccountType(clientQueryModel.getBankAccounts().getAccountType());
 
         Contact contact = client.getContact();
         contact.setCode(clientQueryModel.getContact().getCode());

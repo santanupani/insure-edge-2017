@@ -141,6 +141,7 @@ create table bank_accounts(
       account_name varchar(32) not null,
       branch varchar(32) not null,
       bank_name varchar(32) not null,
+      account_type varchar(32) not null
 );
 
 /* table :  contacts */

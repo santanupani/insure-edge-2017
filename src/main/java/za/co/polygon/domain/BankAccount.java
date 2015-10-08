@@ -27,6 +27,9 @@ public class BankAccount {
 
     @Column(name = "bank_name")
     private String bankName;
+    
+    @Column(name = "account_type")
+    private String accountType;
 
     public Long getId() {
         return id;
@@ -69,7 +72,13 @@ public class BankAccount {
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
-    
-    
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
 
 }

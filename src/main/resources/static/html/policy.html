@@ -63,6 +63,12 @@
                                                     <option value=""></option>
                                                 </select>
                                             </div>
+                                            
+                                             <div class="form-group">
+                                                <label>Broker Commission</label> <input type="text"
+                                                                                 ng-readonly="isUpdate" class="form-control"
+                                                                                 ng-model="policy.brokerFee" />
+                                            </div>
 
                                         </div>
 
@@ -92,7 +98,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Underwriter Fee</label> <input type="text"
+                                                <label>Underwriter Commission</label> <input type="text"
                                                                                       ng-readonly="isUpdate" class="form-control"
                                                                                       ng-model="policy.underwriterFee" required />
                                             </div>
@@ -112,13 +118,7 @@
                                                 <textarea class="form-control" rows="8"
                                                           ng-readonly="isUpdate" ng-model="policy.notes" required></textarea>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label>Broker Fee</label> <input type="text"
-                                                                                 ng-readonly="isUpdate" class="form-control"
-                                                                                 ng-model="policy.brokerFee" />
-                                            </div>
-
+                                           
                                             <div class="form-group form-inline">
                                                 <input type="checkbox" class="form-control"
                                                        ng-model="policy.collectByDebitOrder" required
