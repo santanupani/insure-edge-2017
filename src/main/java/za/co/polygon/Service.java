@@ -3,8 +3,10 @@ package za.co.polygon;
 import static za.co.polygon.mapper.Mapper.fromBankAccountCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClientCommandModel;
 import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
+import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
+import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import static za.co.polygon.mapper.Mapper.toClientQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyRequest;
@@ -15,15 +17,21 @@ import static za.co.polygon.mapper.Mapper.toQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
-import static za.co.polygon.mapper.Mapper.toUserQueryModel;
-import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
+import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +44,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.DocumentException;
-import javax.persistence.EntityManager;
+
+import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
@@ -52,7 +63,6 @@ import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
-import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.PolicyCreationCommandModel;
@@ -133,16 +143,19 @@ public class Service {
 
 	@Autowired
 	private UnderwriterRepository underwriterRepository;
-	
+
 	@Autowired
 	private SubAgentRepository subAgentRepository;
-	
+
 	@Autowired
 	private BankAccountRepository bankAccountRepository;
-	
+
 	@Autowired
 	private ContactRepository contactRepository;
 	
+	@Autowired
+	private DocumentService documentService;
+
 
 	@RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<UserQueryModel> findAllUsers() {
@@ -335,33 +348,33 @@ public class Service {
 		log.info("client details");
 		return toClientQueryModel(client);
 	}
-        
-        @RequestMapping(value = "api/clients", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public List<ClientQueryModel> findAllClients(){
-            log.info("Find all Clients");
-            List<Client> client = clientRepository.findAll();
-            log.info("Found all Cleints - size : ", client.size());
-            return toClientQueryModel(client);
-        }
+
+	@RequestMapping(value = "api/clients", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClientQueryModel> findAllClients(){
+		log.info("Find all Clients");
+		List<Client> client = clientRepository.findAll();
+		log.info("Found all Cleints - size : ", client.size());
+		return toClientQueryModel(client);
+	}
 
 	/*The get service to return the policy details per specific policy ID*/
 	@RequestMapping(value = "api/policy/{policyReference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public PolicyQueryModel getPolicy(@PathVariable("policyReference") String policyReference) {
 		log.info("Find the details of specific policy");
 		Policy policy = policyRepository.findByPolicyReference(policyReference);
-		
+
 		return toPolicyQueryModel(policy);
 	}
-        
-        @RequestMapping(value = "api/policy-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public List<PolicyRequestQueryModel> getAllPolicyRequests(){
-            log.info("Find all Policy Requests");
-            List<PolicyRequest> policyRequests = policyRequestRepository.findAll();
-            List<PolicyRequestQueryModel> policyRequestQueryModel = toPolicyRequestQueryModel(policyRequests);
-            
-            return  policyRequestQueryModel;
-        }
-	
+
+	@RequestMapping(value = "api/policy-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<PolicyRequestQueryModel> getAllPolicyRequests(){
+		log.info("Find all Policy Requests");
+		List<PolicyRequest> policyRequests = policyRequestRepository.findAll();
+		List<PolicyRequestQueryModel> policyRequestQueryModel = toPolicyRequestQueryModel(policyRequests);
+
+		return  policyRequestQueryModel;
+	}
+
 	/*The all the policies*/
 	@RequestMapping(value = "api/policies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<PolicyQueryModel> getPolicies() {
@@ -371,21 +384,22 @@ public class Service {
 		log.info("Number of policies returned: "+policies.size());
 		return policies;
 	}
-	
+
 	@Transactional
 	@RequestMapping(value = "api/policy", method = RequestMethod.POST)
-	public String createPolicy(@RequestBody PolicyCreationCommandModel policyCreationCommandModel) throws IOException, ParseException {
-		
+	public String createPolicy(@RequestBody PolicyCreationCommandModel policyCreationCommandModel) throws IOException, ParseException, JRException {
+
 		Underwriter underwriter = underwriterRepository.findOne(policyCreationCommandModel.getUnderwriterId());
 		SubAgent subAgent = subAgentRepository.findOne(policyCreationCommandModel.getSubAgentId());
-		
+
 		BankAccount bankAccount = bankAccountRepository.save(fromBankAccountCommandModel(policyCreationCommandModel));
 		Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
+		documentService.policyScheduleReportPDF(policy);
 		return policy.getPolicyReference();
 	}
-	
+
 	@RequestMapping(value = "api/sub-agents", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<SubAgentQueryModel> getSubAgents() {
 		log.info("Find all sub agents");
@@ -393,16 +407,30 @@ public class Service {
 		List<SubAgentQueryModel> subAgents =  toSubAgentQueryModel(subAgent);
 		return subAgents;
 	}
-        
-        
-        
-        @Transactional
+
+
+
+	@Transactional
 	@RequestMapping(value = "api/client/{clientId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
 	public void updateClient(@PathVariable("clientId") Long clientId, @RequestBody ClientQueryModel clientQueryModel) throws ParseException {
-	 
-                Client client = clientRepository.findOne(clientId);
-             
-                clientRepository.save(toClientCommandModel(clientQueryModel, client));
+
+		Client client = clientRepository.findOne(clientId);
+
+		clientRepository.save(toClientCommandModel(clientQueryModel, client));
+	}
+	
+	@RequestMapping(value = "api/policy-schedules/{policyReference}", method = RequestMethod.GET)
+	@Produces("application/pdf")
+	public Response generatePolicySchedule(@PathVariable("policyReference") String policyReference) throws JRException, IOException, BadElementException {
+
+		Policy policy = policyRepository.findByPolicyReference(policyReference);
+		File policySchedulePDF = documentService.policyScheduleReportPDF(policy);
+		ResponseBuilder response = Response.ok((Object) policySchedulePDF);
+		response.type("application/pdf");
+		response.header("Content-Disposition", "attachment; Policy_Schedule_"+policy.getPolicyReference()+".pdf");
+
+		return response.build();
+
 	}
 
 }

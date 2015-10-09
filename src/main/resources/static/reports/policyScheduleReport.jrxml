@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-10-05T10:09:30 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PolicyScheduleReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="policy" class="za.co.polygon.domain.Policy"/>
+	<parameter name="POLYGON_REPORT_FILE_RESOLVER" class ="net.sf.jasperreports.engine.util.FileResolver"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="280" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="-13" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="135" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement key="" stretchType="RelativeToBandHeight" x="555" y="-14" width="1" height="277" />
+			</line>
+			<line>
+				<reportElement key="" stretchType="RelativeToBandHeight" x="-1" y="-14" width="1" height="294"/>
+			</line>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="92" width="555" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POLICY SCHEDULE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="270" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="49" y="148" width="120" height="22"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Company:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="148" width="327" height="18" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Genric Insurance Company Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="171" width="327" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.O Box 1115]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="190" width="327" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bromhof]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="210" width="327" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2154]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="240" width="120" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Administrators:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="240" width="324" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Polygon Underwriting Agency (Pty) Ltd]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="116" y="-1" width="323" height="80"/>
+				<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/static/reports/header.jpg").toString()]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	
+	<columnHeader>
+		<band height="363" splitType="Stretch">
+			<line>
+				<reportElement key="" stretchType="RelativeToBandHeight" x="-1" y="-9" width="1" height="367"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="10" width="130" height="20" />
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Policy Number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="41" width="130" height="20" />
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Intermediary:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="72" width="130" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[The Insured:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="101" width="130" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Postal Address:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="211" y="10" width="325" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getPolicyReference()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="211" y="41" width="334" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getSubAgent().getBroker().getName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="211" y="72" width="310" height="20" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getClient().getClientName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="211" y="100" width="340" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getClient().getContact().getStreet()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="130" width="340" height="20" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getClient().getContact().getSuburb()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="160" width="340" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getClient().getContact().getCode()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-3" y="191" width="173" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Policy Inception Date:]]></text>
+			</staticText>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="210" y="191" width="250" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getInceptionDate().toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-3" y="222" width="173" height="20" />
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Period of Insurance:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="286" y="221" width="130" height="20" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getInceptionDate().toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="209" y="222" width="67" height="19"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[(a) From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="383" y="222" width="34" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[to]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="421" y="221" width="130" height="20" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policy}.getInceptionDate().toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-3" y="251" width="173" height="20" />
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[Anniversary Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-3" y="282" width="210" height="20" />
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SIGNED at MIDRAND on]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="213" y="282" width="337" height="20" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="329" width="506" height="22" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<text><![CDATA[On behalf of the Company   ................................................................]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="-1" y="357" width="555" height="1" />
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="" stretchType="RelativeToBandHeight" x="555" y="-12" width="1" height="367"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="172" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="61" splitType="Stretch">
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="9" y="-18" width="72" height="54" />
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/static/reports/genric.png").toString()]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="117" y="-23" width="260" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{policy}.getClient().getClientName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="10" width="162" height="20" />
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{policy}.getPolicyReference()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="207" y="10" width="70" height="20" />
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[POLICY NO:]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="411" y="-15" width="134" height="53" />
+				<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/static/reports/header.jpg").toString()]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
