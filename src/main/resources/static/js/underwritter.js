@@ -162,7 +162,7 @@ underwritter.controller('listClientCtrl', function ($scope, $rootScope, $http) {
     $scope.init = function () {
         $scope.getAllClients();
     };
-    
+
 
     $scope.getAllClients = function () {
         $http({
@@ -189,17 +189,42 @@ underwritter.controller('listClientCtrl', function ($scope, $rootScope, $http) {
 underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
 
     $scope.client = {};
-
+//    $rootScope.policy = {};
+    $rootScope.policies = [];
     $scope.isDisabled = false;
 
     $scope.init = function () {
 
+        $scope.getPolicies();
         $scope.is_readonly = true;
         $scope.clientId = $routeParams.clientId;
 
-        $scope.getClient($scope.clientId);
+       
+
     };
 
+
+    $scope.getPolicies = function () {
+        $http({
+            url: '/api/policies',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('All policies retrived sucessfully');
+                $rootScope.policies = data;
+                console.log($rootScope.policies);
+                console.log('Policies size :' + $rootScope.policies.length);
+                 $scope.getClient($scope.clientId);
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+        });
+    };
 
     $rootScope.getClient = function () {
 
@@ -211,6 +236,8 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
                 console.log('Client retrived');
                 $scope.client = data;
                 console.log('Client : ' + $scope.client.clientName);
+                console.log('Client : ' + $scope.client.clientId);
+                $scope.getClientPolicies($scope.client.clientId);
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
@@ -256,9 +283,25 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
                 });
     };
 
-    $scope.closeNotification = function () {
-        $rootScope.message = undefined;
+
+
+    $scope.getClientPolicies = function (clientId) {
+        $scope.clientPolicies = [];
+        console.log("Policies: " + $rootScope.policies);
+        angular.forEach($rootScope.policies, function (policy) {
+            if (angular.equals(policy.client.clientId, clientId)) {
+                console.log("Policy obtained " + policy.client.clientName);
+                $scope.clientPolicies.push(policy);
+            } else {
+                console.log("Not matched....");
+            }
+        });
+
+
+
     };
+
+
 });
 
 
@@ -318,7 +361,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.getPolicyRequest($cookieStore.get('reference'));
             console.log('initializing new policy state');
             $scope.policy.brokerFee = 20;
-             $scope.policy.underwriterFee = 12.5;
+            $scope.policy.underwriterFee = 12.5;
             $scope.policy.underwritingYear = 2015;
             $scope.policy.notes = $scope.wording.notes;
             $scope.policy.underwriterId = 1;

@@ -577,6 +577,7 @@ public class Mapper {
     public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount) throws ParseException {
         Policy policyResult = new Policy();
 
+        
         policyResult.setClient(client);
         policyResult.setSubAgent(subAgent);
         policyResult.setUnderwriter(underwriter);
