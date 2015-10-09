@@ -387,7 +387,7 @@ public class Service {
 
 	@Transactional
 	@RequestMapping(value = "api/policy", method = RequestMethod.POST)
-	public String createPolicy(@RequestBody PolicyCreationCommandModel policyCreationCommandModel) throws IOException, ParseException, JRException {
+	public String createPolicy(@RequestBody PolicyCreationCommandModel policyCreationCommandModel) throws IOException, ParseException {
 
 		Underwriter underwriter = underwriterRepository.findOne(policyCreationCommandModel.getUnderwriterId());
 		SubAgent subAgent = subAgentRepository.findOne(policyCreationCommandModel.getSubAgentId());
@@ -396,7 +396,7 @@ public class Service {
 		Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
-		documentService.policyScheduleReportPDF(policy);
+//		documentService.policyScheduleReportPDF(policy);
 		return policy.getPolicyReference();
 	}
 

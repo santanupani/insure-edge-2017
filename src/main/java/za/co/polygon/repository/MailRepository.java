@@ -43,7 +43,7 @@ public class MailRepository {
         props.put("mail.smtp.username", pass);
         props.put("mail.smtp.password", user);
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.enable", "true");        
 
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
