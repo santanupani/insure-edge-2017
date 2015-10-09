@@ -52,53 +52,61 @@
 
                                     <div class="form-group">
                                         <label>Designation</label> <input type="text" class="form-control"
-                                                                                ng-model="client.designation" ng-readonly="is_readonly" />
+                                                                          ng-model="client.designation" ng-readonly="is_readonly" />
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-
 
                         <div class="col-md-6">
 
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" style="height: 390px">
                                 <div class="panel-heading">
-                                    <h4><b>Bank Account</b></h4>
+                                    <h4><b>Client Policy List</b></h4>
                                 </div>
                                 <div class="panel-body">
-
-                                    <div class="form-group">
-                                        <label>Account No </label> <input type="text"
-                                                                          class="form-control"
-                                                                          ng-model="client.bankAccounts.accountNumber"
-                                                                          ng-readonly="is_readonly" />
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               ng-model="clientPolicy"
+                                               placeholder="Search client Policy"> <span
+                                               class="input-group-btn">
+                                            <button type="submit" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>Account Name</label> <input type="text"
-                                                                           class="form-control"
-                                                                           ng-model="client.bankAccounts.accountName" ng-readonly="is_readonly" />
-                                    </div>
+                                    <div>          
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Policy Reference</th>
+                                                    <th>Subject Matter </th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="clientPolicy in clientPolicies| filter:clientPolicy">
+                                                <tr>
+                                                    <td>{{$index + 1}}</td>
+                                                    <td id="q_{{index}}"><a role="button" ng-href="#/policy/{{clientPolicy.policyReference}}">{{clientPolicy.policyReference}}</a></td>
+                                                    <td id="q_{{index}}">{{clientPolicy.subjectMatter}}</td>
+                                                    <td id="q_{{index}}">{{clientPolicy.status}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
-                                    <div class="form-group">
-                                        <label>Branch </label> <input type="text" class="form-control"
-                                                                      ng-model="client.bankAccounts.branch" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Bank Name</label> <input type="text"
-                                                                        class="form-control" ng-model="client.bankAccounts.bankName"
-                                                                        ng-readonly="is_readonly" />
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -131,6 +139,41 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="panel panel-default" style="height: 460px">
+                                <div class="panel-heading">
+                                    <h4><b>Bank Account</b></h4>
+                                </div>
+                                <div class="panel-body">
+
+                                    <div class="form-group">
+                                        <label>Account No </label> <input type="text"
+                                                                          class="form-control"
+                                                                          ng-model="client.bankAccounts.accountNumber"
+                                                                          ng-readonly="is_readonly" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Account Name</label> <input type="text"
+                                                                           class="form-control"
+                                                                           ng-model="client.bankAccounts.accountName" ng-readonly="is_readonly" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Branch </label> <input type="text" class="form-control"
+                                                                      ng-model="client.bankAccounts.branch" ng-readonly="is_readonly" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Bank Name</label> <input type="text"
+                                                                        class="form-control" ng-model="client.bankAccounts.bankName"
+                                                                        ng-readonly="is_readonly" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
