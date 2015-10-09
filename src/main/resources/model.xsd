@@ -164,6 +164,7 @@
             <element name="accountName" type="string"></element>
             <element name="branch" type="string"></element>
             <element name="bankName" type="string"></element>
+            <element name="accountType" type="string"></element>
         </sequence>
 
     </complexType>
@@ -377,6 +378,7 @@
             <element name="accountName" type="string"></element>
             <element name="branch" type="string"></element>
             <element name="bankName" type="string"></element>
+            <element name="accountType" type="string"></element>
         </sequence>
 
     </complexType>

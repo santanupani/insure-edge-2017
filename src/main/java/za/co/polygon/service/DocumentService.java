@@ -5,6 +5,19 @@
  */
 package za.co.polygon.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.stereotype.Service;
+
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -17,20 +30,55 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.springframework.stereotype.Service;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.FileResolver;
 import za.co.polygon.domain.Answer;
-import za.co.polygon.domain.Questionnaire;
-
+import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 
 @Service
 public class DocumentService extends PdfPageEventHelper {
 
+	public File policyScheduleReportPDF(Policy policy) throws JRException, IOException{
+
+		FileResolver fileResolver = new FileResolver() {
+
+			public File resolveFile(String fileName) {
+				URI uri;
+				try {
+					uri = new URI(this.getClass().getResource(fileName).getPath());
+					return new File(uri.getPath());
+				} catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+		};
+
+		Map<String,Object> reportData = new HashMap<String,Object>();
+		reportData.put("policy", policy);
+		reportData.put("POLYGON_REPORT_FILE_RESOLVER", fileResolver);
+
+		JRBeanCollectionDataSource indemnityOptionsDS = new JRBeanCollectionDataSource(policy.getIndemnityOptions());
+		InputStream jasperIS = getClass().getResourceAsStream("/static/reports/policyScheduleReport1.jrxml");
+
+		JasperReport jasperReport = JasperCompileManager.compileReport(jasperIS);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, reportData, indemnityOptionsDS);
+
+		File file = new File("/static/reports/Policy_Schedule_"+policy.getPolicyReference()+".pdf");
+		JasperExportManager.exportReportToPdfFile(jasperPrint, file.getName());
+
+		return file;
+	}
+	
     public byte[] generateQuotation(Quotation quotation) throws DocumentException, BadElementException, IOException {
         Document document = new Document(PageSize.A4);
         document.setMargins(50, 45, 50, 30);

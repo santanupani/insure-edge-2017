@@ -325,9 +325,9 @@ insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(
 insert into underwriters(first_name,middle_name,last_name,email) values('Lessely','Lessley','Kruger','lessely.kruger@genric.co.za');
 insert into underwriters(first_name,middle_name,last_name,email) values('Marissa','Marissa','Lehman','marissa@lehman@genric.co.za');
 
-insert into bank_accounts(account_number, account_name, branch, bank_name)values('236777262','Thabo','5678','Standard Bank');
-insert into bank_accounts(account_number, account_name, branch, bank_name)values('3425672872','Lenox','6756','ABSA');
-insert into bank_accounts(account_number, account_name, branch, bank_name)values('234565656','Binod','7889','FNB');
+insert into bank_accounts(account_number, account_name, branch, bank_name, account_type)values('236777262','Thabo','5678','Standard Bank', 'Savings');
+insert into bank_accounts(account_number, account_name, branch, bank_name, account_type)values('3425672872','Lenox','6756','ABSA', 'Transmission');
+insert into bank_accounts(account_number, account_name, branch, bank_name, account_type)values('234565656','Binod','7889','FNB', 'Savings');
 
 
 insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('121 Fire Street','8909','Midrand','011 991 0000','086 575 7876','thabo@gmail.com','Thabo Thulare');
@@ -356,6 +356,7 @@ insert into policies(reference,sub_agent_id,client_id,underwriter_id,inception_d
 values('2015-1209',2,3,1,'2015-09-24','2015-09-24',2015,'Acive','Short Term','N/A','Nedbank Cameo','',false,false,12.5,20.00,12000,89000,0.00,20.00,250.00,0.00,'1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS','Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured.','Art','By Artery','As discussed','Limit','Discussion Value','This policy has qualified for cover, await approval from Manager');
 insert into policies(reference,sub_agent_id,client_id,underwriter_id,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,re_instatement,collect_by_debit_order,exclude_sasria,underwriter_fee,broker_fee,sum_insured,max_sum_insured,broker_commission,ua_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration,notes) 
 values('2015-1210',1,3,1,'2015-09-25','2015-09-25',2015,'Acive','Monthly','N/A','Nedbank Cameo','',false,false,12.5,20.00,65000,34000,0.00,20.00,350.00,0.00,'1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS','Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured.','Art','By Artery','As discussed','Limit','Discussion Value','This policy has qualified for cover, await approval from Manager');
+
 insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium)
 values(1,'Policy Vault','Per vehicle per transit (6* weekly)',650000,2310);
 
