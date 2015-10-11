@@ -38,7 +38,7 @@ public class NotificationService {
                 port,
                 quotationRequest.getReference());
         Notification notification = new Notification(to, subject, message);
-        getMessageRepository().publish(notification, "q.notification");
+        messageRepository.publish(notification, "q.notification");
     }
 
     public void sendNotificationForRejectQuotationRequest(QuotationRequest quotationRequest, String reason) {

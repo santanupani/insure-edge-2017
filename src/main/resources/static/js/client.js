@@ -1,4 +1,4 @@
-var polygon = angular.module('polygon', ['ngRoute']);z
+var polygon = angular.module('polygon', ['ngRoute']);
 
 polygon.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
