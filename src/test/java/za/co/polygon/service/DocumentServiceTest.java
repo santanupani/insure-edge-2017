@@ -1,32 +1,26 @@
 package za.co.polygon.service;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Assert;
+import org.dom4j.DocumentException;
 import org.junit.Test;
 
-import za.co.polygon.domain.Broker;
-import za.co.polygon.domain.PolicyRequest;
+//import com.itextpdf.text.DocumentException;
+
+import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
-import za.co.polygon.repository.MessageRepository;
-
-import com.itextpdf.text.DocumentException;
 
 public class DocumentServiceTest {
 
     @Test
-    public void test() throws DocumentException, IOException {
+    public void test() throws DocumentException, IOException, JRException {
         DocumentService service = new DocumentService();
 
         Quotation quotation = new Quotation();
@@ -47,7 +41,9 @@ public class DocumentServiceTest {
         quotationOption.setExcess("1231");
         quotationOption.setLimit("1000");
         quotationOption.setPremium("12334");
+        quotationOption.setDuration("Annually");
         quotationOption.setCover("Static cover");
+        quotationOption.setPavements("1200.90");
         quotationOption.setQuotation(quotation);
 
         QuotationOption quotationOption2 = new QuotationOption();
@@ -56,6 +52,8 @@ public class DocumentServiceTest {
         quotationOption2.setExcess("12000");
         quotationOption2.setLimit("998");
         quotationOption2.setPremium("1999");
+        quotationOption2.setDuration("Weekly");
+        quotationOption2.setPavements("0.00");
         quotationOption2.setCover("Cash In Transit");
         quotationOption2.setQuotation(quotation);
 
@@ -66,7 +64,9 @@ public class DocumentServiceTest {
         quotationOption3.setExcess("12000");
         quotationOption3.setLimit("998");
         quotationOption3.setPremium("1999");
+        quotationOption3.setPavements("2190.88");
         quotationOption3.setCover("Cash In Transit");
+        quotationOption3.setDuration("Monthly");
         quotationOption3.setQuotation(quotation);
         
         quotationRequest.setProduct(product);
@@ -81,7 +81,7 @@ public class DocumentServiceTest {
 
         quotation.setQuotationOptions(quotationOptions);
 
-        byte[] data = service.generateQuotation(quotation);
+        byte[] data = service.generateQuotationPDF(quotation);
         FileOutputStream out = new FileOutputStream("target/test.pdf");
         out.write(data);
         out.close();

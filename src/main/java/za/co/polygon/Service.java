@@ -32,6 +32,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.DocumentException;
 
 import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Answer;
@@ -236,13 +235,13 @@ public class Service {
 
 	@Transactional
 	@RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void createNewQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException {
+	public void createNewQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException, JRException {
 		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
 		quotationRequest.setStatus("ACCEPTED");
 		Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
 		quotation = quotationRepository.save(quotation);
 		log.info("Quotation Command size: " + quotation.getQuotationOptions().size());
-		byte[] data = reportService.generateQuotation(quotation);
+		byte[] data = reportService.generateQuotationPDF(quotation);
 		notificationService.sendNotificationForAcceptQuotationRequest(quotation.getQuotationRequest(), data);
 		log.info("Quotation Created Successfully !!!");
 	}
@@ -358,10 +357,10 @@ public class Service {
 	}
 
 	/*The get service to return the policy details per specific policy ID*/
-	@RequestMapping(value = "api/policy/{policyReference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public PolicyQueryModel getPolicy(@PathVariable("policyReference") String policyReference) {
+	@RequestMapping(value = "api/policy/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public PolicyQueryModel getPolicy(@PathVariable("reference") String reference) {
 		log.info("Find the details of specific policy");
-		Policy policy = policyRepository.findByPolicyReference(policyReference);
+		Policy policy = policyRepository.findByReference(reference);
 
 		return toPolicyQueryModel(policy);
 	}
@@ -387,7 +386,7 @@ public class Service {
 
 	@Transactional
 	@RequestMapping(value = "api/policy", method = RequestMethod.POST)
-	public String createPolicy(@RequestBody PolicyCreationCommandModel policyCreationCommandModel) throws IOException, ParseException {
+	public String createPolicy(@RequestBody PolicyCreationCommandModel policyCreationCommandModel) throws IOException, ParseException, JRException {
 
 		Underwriter underwriter = underwriterRepository.findOne(policyCreationCommandModel.getUnderwriterId());
 		SubAgent subAgent = subAgentRepository.findOne(policyCreationCommandModel.getSubAgentId());
@@ -396,8 +395,8 @@ public class Service {
 		Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
-//		documentService.policyScheduleReportPDF(policy);
-		return policy.getPolicyReference();
+		documentService.policyScheduleReportPDF(policy);
+		return policy.getReference();
 	}
 
 	@RequestMapping(value = "api/sub-agents", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -419,15 +418,15 @@ public class Service {
 		clientRepository.save(toClientCommandModel(clientQueryModel, client));
 	}
 	
-	@RequestMapping(value = "api/policy-schedules/{policyReference}", method = RequestMethod.GET)
+	@RequestMapping(value = "api/policy-schedules/{reference}", method = RequestMethod.GET)
 	@Produces("application/pdf")
-	public Response generatePolicySchedule(@PathVariable("policyReference") String policyReference) throws JRException, IOException, BadElementException {
+	public Response generatePolicySchedule(@PathVariable("reference") String reference) throws JRException, IOException{
 
-		Policy policy = policyRepository.findByPolicyReference(policyReference);
+		Policy policy = policyRepository.findByReference(reference);
 		File policySchedulePDF = documentService.policyScheduleReportPDF(policy);
 		ResponseBuilder response = Response.ok((Object) policySchedulePDF);
 		response.type("application/pdf");
-		response.header("Content-Disposition", "attachment; Policy_Schedule_"+policy.getPolicyReference()+".pdf");
+		response.header("Content-Disposition", "attachment; Policy_Schedule_"+policy.getReference()+".pdf");
 
 		return response.build();
 

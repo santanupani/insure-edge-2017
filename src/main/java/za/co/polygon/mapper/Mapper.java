@@ -466,7 +466,9 @@ public class Mapper {
         PolicyQueryModel policyQueryModel = new PolicyQueryModel();
 
         policyQueryModel.setId(policy.getId());
-        policyQueryModel.setPolicyReference(policy.getPolicyReference());
+        policyQueryModel.setReference(policy.getReference());
+        policyQueryModel.setPolicyInceptionDate(policy.getPolicyInceptionDate());
+        policyQueryModel.setProductName(policy.getProductName());
         policyQueryModel.setCollectByDebitOrder(policy.isCollectByDebitOrder());
         policyQueryModel.setBrokerFee(Double.toString(policy.getBrokerFee()));
         policyQueryModel.setDevice(policy.getDevice());
@@ -581,12 +583,14 @@ public class Mapper {
         policyResult.setClient(client);
         policyResult.setSubAgent(subAgent);
         policyResult.setUnderwriter(underwriter);
+        policyResult.setPolicyInceptionDate(policyCreationCommandModel.getPolicyInceptionDate());
+        policyResult.setProductName(policyCreationCommandModel.getProductName());
         policyResult.setBrokerFee(Double.parseDouble(policyCreationCommandModel.getBrokerFee()));
         policyResult.setDevice(policyCreationCommandModel.getDevice());
         policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
         policyResult.setInceptionDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getInceptionDate()));
         policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
-        policyResult.setPolicyReference(UUID.randomUUID().toString());
+        policyResult.setReference(UUID.randomUUID().toString());
         policyResult.setRenewalDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getRenewalDate()));
         policyResult.setStatus(policyCreationCommandModel.getStatus());
         policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());

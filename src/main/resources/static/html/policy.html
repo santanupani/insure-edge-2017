@@ -15,7 +15,7 @@
 
                 <div class="panel-heading">
                     <h4>
-                        <b>Policy Summary for Policy Ref.: </b>{{policy.policyReference}}
+                        <b>Policy Summary for Policy Ref.: </b>{{policy.reference}}
                         <span class="pull-right" style="font: 14px Lucinda red"><b>Logged-In:</b>
                             {{policy.underwriter.firstName}} {{policy.underwriter.lastName}}</span>
                     </h4>
@@ -416,8 +416,8 @@
 
                     </div>
                     <div class="pull-center">
-                        <a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(false)" role="link">Update</a>
-                        <a ng-href="#/policy/{{policy.policyReference}}" ng-click="update(true)" role="link">Cancel</a>
+                        <a ng-href="#/policy/{{policy.reference}}" ng-click="update(false)" role="link">Update</a>
+                        <a ng-href="#/policy/{{policy.reference}}" ng-click="update(true)" role="link">Cancel</a>
                     </div>
                 </div>
 

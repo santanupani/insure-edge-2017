@@ -40,8 +40,8 @@
                                     ng-repeat="policy in policies| offset: currentPage * itemsPerPage | limitTo: itemsPerPage | filter:clientPolicy">
 
                                     <td>{{policy.client.clientName}}</td>
-                                    <td><a ng-href="#/policy/{{policy.policyReference}}"
-                                           ng-click="getPolicy(policy.policyReference)">{{policy.policyReference}}</a></td>
+                                    <td><a ng-href="#/policy/{{policy.reference}}"
+                                           ng-click="getPolicy(policy.policyReference)">{{policy.reference}}</a></td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -53,7 +53,7 @@
                                         <li ng-repeat="n in range()"
                                             ng-class="{active: n == currentPage}"
                                             ng-click="setPage(n)"><a
-                                                href="#/policy/{{policy.policyReference}}">{{n + 1}}</a></li>
+                                                href="#/policy/{{policy.reference}}">{{n + 1}}</a></li>
                                         <li ng-class="nextPageDisabled()"><a href
                                                                              ng-click="nextPage()">Next »</a></li>
                                     </ul>

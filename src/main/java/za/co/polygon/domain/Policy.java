@@ -2,8 +2,8 @@ package za.co.polygon.domain;
 
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -33,8 +32,14 @@ public class Policy {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @Column(name = "policy_inception_date")
+    private String policyInceptionDate;
+    
     @Column(name = "reference")
-    private String policyReference;
+    private String reference;
+    
+    @Column(name = "product_name")
+    private String productName;
     
     @ManyToOne
     @JoinColumn(name = "sub_agent_id")
@@ -129,12 +134,28 @@ public class Policy {
         this.id = id;
     }
 
-    public String getPolicyReference() {
-		return policyReference;
+	public String getPolicyInceptionDate() {
+		return policyInceptionDate;
 	}
 
-	public void setPolicyReference(String policyReference) {
-		this.policyReference = policyReference;
+	public void setPolicyInceptionDate(String policyInceptionDate) {
+		this.policyInceptionDate = policyInceptionDate;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public Underwriter getUnderwriter() {

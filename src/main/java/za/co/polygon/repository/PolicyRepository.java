@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import za.co.polygon.domain.Policy;
 
 public interface PolicyRepository extends JpaRepository<Policy,Long>{
-	public Policy findByPolicyReference(String policyReference);
+	public Policy findByReference(String Reference);
 
 }

@@ -208,6 +208,8 @@ create table policies(
     sub_agent_id integer not null,
     client_id integer not null,
     underwriter_id integer,
+    policy_inception_date varchar(30) not null,
+    product_name varchar(45) not null,
     inception_date varchar(30) not null,
     renewal_date varchar(30) not null,
     underwriting_year integer not null,
