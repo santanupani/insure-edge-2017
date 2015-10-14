@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-10-13T15:02:23 -->
+<!-- 2015-10-14T08:58:46 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotationReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="quotation" class="za.co.polygon.domain.Quotation"/>
@@ -99,9 +99,9 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="227" splitType="Stretch">
+		<band height="192" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="227"/>
+				<reportElement x="0" y="0" width="555" height="192"/>
 				<staticText>
 					<reportElement x="20" y="5" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -117,98 +117,98 @@
 					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="20" y="52" width="180" height="20"/>
+					<reportElement x="20" y="46" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Cross Pavement ZAR	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="28" width="180" height="20"/>
+					<reportElement x="20" y="25" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Limit ZAR	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="77" width="180" height="20"/>
+					<reportElement x="20" y="67" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Commodity	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="103" width="180" height="20"/>
+					<reportElement x="20" y="88" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Cover	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="129" width="180" height="20"/>
+					<reportElement x="20" y="109" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Duration	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="154" width="180" height="20"/>
+					<reportElement x="20" y="130" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Excess	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="180" width="180" height="20"/>
+					<reportElement x="20" y="151" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Premium ZAR	]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="207" y="28" width="313" height="20"/>
+					<reportElement x="207" y="26" width="313" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{limit}+" Per vehicle per transit"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="207" y="52" width="313" height="20"/>
+					<reportElement x="207" y="47" width="313" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{pavements}+" Per vehicle per transit"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="207" y="77" width="180" height="20"/>
+					<reportElement x="207" y="68" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{commodity}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="207" y="103" width="180" height="20"/>
+					<reportElement x="207" y="89" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cover}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="207" y="129" width="180" height="20"/>
+					<reportElement x="207" y="110" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="207" y="154" width="180" height="20"/>
+					<reportElement x="207" y="131" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{excess}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="207" y="180" width="180" height="20"/>
+					<reportElement x="207" y="152" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
@@ -232,26 +232,26 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="223" splitType="Stretch">
+		<band height="182" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="223"/>
+				<reportElement x="0" y="0" width="555" height="180"/>
 				<staticText>
-					<reportElement x="20" y="170" width="120" height="20"/>
+					<reportElement x="20" y="128" width="120" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Regards,]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="197" width="120" height="20"/>
+					<reportElement x="20" y="155" width="120" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Polygon Team]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="20" y="9" width="534" height="121"/>
-					<textElement textAlignment="Left">
+					<reportElement x="20" y="13" width="520" height="87"/>
+					<textElement>
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{quotationWording}]]></textFieldExpression>
