@@ -90,7 +90,7 @@
                                             <tbody ng-repeat="clientPolicy in clientPolicies| filter:clientPolicy">
                                                 <tr>
                                                     <td>{{$index + 1}}</td>
-                                                    <td id="q_{{index}}"><a role="button" ng-href="#/policy/{{clientPolicy.policyReference}}">{{clientPolicy.policyReference}}</a></td>
+                                                    <td id="q_{{index}}"><a role="button" ng-href="#/policy/{{clientPolicy.reference}}">{{clientPolicy.reference}}</a></td>
                                                     <td id="q_{{index}}">{{clientPolicy.subjectMatter}}</td>
                                                     <td id="q_{{index}}">{{clientPolicy.status}}</td>
                                                 </tr>

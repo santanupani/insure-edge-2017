@@ -15,8 +15,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-//import com.itextpdf.text.pdf.PdfPageEventHelper;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -33,6 +31,7 @@ import za.co.polygon.domain.Quotation;
 public class DocumentService{
 
 	private String quotationWording;
+	
 		
 	FileResolver fileResolver = new FileResolver() {
 
@@ -61,12 +60,12 @@ public class DocumentService{
                 if (answer.getAnswer().equals("Once-Off")) {
                 	this.setQuotationWording("Quote only valid for 7 days"
                             + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
-                            + "form  and signed debit order form. Underwriters serve the right to refuse"
-                            + "acceptance of the risk as declared to us\n");
+                            + "form  and signed debit order form. Underwriters serve the right to refuse "
+                            + "acceptance of the risk as declared to us.\n");
                     
                 } else if (answer.getAnswer().equals("Annually") || answer.getAnswer().equals("Monthly")) {
                 	this.setQuotationWording("Quote only valid for 15 days"
-                            + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
+                            + " and acceptance thereof by underwriters subject to a fully completed rist assessment, proposal "
                             + "form  and signed debit order form. Underwriters serve the right to refuse"
                             + "acceptance of the risk as declared to us\n");
                 }
@@ -87,19 +86,18 @@ public class DocumentService{
 	
 	
 	public File policyScheduleReportPDF(Policy policy) throws JRException, IOException{
-
-
+		
 		Map<String,Object> reportData = new HashMap<String,Object>();
 		reportData.put("policy", policy);
 		reportData.put("POLYGON_REPORT_FILE_RESOLVER", fileResolver);
 
 		JRBeanCollectionDataSource indemnityOptionsDS = new JRBeanCollectionDataSource(policy.getIndemnityOptions());
-		InputStream jasperIS = getClass().getResourceAsStream("/static/reports/policyScheduleReport1.jrxml");
+		InputStream jasperIS = getClass().getResourceAsStream("/reports/policyScheduleReport.jrxml");
 
 		JasperReport jasperReport = JasperCompileManager.compileReport(jasperIS);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, reportData, indemnityOptionsDS);
 
-		File file = new File("/static/reports/Policy_Schedule_"+policy.getReference()+".pdf");
+		File file = new File("/Policy_Schedule_"+policy.getReference()+".pdf");
 		JasperExportManager.exportReportToPdfFile(jasperPrint, file.getName());
 
 		return file;
