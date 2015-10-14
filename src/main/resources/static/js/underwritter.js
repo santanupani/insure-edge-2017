@@ -11,7 +11,7 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
         }).when('/clients/:clientId', {
             'templateUrl': '/html/clients.html',
             'controller': 'viewClientCtrl'
-        }).when('/policy/:policyReference', {
+        }).when('/policy/:reference', {
             'templateUrl': '/html/policy.html',
             'controller': 'policyCtrl'
         }).when('/policies', {
