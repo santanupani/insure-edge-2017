@@ -62,7 +62,7 @@ public class MailRepository {
         message.setSubject(notification.getSubject());
         message.setText(notification.getMessage());
 
-       /* if (notification.getAttachment() != null) {
+       if (notification.getAttachment() != null) {
             Multipart mp = new MimeMultipart();
             BodyPart textPart = new MimeBodyPart();
             textPart.setText(notification.getMessage());
@@ -78,7 +78,7 @@ public class MailRepository {
             mp.addBodyPart(attachment);
 
             message.setContent(mp);
-        }*/
+        }
         Transport.send(message);
     }
 
