@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-10-12T20:43:47 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotationReport" pageWidth="595" pageHeight="860" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<!-- 2015-10-13T15:02:23 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotationReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="quotation" class="za.co.polygon.domain.Quotation"/>
 	<parameter name="quotationWording" class="java.lang.String"/>
 	<parameter name="POLYGON_REPORT_FILE_RESOLVER" class="net.sf.jasperreports.engine.util.FileResolver"/>
@@ -27,244 +18,245 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="112" splitType="Stretch">
+	<title>
+		<band height="228" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="112"/>
+				<reportElement x="0" y="0" width="555" height="228"/>
 				<image scaleImage="FillFrame">
-					<reportElement x="10" y="10" width="534" height="72"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+					<reportElement x="0" y="0" width="555" height="80"/>
 					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-logo.jpg").toString()]]></imageExpression>
 				</image>
-			</frame>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="131" splitType="Stretch">
-			<frame>
-				<reportElement x="0" y="0" width="555" height="131"/>
 				<staticText>
-					<reportElement x="20" y="10" width="30" height="20"/>
+					<reportElement x="20" y="90" width="29" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="13" isBold="true"/>
+						<font fontName="Serif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[To:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="308" y="10" width="36" height="20"/>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="11" isBold="true"/>
+					<reportElement x="20" y="160" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Date]]></text>
+					<text><![CDATA[TO WHOM IT MAY CONCERN:]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="20" y="101" width="340" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getProduct().getName()]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="140" y="40" width="236" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getReference()]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="344" y="10" width="200" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="8" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{quotation}.getQuotationRequest().getCreateDate())]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="200" y="70" width="236" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getApplicantName()]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="54" y="10" width="211" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getCompanyName()]]></textFieldExpression>
-				</textField>
 				<staticText>
-					<reportElement x="20" y="40" width="150" height="20"/>
+					<reportElement x="20" y="125" width="120" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12" isBold="true"/>
+						<font fontName="Serif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Reference Number:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="70" width="220" height="20"/>
+					<reportElement x="321" y="90" width="39" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12" isBold="true"/>
+						<font fontName="Serif" isBold="true"/>
 					</textElement>
-					<text><![CDATA[TO WHOM IT MAY CONCERN:]]></text>
-				</staticText>
-			</frame>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="232" splitType="Stretch">
-			<frame>
-				<reportElement x="0" y="0" width="555" height="232"/>
-				<staticText>
-					<reportElement x="20" y="91" width="100" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
-					</textElement>
-					<text><![CDATA[Commodity:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="20" y="120" width="100" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
-					</textElement>
-					<text><![CDATA[Cover: ]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="20" y="150" width="100" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
-					</textElement>
-					<text><![CDATA[Excess:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="20" y="211" width="100" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
-					</textElement>
-					<text><![CDATA[Duration:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="20" y="181" width="100" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
-					</textElement>
-					<text><![CDATA[Premium ZAR:]]></text>
+					<text><![CDATA[Date:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="181" y="0" width="324" height="20"/>
+					<reportElement x="49" y="90" width="219" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
+						<font fontName="Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getCompanyName()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="361" y="90" width="179" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($P{quotation}.getQuotationRequest().getCreateDate())]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="144" y="125" width="354" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getReference()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="203" y="160" width="295" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getApplicantName()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="193" width="369" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getProduct().getName()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="227" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="227"/>
+				<staticText>
+					<reportElement x="20" y="5" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<text><![CDATA[Location	]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="207" y="5" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="20" y="61" width="100" height="20"/>
+					<reportElement x="20" y="52" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
+						<font fontName="Serif"/>
 					</textElement>
-					<text><![CDATA[Cross Pavement ZAR:]]></text>
+					<text><![CDATA[Cross Pavement ZAR	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="31" width="100" height="20"/>
+					<reportElement x="20" y="28" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
+						<font fontName="Serif"/>
 					</textElement>
-					<text><![CDATA[Limit ZAR:]]></text>
+					<text><![CDATA[Limit ZAR	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="0" width="100" height="20" />
+					<reportElement x="20" y="77" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
+						<font fontName="Serif"/>
 					</textElement>
-					<text><![CDATA[Location:]]></text>
+					<text><![CDATA[Commodity	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="103" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<text><![CDATA[Cover	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="129" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<text><![CDATA[Duration	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="154" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<text><![CDATA[Excess	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="180" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
+					</textElement>
+					<text><![CDATA[Premium ZAR	]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="181" y="31" width="324" height="20"/>
+					<reportElement x="207" y="28" width="313" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
+						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{limit}+" Per vehicle per transit"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="181" y="61" width="324" height="20"/>
+					<reportElement x="207" y="52" width="313" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
+						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{pavements}+" Per vehicle per transit"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="181" y="91" width="324" height="20"/>
+					<reportElement x="207" y="77" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
+						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{commodity}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="181" y="120" width="324" height="20"/>
+					<reportElement x="207" y="103" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
+						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cover}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="181" y="150" width="324" height="20"/>
+					<reportElement x="207" y="129" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
+						<font fontName="Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="207" y="154" width="180" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{excess}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="181" y="181" width="324" height="20"/>
+					<reportElement x="207" y="180" width="180" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
+						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{premium}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="181" y="210" width="324" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="250" splitType="Stretch">
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="99" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="250"/>
+				<reportElement x="0" y="0" width="555" height="99"/>
+				<image scaleImage="FillFrame">
+					<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="99"/>
+					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-footer.png").toString()]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="223" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="223"/>
 				<staticText>
-					<reportElement x="20" y="141" width="100" height="20"/>
+					<reportElement x="20" y="170" width="120" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
+						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Regards,]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="178" width="100" height="20"/>
+					<reportElement x="20" y="197" width="120" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" size="12"/>
+						<font fontName="Serif"/>
 					</textElement>
-					<text><![CDATA[Polygon Team.]]></text>
+					<text><![CDATA[Polygon Team]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="20" y="7" width="535" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$P{quotationWording}.toString()]]></textFieldExpression>
+					<reportElement x="20" y="9" width="534" height="121"/>
+					<textElement textAlignment="Left">
+						<font fontName="Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{quotationWording}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="84" splitType="Stretch">
-			<image scaleImage="FillFrame" evaluationTime="Report">
-				<reportElement x="0" y="0" width="555" height="84"/>
-				<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-footer.png").toString()]]></imageExpression>
-			</image>
-		</band>
-	</pageFooter>
+	</summary>
 </jasperReport>
