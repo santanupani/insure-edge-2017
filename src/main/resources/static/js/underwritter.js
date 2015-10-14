@@ -364,6 +364,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.underwriterFee = 12.5;
             $scope.policy.underwritingYear = 2015;
             $scope.policy.notes = $scope.wording.notes;
+            $scope.policy.inceptionDate = "2015-09-10";
+            $scope.policy.productName = $rootScope.policyRequest.quotation.quotationRequest.product.name;
             $scope.policy.underwriterId = 1;
             $scope.policy.client.clientName = $rootScope.policyRequest.quotation.quotationRequest.companyName;
             $scope.policy.client.regNumber = $rootScope.policyRequest.vatRegNumber;
@@ -379,6 +381,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.client.contact.suburb = $rootScope.policyRequest.suburb;
             $scope.policy.client.bankAccount.branch = $rootScope.policyRequest.branchCode;
             $scope.policy.client.bankAccount.accountName = $rootScope.policyRequest.accountName;
+            $scope.policy.client.bankAccount.accountType = $rootScope.policyRequest.accType;
             $scope.policy.client.bankAccount.bankName = $rootScope.policyRequest.bankName;
             $scope.policy.client.bankAccount.accountNumber = $rootScope.policyRequest.accountNumber;
 
@@ -386,6 +389,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.premium = $rootScope.policyRequest.quotationOption.premium;
             $scope.policy.excessStructure = $rootScope.policyRequest.quotationOption.excess;
             $scope.policy.specialCondition = $scope.wording.specialCondition;
+            $scope.policy.conveyances = $scope.wording.conveyances;
 
 
 
@@ -406,7 +410,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
                     case 'Please specify policy insecption date for annual cover :':
                         console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
-                        $scope.policy.inceptionDate = questionnairre.answer;
+                        $scope.policy.policyInceptionDate = questionnairre.answer;
                     case '':
                 }
             });
@@ -593,7 +597,9 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 'whilst in the custody and care of Protea Coin Group and/or whilst within the Nedbank Camera Managed Unit at the premises declared' +
                 'to Insurers, Excluding fraud, dishonesty or criminal involvement of the Insured or their employees.',
         'geographicalDuration': 'refer to special conditions',
-        'specialCondition': 'Geographical and duration: Cash - once cash has recorded',
+        'specialCondition': '1) Geographical and duration: Cash - once cash has recorded as deposited into the CIMA Managed Unit including authorised collection of the security.' +
+        '\n2) Premium: The minimum monthly premium of R0.00 is made up of: R0.00 miniun deposit',
+        'conveyances': 'Per Road vehicle of Protea Coin Group',
         'notes': '[Add notes for this policy]'
 
     };

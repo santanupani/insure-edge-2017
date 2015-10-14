@@ -75,32 +75,41 @@
                     <div class="panel-body">
                         <div>
                             <div class="form-group">
+                                <label class="control-label" for="regNumber">Company Registration Number</label>
                                 <input type="text" class="form-control" placeholder="Company Registration Number" style="text-transform: uppercase" ng-model="policyRequest.companyRegNumber"  required/>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="vatNumber">VAT Registration Number</label>
                                 <input type="text" class="form-control" placeholder="VAT Registration Number" style="text-transform: uppercase" ng-model="policyRequest.vatRegNumber" required uppercased/>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="phoneNumber">Phone Number</label>
                                 <input type="text" class="form-control" pattern="[\(]\d{3}[\)]\d{3}[\-]\d{4}" name="phoneNumber" placeholder="Telephone Number" ng-model="policyRequest.telephoneNumber"  required/>
                                 <label>Required phone number Format: (012)345-6789</label>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="faxNumber">Fax Number</label>
                                 <input type="text" class="form-control" pattern="[\(]\d{3}[\)]\d{3}[\-]\d{4}" placeholder="Fax Number" ng-model="policyRequest.faxNumber" required/>
                                 <label>Required Fax number Format: (012)345-6789</label>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="streetNumber">Street Address</label>
                                 <input type="text" class="form-control" placeholder="Street Address" ng-model="policyRequest.streetAddress"  required/>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="suburb">Suburb</label>
                                 <input type="text" class="form-control" placeholder="Suburb" ng-model="policyRequest.suburb" required/>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="postalCode">Postal Code</label>
                                 <input type="text" class="form-control" placeholder="Postal Code" ng-model="policyRequest.postalCode" required/>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="designation">Designation</label>
                                 <input type="text" class="form-control" placeholder="Designation" ng-model="policyRequest.designation" required/>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="businessDesc">Business Description</label>
                                 <textarea class="form-control" placeholder="Description Of Business" ng-model="policyRequest.buisnessDesc"  required/></textarea>
                             </div>
                         </div>
@@ -163,26 +172,33 @@
                         
                         <div>
                             <div class="form-group">
+                                <label class="control-label" for="acountHolder">Account Holder Name</label>
                                 <input type="text" class="form-control" placeholder="Full Name of Payee/Account Holder" ng-model="policyRequest.accountHolder" required>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="differentAccountHolder">Account Name(If Different From Above)</label>
                                 <input type="text" class="form-control" placeholder="Account Name(If Different From above)" ng-model="policyRequest.accountName" required>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="bankName">Name Of Bank</label>
                                 <input type="text" class="form-control" placeholder="Name of Bank" ng-model="policyRequest.bankName" required>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="accountNumber">Account Number</label>
                                 <input type="text" class="form-control" placeholder="Account Number" ng-model="policyRequest.accountNumber" required>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="branchCode">Branch Code</label>
                                 <input type="text" class="form-control" placeholder="Branch Code" ng-model="policyRequest.branchCode" required>
                             </div>
                               <div class="form-group">
+                                  <label class="control-label" for="accountType">Account Type</label>
                                 <select class="form-control" placeholder="Account Type" ng-model="policyRequest.accType" ng-options="accounttype for accounttype in accounttype" required>
                                         <option value="">Select Your Account type</option>
                                 </select>
                             </div>
                                <div class="form-group">
+                                   <label class="control-label" for="debitOrder">Debit Order</label>
                                 <select class="form-control" placeholder="Account Type" ng-model="policyRequest.debitOrderDate" ng-options="debitOrderDate for debitOrderDate in debitOrderDate" required>
                                         <option value="">Select Debit order date</option>
                                 </select>
