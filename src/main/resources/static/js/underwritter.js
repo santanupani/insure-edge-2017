@@ -11,7 +11,7 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
         }).when('/clients/:clientId', {
             'templateUrl': '/html/clients.html',
             'controller': 'viewClientCtrl'
-        }).when('/policy/:policyReference', {
+        }).when('/policy/:reference', {
             'templateUrl': '/html/policy.html',
             'controller': 'policyCtrl'
         }).when('/policies', {
@@ -186,10 +186,10 @@ underwritter.controller('listClientCtrl', function ($scope, $rootScope, $http) {
 
 });
 
-underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
+underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $window) {
 
     $scope.client = {};
-//    $rootScope.policy = {};
+    $rootScope.policy = {};
     $rootScope.policies = [];
     $scope.isDisabled = false;
 
@@ -198,8 +198,6 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
         $scope.getPolicies();
         $scope.is_readonly = true;
         $scope.clientId = $routeParams.clientId;
-
-       
 
     };
 
@@ -214,7 +212,7 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
                 $rootScope.policies = data;
                 console.log($rootScope.policies);
                 console.log('Policies size :' + $rootScope.policies.length);
-                 $scope.getClient($scope.clientId);
+                $scope.getClient($scope.clientId);
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
@@ -273,6 +271,7 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
             if (status == 200) {
                 $rootScope.message = "Client Updated Successfully";
                 console.log('Client Updated');
+                $window.location.reload();
             } else {
                 console.log('status:' + status);
             }
@@ -325,7 +324,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         $scope.getClient();
         $scope.btnValue = (angular.equals($scope.policy.policyReference, 'New-Policy-Creation')) ? 'Update' : 'Create Policy';
         $scope.getPolicies();
-        $scope.getPolicyRequest($cookieStore.get('reference'))
+        $scope.getPolicyRequest($cookieStore.get('reference').toString());
         $scope.getSubAgents();
         $scope.initNewPolicy($rootScope.policy);
         $scope.policies.push($rootScope.policy);
@@ -364,6 +363,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.underwriterFee = 12.5;
             $scope.policy.underwritingYear = 2015;
             $scope.policy.notes = $scope.wording.notes;
+            $scope.policy.inceptionDate = "2015-09-10";
+            $scope.policy.productName = $rootScope.policyRequest.quotation.quotationRequest.product.name;
             $scope.policy.underwriterId = 1;
             $scope.policy.client.clientName = $rootScope.policyRequest.quotation.quotationRequest.companyName;
             $scope.policy.client.regNumber = $rootScope.policyRequest.vatRegNumber;
@@ -379,6 +380,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.client.contact.suburb = $rootScope.policyRequest.suburb;
             $scope.policy.client.bankAccount.branch = $rootScope.policyRequest.branchCode;
             $scope.policy.client.bankAccount.accountName = $rootScope.policyRequest.accountName;
+            $scope.policy.client.bankAccount.accountType = $rootScope.policyRequest.accType;
             $scope.policy.client.bankAccount.bankName = $rootScope.policyRequest.bankName;
             $scope.policy.client.bankAccount.accountNumber = $rootScope.policyRequest.accountNumber;
 
@@ -386,6 +388,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.premium = $rootScope.policyRequest.quotationOption.premium;
             $scope.policy.excessStructure = $rootScope.policyRequest.quotationOption.excess;
             $scope.policy.specialCondition = $scope.wording.specialCondition;
+            $scope.policy.conveyances = $scope.wording.conveyances;
 
 
 
@@ -406,7 +409,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
                     case 'Please specify policy insecption date for annual cover :':
                         console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
-                        $scope.policy.inceptionDate = questionnairre.answer;
+                        $scope.policy.policyInceptionDate = questionnairre.answer;
                     case '':
                 }
             });
@@ -452,10 +455,10 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
     $rootScope.getPolicy = function (reference) {
         angular.forEach($rootScope.policies, function (policy) {
-            if (angular.equals(reference, policy.policyReference)) {
+            if (angular.equals(reference, policy.reference)) {
                 $scope.policy = policy;
                 $scope.update(true);
-                $scope.btnValue = 'Save Changes'
+                $scope.btnValue = 'Save Changes';
                 $location.path('/policy/' + reference);
             }
         });
@@ -472,7 +475,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 $rootScope.policies = data;
                 console.log($rootScope.policies);
                 console.log('Policies size :' + $rootScope.policies.length);
-                $rootScope.getPolicy($routeParams.policyReference);
+                $rootScope.getPolicy($routeParams.reference);
 
             } else {
                 console.log('status:' + status);
@@ -562,11 +565,13 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.policyOptions = {
         'frequencyOptions': [
             'Declaration',
-            'Other',
+            'Annually',
+            'Monthly',
+            'Once_Off'
         ],
         'sasriaFrequencyOptions': [
             'N/A',
-            'Other',
+            'Other'
         ],
         'deviceOptions': [
             'Nedbank Cameo',
@@ -593,25 +598,24 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 'whilst in the custody and care of Protea Coin Group and/or whilst within the Nedbank Camera Managed Unit at the premises declared' +
                 'to Insurers, Excluding fraud, dishonesty or criminal involvement of the Insured or their employees.',
         'geographicalDuration': 'refer to special conditions',
-        'specialCondition': 'Geographical and duration: Cash - once cash has recorded',
+        'specialCondition': '1) Geographical and duration: Cash - once cash has recorded as deposited into the CIMA Managed Unit including authorised collection of the security.' +
+        '\n2) Premium: The minimum monthly premium of R0.00 is made up of: R0.00 miniun deposit',
+        'conveyances': 'Per Road vehicle of Protea Coin Group',
         'notes': '[Add notes for this policy]'
 
     };
 
     $scope.getClient = function () {
         angular.forEach($rootScope.policies, function (policy) {
-            if (angular.equals($routeParams.policyReference, policy.policyReference)) {
+            if (angular.equals($routeParams.reference, policy.reference)) {
                 $scope.policy = policy;
                 $scope.policy.client = policy.client;
                 console.log('Client UI policies size: ' + $rootScope.policies.length);
                 console.log('Client :' + $scope.policy.client);
-                $location.path('/client/' + $routeParams.policyReference);
+                $location.path('/client/' + $routeParams.reference);
             }
         });
 
     };
 
 });
-
-
-

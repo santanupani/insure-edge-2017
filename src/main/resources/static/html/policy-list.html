@@ -1,9 +1,70 @@
+<div  ng-init="init()">
+    <div class="row" style="padding: 25px;">
+        <div class="col-md-12">
+            <div class="input-group input-group-lg" style="box-shadow: 0 0 30px black;">
+                <span class="input-group-addon" id="sizing-addon1">Policies</span>
+                <input ng-model="clientPolicy" type="text" class="form-control" placeholder="Search..." aria-describedby="sizing-addon1">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 25px;" >
+        <div class="col-md-12">
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel-body">
+                    <div>          
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Subject Matter </th>
+                                    <th>Status</th>
+                                    <th>Policy Reference</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="policy in policies|  filter:clientPolicy">
+<!--                                <tr ng-repeat="policy in policies| offset: currentPage * itemsPerPage | limitTo: itemsPerPage | filter:clientPolicy">-->
+
+                                    <td>{{policy.client.clientName}}</td>
+                                    <td>{{policy.subjectMatter}}</td>
+                                    <td>{{policy.status}}</td>
+                                    <td><a ng-href="#/policy/{{policy.reference}}"
+                                           ng-click="getPolicy(policy.reference)">{{policy.reference}}</a></td>
+                                </tr>
+                            </tbody>
+<!--                            <tfoot>
+                            <td colspan="3">
+                                <div class="pagination" id="navi">
+                                    <ul>
+                                        <li ng-class="prevPageDisabled()"><a href
+                                                                             ng-click="prevPage()">« Prev</a></li>
+                                        <li ng-repeat="n in range()"
+                                            ng-class="{active: n == currentPage}"
+                                            ng-click="setPage(n)"><a
+                                                href="#/policy/{{policy.reference}}">{{n + 1}}</a></li>
+                                        <li ng-class="nextPageDisabled()"><a href
+                                                                             ng-click="nextPage()">Next »</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                            </tfoot>-->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-
-<div class="row" style="padding: 25px;" ng-init="init()">
+<!--<div class="row" style="padding: 25px;" ng-init="init()">
     <div class="col-md-12">
-        <!-- Entities Accordion Start -->
+         Entities Accordion Start 
 
 
         <div id="entities" class="panel-group">
@@ -41,7 +102,7 @@
 
                                     <td>{{policy.client.clientName}}</td>
                                     <td><a ng-href="#/policy/{{policy.reference}}"
-                                           ng-click="getPolicy(policy.policyReference)">{{policy.reference}}</a></td>
+                                           ng-click="getPolicy(policy.reference)">{{policy.reference}}</a></td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -70,6 +131,6 @@
 
 
 
-        <!-- Entity Accordion Ends -->
+         Entity Accordion Ends 
     </div>
-</div>
+</div>-->

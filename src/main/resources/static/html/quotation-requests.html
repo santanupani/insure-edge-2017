@@ -99,34 +99,43 @@
                             </div>
                             
                              <div class="form-group">
+                                 <label class="control-label" for="productName">Product Name</label>
                                 <input type="text" class="form-control"  ng-model="option.cover=quotationRequest.product.name" readonly>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="commodity">Commodity</label>
                                 <input type="text" class="form-control"  ng-model="option.commodity=(option.commodity)? option.commodity: commodity" readonly>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="limit">Limit</label>
                                 <input type="text" class="form-control"  ng-model="option.limit=(option.limit)? option.limit: limit" readonly>
                             </div>
                             
                             <div class="form-group" ng-if="quotationRequest.product.id == 4">
+                                <label class="control-label" for="staticLimit">Static Limit</label>
                                 <input type="text" class="form-control" placeholder="static limit" ng-model="option.staticLimit=(option.staticLimit)? option.staticLimit: staticLimit" readonly>
                             </div>
                             
                             <div class="form-group">
+                                <label class="control-label" for="duration">Duration</label>
                                 <input type="text" class="form-control"  ng-model="option.duration=(option.duration)?option.duration: duration" readonly>
                             </div>
                            <div class="form-group">
+                               <label class="control-label" for="location">Location</label>
                                 <input type="text" class="form-control" placeholder="Location" ng-model="option.location" required>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="excess">Excess Amount</label>
                                 <input type="text" class="form-control" placeholder="Excess" ng-model="option.excess" required>
                                 <label ng-show='option.excess' >{{option.excess | currency:'R '}}</label>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="premium">Premium</label>
                                 <input type="text" class="form-control" placeholder="Premium" ng-model="option.premium" required>
                                 <label ng-show='option.premium' >{{option.premium | currency:'R '}}</label>
                             </div>
                              <div class="form-group">
+                                 <label class="control-label" for="crossPavement">Cross Pavement</label>
                                 <input type="text" class="form-control" placeholder="Cross Pavement" ng-model="option.pavement" required>
                                 <label ng-show='option.pavement' >{{option.pavement | currency:'R '}}</label>
                             </div>
