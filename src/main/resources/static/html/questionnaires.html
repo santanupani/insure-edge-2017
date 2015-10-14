@@ -95,13 +95,9 @@
 
                             <div  ng-if="questionnaire.answerType == 'date'" class="form-group">
                                 <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-                                <input type="text" class="form-control" 
+                                <input type="date" class="form-control" 
                                        id="q_{{questionnaire.id}}"
-                                       ng-model="questionnaire.answer"
-                                       pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d"
-                                       
-                                       ng-required="questionnaire.isRequired" required/>
-                                <label>Date (Format: MM-dd-YYYY)</label>
+                                       ng-model="questionnaire.answer" ng-required="questionnaire.isRequired" required/>
                             </div>
                             
 
