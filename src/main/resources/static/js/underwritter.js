@@ -11,7 +11,7 @@ underwritter.config(['$routeProvider', function ($routeProvider) {
         }).when('/clients/:clientId', {
             'templateUrl': '/html/clients.html',
             'controller': 'viewClientCtrl'
-        }).when('/policy/:policyReference', {
+        }).when('/policy/:reference', {
             'templateUrl': '/html/policy.html',
             'controller': 'policyCtrl'
         }).when('/policies', {
@@ -186,10 +186,10 @@ underwritter.controller('listClientCtrl', function ($scope, $rootScope, $http) {
 
 });
 
-underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $route, $window) {
+underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $window) {
 
     $scope.client = {};
-//    $rootScope.policy = {};
+    $rootScope.policy = {};
     $rootScope.policies = [];
     $scope.isDisabled = false;
 
@@ -198,8 +198,6 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
         $scope.getPolicies();
         $scope.is_readonly = true;
         $scope.clientId = $routeParams.clientId;
-
-       
 
     };
 
@@ -214,7 +212,7 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
                 $rootScope.policies = data;
                 console.log($rootScope.policies);
                 console.log('Policies size :' + $rootScope.policies.length);
-                 $scope.getClient($scope.clientId);
+                $scope.getClient($scope.clientId);
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
@@ -326,7 +324,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         $scope.getClient();
         $scope.btnValue = (angular.equals($scope.policy.policyReference, 'New-Policy-Creation')) ? 'Update' : 'Create Policy';
         $scope.getPolicies();
-        $scope.getPolicyRequest($cookieStore.get('reference'))
+        $scope.getPolicyRequest($cookieStore.get('reference').toString());
         $scope.getSubAgents();
         $scope.initNewPolicy($rootScope.policy);
         $scope.policies.push($rootScope.policy);
@@ -457,7 +455,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             if (angular.equals(reference, policy.reference)) {
                 $scope.policy = policy;
                 $scope.update(true);
-                $scope.btnValue = 'Save Changes'
+                $scope.btnValue = 'Save Changes';
                 $location.path('/policy/' + reference);
             }
         });
@@ -564,11 +562,13 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     $scope.policyOptions = {
         'frequencyOptions': [
             'Declaration',
-            'Other',
+            'Annually',
+            'Monthly',
+            'Once_Off'
         ],
         'sasriaFrequencyOptions': [
             'N/A',
-            'Other',
+            'Other'
         ],
         'deviceOptions': [
             'Nedbank Cameo',
@@ -614,6 +614,3 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
     };
 
 });
-
-
-

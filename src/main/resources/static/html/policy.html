@@ -200,14 +200,14 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td><select class="form-control"
-                                                                                ng-model="policy.subAgentId" ng-readonly="isUpdate"
+                                                                                ng-model="policy.subAgent.id" ng-readonly="isUpdate"
                                                                                 required
                                                                                 ng-options="subAgent.id as subAgent.firstName for subAgent in subAgents">
                                                                             <option value=""></option>
                                                                         </select></td>
                                                                     <td><input type="text" class="form-control"
                                                                                required ng-readonly="isUpdate"
-                                                                               ng-model="policy.commission"></td>
+                                                                               ng-model="policy.uacommission"></td>
                                                                     <td><input type="text" class="form-control"
                                                                                required ng-readonly="isUpdate"
                                                                                ng-model="policy.status"></td>
