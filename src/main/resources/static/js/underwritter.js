@@ -186,7 +186,7 @@ underwritter.controller('listClientCtrl', function ($scope, $rootScope, $http) {
 
 });
 
-underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
+underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $route, $window) {
 
     $scope.client = {};
 //    $rootScope.policy = {};
@@ -273,6 +273,7 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
             if (status == 200) {
                 $rootScope.message = "Client Updated Successfully";
                 console.log('Client Updated');
+                $window.location.reload();
             } else {
                 console.log('status:' + status);
             }
@@ -379,6 +380,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.client.contact.suburb = $rootScope.policyRequest.suburb;
             $scope.policy.client.bankAccount.branch = $rootScope.policyRequest.branchCode;
             $scope.policy.client.bankAccount.accountName = $rootScope.policyRequest.accountName;
+            $scope.policy.client.bankAccount.accountType = $rootScope.policyRequest.accType;
             $scope.policy.client.bankAccount.bankName = $rootScope.policyRequest.bankName;
             $scope.policy.client.bankAccount.accountNumber = $rootScope.policyRequest.accountNumber;
 
@@ -452,7 +454,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
     $rootScope.getPolicy = function (reference) {
         angular.forEach($rootScope.policies, function (policy) {
-            if (angular.equals(reference, policy.policyReference)) {
+            if (angular.equals(reference, policy.reference)) {
                 $scope.policy = policy;
                 $scope.update(true);
                 $scope.btnValue = 'Save Changes'
@@ -472,7 +474,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 $rootScope.policies = data;
                 console.log($rootScope.policies);
                 console.log('Policies size :' + $rootScope.policies.length);
-                $rootScope.getPolicy($routeParams.policyReference);
+                $rootScope.getPolicy($routeParams.reference);
 
             } else {
                 console.log('status:' + status);
@@ -600,12 +602,12 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
     $scope.getClient = function () {
         angular.forEach($rootScope.policies, function (policy) {
-            if (angular.equals($routeParams.policyReference, policy.policyReference)) {
+            if (angular.equals($routeParams.reference, policy.reference)) {
                 $scope.policy = policy;
                 $scope.policy.client = policy.client;
                 console.log('Client UI policies size: ' + $rootScope.policies.length);
                 console.log('Client :' + $scope.policy.client);
-                $location.path('/client/' + $routeParams.policyReference);
+                $location.path('/client/' + $routeParams.reference);
             }
         });
 
