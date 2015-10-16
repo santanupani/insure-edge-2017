@@ -72,6 +72,12 @@
                         <label class="control-label" for="q_{{index}}">Limit: </label>
                         <input type="text" class="form-control" id="q_{{index}}"
                                ng-model="option.limit" readonly="readonly">
+                        
+                        <div ng-if="quotation.quotationRequest.product.id == 4">
+                            <label class="control-label" for="q_{{index}}">Static Limit :</label>
+                            <input type="text" class="form-control" id="q_{{index}}"
+                                   ng-model="option.staticLimit" readonly="readonly" >
+                        </div>
 
                         <label class="control-label" for="q_{{index}}">Cover: </label>
                         <input type="text" class="form-control" id="q_{{index}}"
@@ -84,7 +90,7 @@
                         <label class="control-label" for="q_{{index}}">Premium: </label>
                         <input type="text" class="form-control" id="q_{{index}}"
                                ng-model="option.premium" readonly="readonly">
-                        
+
                         <label class="control-label" for="q_{{index}}">Cross Pavements: </label>
                         <input type="text" class="form-control" id="q_{{index}}"
                                ng-model="option.pavement" readonly="readonly">
