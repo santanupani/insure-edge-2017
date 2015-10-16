@@ -92,7 +92,7 @@ public class DocumentService{
 		reportData.put("POLYGON_REPORT_FILE_RESOLVER", fileResolver);
 
 		JRBeanCollectionDataSource indemnityOptionsDS = new JRBeanCollectionDataSource(policy.getIndemnityOptions());
-		InputStream jasperIS = getClass().getResourceAsStream("/reports/policyScheduleReport.jrxml");
+		InputStream jasperIS = getClass().getResourceAsStream("/reports/policyReport.jrxml");
 
 		JasperReport jasperReport = JasperCompileManager.compileReport(jasperIS);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, reportData, indemnityOptionsDS);
