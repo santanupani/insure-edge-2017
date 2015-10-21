@@ -232,8 +232,9 @@
 			<element name="reference" type="string" />
 			<element name="inceptionDate" type="string" />
 			<element name="policyInceptionDate" type="string" />
-			<element name="productName" type="string" />
+			<element name="anniversaryDate" type="string" />
 			<element name="renewalDate" type="string" />
+			<element name="productName" type="string" />
 			<element name="underwritingYear" type="long" />
 			<element name="status" type="string" />
 			<element name="frequency" type="string" />
@@ -447,11 +448,9 @@
 					type="tns:ClientCommandModel" />
 				<element name="subAgentId" type="long" />
 				<element name="underwriterId" type="long" />
-				<element name="inceptionDate" type="string" />
-				<element name="renewalDate" type="string" />
+				<element name="policyInceptionDate" type="string" />
 				<element name="underwritingYear" type="int" />
 				<element name="status" type="string" />
-				<element name="policyInceptionDate" type="string" />
 				<element name="productName" type="string" />
 				<element name="sasriaFrequency" type="string" />
 				<element name="device" type="string" />

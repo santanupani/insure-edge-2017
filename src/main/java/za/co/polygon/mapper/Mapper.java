@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -467,18 +468,18 @@ public class Mapper {
 
         policyQueryModel.setId(policy.getId());
         policyQueryModel.setReference(policy.getReference());
-        policyQueryModel.setPolicyInceptionDate(policy.getPolicyInceptionDate());
-        policyQueryModel.setProductName(policy.getProductName());
         policyQueryModel.setCollectByDebitOrder(policy.isCollectByDebitOrder());
         policyQueryModel.setBrokerFee(Double.toString(policy.getBrokerFee()));
         policyQueryModel.setDevice(policy.getDevice());
         policyQueryModel.setCollectByDebitOrder(policy.isCollectByDebitOrder());
         policyQueryModel.setExcludeSasria(policy.isExclude_sasria());
-        policyQueryModel.setInceptionDate(policy.getInceptionDate().toString());
+        policyQueryModel.setPolicyInceptionDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getPolicyInceptionDate()));
+        policyQueryModel.setInceptionDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getInceptionDate()));
+        policyQueryModel.setRenewalDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getRenewalDate()));
+        policyQueryModel.setAnniversaryDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getAnniversaryDate()));
         policyQueryModel.setNotes(policy.getNotes());
         policyQueryModel.setStatus(policy.getStatus());
         policyQueryModel.setReInstatement(policy.getReInstatement());
-        policyQueryModel.setRenewalDate(policy.getRenewalDate().toString());
         policyQueryModel.setUnderwriterFee(Double.toString(policy.getUnderwriterFee()));
         policyQueryModel.setUnderwritingYear(policy.getUnderwriting_year());
         policyQueryModel.setFrequency(policy.getFrequency());
@@ -578,25 +579,43 @@ public class Mapper {
 
     public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount) throws ParseException {
         Policy policyResult = new Policy();
-
+        Calendar calendar = Calendar.getInstance();
         
         policyResult.setClient(client);
         policyResult.setSubAgent(subAgent);
         policyResult.setUnderwriter(underwriter);
-        policyResult.setPolicyInceptionDate(policyCreationCommandModel.getPolicyInceptionDate());
+        policyResult.setPolicyInceptionDate(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
+        
+        calendar = Calendar.getInstance();
+        calendar.setTime(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
+        calendar.add(Calendar.YEAR, 1);
+        Date inceptionDate = calendar.getTime();
+        policyResult.setInceptionDate(inceptionDate);
+        
+        calendar = Calendar.getInstance();
+        calendar.setTime(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
+        calendar.add(Calendar.YEAR, 1);
+        calendar.add(Calendar.MONTH, -1);
+        Date renewalDate = calendar.getTime();
+        policyResult.setRenewalDate(renewalDate);
+        
+        calendar = Calendar.getInstance();
+        calendar.setTime(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
+        calendar.add(Calendar.YEAR, 1);
+        Date anniversaryDate = calendar.getTime();
+        policyResult.setAnniversaryDate(anniversaryDate);
+        
+        policyResult.setUnderwriting_year(policyCreationCommandModel.getUnderwritingYear());        
         policyResult.setProductName(policyCreationCommandModel.getProductName());
         policyResult.setBrokerFee(Double.parseDouble(policyCreationCommandModel.getBrokerFee()));
         policyResult.setDevice(policyCreationCommandModel.getDevice());
         policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
-        policyResult.setInceptionDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getInceptionDate()));
         policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
         policyResult.setReference(UUID.randomUUID().toString());
-        policyResult.setRenewalDate(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getRenewalDate()));
         policyResult.setStatus(policyCreationCommandModel.getStatus());
         policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
         policyResult.setNotes(policyCreationCommandModel.getNotes());
         policyResult.setReInstatement(policyCreationCommandModel.getReInstatement());
-        policyResult.setUnderwriting_year(policyCreationCommandModel.getUnderwritingYear());
         policyResult.setFrequency(policyCreationCommandModel.getFrequency());
         policyResult.setUnderwriterFee(policyCreationCommandModel.getUnderwriterFee());
         policyResult.setBrokerCommission(policyCreationCommandModel.getBrokerCommission());

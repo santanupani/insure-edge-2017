@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-10-14T08:58:46 -->
+<!-- 2015-10-19T12:14:49 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotationReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="quotation" class="za.co.polygon.domain.Quotation"/>
@@ -19,37 +19,37 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="228" splitType="Stretch">
+		<band height="181" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="228"/>
+				<reportElement x="0" y="0" width="555" height="181" />
 				<image scaleImage="FillFrame">
-					<reportElement x="0" y="0" width="555" height="80"/>
+					<reportElement x="0" y="0" width="555" height="80" />
 					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-logo.jpg").toString()]]></imageExpression>
 				</image>
 				<staticText>
-					<reportElement x="20" y="90" width="29" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Serif" isBold="true"/>
+					<reportElement x="20" y="90" width="29" height="20" />
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+						<font fontName="Serif" isBold="false"/>
 					</textElement>
 					<text><![CDATA[To:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="160" width="180" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<reportElement x="20" y="133" width="180" height="20" />
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
 						<font fontName="Serif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[TO WHOM IT MAY CONCERN:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="125" width="120" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<reportElement x="20" y="111" width="120" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
 						<font fontName="Serif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Reference Number:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="321" y="90" width="39" height="20"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<reportElement x="321" y="90" width="39" height="20" />
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
 						<font fontName="Serif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Date:]]></text>
@@ -69,21 +69,21 @@
 					<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($P{quotation}.getQuotationRequest().getCreateDate())]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="144" y="125" width="354" height="20"/>
+					<reportElement x="144" y="111" width="354" height="20" />
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getReference()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="203" y="160" width="295" height="20"/>
+					<reportElement x="203" y="133" width="295" height="20" />
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{quotation}.getQuotationRequest().getApplicantName()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="20" y="193" width="369" height="20"/>
+					<reportElement x="20" y="153" width="369" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif" isBold="true"/>
 					</textElement>
@@ -99,11 +99,11 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="192" splitType="Stretch">
+		<band height="186" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="192"/>
+				<reportElement x="0" y="0" width="555" height="186"/>
 				<staticText>
-					<reportElement x="20" y="5" width="180" height="20"/>
+					<reportElement x="20" y="5" width="180" height="20" />
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
@@ -225,32 +225,32 @@
 			<frame>
 				<reportElement x="0" y="0" width="555" height="99"/>
 				<image scaleImage="FillFrame">
-					<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="99"/>
+					<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="99" />
 					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-footer.png").toString()]]></imageExpression>
 				</image>
 			</frame>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="182" splitType="Stretch">
+		<band height="129" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="180"/>
+				<reportElement x="0" y="0" width="555" height="124"/>
 				<staticText>
-					<reportElement x="20" y="128" width="120" height="20"/>
+					<reportElement x="20" y="73" width="120" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Regards,]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="155" width="120" height="20"/>
+					<reportElement x="20" y="100" width="120" height="20"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Serif"/>
 					</textElement>
 					<text><![CDATA[Polygon Team]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="20" y="13" width="520" height="87"/>
+					<reportElement x="20" y="13" width="520" height="57"/>
 					<textElement>
 						<font fontName="Serif"/>
 					</textElement>

@@ -34,7 +34,6 @@ public class IndemnityOption {
     @JoinColumn(name = "policy_id")
     private Policy policy;
     
-
     public Long getId() {
         return id;
     }

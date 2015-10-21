@@ -67,7 +67,7 @@ public class DocumentService{
                 	this.setQuotationWording("Quote only valid for 15 days"
                             + " and acceptance thereof by underwriters subject to a fully completed rist assessment, proposal "
                             + "form  and signed debit order form. Underwriters serve the right to refuse"
-                            + "acceptance of the risk as declared to us\n");
+                            + "acceptance of the risk as declared to us.\n");
                 }
             }
         }
