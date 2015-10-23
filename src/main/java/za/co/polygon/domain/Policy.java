@@ -31,6 +31,10 @@ public class Policy {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+    
+        
+    @OneToMany(mappedBy = "policy")
+    private List<ClaimRequest> claimRequest;
 
     @Column(name = "policy_inception_date")
     private String policyInceptionDate;
@@ -125,6 +129,9 @@ public class Policy {
 
     @Column(name = "notes")
     private String notes;
+    
+    
+    
 
     public Long getId() {
         return id;
@@ -396,6 +403,14 @@ public class Policy {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<ClaimRequest> getClaimRequest() {
+        return claimRequest;
+    }
+
+    public void setClaimRequest(List<ClaimRequest> claimRequest) {
+        this.claimRequest = claimRequest;
     }
     
 }

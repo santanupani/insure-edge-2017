@@ -13,6 +13,9 @@ import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.ClaimAnswerValue;
+import za.co.polygon.domain.ClaimQuestionnaire;
+import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.IndemnityOption;
@@ -28,6 +31,8 @@ import za.co.polygon.domain.Underwriter;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BankAccountQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.ClaimQuestionnaireQuery;
+import za.co.polygon.model.ClaimTypeQueryModel;
 import za.co.polygon.model.ClientCommandModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.ContactQueryModel;
@@ -579,7 +584,6 @@ public class Mapper {
     public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount) throws ParseException {
         Policy policyResult = new Policy();
 
-        
         policyResult.setClient(client);
         policyResult.setSubAgent(subAgent);
         policyResult.setUnderwriter(underwriter);
@@ -641,7 +645,7 @@ public class Mapper {
 
         client.setClientName(clientQueryModel.getClientName());
         client.setIncomeTaxNumber(clientQueryModel.getIncomeTaxNumber());
-         client.setDesignation(clientQueryModel.getDesignation());
+        client.setDesignation(clientQueryModel.getDesignation());
         client.setRegNumber(clientQueryModel.getRegNumber());
         client.setVatNumber(clientQueryModel.getVatNumber());
         BankAccount bankAccount = client.getBankAccount();
@@ -665,4 +669,42 @@ public class Mapper {
         return updatedClient;
     }
 
+    public static ClaimTypeQueryModel toClaimTypeQueryModel(ClaimType from) {
+        ClaimTypeQueryModel claimTypeQueryModel = new ClaimTypeQueryModel();
+        claimTypeQueryModel.setId(from.getId());
+        claimTypeQueryModel.setClaimType(from.getClaimType());
+
+        return claimTypeQueryModel;
+    }
+
+    public static List<ClaimTypeQueryModel> toClaimTypeQueryModel(List<ClaimType> fromList) {
+        List<ClaimTypeQueryModel> claimTypeQueryModels = new ArrayList<ClaimTypeQueryModel>();
+        for (ClaimType claimType : fromList) {
+            claimTypeQueryModels.add(toClaimTypeQueryModel(claimType));
+        }
+        return claimTypeQueryModels;
+    }
+
+    public static ClaimQuestionnaireQuery toClaimQuestionnaireQueryModel(ClaimQuestionnaire from) {
+        ClaimQuestionnaireQuery claimQuestionnaireQuery = new ClaimQuestionnaireQuery();
+        claimQuestionnaireQuery.setId(from.getId());
+        claimQuestionnaireQuery.setQuestion(from.getQuestion());
+        claimQuestionnaireQuery.setSequenceNumber(from.getSequenceNumber());
+        claimQuestionnaireQuery.setClaimAnswerType(from.getClaimAnswerType().getClaimAnswerType());
+        claimQuestionnaireQuery.setIsRequired(from.getIsRequired());
+
+        for (ClaimAnswerValue claimAnswerValue : from.getClaimAnswerValue()) {
+            claimQuestionnaireQuery.getClaimAnswerValues().add(claimAnswerValue.getClaimAnswerValue());
+        }
+
+        return claimQuestionnaireQuery;
+    }
+    
+        public static List<ClaimQuestionnaireQuery> toClaimQuestionnaireQueryModel(List<ClaimQuestionnaire> fromList) {
+        List<ClaimQuestionnaireQuery> claimQuestionnaireQuerys = new ArrayList<ClaimQuestionnaireQuery>();
+        for (ClaimQuestionnaire claimQuestionnaire : fromList) {
+            claimQuestionnaireQuerys.add(toClaimQuestionnaireQueryModel(claimQuestionnaire));
+        }
+        return claimQuestionnaireQuerys;
+    }
 }
