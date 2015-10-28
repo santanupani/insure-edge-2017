@@ -21,6 +21,7 @@ import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+import static za.co.polygon.mapper.Mapper.toPolicyUpdateCommandModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -406,6 +407,15 @@ public class Service {
 		documentService.policyScheduleReportPDF(policy);
 		return policy.getReference();
 	}
+	
+	@Transactional
+	@RequestMapping(value = "api/policy-update/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updatePolicy(@PathVariable("reference") String reference, @RequestBody PolicyQueryModel PolicyQueryModel) throws ParseException {
+		log.info("Updating Policy with reference: "+reference);
+		Policy policy = policyRepository.findByReference(reference);
+		log.info("Product Name: "+policy.getProductName());
+		policyRepository.save(toPolicyUpdateCommandModel(PolicyQueryModel,policy));
+	}
 
 	@RequestMapping(value = "api/sub-agents", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<SubAgentQueryModel> getSubAgents() {
@@ -432,9 +442,6 @@ public class Service {
 		return documentService.policyScheduleReportPDF(policy);
 
 	}
-
-
-
 
 	@RequestMapping(value = "api/claim-types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<ClaimTypeQueryModel> findAllClaimTypes() {

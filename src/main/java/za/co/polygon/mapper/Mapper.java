@@ -484,6 +484,7 @@ public class Mapper {
         policyQueryModel.setRenewalDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getRenewalDate()));
         policyQueryModel.setAnniversaryDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getAnniversaryDate()));
         policyQueryModel.setNotes(policy.getNotes());
+        policyQueryModel.setProductName(policy.getProductName());
         policyQueryModel.setStatus(policy.getStatus());
         policyQueryModel.setReInstatement(policy.getReInstatement());
         policyQueryModel.setUnderwriterFee(Double.toString(policy.getUnderwriterFee()));
@@ -693,26 +694,24 @@ public class Mapper {
     }
     
     public static Policy toPolicyUpdateCommandModel(PolicyQueryModel policyQueryModel, Policy policy){
-    	
-    	policy.setStatus(policyQueryModel.getStatus());
     	policy.setScheduleAttaching(policyQueryModel.getScheduleAttaching());
     	policy.setExcessSturcture(policyQueryModel.getExcessStructure());
     	policy.setConvenyances(policyQueryModel.getConveyances());
     	policy.setGeographicalDuration(policyQueryModel.getGeographicalDuration());
     	policy.setNotes(policyQueryModel.getNotes());
     	policy.setExclude_sasria(new Boolean(policyQueryModel.getSasriaFrequency()));
+    	List<IndemnityOption> indemnityOptions = new ArrayList<IndemnityOption>();
     	int i=0;
-    	List<IndemnityOption> indemnityOptionsList = new ArrayList<IndemnityOption>();
     	for(IndemnityOption indemnityOption: policy.getIndemnityOptions()){
-    		IndemnityOption option = indemnityOption;
-    		option.setIndemnityItemOption(policyQueryModel.getIndemnityOption().get(i).getIndemnityItemOption());
-    		option.setIndemnityValue(policyQueryModel.getIndemnityOption().get(i).getIndemnityValue());
-    		option.setPremium(policyQueryModel.getIndemnityOption().get(i).getPremium());
-    		indemnityOptionsList.add(option);
-    		i++;
+    		indemnityOption.setIndemnityItemOption(policyQueryModel.getIndemnityOption().get(i).getIndemnityItemOption());
+    		indemnityOption.setIndemnityValue(policyQueryModel.getIndemnityOption().get(i).getIndemnityValue());
+    		indemnityOption.setPremium(policyQueryModel.getIndemnityOption().get(i).getPremium());
+    		indemnityOption.setSumInsured(policyQueryModel.getIndemnityOption().get(i).getSumInsured());
+    		indemnityOptions.add(indemnityOption);
     		
+    		i++;    		
     	}
-    	
+    	policy.setIndemnityOptions(indemnityOptions);
     	
     	Policy updatedPolicy = policy;
     	

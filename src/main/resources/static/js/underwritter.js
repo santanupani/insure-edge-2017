@@ -292,7 +292,7 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
 
 });
 
-underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $cookieStore,$sce) {
+underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $cookieStore,$sce,$window) {
 
 	$rootScope.policy = {};
 	$scope.itemsPerPage = 5;
@@ -314,6 +314,31 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		$scope.initNewPolicy($rootScope.policy);
 		$scope.policies.push($rootScope.policy);
 	};
+	
+	$scope.updatePolicy = function(reference){
+		console.log('Update POlicy');
+		$http({
+			url: '/api/policy-update/' + reference,
+			method: 'put',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			data: $scope.policy
+		}).success(function (data, status) {
+			console.log('get success code:' + status);
+			if (status == 200) {
+				$rootScope.message = "Policy Updated Successfully";
+				console.log('Policy Updated');
+				$window.location.reload();
+			} else {
+				console.log('status:' + status);
+			}
+		})
+		.error(function (error) {
+			$rootScope.message = "Oops we recieved your request but there was a problem processing it";
+			console.log(error);
+		});
+	}
 
 	$scope.submitForPolicySchedule = function(reference){
 		console.log('Ref: ' + reference);
