@@ -287,8 +287,11 @@ create table claim_answer_values(
 
 create table claim_requests(
     id integer auto_increment not null primary key,
-    claim_number varchar(16) not null,
+    claim_number varchar(64) not null,
     policy_id integer not null,
+    claim_type_id integer not null,
+    create_date date not null,
+    status varchar(16) not null,
     investigation_report longblob,
     confirmation_amount longblob,
     proof_of_pickup longblob,
@@ -304,14 +307,15 @@ create table claim_requests(
     photo3 longblob,
     photo4 longblob,
     photo5 longblob,
-    constraint claim_request_fk1 foreign key (policy_id) references policies(id)
+    constraint claim_request_fk1 foreign key (policy_id) references policies(id),
+    constraint claim_request_fk2 foreign key (claim_type_id) references claim_types(id)
 );
 
 create table claim_answers(
-     id integer auto_increment not null primary key,
+      id integer auto_increment not null primary key,
      claim_request_id integer not null,
      question varchar(128) not null,
-     answers varchar(512) not null,
+     answer varchar(512),
      constraint claim_answer_fk1 foreign key (claim_request_id) references  claim_requests(id)
 );
 

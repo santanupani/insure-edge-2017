@@ -1,5 +1,7 @@
 package za.co.polygon.domain;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "claim_requests")
 public class ClaimRequest {
 
-    @Id
+       @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
@@ -24,12 +26,20 @@ public class ClaimRequest {
     @ManyToOne
     @JoinColumn(name = "policy_id")
     private Policy policy;
-    
-    @OneToMany(mappedBy = "claimRequest", fetch = FetchType.EAGER)
-    private List<ClaimAnswer> claimAnswer;
 
+    @ManyToOne
+    @JoinColumn(name = "claim_type_id")
+    private ClaimType claimType;
+
+    @OneToMany(mappedBy = "claimRequest", fetch = FetchType.EAGER)
+    private List<ClaimAnswer> claimAnswers;
+    
+              
     @Column(name = "claim_number")
     private String claimNumber;
+    
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "investigation_report")
     private byte[] investigationReport;
@@ -72,6 +82,9 @@ public class ClaimRequest {
 
     @Column(name = "photo5")
     private byte[] photo5;
+
+    @Column(name = "create_date")
+    private Date createDate;
 
     public Long getId() {
         return id;
@@ -209,14 +222,51 @@ public class ClaimRequest {
         this.photo5 = photo5;
     }
 
-    public List<ClaimAnswer> getClaimAnswer() {
-        return claimAnswer;
+
+
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setClaimAnswer(List<ClaimAnswer> claimAnswer) {
-        this.claimAnswer = claimAnswer;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public ClaimType getClaimType() {
+        return claimType;
+    }
+
+    public void setClaimType(ClaimType claimType) {
+        this.claimType = claimType;
+    }
+    
+
+    public List<ClaimAnswer> getClaimAnswer() {
+        if(claimAnswers == null)
+            return new ArrayList<ClaimAnswer>();
+            else
+        return claimAnswers;
     }
     
     
+
+    public void setClaimAnswer(List<ClaimAnswer> claimRequestQuestionnaire) {
+        this.claimAnswers = claimRequestQuestionnaire;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
+     
+
+
+
+ 
 
 }

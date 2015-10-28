@@ -373,13 +373,13 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                     $scope.policy.indemnityOption[i].indemnityValue = $scope.noOfTimesPerWeek + ' service';
                     $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.limit;
                     $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
-                    
+
                 }
                 ;
                 for (var i = 1; i < 2; i++) {
                     $scope.policy.indemnityOption[i] = {};
                     $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
-                    $scope.policy.indemnityOption[i].indemnityValue ='Per cross pavement carry limit';
+                    $scope.policy.indemnityOption[i].indemnityValue = 'Per cross pavement carry limit';
                     $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.pavement;
                     $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
                 }
@@ -387,7 +387,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             } else {
 
                 $scope.policy.indemnityOption = [];
-                 for (var i = 0; i < 1; i++) {
+                for (var i = 0; i < 1; i++) {
                     $scope.policy.indemnityOption[i] = {};
                     $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
                     $scope.policy.indemnityOption[i].indemnityValue = $scope.noOfTimesPerWeek + ' service';
@@ -398,7 +398,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                 for (var i = 1; i < 2; i++) {
                     $scope.policy.indemnityOption[i] = {};
                     $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
-                    $scope.policy.indemnityOption[i].indemnityValue ='Per cross pavement carry limit';
+                    $scope.policy.indemnityOption[i].indemnityValue = 'Per cross pavement carry limit';
                     $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.pavement;
                     $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
                 }

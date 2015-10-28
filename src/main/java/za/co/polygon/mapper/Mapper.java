@@ -13,8 +13,10 @@ import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.ClaimAnswer;
 import za.co.polygon.domain.ClaimAnswerValue;
 import za.co.polygon.domain.ClaimQuestionnaire;
+import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
@@ -32,6 +34,9 @@ import za.co.polygon.domain.User;
 import za.co.polygon.model.BankAccountQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
+import za.co.polygon.model.ClaimRequestCommandModel;
+import za.co.polygon.model.ClaimRequestCommandModel.ClaimQuestionnaires;
+import za.co.polygon.model.ClaimRequestQueryModel;
 import za.co.polygon.model.ClaimTypeQueryModel;
 import za.co.polygon.model.ClientCommandModel;
 import za.co.polygon.model.ClientQueryModel;
@@ -699,12 +704,94 @@ public class Mapper {
 
         return claimQuestionnaireQuery;
     }
-    
-        public static List<ClaimQuestionnaireQuery> toClaimQuestionnaireQueryModel(List<ClaimQuestionnaire> fromList) {
+
+    public static List<ClaimQuestionnaireQuery> toClaimQuestionnaireQueryModel(List<ClaimQuestionnaire> fromList) {
         List<ClaimQuestionnaireQuery> claimQuestionnaireQuerys = new ArrayList<ClaimQuestionnaireQuery>();
         for (ClaimQuestionnaire claimQuestionnaire : fromList) {
             claimQuestionnaireQuerys.add(toClaimQuestionnaireQueryModel(claimQuestionnaire));
         }
         return claimQuestionnaireQuerys;
     }
+
+    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType) {
+        ClaimRequest claimRequest = new ClaimRequest();
+
+        claimRequest.setClaimNumber(UUID.randomUUID().toString());
+        claimRequest.setPolicy(policy);
+        claimRequest.setCreateDate(new Date());
+        claimRequest.setClaimType(claimType);
+        claimRequest.setStatus("APPLIED");
+
+        List<ClaimAnswer> answerList = new ArrayList<ClaimAnswer>();
+
+        for (ClaimQuestionnaires claimquestionnaires : claimRequestCommandModel.getClaimQuestionnaires()) {
+            ClaimAnswer claimAnswer = new ClaimAnswer();
+            claimAnswer.setQuestion(claimquestionnaires.getQuestion());
+            claimAnswer.setAnswer(claimquestionnaires.getAnswer());
+            claimAnswer.setClaimRequest(claimRequest);
+            answerList.add(claimAnswer);
+
+        }
+
+        claimRequest.setClaimAnswer(answerList);
+
+        return claimRequest;
+    }
+
+    public static List<ClaimAnswer> fromClaimRequestCommandModel(ClaimRequestCommandModel claimRequestCommandModel, ClaimRequest claimRequest) {
+        List<ClaimAnswer> result = new ArrayList<ClaimAnswer>();
+        for (ClaimRequestCommandModel.ClaimQuestionnaires claimQuestionnaire : claimRequestCommandModel.getClaimQuestionnaires()) {
+            ClaimAnswer claimAnswer = new ClaimAnswer();
+            claimAnswer.setQuestion(claimQuestionnaire.getQuestion());
+            claimAnswer.setAnswer(claimQuestionnaire.getAnswer());
+            claimAnswer.setClaimRequest(claimRequest);
+            result.add(claimAnswer);
+        }
+        return result;
+    }
+
+    public static ClaimRequestQueryModel toClaimRequestQueryModel(ClaimRequest claimRequest) {
+
+        ClaimRequestQueryModel claimRequestQueryModel = new ClaimRequestQueryModel();
+
+        claimRequestQueryModel.setClaimNumber(claimRequest.getClaimNumber());
+        claimRequestQueryModel.setStatus(claimRequest.getStatus());
+        claimRequestQueryModel.setCreateDate(new SimpleDateFormat("dd/MM/YYYY").format(claimRequest.getCreateDate()));
+        claimRequestQueryModel.setPolicy(toPolicyQueryModel(claimRequest.getPolicy()));
+        claimRequestQueryModel.setClaimType(toClaimTypeQueryModel(claimRequest.getClaimType()));
+        claimRequestQueryModel.setAffidavit(claimRequest.getAffidavit());
+        claimRequestQueryModel.setAmountBanked(claimRequest.getAmountBanked());
+        claimRequestQueryModel.setCaseNumber(claimRequest.getCaseNumber());
+        claimRequestQueryModel.setComfirmationAmount(claimRequest.getComfirmationAmount());
+        claimRequestQueryModel.setInvestigationReport(claimRequest.getInvestigationReport());
+        claimRequestQueryModel.setPhoto1(claimRequest.getPhoto1());
+        claimRequestQueryModel.setPhoto2(claimRequest.getPhoto2());
+        claimRequestQueryModel.setPhoto3(claimRequest.getPhoto3());
+        claimRequestQueryModel.setPhoto4(claimRequest.getPhoto4());
+        claimRequestQueryModel.setPhoto5(claimRequest.getPhoto5());
+        claimRequestQueryModel.setProofOfPickup(claimRequest.getProofOfPickup());
+        claimRequestQueryModel.setQuote(claimRequest.getQuote());
+        claimRequestQueryModel.setReport(claimRequest.getReport());
+        claimRequestQueryModel.setTransTrackDocument(claimRequest.getTransTrackDocument());
+
+        for (ClaimAnswer claimAnswer : claimRequest.getClaimAnswer()) {
+            ClaimRequestQueryModel.ClaimQuestionnaire q = new ClaimRequestQueryModel.ClaimQuestionnaire();
+            q.setQuestion(claimAnswer.getQuestion());
+            q.setAnswer(claimAnswer.getAnswer());
+
+            claimRequestQueryModel.getClaimQuestionnaire().add(q);
+        }
+
+        return claimRequestQueryModel;
+    }
+
+    public static List<ClaimRequestQueryModel> toClaimRequestQueryModel(List<ClaimRequest> fromList) {
+        List<ClaimRequestQueryModel> claimRequestList = new ArrayList<ClaimRequestQueryModel>();
+
+        for (ClaimRequest claimRequest : fromList) {
+            claimRequestList.add(toClaimRequestQueryModel(claimRequest));
+        }
+        return claimRequestList;
+    }
+
 }

@@ -50,7 +50,9 @@ import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.ClaimAnswer;
 import za.co.polygon.domain.ClaimQuestionnaire;
+import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
@@ -63,10 +65,15 @@ import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
+import static za.co.polygon.mapper.Mapper.fromClaimRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toClaimRequest;
+import static za.co.polygon.mapper.Mapper.toClaimRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimTypeQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
+import za.co.polygon.model.ClaimRequestCommandModel;
+import za.co.polygon.model.ClaimRequestQueryModel;
 import za.co.polygon.model.ClaimTypeQueryModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.PolicyCreationCommandModel;
@@ -85,6 +92,8 @@ import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BankAccountRepository;
 import za.co.polygon.repository.BrokerRepository;
 import za.co.polygon.repository.ClaimQuestionnaireRepository;
+import za.co.polygon.repository.ClaimRequestQuestionnaireRepository;
+import za.co.polygon.repository.ClaimRequestRepository;
 import za.co.polygon.repository.ClaimTypeRepository;
 import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
@@ -163,6 +172,12 @@ public class Service {
 
     @Autowired
     private ClaimQuestionnaireRepository claimQuestionnaireRepository;
+    
+    @Autowired
+    private ClaimRequestRepository claimRequestRepository;
+
+    @Autowired
+    private ClaimRequestQuestionnaireRepository claimRequestQuestionnaireRepository;
 
     @Autowired
     private DocumentService documentService;
@@ -467,4 +482,44 @@ public class Service {
         return r;
     }
 
+    @Transactional
+    @RequestMapping(value = "api/claim-requests",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE )
+    public String createClaimRequest(@RequestBody ClaimRequestCommandModel claimRequestCommandModel) {
+
+        Policy policy = policyRepository.findByReference(claimRequestCommandModel.getReference());
+
+        ClaimType claimType = claimTypeRepository.findOne(claimRequestCommandModel.getClaimTypeId());
+
+        ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType);
+        claimRequest =  claimRequestRepository.save(claimRequest);
+                
+        //claimRequest.setComfirmationAmount(file.getBytes());
+             
+        List<ClaimAnswer> claimRequestQuestionnaires = fromClaimRequestCommandModel(claimRequestCommandModel, claimRequest);
+
+        claimRequestQuestionnaireRepository.save(claimRequestQuestionnaires);
+
+       notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department");
+
+        return claimRequest.getClaimNumber();
+    }
+    
+    @RequestMapping(value = "api/claim-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ClaimRequestQueryModel> getAllClaimRequests() {
+        log.info("Find all claim Requests");
+        List<ClaimRequest> claimRequest = claimRequestRepository.findAll();
+        List<ClaimRequestQueryModel> claimRequestQueryModels = toClaimRequestQueryModel(claimRequest);
+        log.info("found all claim requests");
+        return claimRequestQueryModels;
+    }
+    
+    
+    @RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ClaimRequestQueryModel getClaimRequest(@PathVariable("claimNumber") String claimNumber) {
+        log.info("find claim");
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        log.info("found claim by claim number");
+        return toClaimRequestQueryModel(claimRequest);
+    }
+    
 }

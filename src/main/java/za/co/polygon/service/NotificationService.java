@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.Notification;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.QuotationRequest;
@@ -126,6 +127,28 @@ public class NotificationService {
 //        			e.printStackTrace();
 //        		}
         		getMessageRepository().publish(getNotification(), "q.notification");     
+    }
+    
+    public void sendNotificationForNewClaimRequest(ClaimRequest claimRequest, String claimsEmail, String claimsName){
+    
+          String to = claimsEmail;
+          String subject = "New Claim Request";
+          String message = String.format("Dear " + claimsName +",\n \n"
+          + "You have a new Claim Request For Claim No : %s\n click the link below to view claim request" + "\n"
+                  + "http://%s:%s/polygon/claim-admin.html#/claim-requests/%s\n\nKind Regards,",
+                  claimRequest.getClaimNumber(),
+                  hostname,
+                port,
+                claimRequest.getClaimNumber());
+          
+          setNotification(new Notification(to, subject, message));
+//        		try {
+//        			MailRepository mailRepository = new MailRepository();
+//        			mailRepository.send(notification);
+//        		} catch (Exception e) {
+//        			e.printStackTrace();
+//        		}
+        		getMessageRepository().publish(getNotification(), "q.notification");  
     }
 
 	public MessageRepository getMessageRepository() {
