@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "policies")
@@ -36,8 +38,21 @@ public class Policy {
     @OneToMany(mappedBy = "policy")
     private List<ClaimRequest> claimRequest;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "policy_inception_date")
-    private String policyInceptionDate;
+    private Date policyInceptionDate;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "inception_date")
+    private Date inceptionDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "renewal_date")
+    private Date renewalDate;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "anniversary_date")
+    private Date anniversaryDate;
     
     @Column(name = "reference")
     private String reference;
@@ -52,19 +67,13 @@ public class Policy {
     @OneToMany(mappedBy="policy",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<IndemnityOption> indemnityOptions;
 
-    @Column(name = "inception_date")
-    private Date inceptionDate;
-
-    @Column(name = "renewalDate")
-    private Date renewalDate;
-
     @Column(name = "underwriting_year")
     private int underwriting_year;
 
     @Column(name = "status")
     private String status;
 
-    @Column(name = "frequency")
+	@Column(name = "frequency")
     private String frequency;
 
     @Column(name = "sasria_frequency")
@@ -123,7 +132,7 @@ public class Policy {
    
    @Column(name = "conveyances")
     private String convenyances;
-   
+
    @Column(name = "geographical_duration")
     private String geographicalDuration;
 
@@ -141,16 +150,24 @@ public class Policy {
         this.id = id;
     }
 
-	public String getPolicyInceptionDate() {
+	public String getReference() {
+		return reference;
+	}
+	
+	public Date getPolicyInceptionDate() {
 		return policyInceptionDate;
 	}
 
-	public void setPolicyInceptionDate(String policyInceptionDate) {
+	public void setPolicyInceptionDate(Date policyInceptionDate) {
 		this.policyInceptionDate = policyInceptionDate;
 	}
 
-	public String getReference() {
-		return reference;
+	public Date getAnniversaryDate() {
+		return anniversaryDate;
+	}
+
+	public void setAnniversaryDate(Date anniversaryDate) {
+		this.anniversaryDate = anniversaryDate;
 	}
 
 	public void setReference(String reference) {

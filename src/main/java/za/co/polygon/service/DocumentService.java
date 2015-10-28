@@ -67,7 +67,7 @@ public class DocumentService{
                 	this.setQuotationWording("Quote only valid for 15 days"
                             + " and acceptance thereof by underwriters subject to a fully completed rist assessment, proposal "
                             + "form  and signed debit order form. Underwriters serve the right to refuse"
-                            + "acceptance of the risk as declared to us\n");
+                            + "acceptance of the risk as declared to us.\n");
                 }
             }
         }
@@ -85,7 +85,7 @@ public class DocumentService{
 	}
 	
 	
-	public File policyScheduleReportPDF(Policy policy) throws JRException, IOException{
+	public byte[] policyScheduleReportPDF(Policy policy) throws JRException, IOException{
 		
 		Map<String,Object> reportData = new HashMap<String,Object>();
 		reportData.put("policy", policy);
@@ -97,10 +97,10 @@ public class DocumentService{
 		JasperReport jasperReport = JasperCompileManager.compileReport(jasperIS);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, reportData, indemnityOptionsDS);
 
-		File file = new File("/Policy_Schedule_"+policy.getReference()+".pdf");
-		JasperExportManager.exportReportToPdfFile(jasperPrint, file.getName());
+//		File file = new File("/Policy_Schedule_"+policy.getReference()+".pdf");
+//		JasperExportManager.exportReportToPdfFile(jasperPrint, file.getName());
 
-		return file;
+		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
 	
 //    public byte[] generateQuotation(Quotation quotation) throws DocumentException, BadElementException, IOException {

@@ -6,6 +6,8 @@ import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
+import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toClaimTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import static za.co.polygon.mapper.Mapper.toClientQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyQueryModel;
@@ -20,17 +22,12 @@ import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
@@ -111,6 +108,8 @@ import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
 
+
+
 @RestController
 public class Service {
 
@@ -172,7 +171,7 @@ public class Service {
 
     @Autowired
     private ClaimQuestionnaireRepository claimQuestionnaireRepository;
-    
+
     @Autowired
     private ClaimRequestRepository claimRequestRepository;
 
@@ -242,7 +241,7 @@ public class Service {
     }
 
     @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) {
+    public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) throws ParseException {
         log.info("find all the questions and answers inserted for a product");
         QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
         log.info("find all the questions and answers inserted for a product using the reference");
@@ -420,7 +419,8 @@ public class Service {
         BankAccount bankAccount = bankAccountRepository.save(fromBankAccountCommandModel(policyCreationCommandModel));
         Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
         Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
-        Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
+        int lastPolicyNumber = policyRepository.findAll().size();
+        Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount, lastPolicyNumber));
         documentService.policyScheduleReportPDF(policy);
         return policy.getReference();
     }
@@ -442,17 +442,10 @@ public class Service {
         clientRepository.save(toClientCommandModel(clientQueryModel, client));
     }
 
-    @RequestMapping(value = "api/policy-schedules/{reference}", method = RequestMethod.GET)
-    @Produces("application/pdf")
-    public Response generatePolicySchedule(@PathVariable("reference") String reference) throws JRException, IOException {
-
+    @RequestMapping(value = "api/policy-schedules/{reference}", method = RequestMethod.GET, produces = "application/pdf")
+    public byte[] generatePolicySchedule(@PathVariable("reference") String reference) throws JRException, IOException {
         Policy policy = policyRepository.findByReference(reference);
-        File policySchedulePDF = documentService.policyScheduleReportPDF(policy);
-        ResponseBuilder response = Response.ok((Object) policySchedulePDF);
-        response.type("application/pdf");
-        response.header("Content-Disposition", "attachment; Policy_Schedule_" + policy.getReference() + ".pdf");
-
-        return response.build();
+        return documentService.policyScheduleReportPDF(policy);
 
     }
 
@@ -483,7 +476,7 @@ public class Service {
     }
 
     @Transactional
-    @RequestMapping(value = "api/claim-requests",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE )
+    @RequestMapping(value = "api/claim-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String createClaimRequest(@RequestBody ClaimRequestCommandModel claimRequestCommandModel) {
 
         Policy policy = policyRepository.findByReference(claimRequestCommandModel.getReference());
@@ -491,19 +484,18 @@ public class Service {
         ClaimType claimType = claimTypeRepository.findOne(claimRequestCommandModel.getClaimTypeId());
 
         ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType);
-        claimRequest =  claimRequestRepository.save(claimRequest);
-                
+        claimRequest = claimRequestRepository.save(claimRequest);
+
         //claimRequest.setComfirmationAmount(file.getBytes());
-             
         List<ClaimAnswer> claimRequestQuestionnaires = fromClaimRequestCommandModel(claimRequestCommandModel, claimRequest);
 
         claimRequestQuestionnaireRepository.save(claimRequestQuestionnaires);
 
-       notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department");
+        notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department");
 
         return claimRequest.getClaimNumber();
     }
-    
+
     @RequestMapping(value = "api/claim-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ClaimRequestQueryModel> getAllClaimRequests() {
         log.info("Find all claim Requests");
@@ -512,8 +504,7 @@ public class Service {
         log.info("found all claim requests");
         return claimRequestQueryModels;
     }
-    
-    
+
     @RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ClaimRequestQueryModel getClaimRequest(@PathVariable("claimNumber") String claimNumber) {
         log.info("find claim");
@@ -521,5 +512,7 @@ public class Service {
         log.info("found claim by claim number");
         return toClaimRequestQueryModel(claimRequest);
     }
-    
+
+  
+
 }
