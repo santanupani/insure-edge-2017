@@ -74,8 +74,8 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into answer_values(questionnaire_id, answer_value) values(14, 'Annually');
 insert into answer_values(questionnaire_id, answer_value) values(14, 'Monthly');
 insert into answer_values(questionnaire_id, answer_value) values(14, 'Once-Off');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '15', 'Please specify policy insecption date for annual cover :'                     ,                    6,    14,  'Annually', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '16', 'Please specify policy insecption date for monthly cover :'                     ,                    6,    14,  'Monthly', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '15', 'Please specify policy inception date for annual cover :'                     ,                    6,    14,  'Annually', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '16', 'Please specify policy inception date for monthly cover :'                     ,                    6,    14,  'Monthly', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '17', 'Please specify from date for once-off:'                     ,                    6,    14,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '18', 'Please specify end date for once-off :'                     ,                    6,    14,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '19', 'Are you currently insured ?'                     ,                      4,    null,  null, 'false');
@@ -135,8 +135,8 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into answer_values(questionnaire_id, answer_value) values(53, 'Annually');
 insert into answer_values(questionnaire_id, answer_value) values(53, 'Monthly');
 insert into answer_values(questionnaire_id, answer_value) values(53, 'Once-Off');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '54', 'Please specify policy insecption date for annual cover :'                     ,                    6,    16,  'Annually', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '55', 'Please specify policy insecption date for monthly cover :'                     ,                    6,    16,  'Monthly', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '54', 'Please specify policy inception date for annual cover :'                     ,                    6,    16,  'Annually', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '55', 'Please specify policy inception date for monthly cover :'                     ,                    6,    16,  'Monthly', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '56', 'Please specify from date for once-off:'                     ,                    6,    16,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '57', 'Please specify end date for once-off :'                     ,                    6,    16,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '58', 'Please specify if secured by any other means :',                 4,  null,    null, 'false');
@@ -175,8 +175,8 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into answer_values(questionnaire_id, answer_value) values(81, 'Annually');
 insert into answer_values(questionnaire_id, answer_value) values(81, 'Monthly');
 insert into answer_values(questionnaire_id, answer_value) values(81, 'Once-Off');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '82', 'Please specify policy insecption date for annual cover :'                     ,                    6,    3,  'Annually', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '83', 'Please specify policy insecption date for monthly cover :'                     ,                    6,    3,  'Monthly', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '82', 'Please specify policy inception date for annual cover :'                     ,                    6,    3,  'Annually', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '83', 'Please specify policy inception date for monthly cover :'                     ,                    6,    3,  'Monthly', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '84', 'Please specify from date for once-off:'                     ,                    6,    3,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '85', 'Please specify end date for once-off :'                     ,                    6,    3,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '86', 'What is the maximum amount you wish to insure ?',                      2, 	null, 	null, 'true');
@@ -253,8 +253,8 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into answer_values(questionnaire_id, answer_value) values(125, 'Annually');
 insert into answer_values(questionnaire_id, answer_value) values(125, 'Monthly');
 insert into answer_values(questionnaire_id, answer_value) values(125, 'Once-Off');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '126', 'Please specify policy insecption date for annual cover :'                     ,                    6,    10,  'Annually', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '127', 'Please specify policy insecption date for monthly cover :'                     ,                    6,    10,  'Monthly', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '126', 'Please specify policy inception date for annual cover :'                     ,                    6,    10,  'Annually', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '127', 'Please specify policy inception date for monthly cover :'                     ,                    6,    10,  'Monthly', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '128', 'Please specify from date for once-off:'                     ,                    6,    10,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '129', 'Please specify end date for once-off :'                     ,                    6,    10,  'Once-Off', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '130', 'How many times per week are the valuables carried ?',                   3,  null,  	null, true);

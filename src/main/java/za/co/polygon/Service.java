@@ -216,7 +216,7 @@ public class Service {
 	}
 
 	@RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) {
+	public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) throws ParseException {
 		log.info("find all the questions and answers inserted for a product");
 		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
 		log.info("find all the questions and answers inserted for a product using the reference");
@@ -394,7 +394,8 @@ public class Service {
 		BankAccount bankAccount = bankAccountRepository.save(fromBankAccountCommandModel(policyCreationCommandModel));
 		Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
-		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount));
+		int lastPolicyNumber = policyRepository.findAll().size();
+		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount,lastPolicyNumber));
 		documentService.policyScheduleReportPDF(policy);
 		return policy.getReference();
 	}
@@ -418,17 +419,17 @@ public class Service {
 		clientRepository.save(toClientCommandModel(clientQueryModel, client));
 	}
 	
-	@RequestMapping(value = "api/policy-schedules/{reference}", method = RequestMethod.GET)
-	@Produces("application/pdf")
-	public Response generatePolicySchedule(@PathVariable("reference") String reference) throws JRException, IOException{
+	@RequestMapping(value = "api/policy-schedules/{reference}", method = RequestMethod.GET,produces="application/pdf")
+//	@Produces("application/pdf")
+	public byte[] generatePolicySchedule(@PathVariable("reference") String reference) throws JRException, IOException{
 
 		Policy policy = policyRepository.findByReference(reference);
-		File policySchedulePDF = documentService.policyScheduleReportPDF(policy);
-		ResponseBuilder response = Response.ok((Object) policySchedulePDF);
-		response.type("application/pdf");
-		response.header("Content-Disposition", "attachment; Policy_Schedule_"+policy.getReference()+".pdf");
+//		File policySchedulePDF = documentService.policyScheduleReportPDF(policy);
+//		ResponseBuilder response = Response.ok((Object) policySchedulePDF);
+//		response.type("application/pdf");
+//		response.header("Content-Disposition", "attachment; Policy_Schedule_"+policy.getReference()+".pdf");
 
-		return response.build();
+		return documentService.policyScheduleReportPDF(policy);
 
 	}
 

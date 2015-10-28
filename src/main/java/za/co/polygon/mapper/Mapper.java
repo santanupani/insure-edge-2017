@@ -3,6 +3,7 @@ package za.co.polygon.mapper;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -577,7 +578,7 @@ public class Mapper {
         return clientResult;
     }
 
-    public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount) throws ParseException {
+    public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount,int lastPolicyNumber) throws ParseException {
         Policy policyResult = new Policy();
         Calendar calendar = Calendar.getInstance();
         
@@ -600,7 +601,7 @@ public class Mapper {
         policyResult.setRenewalDate(renewalDate);
         
         calendar = Calendar.getInstance();
-        calendar.setTime(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
+        calendar.setTime(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
         calendar.add(Calendar.YEAR, 1);
         Date anniversaryDate = calendar.getTime();
         policyResult.setAnniversaryDate(anniversaryDate);
@@ -611,7 +612,8 @@ public class Mapper {
         policyResult.setDevice(policyCreationCommandModel.getDevice());
         policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
         policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
-        policyResult.setReference(UUID.randomUUID().toString());
+        LocalDateTime now = LocalDateTime.now();
+        policyResult.setReference(now.getYear()+"-"+now.getMonthValue()+""+lastPolicyNumber);
         policyResult.setStatus(policyCreationCommandModel.getStatus());
         policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
         policyResult.setNotes(policyCreationCommandModel.getNotes());
@@ -682,6 +684,33 @@ public class Mapper {
         Client updatedClient = client;
 
         return updatedClient;
+    }
+    
+    public static Policy toPolicyUpdateCommandModel(PolicyQueryModel policyQueryModel, Policy policy){
+    	
+    	policy.setStatus(policyQueryModel.getStatus());
+    	policy.setScheduleAttaching(policyQueryModel.getScheduleAttaching());
+    	policy.setExcessSturcture(policyQueryModel.getExcessStructure());
+    	policy.setConvenyances(policyQueryModel.getConveyances());
+    	policy.setGeographicalDuration(policyQueryModel.getGeographicalDuration());
+    	policy.setNotes(policyQueryModel.getNotes());
+    	policy.setExclude_sasria(new Boolean(policyQueryModel.getSasriaFrequency()));
+    	int i=0;
+    	List<IndemnityOption> indemnityOptionsList = new ArrayList<IndemnityOption>();
+    	for(IndemnityOption indemnityOption: policy.getIndemnityOptions()){
+    		IndemnityOption option = indemnityOption;
+    		option.setIndemnityItemOption(policyQueryModel.getIndemnityOption().get(i).getIndemnityItemOption());
+    		option.setIndemnityValue(policyQueryModel.getIndemnityOption().get(i).getIndemnityValue());
+    		option.setPremium(policyQueryModel.getIndemnityOption().get(i).getPremium());
+    		indemnityOptionsList.add(option);
+    		i++;
+    		
+    	}
+    	
+    	
+    	Policy updatedPolicy = policy;
+    	
+    	return updatedPolicy;
     }
 
 }
