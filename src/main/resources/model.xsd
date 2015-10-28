@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://polygon.co.za/model"
+
 	xmlns:tns="http://polygon.co.za/model" elementFormDefault="qualified">
 
 	<element name="UserQueryModel">
@@ -233,8 +234,8 @@
 			<element name="inceptionDate" type="string" />
 			<element name="policyInceptionDate" type="string" />
 			<element name="anniversaryDate" type="string" />
-			<element name="renewalDate" type="string" />
 			<element name="productName" type="string" />
+			<element name="renewalDate" type="string" />
 			<element name="underwritingYear" type="long" />
 			<element name="status" type="string" />
 			<element name="frequency" type="string" />
@@ -448,9 +449,12 @@
 					type="tns:ClientCommandModel" />
 				<element name="subAgentId" type="long" />
 				<element name="underwriterId" type="long" />
-				<element name="policyInceptionDate" type="string" />
+				<element name="inceptionDate" type="string" />
+				<element name="renewalDate" type="string" />
 				<element name="underwritingYear" type="int" />
 				<element name="status" type="string" />
+				<element name="policyInceptionDate" type="string" />
+				<element name="anniversaryDate" type="string" />
 				<element name="productName" type="string" />
 				<element name="sasriaFrequency" type="string" />
 				<element name="device" type="string" />
@@ -488,4 +492,28 @@
 		</complexType>
 	</element>
 
+	<element name="ClaimTypeQueryModel" type="tns:ClaimTypeQueryModel" />
+	<complexType name="ClaimTypeQueryModel">
+		<sequence>
+			<element name="id" type="long"></element>
+			<element name="claimType" type="string"></element>
+		</sequence>
+	</complexType>
+
+
+	<element name="ClaimQuestionnaireQuery">
+		<complexType>
+			<sequence>
+				<element name="id" type="long"></element>
+				<element name="sequenceNumber" type="long"></element>
+				<element name="claimTypeId" type="long"></element>
+				<element name="question" type="string"></element>
+				<element name="claimAnswerType" type="string"></element>
+				<element name="ClaimAnswerValues" type="string" minOccurs="0"
+					maxOccurs="unbounded">
+				</element>
+				<element name="isRequired" type="boolean"></element>
+			</sequence>
+		</complexType>
+	</element>
 </schema>

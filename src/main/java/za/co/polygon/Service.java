@@ -6,6 +6,8 @@ import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
+import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toClaimTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import static za.co.polygon.mapper.Mapper.toClientQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyQueryModel;
@@ -20,17 +22,12 @@ import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
@@ -46,11 +43,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.ClaimQuestionnaire;
+import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.Policy;
@@ -63,6 +61,8 @@ import za.co.polygon.domain.QuotationRequest;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.ClaimQuestionnaireQuery;
+import za.co.polygon.model.ClaimTypeQueryModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
@@ -79,6 +79,8 @@ import za.co.polygon.model.SubAgentQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BankAccountRepository;
 import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.ClaimQuestionnaireRepository;
+import za.co.polygon.repository.ClaimTypeRepository;
 import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
 import za.co.polygon.repository.PolicyRepository;
@@ -94,7 +96,6 @@ import za.co.polygon.repository.UnderwriterRepository;
 import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
-
 
 @RestController
 public class Service {
@@ -151,10 +152,15 @@ public class Service {
 
 	@Autowired
 	private ContactRepository contactRepository;
-	
+
+	@Autowired
+	private ClaimTypeRepository claimTypeRepository;
+
+	@Autowired
+	private ClaimQuestionnaireRepository claimQuestionnaireRepository;
+
 	@Autowired
 	private DocumentService documentService;
-
 
 	@RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<UserQueryModel> findAllUsers() {
@@ -183,7 +189,7 @@ public class Service {
 			questionnaires = questionnaireRepository.findByProduct(product);
 		}
 		log.info("found questionnaires for product - productId:{}, size:{}", productId, questionnaires.size());
-		List<QuestionnaireQuery> r  = toQuestionnaireQueryModel(questionnaires);
+		List<QuestionnaireQuery> r = toQuestionnaireQueryModel(questionnaires);
 		log.info("mapping done....");
 		return r;
 	}
@@ -214,6 +220,7 @@ public class Service {
 		log.info("Quotation Request Created. reference : {} ", quotationRequest.getReference());
 		return quotationRequest.getReference();
 	}
+
 
 	@RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) throws ParseException {
@@ -418,19 +425,42 @@ public class Service {
 
 		clientRepository.save(toClientCommandModel(clientQueryModel, client));
 	}
-	
+
 	@RequestMapping(value = "api/policy-schedules/{reference}", method = RequestMethod.GET,produces="application/pdf")
-//	@Produces("application/pdf")
 	public byte[] generatePolicySchedule(@PathVariable("reference") String reference) throws JRException, IOException{
-
 		Policy policy = policyRepository.findByReference(reference);
-//		File policySchedulePDF = documentService.policyScheduleReportPDF(policy);
-//		ResponseBuilder response = Response.ok((Object) policySchedulePDF);
-//		response.type("application/pdf");
-//		response.header("Content-Disposition", "attachment; Policy_Schedule_"+policy.getReference()+".pdf");
-
 		return documentService.policyScheduleReportPDF(policy);
 
 	}
+
+
+
+
+	@RequestMapping(value = "api/claim-types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClaimTypeQueryModel> findAllClaimTypes() {
+		log.info("find all claim Types");
+		List<ClaimType> claimType = claimTypeRepository.findAll();
+		log.info("Found all claim types");
+
+		return toClaimTypeQueryModel(claimType);
+	}
+
+	@RequestMapping(value = "api/claim-types/{claimTypeId}/claim-questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClaimQuestionnaireQuery> findClaimQuestionnaires(@PathVariable("claimTypeId") Long claimTypeId) {
+
+		log.info("Find all Claim questionaire for a claim type");
+		List<ClaimQuestionnaire> claimQuestionnaire = new ArrayList<ClaimQuestionnaire>();
+
+		ClaimType claimType = claimTypeRepository.findOne(claimTypeId);
+
+		if (claimType != null) {
+			claimQuestionnaire = claimQuestionnaireRepository.findByClaimType(claimType);
+		}
+		log.info("found all the questionnaires for claim type");
+		List<ClaimQuestionnaireQuery> r = toClaimQuestionnaireQueryModel(claimQuestionnaire);
+
+		return r;
+	}
+
 
 }

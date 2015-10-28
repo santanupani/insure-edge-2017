@@ -254,3 +254,65 @@ create table indemnity_options(
     constraint indemnity_options_fk1 foreign key (policy_id) references policies (id)
 );
 
+
+create table claim_types(
+    id integer auto_increment not null primary key,
+    claim_type varchar(32) not null
+);
+
+
+create table claim_answer_types(
+   id integer auto_increment not null primary key,
+   claim_answer_type varchar(16) not null
+);
+
+create table claim_questionnaires(
+   id integer auto_increment not null primary key,
+   claim_type_id integer not null,
+   claim_answer_type_id integer not null,
+   question varchar(124) not null,
+   sequence_number integer not null,
+   is_required boolean not null,
+   constraint claim_questionnaires_fk1 foreign key (claim_answer_type_id) references claim_answer_types(id),
+   constraint claim_questinnaires_fk1 foreign key (claim_type_id) references claim_types(id)
+);
+
+create table claim_answer_values(
+    id integer auto_increment not null primary key,
+    claim_questionnaire_id integer not null,
+    claim_answer_value varchar(16),
+    constraint claim_answer_values_fk1 foreign key (claim_questionnaire_id) references claim_questionnaires (id)
+);
+
+
+
+create table claim_requests(
+    id integer auto_increment not null primary key,
+    claim_number varchar(16) not null,
+    policy_id integer not null,
+    investigation_report longblob,
+    confirmation_amount longblob,
+    proof_of_pickup longblob,
+    case_number longblob,
+    amount_banked longblob,
+    trans_track_document longblob,
+    quote longblob,
+    photos longblob,
+    report longblob,
+    affidavit longblob,
+    photo1 longblob,
+    photo2 longblob,
+    photo3 longblob,
+    photo4 longblob,
+    photo5 longblob,
+    constraint claim_request_fk1 foreign key (policy_id) references policies(id)
+);
+
+create table claim_answers(
+     id integer auto_increment not null primary key,
+     claim_request_id integer not null,
+     question varchar(128) not null,
+     answers varchar(512) not null,
+     constraint claim_answer_fk1 foreign key (claim_request_id) references  claim_requests(id)
+);
+
