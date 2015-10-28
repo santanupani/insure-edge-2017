@@ -1,12 +1,5 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
 
-    <div class="alert alert-success alert-dismissible" role="alert" ng-if="error">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Sorry ! </strong>{{error}}
-    </div>
-
     <div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
             <span aria-hidden="true">&times;</span>
@@ -94,7 +87,7 @@
                                                     <td><a role="button" ng-href="#/policy/{{clientPolicy.reference}}">{{clientPolicy.reference}}</a></td>
                                                     <td>{{clientPolicy.subjectMatter}}</td>
                                                     <td>{{clientPolicy.status}}</td>
-                                                     <td><a class="btn btn-info" ng-href="#/Claim/{{clientPolicy.reference}}">claim</a></td>
+                                                     <td><a role="button" class="btn btn-info" ng-href="#/claims/{{clientPolicy.reference}}">Claim</a></td>
                                                 </tr>
                                             </tbody>
                                         </table>

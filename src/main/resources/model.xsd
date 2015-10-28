@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://polygon.co.za/model"
-
 	xmlns:tns="http://polygon.co.za/model" elementFormDefault="qualified">
 
 	<element name="UserQueryModel">
@@ -516,4 +515,72 @@
 			</sequence>
 		</complexType>
 	</element>
+        
+            
+    <element name="ClaimRequestCommandModel">
+        <complexType>
+            <sequence>
+                <element name="claimNumber" type="string" />
+                <element name="reference" type="string" />
+                <element name="investigationReport" type="hexBinary" />
+                <element name="comfirmationAmount" type="hexBinary" />
+                <element name="proofOfPickup" type="hexBinary" />
+                <element name="caseNumber" type="hexBinary" />
+                <element name="amountBanked" type="hexBinary" />
+                <element name="transTrackDocument" type="hexBinary" />
+                <element name="quote" type="hexBinary" />
+                <element name="report" type="hexBinary" />
+                <element name="affidavit" type="hexBinary" />
+                <element name="photo1" type="hexBinary" />
+                <element name="photo2" type="hexBinary" />
+                <element name="photo3" type="hexBinary" />
+                <element name="photo4" type="hexBinary" />
+                <element name="photo5" type="hexBinary" />
+                <element name="claimTypeId" type="long" />
+                <element name="claimQuestionnaires" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <sequence>
+                            <element name="question" type="string" />
+                            <element name="answer" type="string" />
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    
+    <element name="ClaimRequestQueryModel" type="tns:ClaimRequestQueryModel" />
+    <complexType name="ClaimRequestQueryModel">
+        <sequence>
+            <element name="claimNumber" type="string" />
+            <element name="createDate" type="string" />
+            <element name="status" type="string" />
+            <element name="investigationReport" type="hexBinary" />
+            <element name="comfirmationAmount" type="hexBinary" />
+            <element name="proofOfPickup" type="hexBinary" />
+            <element name="caseNumber" type="hexBinary" />
+            <element name="amountBanked" type="hexBinary" />
+            <element name="transTrackDocument" type="hexBinary" />
+            <element name="quote" type="hexBinary" />
+            <element name="report" type="hexBinary" />
+            <element name="affidavit" type="hexBinary" />
+            <element name="photo1" type="hexBinary" />
+            <element name="photo2" type="hexBinary" />
+            <element name="photo3" type="hexBinary" />
+            <element name="photo4" type="hexBinary" />
+            <element name="photo5" type="hexBinary" />
+            <element name="policy" minOccurs="0" maxOccurs="1"
+                     type="tns:PolicyQueryModel" />
+            <element name="claimType" minOccurs="0" maxOccurs="1"
+                     type="tns:ClaimTypeQueryModel" />
+            <element name="claimQuestionnaire" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="question" type="string" />
+                        <element name="answer" type="string" />
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
 </schema>

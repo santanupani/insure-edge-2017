@@ -20,8 +20,8 @@ public class ClaimAnswer {
 
     @ManyToOne
     @JoinColumn(name = "claim_request_id")
-    private ClaimRequest claimRequest;
-
+    ClaimRequest claimRequest;
+    
     @Column(name = "question")
     private String question;
 
@@ -59,5 +59,7 @@ public class ClaimAnswer {
     public void setClaimRequest(ClaimRequest claimRequest) {
         this.claimRequest = claimRequest;
     }
+
+    
 
 }

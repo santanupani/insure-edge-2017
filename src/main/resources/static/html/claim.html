@@ -1,0 +1,185 @@
+<div class="row" style="padding: 25px;" ng-init="init()">
+
+    <div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Success ! </strong>{{message}}
+    </div>
+
+    <div class="col-md-12">
+
+        <form data-toggle="validator" role="form" name="form" id="form" enctype="multipart/form-data">
+
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel-heading">
+                    <h4>What type of claim you want to claim for? </h4>
+                </div>
+                <div class="panel-body" align="center">
+                    <div class="form-group">
+                        <select class="form-control" ng-options="claimType.id as claimType.claimType for claimType in claimTypes" ng-model="claimRequest.claimTypeId" ng-change="getClaimQuestionnaire(claimRequest.claimTypeId)" form="form" required>
+                            <option value="">Select Claim Type</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel-heading">
+                    <h4>Please Fill Up the claim Form</h4>
+                </div>
+                <div class="panel-body" align="left">
+
+
+
+                    <div ng-repeat="claimQuestionnaire in claimQuestionnaires">
+
+                        <div ng-if="claimQuestionnaires[claimQuestionnaire.dependsOn - 1].answer.toString() == claimQuestionnaire.onAnswer.toString()">		  				  
+
+                            <div  ng-if="claimQuestionnaire.claimAnswerType == 'text'" class="form-group">
+                                <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                <input type="text" class="form-control" 
+                                       id="q_{{claimQuestionnaire.id}}"
+                                       ng-model="claimQuestionnaire.answer"
+                                       ng-required="claimQuestionnaire.isRequired" />
+                            </div>
+
+                            <div ng-if="claimQuestionnaire.claimAnswerType == 'number'"  class="form-group">
+                                <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+
+                                <input type="number" class="form-control" 
+                                       id="q_{{claimQuestionnaire.id}}"
+                                       ng-model="claimQuestionnaire.answer"
+                                       ng-required="claimQuestionnaire.isRequired" >
+                                <label ng-show='claimQuestionnaire.answer' >{{claimQuestionnaire.answer| currency:'ZAR '}}</label>
+                            </div>
+
+                            <div ng-if="claimQuestionnaire.claimAnswerType == 'checkbox'" class="checkbox">
+                                <label><input type="checkbox" 
+                                              ng-model="claimQuestionnaire.answer">{{claimQuestionnaire.question}}</label>                                              
+                            </div>
+
+                            <div ng-if="claimQuestionnaire.claimAnswerType == 'select'" class="form-group">
+                                <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>                               
+                                <select  class="form-control" 
+                                         id="q_{{claimQuestionnaire.id}}" 
+                                         ng-model="claimQuestionnaire.answer"
+                                         ng-options="claimAnswerValue for claimAnswerValue in claimQuestionnaire.claimAnswerValues" 
+                                         ng-required="claimQuestionnaire.isRequired" >     
+                                    <option value=""></option>                               	
+                                </select>                                
+                            </div>
+
+                            <div  ng-if="claimQuestionnaire.claimAnswerType == 'textarea'" class="form-group">
+                                <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                <textarea class="form-control" 
+                                          id="q_{{claimQuestionnaire.id}}" 
+                                          name="{{claimQuestionnaire.id}}"
+                                          ng-model="claimQuestionnaire.answer" ></textarea>
+                            </div>
+
+                            <div  ng-if="claimQuestionnaire.claimAnswerType == 'date'" class="form-group">
+                                <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                <input type="date" class="form-control" 
+                                       id="q_{{claimQuestionnaire.id}}"
+                                       ng-model="claimQuestionnaire.answer" ng-required="claimQuestionnaire.isRequired" />
+                            </div>
+
+
+                            <div  ng-if="claimQuestionnaire.claimAnswerType == 'other'" class="form-group">
+                                <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                <input type="text" class="form-control" 
+                                       id="q_{{claimQuestionnaire.id}}"
+                                       ng-model="claimQuestionnaire.answer"
+                                       ng-required="claimQuestionnaire.isRequired" />
+                            </div>
+
+                            <div ng-if="claimQuestionnaire.claimAnswerType == 'blob'" class="form-group">
+
+
+                                <div ng-if="claimQuestionnaire.question == 'Please upload Investigation Report '">
+                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                             <input class="btn btn-primary pull-right" type="file" name="file" file-model="file" />
+                                </div>
+
+                                <!--                                <div ng-if="claimQuestionnaire.question == 'Please upload Confirmation Of Amount '">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file1" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired" />
+                                                                </div>
+                                                                <div ng-if="claimQuestionnaire.question == 'Please upload Proof of pickup'">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file2" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired" />
+                                                                </div>
+                                                                <div ng-if="claimQuestionnaire.question == 'Please upload Actual amont banked/counted VMS or Teller Report'">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file3" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired" />
+                                                                </div>
+                                                                <div ng-if="claimQuestionnaire.question == 'Trans track Report'">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file4" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired" />
+                                                                </div>
+                                                                <div ng-if="claimQuestionnaire.question == 'Please upload Armed Response / Alarm Report'">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file5" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired" />
+                                                                </div>
+                                                                <div ng-if="claimQuestionnaire.question == 'Please upload Quote'">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file6" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired"/>
+                                                                </div>
+                                                                <div ng-if="claimQuestionnaire.question == 'Please upload Affidavit'">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file7" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired"/>
+                                                                </div>
+                                                                <div ng-if="claimQuestionnaire.question == 'Please upload Photos'">
+                                                                    <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+                                                                    <input type="file" name="file8" id="q_{{claimQuestionnaire.id}}" 
+                                                                           class="btn btn-primary pull-right" 
+                                
+                                                                           ng-required="claimQuestionnaire.isRequired" />-->
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="panel-footer text-right">
+
+                    <div class="form-group">
+<!--                        <button type="submit" class="btn btn-primary" form="form" ng-click="submitClaimRequest(form)">Log A Claim</button>-->
+                        <button class="btn btn-success" ng-click="submitClaimRequest(form)" role="button">Log A Claim</button>
+                    </div>
+
+                </div>
+
+                `     </div>
+        </form>
+    </div>
+</div>
+
+

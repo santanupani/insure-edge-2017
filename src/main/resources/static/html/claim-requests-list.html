@@ -1,0 +1,62 @@
+<div  ng-init="init()">
+    <div class="row" style="padding: 25px;">
+        <div class="col-md-12">
+            <div class="input-group input-group-lg" style="box-shadow: 0 0 30px black;">
+                <span class="input-group-addon" id="sizing-addon1">Claims</span>
+                <input ng-model="claim" type="text" class="form-control" placeholder="Search..." aria-describedby="sizing-addon1">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 25px;" >
+        <div class="col-md-12">
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel-body">
+                    <div>          
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Claim type</th>
+                                    <th>Create date</th>
+                                    <th>Claim Number</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="claimRequests in claimRequest| filter:claimRequests">
+                                <tr>
+                                    <td>{{claimRequests.policy.client.clientName}}</td>
+
+                                    <td>{{claimRequests.claimType.claimType}}</td>
+                                    <td>{{claimRequests.createDate}}</td>
+                                    <!--<td><a role="button" ng-href="#/clients/{{client.clientId}}"-->
+                                    <!--ng-click="getClient(client.clientId)">view</a></td>-->
+                                    <td><a class="btn btn-info" ng-href="#/claim-requests/{{claimRequests.claimNumber}}">View Claim</a></td>
+                                </tr>
+                            </tbody>
+<!--                            <tfoot>
+                            <td colspan="3">
+                                <div class="pagination" id="navi">
+                                    <ul>
+                                        <li ng-class="prevPageDisabled()"><a href
+                                                                             ng-click="prevPage()">« Prev</a></li>
+                                        <li ng-repeat="n in range()"
+                                            ng-class="{active: n == currentPage}"
+                                            ng-click="setPage(n)"><a
+                                                href="#/policy/{{policy.reference}}">{{n + 1}}</a></li>
+                                        <li ng-class="nextPageDisabled()"><a href
+                                                                             ng-click="nextPage()">Next »</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                            </tfoot>-->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
