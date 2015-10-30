@@ -1,5 +1,6 @@
 package za.co.polygon.mapper;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,12 +11,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import org.springframework.web.multipart.MultipartFile;
 
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.ClaimAnswer;
+import za.co.polygon.domain.ClaimAnswerType;
 import za.co.polygon.domain.ClaimAnswerValue;
 import za.co.polygon.domain.ClaimQuestionnaire;
 import za.co.polygon.domain.ClaimRequest;
@@ -588,7 +591,7 @@ public class Mapper {
         return clientResult;
     }
 
-    public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount,int lastPolicyNumber) throws ParseException {
+    public static Policy fromPolicyCreationCommandModel(PolicyCreationCommandModel policyCreationCommandModel, Client client, SubAgent subAgent, Underwriter underwriter, Contact contact, BankAccount bankAccount, int lastPolicyNumber) throws ParseException {
         Policy policyResult = new Policy();
 
         Calendar calendar = Calendar.getInstance();
@@ -597,34 +600,34 @@ public class Mapper {
         policyResult.setSubAgent(subAgent);
         policyResult.setUnderwriter(underwriter);
         policyResult.setPolicyInceptionDate(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
-        
+
         calendar = Calendar.getInstance();
         calendar.setTime(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
         calendar.add(Calendar.YEAR, 1);
         Date inceptionDate = calendar.getTime();
         policyResult.setInceptionDate(inceptionDate);
-        
+
         calendar = Calendar.getInstance();
         calendar.setTime(new SimpleDateFormat("dd-MM-yyyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
         calendar.add(Calendar.YEAR, 1);
         calendar.add(Calendar.MONTH, -1);
         Date renewalDate = calendar.getTime();
         policyResult.setRenewalDate(renewalDate);
-        
+
         calendar = Calendar.getInstance();
         calendar.setTime(new SimpleDateFormat("MM-dd-yyy").parse(policyCreationCommandModel.getPolicyInceptionDate()));
         calendar.add(Calendar.YEAR, 1);
         Date anniversaryDate = calendar.getTime();
         policyResult.setAnniversaryDate(anniversaryDate);
-        
-        policyResult.setUnderwriting_year(policyCreationCommandModel.getUnderwritingYear());        
+
+        policyResult.setUnderwriting_year(policyCreationCommandModel.getUnderwritingYear());
         policyResult.setProductName(policyCreationCommandModel.getProductName());
         policyResult.setBrokerFee(Double.parseDouble(policyCreationCommandModel.getBrokerFee()));
         policyResult.setDevice(policyCreationCommandModel.getDevice());
         policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
         policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
         LocalDateTime now = LocalDateTime.now();
-        policyResult.setReference(now.getYear()+"-"+now.getMonthValue()+""+lastPolicyNumber);
+        policyResult.setReference(now.getYear() + "-" + now.getMonthValue() + "" + lastPolicyNumber);
         policyResult.setStatus(policyCreationCommandModel.getStatus());
         policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
         policyResult.setNotes(policyCreationCommandModel.getNotes());
@@ -696,32 +699,31 @@ public class Mapper {
 
         return updatedClient;
     }
-    
-    public static Policy toPolicyUpdateCommandModel(PolicyQueryModel policyQueryModel, Policy policy){
-    	
-    	policy.setStatus(policyQueryModel.getStatus());
-    	policy.setScheduleAttaching(policyQueryModel.getScheduleAttaching());
-    	policy.setExcessSturcture(policyQueryModel.getExcessStructure());
-    	policy.setConvenyances(policyQueryModel.getConveyances());
-    	policy.setGeographicalDuration(policyQueryModel.getGeographicalDuration());
-    	policy.setNotes(policyQueryModel.getNotes());
-    	policy.setExclude_sasria(new Boolean(policyQueryModel.getSasriaFrequency()));
-    	int i=0;
-    	List<IndemnityOption> indemnityOptionsList = new ArrayList<IndemnityOption>();
-    	for(IndemnityOption indemnityOption: policy.getIndemnityOptions()){
-    		IndemnityOption option = indemnityOption;
-    		option.setIndemnityItemOption(policyQueryModel.getIndemnityOption().get(i).getIndemnityItemOption());
-    		option.setIndemnityValue(policyQueryModel.getIndemnityOption().get(i).getIndemnityValue());
-    		option.setPremium(policyQueryModel.getIndemnityOption().get(i).getPremium());
-    		indemnityOptionsList.add(option);
-    		i++;
-    		
-    	}
-    	
-    	
-    	Policy updatedPolicy = policy;
-    	
-    	return updatedPolicy;
+
+    public static Policy toPolicyUpdateCommandModel(PolicyQueryModel policyQueryModel, Policy policy) {
+
+        policy.setStatus(policyQueryModel.getStatus());
+        policy.setScheduleAttaching(policyQueryModel.getScheduleAttaching());
+        policy.setExcessSturcture(policyQueryModel.getExcessStructure());
+        policy.setConvenyances(policyQueryModel.getConveyances());
+        policy.setGeographicalDuration(policyQueryModel.getGeographicalDuration());
+        policy.setNotes(policyQueryModel.getNotes());
+        policy.setExclude_sasria(new Boolean(policyQueryModel.getSasriaFrequency()));
+        int i = 0;
+        List<IndemnityOption> indemnityOptionsList = new ArrayList<IndemnityOption>();
+        for (IndemnityOption indemnityOption : policy.getIndemnityOptions()) {
+            IndemnityOption option = indemnityOption;
+            option.setIndemnityItemOption(policyQueryModel.getIndemnityOption().get(i).getIndemnityItemOption());
+            option.setIndemnityValue(policyQueryModel.getIndemnityOption().get(i).getIndemnityValue());
+            option.setPremium(policyQueryModel.getIndemnityOption().get(i).getPremium());
+            indemnityOptionsList.add(option);
+            i++;
+
+        }
+
+        Policy updatedPolicy = policy;
+
+        return updatedPolicy;
     }
 
     public static ClaimTypeQueryModel toClaimTypeQueryModel(ClaimType from) {
@@ -763,7 +765,7 @@ public class Mapper {
         return claimQuestionnaireQuerys;
     }
 
-    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType) {
+    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType, List<ClaimQuestionnaire> claimQuestions,MultipartFile[] attachments) throws IOException {
         ClaimRequest claimRequest = new ClaimRequest();
 
         claimRequest.setClaimNumber(UUID.randomUUID().toString());
@@ -773,12 +775,25 @@ public class Mapper {
         claimRequest.setStatus("APPLIED");
 
         List<ClaimAnswer> answerList = new ArrayList<ClaimAnswer>();
-
+        int count = 0;
         for (ClaimQuestionnaires claimquestionnaires : claimRequestCommandModel.getClaimQuestionnaires()) {
             ClaimAnswer claimAnswer = new ClaimAnswer();
-            claimAnswer.setQuestion(claimquestionnaires.getQuestion());
-            claimAnswer.setAnswer(claimquestionnaires.getAnswer());
-            claimAnswer.setClaimRequest(claimRequest);
+
+            for (ClaimQuestionnaire claimQuestionnaire : claimQuestions) {
+                if (claimQuestionnaire.getClaimAnswerType().getClaimAnswerType().equals("blob")) {
+                    MultipartFile file = attachments[claimQuestions.size()];
+                    claimAnswer.setQuestion(claimquestionnaires.getQuestion());
+                    claimAnswer.setAttachment(file.getBytes());
+                    
+                } else {
+
+                    claimAnswer.setQuestion(claimquestionnaires.getQuestion());
+                    claimAnswer.setAnswer(claimquestionnaires.getAnswer());
+                    
+                }
+                claimAnswer.setClaimRequest(claimRequest);
+            }
+
             answerList.add(claimAnswer);
 
         }
@@ -800,7 +815,7 @@ public class Mapper {
         return result;
     }
 
-    public static ClaimRequestQueryModel toClaimRequestQueryModel(ClaimRequest claimRequest) {
+    public static ClaimRequestQueryModel toClaimRequestQueryModel(ClaimRequest claimRequest, List<ClaimQuestionnaire> claimQuestions) {
 
         ClaimRequestQueryModel claimRequestQueryModel = new ClaimRequestQueryModel();
 
@@ -823,23 +838,37 @@ public class Mapper {
         claimRequestQueryModel.setQuote(claimRequest.getQuote());
         claimRequestQueryModel.setReport(claimRequest.getReport());
         claimRequestQueryModel.setTransTrackDocument(claimRequest.getTransTrackDocument());
-
+        
+        
         for (ClaimAnswer claimAnswer : claimRequest.getClaimAnswer()) {
             ClaimRequestQueryModel.ClaimQuestionnaire q = new ClaimRequestQueryModel.ClaimQuestionnaire();
-            q.setQuestion(claimAnswer.getQuestion());
-            q.setAnswer(claimAnswer.getAnswer());
+            
+             for (ClaimQuestionnaire claimQuestionnaire : claimQuestions) {
+               if (claimQuestionnaire.getClaimAnswerType().getClaimAnswerType().equals("blob")) {
+
+                q.setQuestion(claimAnswer.getQuestion());
+                q.setAnswer(claimAnswer.getAnswer());
+                q.setAttachment(claimAnswer.getAttachment());
+
+            } else {
+
+                q.setQuestion(claimAnswer.getQuestion());
+                q.setAnswer(claimAnswer.getAnswer());
+            }
+             
 
             claimRequestQueryModel.getClaimQuestionnaire().add(q);
+             }
         }
 
         return claimRequestQueryModel;
     }
 
-    public static List<ClaimRequestQueryModel> toClaimRequestQueryModel(List<ClaimRequest> fromList) {
+    public static List<ClaimRequestQueryModel> toClaimRequestQueryModel(List<ClaimRequest> fromList, List<ClaimQuestionnaire> claimQuestions) {
         List<ClaimRequestQueryModel> claimRequestList = new ArrayList<ClaimRequestQueryModel>();
 
         for (ClaimRequest claimRequest : fromList) {
-            claimRequestList.add(toClaimRequestQueryModel(claimRequest));
+            claimRequestList.add(toClaimRequestQueryModel(claimRequest, claimQuestions));
         }
         return claimRequestList;
     }

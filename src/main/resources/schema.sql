@@ -317,6 +317,7 @@ create table claim_answers(
      claim_request_id integer not null,
      question varchar(128) not null,
      answer varchar(512),
+     attachment longblob,
      constraint claim_answer_fk1 foreign key (claim_request_id) references  claim_requests(id)
 );
 

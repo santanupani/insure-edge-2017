@@ -13,6 +13,7 @@ clientAdmin.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
+
 clientAdmin.directive('fileModel', ['$parse', function ($parse) {
         return {
             restrict: 'A',
@@ -23,13 +24,14 @@ clientAdmin.directive('fileModel', ['$parse', function ($parse) {
                 element.bind('change', function () {
                     scope.$apply(function () {
                         modelSetter(scope, element[0].files[0]);
-                        console.log("taking a file");
-                        console.log(scope.file);
+                        console.log("Taking a file  " + scope.claimQuestionnaire.attachment);
+                        console.log(scope.claimQuestionnaire.attachment);
                     });
                 });
             }
         };
     }]);
+
 
 clientAdmin.controller('clientAdminCtrl', function ($scope, $routeParams, $http, $rootScope, $window) {
 
@@ -138,6 +140,8 @@ clientAdmin.controller('claimCtrl', function ($scope, $rootScope, $http, $routeP
         $scope.reference = $routeParams.reference;
     };
 
+    console.log($scope.claimFileModel);
+
     $scope.getClaimType = function () {
         console.log('get Claim types');
         $http({
@@ -167,7 +171,7 @@ clientAdmin.controller('claimCtrl', function ($scope, $rootScope, $http, $routeP
         }).success(function (data, status) {
             if (status == 200) {
                 console.log('retrived successfully');
-                $scope.claimQuestionnaires = data;
+                $rootScope.claimQuestionnaires = data;
                 for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
                     if ($scope.claimQuestionnaires[i].claimAnswerType == 'checkbox') {
 
@@ -192,24 +196,51 @@ clientAdmin.controller('claimCtrl', function ($scope, $rootScope, $http, $routeP
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
-            //console.log($scope.file);
+            //console.log($scope.claimQuestionnaire.attachment);
             console.log("Form Validation Success");
             $scope.claimRequest.claimQuestionnaires = [];
+
             for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
                 $scope.claimRequest.claimQuestionnaires[i] = {};
-                $scope.claimRequest.claimQuestionnaires[i].question = $scope.claimQuestionnaires[i].question;
-                $scope.claimRequest.claimQuestionnaires[i].answer = $scope.claimQuestionnaires[i].answer;
+                
+                if ($scope.claimQuestionnaires[i].claimAnswerType == 'blob') {
+                    
+                    $scope.claimRequest.claimQuestionnaires[i].question = $scope.claimQuestionnaires[i].question;
+                    $scope.claimRequest.claimQuestionnaires[i].attachment = $scope.claimQuestionnaires[i].attachment;
+                    console.log($scope.claimQuestionnaires[i].attachment);
+                    
+                }
+                else {
+                    
+                    $scope.claimRequest.claimQuestionnaires[i].question = $scope.claimQuestionnaires[i].question;
+                    $scope.claimRequest.claimQuestionnaires[i].answer = $scope.claimQuestionnaires[i].answer;
+                    
+                }
+
             }
             console.log($scope.claimRequest);
-            // console.log($scope.file);
+           // console.log($scope.claimRequest.claimQuestionnaires.attachment);
             $scope.claimRequest.reference = $routeParams.reference;
             $http({
                 url: '/api/claim-requests',
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': undefined,
                 },
-                data: $scope.claimRequest
+                transformRequest: function (data) {
+                    var formData = new FormData();
+
+                    formData.append('claimRequest', new Blob([angular.toJson(data.claimRequest)], {
+                        type: "application/json"
+                    }));
+
+                    for (var i = 0; i < data.claimRequest.length; i++) {
+                        formData.append("file[" + i + "]", data.claimRequests.claimQuestionnaires.attachment[i]);
+                    }
+
+                    return formData;
+                },
+                data: {claimRequest: $scope.claimRequest, file: $scope.claimRequest.claimQuestionnaires.attachment}
             }).success(function (data, status) {
                 if (status == 200) {
                     console.log('All the questions and answers saved succesfullly');

@@ -1,14 +1,14 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-        <div class="col-md-12">
+    <div class="col-md-12">
         <form name="form"  novalidate>
 
             <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 
                 <div class="panel-heading">
                     <h4>
-                        <b>Claim Summary for Policy Ref.: </b>{{claimRequest.policy.reference}}
+                        <b>Claim Summary for Policy Ref : {{claimRequest.policy.reference}}</b>
                         <span class="pull-right" style="font: 14px Lucinda red"><b>Logged-In:</b>
-                            {{ }} {{}}</span>
+                            Susan</span>
                     </h4>
                 </div>
 
@@ -23,371 +23,476 @@
                                  style="box-shadow: 0 0 30px #ffff;">
                                 <div class="panel-heading">
                                     <h5>
-                                        <b>Policy Details</b>
+                                        <b>{{claimRequest.policy.client.clientName}} Policy Details</b>
                                     </h5>
                                 </div>
                                 <div class="panel-body">
 
-                                </div>
-                            </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
 
-                            <div class="panel panel-default"
-                                 style="box-shadow: 0 0 30px #ffff;">
-                                <div class="panel-heading">
-                                    <h5>
-                                        <b>Claim For {{claimRequest.policy.client.clientName}}</b>
-                                    </h5>
-                                </div>
-
-                                <div class="panel-body">
-
-                                    <div id="accordion" class="panel-group">
-                                        
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse1">Claim Form</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse1" class="panel-collapse collapse in">
-
-                                                <div class="panel-body">
-                                                    <div>
-                                                        <div class="form-group"
-                                                             ng-repeat="claimQuestionnaire in claimRequest.claimQuestionnaire">
-                                                            <div ng-if="claimQuestionnaire.answer != null">
-                                                                <label class="control-label" for="q_{{index}}">Q:
-                                                                    {{claimQuestionnaire.question}}</label>
-                                                                <textarea class="form-control" id="q_{{index}}"
-                                                                          ng-model="claimQuestionnaire.answer" readonly="readonly"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <b>Client Information</b>
                                                 </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapseOne">Claim Form</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapseOne" class="panel-collapse collapse in">
-
-                                                <div class="panel-body">
-                                                    <div>
-                                                        <div class="form-group"
-                                                             ng-repeat="claimQuestionnaire in claimRequest.claimQuestionnaire">
-                                                            <div ng-if="claimQuestionnaire.answer != null">
-                                                                <label class="control-label" for="q_{{index}}">Q:
-                                                                    {{claimQuestionnaire.question}}</label>
-                                                                <textarea class="form-control" id="q_{{index}}"
-                                                                          ng-model="claimQuestionnaire.answer" readonly="readonly"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapseTwo">Investigation Report</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapseTwo" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapseThree">Confirmation Of Amount</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapseThree" class="panel-collapse collapse">
-
                                                 <div class="panel-body">
 
                                                     <div class="form-group">
-                                                        <label>Quote</label>
+                                                        <label>Intermediary </label> <input type="text"
+                                                                                            class="form-control" ng-model="claimRequest.policy.subAgent.broker.name"
+                                                                                            readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>The Insured </label> <input type="text" class="form-control"
+                                                                                           ng-model="claimRequest.policy.client.clientName" readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date </label> <input type="text" class="form-control"
+                                                                                                     ng-model="claimRequest.policy.inceptionDate" readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Subject Matter</label> <input type="text" class="form-control"
+                                                                                             ng-model="claimRequest.policy.subjectMatter" readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Sum Insured </label> <input type="text" class="form-control"
+                                                                                           ng-model="claimRequest.policy.sumInsured" readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Premium </label> <input type="text" class="form-control"
+                                                                                       ng-model="claimRequest.policy.premium" readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="panel-body">
+                                                <div id="accordion" class="panel-group">
+
+
+                                                    <div class="panel panel-default">
+
+                                                        <div class="panel-heading">
+
+                                                            <h4 class="panel-title">
+
+                                                                <a data-toggle="collapse" data-parent="#accordion"
+                                                                   href="/#collapse13">Indemnity Option</a>
+
+                                                            </h4>
+
+                                                        </div>
+
+                                                        <div id="collapse13" class="panel-collapse collapse in">
+
+                                                            <div class="panel-body">
+
+                                                                <div>          
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Indemnity Option</th>
+                                                                                <th>Indemnity Value</th>
+                                                                                <th>Sum Insured</th>
+                                                                                <th>Premium</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="indemnity in claimRequest.policy.indemnityOption">
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.indemnityItemOption"></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.indemnityValue"></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.sumInsured"></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.premium"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="panel panel-default">
+
+                                                    <div class="panel-heading">
+
+                                                        <h4 class="panel-title">
+
+                                                            <a data-toggle="collapse" data-parent="#accordion"
+                                                               href="/#collapse15">Claim History</a>
+
+                                                        </h4>
+
+                                                    </div>
+
+                                                    <div id="collapse15" class="panel-collapse collapse">
+
+                                                        <div class="panel-body">
+
+                                                            <div class="form-group">
+                                                                <label>Claim History</label>
+
+                                                            </div>
+
+                                                        </div>
 
                                                     </div>
 
                                                 </div>
 
-                                            </div>
 
-                                        </div>
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapseFour">Photos</a>
-
-                                                </h4>
 
                                             </div>
 
-                                            <div id="collapseFour" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse5">Armed Response / Alarm Report</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse5" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse6">Affidavit</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse6" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-
-
-
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse7">Proof Of Pickup</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse7" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-
-
-
-
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse8">Actual Amount Banked/ Counted : VMS or Teller Report</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse8" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-
-
-
-
-
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse9">Trans Track Document</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse9" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-
-
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse10">Quote</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse10" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-
-
-
-                                        <div class="panel panel-default">
-
-                                            <div class="panel-heading">
-
-                                                <h4 class="panel-title">
-
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="/#collapse11">Investigation Report</a>
-
-                                                </h4>
-
-                                            </div>
-
-                                            <div id="collapse11" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-
-                                                </div>
-
-                                            </div>
 
                                         </div>
 
                                     </div>
                                 </div>
 
+                                <div class="panel panel-default"
+                                     style="box-shadow: 0 0 30px #ffff;">
+                                    <div class="panel-heading">
+                                        <h5>
+                                            <b>Claim For {{claimRequest.policy.client.clientName}}</b>
+                                        </h5>
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                        <div id="accordion" class="panel-group">
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse1">Claim Form</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse1" class="panel-collapse collapse in">
+
+                                                    <div class="panel-body">
+                                                        <div>
+                                                            <div class="form-group"
+                                                                 ng-repeat="claimQuestionnaire in claimRequest.claimQuestionnaire">
+                                                                <div ng-if="claimQuestionnaire.answer != null">
+                                                                    <label class="control-label" for="q_{{index}}">Q:
+                                                                        {{claimQuestionnaire.question}}</label>
+                                                                    <textarea class="form-control" id="q_{{index}}"
+                                                                              ng-model="claimQuestionnaire.answer" readonly="readonly"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapseTwo">Investigation Report</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapseTwo" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapseThree">Confirmation Of Amount</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapseThree" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+                                                        <div class="form-group">
+                                                            <label>Quote</label>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapseFour">Photos</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapseFour" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse5">Armed Response / Alarm Report</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse5" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse6">Affidavit</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse6" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse7">Proof Of Pickup</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse7" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse8">Actual Amount Banked/ Counted : VMS or Teller Report</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse8" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse9">Trans Track Document</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse9" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse10">Quote</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse10" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                            <div class="panel panel-default">
+
+                                                <div class="panel-heading">
+
+                                                    <h4 class="panel-title">
+
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                           href="/#collapse11">Investigation Report</a>
+
+                                                    </h4>
+
+                                                </div>
+
+                                                <div id="collapse11" class="panel-collapse collapse">
+
+                                                    <div class="panel-body">
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
+
                         </div>
-
                     </div>
-                </div>
 
-                <div class="panel-footer text-right">
-                    <button class="btn btn-success" type="submit">Approve Claim</button>
-                    <button class="btn btn-danger">Reject Claim</button>
-                </div>
+                    <div class="panel-footer text-right">
+                        <button class="btn btn-success" type="submit">Approve Claim</button>
+                        <button class="btn btn-danger">Reject Claim</button>
+                    </div>
 
-            </div>
+                </div>
         </form>
     </div>
 </div>

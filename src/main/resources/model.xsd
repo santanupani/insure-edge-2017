@@ -578,6 +578,7 @@
                     <sequence>
                         <element name="question" type="string" />
                         <element name="answer" type="string" />
+                         <element name="attachment" type="hexBinary" />
                     </sequence>
                 </complexType>
             </element>
