@@ -492,6 +492,7 @@ public class Mapper {
         policyQueryModel.setRenewalDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getRenewalDate()));
         policyQueryModel.setAnniversaryDate(new SimpleDateFormat("dd/MM/yyyy").format(policy.getAnniversaryDate()));
         policyQueryModel.setNotes(policy.getNotes());
+        policyQueryModel.setProductName(policy.getProductName());
         policyQueryModel.setStatus(policy.getStatus());
         policyQueryModel.setReInstatement(policy.getReInstatement());
         policyQueryModel.setUnderwriterFee(Double.toString(policy.getUnderwriterFee()));
@@ -700,6 +701,7 @@ public class Mapper {
         return updatedClient;
     }
 
+
     public static Policy toPolicyUpdateCommandModel(PolicyQueryModel policyQueryModel, Policy policy) {
 
         policy.setStatus(policyQueryModel.getStatus());
@@ -724,6 +726,7 @@ public class Mapper {
         Policy updatedPolicy = policy;
 
         return updatedPolicy;
+
     }
 
     public static ClaimTypeQueryModel toClaimTypeQueryModel(ClaimType from) {
