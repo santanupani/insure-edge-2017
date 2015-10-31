@@ -78,8 +78,9 @@
                                                     <th>Policy Reference</th>
                                                     <th>Subject Matter </th>
                                                     <th>Status</th>
-                                                    <th>Claim</th>
-                                                </tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                  </tr>
                                             </thead>
                                             <tbody ng-repeat="clientPolicy in clientPolicies| filter:clientPolicy">
                                                 <tr>
@@ -87,7 +88,8 @@
                                                     <td><a role="button" ng-href="#/policy/{{clientPolicy.reference}}">{{clientPolicy.reference}}</a></td>
                                                     <td>{{clientPolicy.subjectMatter}}</td>
                                                     <td>{{clientPolicy.status}}</td>
-                                                     <td><a role="button" class="btn btn-info" ng-href="#/claims/{{clientPolicy.reference}}">Claim</a></td>
+                                                    <td><a role="button" class="btn btn-info" ng-href="#/claims/{{clientPolicy.reference}}">Log Claim</a></td>
+                                                    <td><a role="button" class="btn btn-info" ng-href="#/cancellations/{{clientPolicy.reference}}">Log Cancellation</a></td>
                                                 </tr>
                                             </tbody>
                                         </table>

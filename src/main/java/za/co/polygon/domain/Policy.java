@@ -66,9 +66,12 @@ public class Policy {
     
     @OneToMany(mappedBy="policy",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<IndemnityOption> indemnityOptions;
+    
+    @OneToMany(mappedBy="policy",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    private List<PolicyRequestType> policyRequestTypes;
 
     @Column(name = "underwriting_year")
-    private int underwriting_year;
+    private int underwritingYear;
 
     @Column(name = "status")
     private String status;
@@ -79,9 +82,6 @@ public class Policy {
     @Column(name = "sasria_frequency")
     private String sasriaFrequency;
 
-    @Column(name = "re_instatement")
-    private String reInstatement;
-
     @Column(name = "device")
     private String device;
 
@@ -91,12 +91,6 @@ public class Policy {
     @Column(name = "exclude_sasria")
     private boolean exclude_sasria;
 
-    @Column(name = "underwriter_fee")
-    private double underwriterFee;
-
-    @Column(name = "broker_fee")
-    private double brokerFee;
-    
     @Column(name = "sum_insured")
     private double sumInsured;
     
@@ -106,11 +100,20 @@ public class Policy {
     @Column(name = "broker_commission")
     private double brokerCommission;
     
-    @Column(name = "ua_commission")
-    private double UACommission;
+    @Column(name = "uma_fee")
+    private double umaFee;
+    
+    @Column(name = "underwriter_commission")
+    private double underwriterCommission;
+    
+    @Column(name = "policy_fee")
+    private double policyFee;
+    
+    @Column(name = "initial_fee")
+    private double initialFee;
     
     @Column(name = "premium")
-    private double premoium;
+    private double premium;
     
     @Column(name = "sasria_premium")
     private double sasriaPremium;
@@ -230,14 +233,6 @@ public class Policy {
         this.renewalDate = renewalDate;
     }
 
-    public int getUnderwriting_year() {
-        return underwriting_year;
-    }
-
-    public void setUnderwriting_year(int underwriting_year) {
-        this.underwriting_year = underwriting_year;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -260,14 +255,6 @@ public class Policy {
 
     public void setSasriaFrequency(String sasriaFrequency) {
         this.sasriaFrequency = sasriaFrequency;
-    }
-
-    public String getReInstatement() {
-        return reInstatement;
-    }
-
-    public void setReInstatement(String reInstatement) {
-        this.reInstatement = reInstatement;
     }
 
     public String getDevice() {
@@ -294,22 +281,6 @@ public class Policy {
         this.exclude_sasria = exclude_sasria;
     }
 
-    public double getUnderwriterFee() {
-        return underwriterFee;
-    }
-
-    public void setUnderwriterFee(double underwriterFee) {
-        this.underwriterFee = underwriterFee;
-    }
-
-    public double getBrokerFee() {
-        return brokerFee;
-    }
-
-    public void setBrokerFee(double brokerFee) {
-        this.brokerFee = brokerFee;
-    }
-
     public double getSumInsured() {
         return sumInsured;
     }
@@ -332,22 +303,6 @@ public class Policy {
 
     public void setBrokerCommission(double brokerCommission) {
         this.brokerCommission = brokerCommission;
-    }
-
-    public double getUACommission() {
-        return UACommission;
-    }
-
-    public void setUACommission(double UACommission) {
-        this.UACommission = UACommission;
-    }
-
-    public double getPremoium() {
-        return premoium;
-    }
-
-    public void setPremoium(double premoium) {
-        this.premoium = premoium;
     }
 
     public double getSasriaPremium() {
@@ -429,5 +384,53 @@ public class Policy {
     public void setClaimRequest(List<ClaimRequest> claimRequest) {
         this.claimRequest = claimRequest;
     }
+
+	public double getUmaFee() {
+		return umaFee;
+	}
+
+	public void setUmaFee(double umaFee) {
+		this.umaFee = umaFee;
+	}
+
+	public double getUnderwriterCommission() {
+		return underwriterCommission;
+	}
+
+	public void setUnderwriterCommission(double underwriterCommission) {
+		this.underwriterCommission = underwriterCommission;
+	}
+
+	public double getPolicyFee() {
+		return policyFee;
+	}
+
+	public void setPolicyFee(double policyFee) {
+		this.policyFee = policyFee;
+	}
+
+	public double getInitialFee() {
+		return initialFee;
+	}
+
+	public void setInitialFee(double initialFee) {
+		this.initialFee = initialFee;
+	}
+
+	public double getPremium() {
+		return premium;
+	}
+
+	public void setPremium(double premium) {
+		this.premium = premium;
+	}
+
+	public int getUnderwritingYear() {
+		return underwritingYear;
+	}
+
+	public void setUnderwritingYear(int underwritingYear) {
+		this.underwritingYear = underwritingYear;
+	}
     
 }

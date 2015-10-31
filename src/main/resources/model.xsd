@@ -242,9 +242,6 @@
 			<element name="device" type="string" />
 			<element name="collectByDebitOrder" type="boolean" />
 			<element name="excludeSasria" type="boolean" />
-			<element name="re_instatement" type="string" />
-			<element name="underwriterFee" type="string" />
-			<element name="brokerFee" type="string" />
 			<element name="notes" type="string" />
 			<element name="client" minOccurs="0" maxOccurs="1"
 				type="tns:ClientQueryModel" />
@@ -256,7 +253,10 @@
 			<element name="maximumSumInsured" type="double" />
 			<element name="brokerCommission" type="double" />
 			<element name="premium" type="double" />
-			<element name="UACommission" type="double" />
+			<element name="umaFee" type="double" />
+			<element name="underwriterCommission" type="double" />
+			<element name="policyFee" type="double" />
+			<element name="initialFee" type="double" />
 			<element name="sasriaPremium" type="double" />
 			<element name="scheduleAttaching" type="string" />
 			<element name="typeOfCover" type="string" />
@@ -458,11 +458,12 @@
 				<element name="sasriaFrequency" type="string" />
 				<element name="device" type="string" />
 				<element name="frequency" type="string" />
-				<element name="re_instatement" type="string" />
+				<element name="umaFee" type="double" />
+				<element name="underwriterCommission" type="double" />
+				<element name="policyFee" type="double" />
+				<element name="initialFee" type="double" />
 				<element name="collectByDebitOrder" type="boolean" />
 				<element name="excludeSasria" type="boolean" />
-				<element name="underwriterFee" type="double" />
-				<element name="brokerFee" type="string" />
 				<element name="sumInsured" type="double" />
 				<element name="maximumSumInsured" type="double" />
 				<element name="brokerCommission" type="double" />
@@ -515,72 +516,130 @@
 			</sequence>
 		</complexType>
 	</element>
-        
-            
-    <element name="ClaimRequestCommandModel">
-        <complexType>
-            <sequence>
-                <element name="claimNumber" type="string" />
-                <element name="reference" type="string" />
-                <element name="investigationReport" type="hexBinary" />
-                <element name="comfirmationAmount" type="hexBinary" />
-                <element name="proofOfPickup" type="hexBinary" />
-                <element name="caseNumber" type="hexBinary" />
-                <element name="amountBanked" type="hexBinary" />
-                <element name="transTrackDocument" type="hexBinary" />
-                <element name="quote" type="hexBinary" />
-                <element name="report" type="hexBinary" />
-                <element name="affidavit" type="hexBinary" />
-                <element name="photo1" type="hexBinary" />
-                <element name="photo2" type="hexBinary" />
-                <element name="photo3" type="hexBinary" />
-                <element name="photo4" type="hexBinary" />
-                <element name="photo5" type="hexBinary" />
-                <element name="claimTypeId" type="long" />
-                <element name="claimQuestionnaires" minOccurs="0" maxOccurs="unbounded">
-                    <complexType>
-                        <sequence>
-                            <element name="question" type="string" />
-                            <element name="answer" type="string" />
-                        </sequence>
-                    </complexType>
-                </element>
-            </sequence>
-        </complexType>
-    </element>
-    
-    <element name="ClaimRequestQueryModel" type="tns:ClaimRequestQueryModel" />
-    <complexType name="ClaimRequestQueryModel">
-        <sequence>
-            <element name="claimNumber" type="string" />
-            <element name="createDate" type="string" />
-            <element name="status" type="string" />
-            <element name="investigationReport" type="hexBinary" />
-            <element name="comfirmationAmount" type="hexBinary" />
-            <element name="proofOfPickup" type="hexBinary" />
-            <element name="caseNumber" type="hexBinary" />
-            <element name="amountBanked" type="hexBinary" />
-            <element name="transTrackDocument" type="hexBinary" />
-            <element name="quote" type="hexBinary" />
-            <element name="report" type="hexBinary" />
-            <element name="affidavit" type="hexBinary" />
-            <element name="photo1" type="hexBinary" />
-            <element name="photo2" type="hexBinary" />
-            <element name="photo3" type="hexBinary" />
-            <element name="photo4" type="hexBinary" />
-            <element name="photo5" type="hexBinary" />
-            <element name="policy" minOccurs="0" maxOccurs="1"
-                     type="tns:PolicyQueryModel" />
-            <element name="claimType" minOccurs="0" maxOccurs="1"
-                     type="tns:ClaimTypeQueryModel" />
-            <element name="claimQuestionnaire" minOccurs="0" maxOccurs="unbounded">
-                <complexType>
-                    <sequence>
-                        <element name="question" type="string" />
-                        <element name="answer" type="string" />
-                    </sequence>
-                </complexType>
-            </element>
-        </sequence>
-    </complexType>
+
+
+	<element name="ClaimRequestCommandModel">
+		<complexType>
+			<sequence>
+				<element name="claimNumber" type="string" />
+				<element name="reference" type="string" />
+				<element name="investigationReport" type="hexBinary" />
+				<element name="comfirmationAmount" type="hexBinary" />
+				<element name="proofOfPickup" type="hexBinary" />
+				<element name="caseNumber" type="hexBinary" />
+				<element name="amountBanked" type="hexBinary" />
+				<element name="transTrackDocument" type="hexBinary" />
+				<element name="quote" type="hexBinary" />
+				<element name="report" type="hexBinary" />
+				<element name="affidavit" type="hexBinary" />
+				<element name="photo1" type="hexBinary" />
+				<element name="photo2" type="hexBinary" />
+				<element name="photo3" type="hexBinary" />
+				<element name="photo4" type="hexBinary" />
+				<element name="photo5" type="hexBinary" />
+				<element name="claimTypeId" type="long" />
+				<element name="claimQuestionnaires" minOccurs="0" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="question" type="string" />
+							<element name="answer" type="string" />
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="ClaimRequestQueryModel" type="tns:ClaimRequestQueryModel" />
+	<complexType name="ClaimRequestQueryModel">
+		<sequence>
+			<element name="claimNumber" type="string" />
+			<element name="createDate" type="string" />
+			<element name="status" type="string" />
+			<element name="investigationReport" type="hexBinary" />
+			<element name="comfirmationAmount" type="hexBinary" />
+			<element name="proofOfPickup" type="hexBinary" />
+			<element name="caseNumber" type="hexBinary" />
+			<element name="amountBanked" type="hexBinary" />
+			<element name="transTrackDocument" type="hexBinary" />
+			<element name="quote" type="hexBinary" />
+			<element name="report" type="hexBinary" />
+			<element name="affidavit" type="hexBinary" />
+			<element name="photo1" type="hexBinary" />
+			<element name="photo2" type="hexBinary" />
+			<element name="photo3" type="hexBinary" />
+			<element name="photo4" type="hexBinary" />
+			<element name="photo5" type="hexBinary" />
+			<element name="policy" minOccurs="0" maxOccurs="1"
+				type="tns:PolicyQueryModel" />
+			<element name="claimType" minOccurs="0" maxOccurs="1"
+				type="tns:ClaimTypeQueryModel" />
+			<element name="claimQuestionnaire" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="question" type="string" />
+						<element name="answer" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<!-- Generic requests on existing policy -->
+	<element name="RequestTypeQueryModel" type="tns:RequestTypeQueryModel" />
+	<complexType name="RequestTypeQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="requestType" type="string" />
+		</sequence>
+	</complexType>
+
+
+	<element name="RequestQuestionnaireQueryModel" type="tns:RequestQuestionnaireQueryModel" />
+	<complexType name="RequestQuestionnaireQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="sequenceNumber" type="long" />
+			<element name="requestTypeId" type="long" />
+			<element name="question" type="string" />
+			<element name="requestAnswerType" type="string" />
+			<element name="requestAnswerValues" type="string" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element name="isRequired" type="boolean"></element>
+		</sequence>
+	</complexType>
+
+
+	<element name="PolicyRequestTypeCommandModel" type="tns:PolicyRequestTypeCommandModel" />
+	<complexType name="PolicyRequestTypeCommandModel">
+		<sequence>
+			<element name="requestTypeId" type="long" />
+			<element name="reason" type="string" />
+			<element name="effectiveDate" type="string" />
+			<element name="policyNo" type="string" />
+			<element name="requestQuestionnaire" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="question" type="string" />
+						<element name="answer" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<element name="PolicyRequestTypeQueryModel" type="tns:PolicyRequestTypeQueryModel" />
+	<complexType name="PolicyRequestTypeQueryModel">
+		<sequence>
+			<element name="reason" type="string" />
+			<element name="reference" type="string" />
+			<element name="effectiveDate" type="string" />
+			<element name="policy" minOccurs="0" maxOccurs="1"
+				type="tns:PolicyQueryModel" />
+			<element name="requestType" minOccurs="0" maxOccurs="1"
+				type="tns:RequestTypeQueryModel" />
+		</sequence>
+	</complexType>
+	<!-- End -->
 </schema>

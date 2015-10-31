@@ -218,15 +218,15 @@ create table policies(
     frequency varchar(30) not null,
     sasria_frequency varchar(30) not null,
     device varchar(30) not null,
-    re_instatement varchar(45) not null,
     collect_by_debit_order boolean not null,
     exclude_sasria boolean,
-    underwriter_fee decimal not null,
-    broker_fee decimal not null,
+    underwriter_commission decimal not null,
+    broker_commission decimal not null,
+    uma_fee decimal not null,
+    policy_fee decimal not null,
+    initial_fee decimal not null,
     sum_insured decimal not null,
     max_sum_insured decimal not null,
-    broker_commission decimal not null,
-    ua_commission decimal not null,
     premium decimal not null,
     sasria_premium decimal not null,
     schedule_attaching varchar(1024) not null,
@@ -318,5 +318,55 @@ create table claim_answers(
      question varchar(128) not null,
      answer varchar(512),
      constraint claim_answer_fk1 foreign key (claim_request_id) references  claim_requests(id)
+);
+
+create table policy_request_type(
+     id integer auto_increment not null primary key,
+     request_type varchar(32) not null,
+     policy_id varchar(16) not null,
+     status_from varchar(16),
+     reason varchar(128) not null,
+     reference varchar(60) not null,
+     created_date date not null,
+     effective_date date,
+     constraint policy_request_type_fk1 foreign key (policy_id) references  policies(id)
+);
+
+
+create table request_types(
+    id integer auto_increment not null primary key,
+    request_type varchar(32) not null
+);
+
+
+create table request_answer_types(
+   id integer auto_increment not null primary key,
+   request_answer_type varchar(16) not null
+);
+
+create table request_questionnaires(
+   id integer auto_increment not null primary key,
+   request_type_id integer not null,
+   request_answer_type_id integer not null,
+   question varchar(124) not null,
+   sequence_number integer not null,
+   is_required boolean not null,
+   constraint request_questionnaires_fk1 foreign key (request_answer_type_id) references request_answer_types(id),
+   constraint request_questinnaires_fk1 foreign key (request_type_id) references request_types(id)
+);
+
+create table request_answer_values(
+    id integer auto_increment not null primary key,
+    request_questionnaire_id integer not null,
+    request_answer_value varchar(16),
+    constraint request_answer_values_fk1 foreign key (request_questionnaire_id) references request_questionnaires (id)
+);
+
+create table request_answers(
+      id integer auto_increment not null primary key,
+     request_type_id integer not null,
+     question varchar(128) not null,
+     answer varchar(512),
+     constraint request_answer_fk1 foreign key (request_type_id) references  request_types(id)
 );
 

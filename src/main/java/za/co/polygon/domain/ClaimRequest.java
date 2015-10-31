@@ -18,255 +18,255 @@ import javax.persistence.Table;
 @Table(name = "claim_requests")
 public class ClaimRequest {
 
-       @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "policy_id")
-    private Policy policy;
+	@ManyToOne
+	@JoinColumn(name = "policy_id")
+	private Policy policy;
 
-    @ManyToOne
-    @JoinColumn(name = "claim_type_id")
-    private ClaimType claimType;
+	@ManyToOne
+	@JoinColumn(name = "claim_type_id")
+	private ClaimType claimType;
 
-    @OneToMany(mappedBy = "claimRequest", fetch = FetchType.EAGER)
-    private List<ClaimAnswer> claimAnswers;
-    
-              
-    @Column(name = "claim_number")
-    private String claimNumber;
-    
-    @Column(name = "status")
-    private String status;
+	@OneToMany(mappedBy = "claimRequest", fetch = FetchType.EAGER)
+	private List<ClaimAnswer> claimAnswers;
 
-    @Column(name = "investigation_report")
-    private byte[] investigationReport;
 
-    @Column(name = "confirmation_amount")
-    private byte[] comfirmationAmount;
+	@Column(name = "claim_number")
+	private String claimNumber;
 
-    @Column(name = "proof_of_pickup")
-    private byte[] proofOfPickup;
+	@Column(name = "status")
+	private String status;
 
-    @Column(name = "case_number")
-    private byte[] caseNumber;
+	@Column(name = "investigation_report")
+	private byte[] investigationReport;
 
-    @Column(name = "amount_banked")
-    private byte[] amountBanked;
+	@Column(name = "confirmation_amount")
+	private byte[] comfirmationAmount;
 
-    @Column(name = "trans_track_document")
-    private byte[] transTrackDocument;
+	@Column(name = "proof_of_pickup")
+	private byte[] proofOfPickup;
 
-    @Column(name = "quote")
-    private byte[] quote;
+	@Column(name = "case_number")
+	private byte[] caseNumber;
 
-    @Column(name = "report")
-    private byte[] report;
+	@Column(name = "amount_banked")
+	private byte[] amountBanked;
 
-    @Column(name = "affidavit")
-    private byte[] affidavit;
+	@Column(name = "trans_track_document")
+	private byte[] transTrackDocument;
 
-    @Column(name = "photo1")
-    private byte[] photo1;
+	@Column(name = "quote")
+	private byte[] quote;
 
-    @Column(name = "photo2")
-    private byte[] photo2;
+	@Column(name = "report")
+	private byte[] report;
 
-    @Column(name = "photo3")
-    private byte[] photo3;
+	@Column(name = "affidavit")
+	private byte[] affidavit;
 
-    @Column(name = "photo4")
-    private byte[] photo4;
+	@Column(name = "photo1")
+	private byte[] photo1;
 
-    @Column(name = "photo5")
-    private byte[] photo5;
+	@Column(name = "photo2")
+	private byte[] photo2;
 
-    @Column(name = "create_date")
-    private Date createDate;
+	@Column(name = "photo3")
+	private byte[] photo3;
 
-    public Long getId() {
-        return id;
-    }
+	@Column(name = "photo4")
+	private byte[] photo4;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Column(name = "photo5")
+	private byte[] photo5;
 
-    public Policy getPolicy() {
-        return policy;
-    }
+	@Column(name = "create_date")
+	private Date createDate;
 
-    public void setPolicy(Policy policy) {
-        this.policy = policy;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getClaimNumber() {
-        return claimNumber;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setClaimNumber(String claimNumber) {
-        this.claimNumber = claimNumber;
-    }
+	public Policy getPolicy() {
+		return policy;
+	}
 
-    public byte[] getInvestigationReport() {
-        return investigationReport;
-    }
+	public void setPolicy(Policy policy) {
+		this.policy = policy;
+	}
 
-    public void setInvestigationReport(byte[] investigationReport) {
-        this.investigationReport = investigationReport;
-    }
+	public String getClaimNumber() {
+		return claimNumber;
+	}
 
-    public byte[] getComfirmationAmount() {
-        return comfirmationAmount;
-    }
-
-    public void setComfirmationAmount(byte[] comfirmationAmount) {
-        this.comfirmationAmount = comfirmationAmount;
-    }
+	public void setClaimNumber(String claimNumber) {
+		this.claimNumber = claimNumber;
+	}
 
-    public byte[] getProofOfPickup() {
-        return proofOfPickup;
-    }
+	public byte[] getInvestigationReport() {
+		return investigationReport;
+	}
 
-    public void setProofOfPickup(byte[] proofOfPickup) {
-        this.proofOfPickup = proofOfPickup;
-    }
+	public void setInvestigationReport(byte[] investigationReport) {
+		this.investigationReport = investigationReport;
+	}
 
-    public byte[] getCaseNumber() {
-        return caseNumber;
-    }
+	public byte[] getComfirmationAmount() {
+		return comfirmationAmount;
+	}
+
+	public void setComfirmationAmount(byte[] comfirmationAmount) {
+		this.comfirmationAmount = comfirmationAmount;
+	}
 
-    public void setCaseNumber(byte[] caseNumber) {
-        this.caseNumber = caseNumber;
-    }
+	public byte[] getProofOfPickup() {
+		return proofOfPickup;
+	}
 
-    public byte[] getAmountBanked() {
-        return amountBanked;
-    }
+	public void setProofOfPickup(byte[] proofOfPickup) {
+		this.proofOfPickup = proofOfPickup;
+	}
 
-    public void setAmountBanked(byte[] amountBanked) {
-        this.amountBanked = amountBanked;
-    }
-
-    public byte[] getTransTrackDocument() {
-        return transTrackDocument;
-    }
-
-    public void setTransTrackDocument(byte[] transTrackDocument) {
-        this.transTrackDocument = transTrackDocument;
-    }
-
-    public byte[] getQuote() {
-        return quote;
-    }
-
-    public void setQuote(byte[] quote) {
-        this.quote = quote;
-    }
-
-    public byte[] getReport() {
-        return report;
-    }
+	public byte[] getCaseNumber() {
+		return caseNumber;
+	}
 
-    public void setReport(byte[] report) {
-        this.report = report;
-    }
+	public void setCaseNumber(byte[] caseNumber) {
+		this.caseNumber = caseNumber;
+	}
 
-    public byte[] getAffidavit() {
-        return affidavit;
-    }
+	public byte[] getAmountBanked() {
+		return amountBanked;
+	}
 
-    public void setAffidavit(byte[] affidavit) {
-        this.affidavit = affidavit;
-    }
+	public void setAmountBanked(byte[] amountBanked) {
+		this.amountBanked = amountBanked;
+	}
 
-    public byte[] getPhoto1() {
-        return photo1;
-    }
+	public byte[] getTransTrackDocument() {
+		return transTrackDocument;
+	}
 
-    public void setPhoto1(byte[] photo1) {
-        this.photo1 = photo1;
-    }
+	public void setTransTrackDocument(byte[] transTrackDocument) {
+		this.transTrackDocument = transTrackDocument;
+	}
 
-    public byte[] getPhoto2() {
-        return photo2;
-    }
+	public byte[] getQuote() {
+		return quote;
+	}
 
-    public void setPhoto2(byte[] photo2) {
-        this.photo2 = photo2;
-    }
+	public void setQuote(byte[] quote) {
+		this.quote = quote;
+	}
 
-    public byte[] getPhoto3() {
-        return photo3;
-    }
+	public byte[] getReport() {
+		return report;
+	}
 
-    public void setPhoto3(byte[] photo3) {
-        this.photo3 = photo3;
-    }
+	public void setReport(byte[] report) {
+		this.report = report;
+	}
 
-    public byte[] getPhoto4() {
-        return photo4;
-    }
+	public byte[] getAffidavit() {
+		return affidavit;
+	}
 
-    public void setPhoto4(byte[] photo4) {
-        this.photo4 = photo4;
-    }
+	public void setAffidavit(byte[] affidavit) {
+		this.affidavit = affidavit;
+	}
 
-    public byte[] getPhoto5() {
-        return photo5;
-    }
+	public byte[] getPhoto1() {
+		return photo1;
+	}
 
-    public void setPhoto5(byte[] photo5) {
-        this.photo5 = photo5;
-    }
+	public void setPhoto1(byte[] photo1) {
+		this.photo1 = photo1;
+	}
 
+	public byte[] getPhoto2() {
+		return photo2;
+	}
 
+	public void setPhoto2(byte[] photo2) {
+		this.photo2 = photo2;
+	}
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+	public byte[] getPhoto3() {
+		return photo3;
+	}
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	public void setPhoto3(byte[] photo3) {
+		this.photo3 = photo3;
+	}
 
-    public ClaimType getClaimType() {
-        return claimType;
-    }
+	public byte[] getPhoto4() {
+		return photo4;
+	}
 
-    public void setClaimType(ClaimType claimType) {
-        this.claimType = claimType;
-    }
-    
+	public void setPhoto4(byte[] photo4) {
+		this.photo4 = photo4;
+	}
 
-    public List<ClaimAnswer> getClaimAnswer() {
-        if(claimAnswers == null)
-            return new ArrayList<ClaimAnswer>();
-            else
-        return claimAnswers;
-    }
-    
-    
+	public byte[] getPhoto5() {
+		return photo5;
+	}
 
-    public void setClaimAnswer(List<ClaimAnswer> claimRequestQuestionnaire) {
-        this.claimAnswers = claimRequestQuestionnaire;
-    }
+	public void setPhoto5(byte[] photo5) {
+		this.photo5 = photo5;
+	}
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
-    
-     
 
+	public Date getCreateDate() {
+		return createDate;
+	}
 
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
- 
+	public ClaimType getClaimType() {
+		return claimType;
+	}
+
+	public void setClaimType(ClaimType claimType) {
+		this.claimType = claimType;
+	}
+
+
+	public List<ClaimAnswer> getClaimAnswer() {
+		if(claimAnswers == null)
+			return new ArrayList<ClaimAnswer>();
+		else
+			return claimAnswers;
+	}
+
+
+
+	public void setClaimAnswer(List<ClaimAnswer> claimRequestQuestionnaire) {
+		this.claimAnswers = claimRequestQuestionnaire;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
+
+
+
+
 
 }

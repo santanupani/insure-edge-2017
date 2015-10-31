@@ -292,7 +292,7 @@ underwritter.controller('viewClientCtrl', function ($scope, $rootScope, $http, $
 
 });
 
-underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $cookieStore,$sce,$window) {
+underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $sce, $filter, $window, $cookieStore){
 
 	$rootScope.policy = {};
 	$scope.itemsPerPage = 5;
@@ -305,18 +305,27 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.policy.indemnityOption = [{}];
 	$scope.btnValue;
 	$scope.init = function () {
-		$scope.isUpdate = false;
+		
 		$scope.getClient();
 		$scope.btnValue = (angular.equals($scope.policy.policyReference, '[YYYY-MM00]')) ? 'Update' : 'Create Policy';
-		$scope.getPolicies();
-		$scope.getPolicyRequest($cookieStore.get('reference').toString());
-		$scope.getSubAgents();
-		$scope.initNewPolicy($rootScope.policy);
-		$scope.policies.push($rootScope.policy);
+		
+		if($rootScope.policyRequest == undefined){
+			console.log('Working on existing policy');
+			$scope.getPolicies();
+			$scope.getSubAgents();
+		}else{
+			console.log('New policy creation');
+			$scope.isUpdate = false;
+			$scope.initNewPolicy($rootScope.policy);
+//			$scope.getPolicyRequest($cookieStore.get('reference'));
+			$scope.getPolicies();
+			$scope.getSubAgents();
+		}
 	};
 	
 	$scope.updatePolicy = function(reference){
-		console.log('Update POlicy');
+		console.log('Update Policy');
+		console.log('Policy Fee '+$scope.policy.policyFee);
 		$http({
 			url: '/api/policy-update/' + reference,
 			method: 'put',
@@ -338,7 +347,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			$rootScope.message = "Oops we recieved your request but there was a problem processing it";
 			console.log(error);
 		});
-	}
+	};
 
 	$scope.submitForPolicySchedule = function(reference){
 		console.log('Ref: ' + reference);
@@ -367,7 +376,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.getPolicyRequest = function (reference) {
 		console.log('Ref: ' + reference);
 		$http({
-			url: '/api/policy-requests/' + reference,
+			url: '/api/policy-request/' + reference,
 			method: 'get'
 		}).success(function (data, status) {
 			if (status == 200) {
@@ -389,15 +398,15 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 
 		$scope.noOfTimesPerWeek;
 		if (policy != undefined) {
-			$scope.getPolicyRequest($cookieStore.get('reference'));
 			console.log('initializing new policy state');
 			$scope.policy.reference = '[YYYY-MM00]';
 			$scope.policy.brokerFee = 20;
 			$scope.policy.status = 'Active';
 			$scope.policy.underwriterFee = 12.5;
-			$scope.policy.adminFee = '0.0';
 			$scope.policy.policyFee = '0.0';
-			$scope.policy.initalFee = '0.0';
+			$scope.policy.initialFee = '0.0';
+			$scope.policy.umaFee = '0.0';
+			$scope.policy.brokerCommission = 12.5;
 			$scope.policy.underwritingYear = new Date().getFullYear();;
 			$scope.policy.notes = $scope.wording.notes;
 
@@ -431,6 +440,10 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 					console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
 					$scope.policy.subjectMatter = questionnairre.answer;
 					break;
+				case 'Please select the duration for your cover ?':
+					console.log('Question for duration:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
+					$scope.policy.frequency = questionnairre.answer;
+					break;						
 				case 'What is the maximum amount you wish to insure ?':
 					console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
 					var maxSumToken = questionnairre.answer.split(',');
@@ -447,7 +460,9 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 					if(angular.equals(questionnairre.answer,null)){
 						break;
 					}else{
-						$scope.policy.policyInceptionDate = questionnairre.answer;
+						var subString = new Date($filter('limitTo')(questionnairre.answer, 10, 0));
+						$scope.policy.policyInceptionDate = $filter('date')(subString, "yyyy-MM-dd");
+						console.log('Policy inception date: '+$scope.policy.policyInceptionDate);
 						break;
 					}
 				case 'Please specify policy inception date for monthly cover :':
@@ -455,7 +470,9 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 					if(angular.equals(questionnairre.answer,null)){
 						break;
 					}else{
-						$scope.policy.policyInceptionDate = questionnairre.answer;
+						var subString = new Date($filter('limitTo')(questionnairre.answer, 10, 0));
+						$scope.policy.policyInceptionDate = $filter('date')(subString, "yyyy-MM-dd");
+						console.log('Policy inception date: '+$scope.policy.policyInceptionDate);
 						break;
 					}
 				case 'Please specify from date for once-off:':
@@ -463,7 +480,9 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 					if(angular.equals(questionnairre.answer,null)){
 						break;
 					}else{
-						$scope.policy.policyInceptionDate = questionnairre.answer;
+						var subString = new Date($filter('limitTo')(questionnairre.answer, 10, 0));
+						$scope.policy.policyInceptionDate = $filter('date')(subString, "yyyy-MM-dd");
+						console.log('Policy inception date: '+$scope.policy.policyInceptionDate);
 						break;
 					}
 				case 'How many times per week are the valuables carried ?':
@@ -534,6 +553,10 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.update = function (isUpdated) {
 		$scope.isUpdate = isUpdated;
 	};
+	
+	$scope.cancel = function(isUpdated){
+		$window.location.reload();
+	};
 
 	$scope.submitForPolicy = function (isValid) {
 		if (!isValid) {
@@ -561,6 +584,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 		}
 
 	};
+	
+	
 	$rootScope.getPolicy = function (reference) {
 		angular.forEach($rootScope.policies, function (policy) {
 			if (angular.equals(reference, policy.reference)) {
@@ -571,6 +596,8 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			}
 		});
 	};
+	
+	
 	$scope.getPolicies = function () {
 		$http({
 			url: '/api/policies',
@@ -657,11 +684,12 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			                     'Declaration',
 			                     'Annually',
 			                     'Monthly',
-			                     'Once_Off'
+			                     'Once Off'
 			                     ],
 			                     'sasriaFrequencyOptions': [
-			                                                'N/A',
-			                                                'Other'
+			                                                'Annually',
+			                                                'Monthly',
+			                                                'N/A'
 			                                                ],
 			                                                'deviceOptions': [
 			                                                                  'Nedbank Cameo',

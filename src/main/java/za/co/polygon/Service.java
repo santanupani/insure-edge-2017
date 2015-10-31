@@ -1,27 +1,33 @@
 package za.co.polygon;
 
 import static za.co.polygon.mapper.Mapper.fromBankAccountCommandModel;
+import static za.co.polygon.mapper.Mapper.fromClaimRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClientCommandModel;
 import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
+import static za.co.polygon.mapper.Mapper.fromPolicyRequestTypeCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toClaimRequest;
+import static za.co.polygon.mapper.Mapper.toClaimRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import static za.co.polygon.mapper.Mapper.toClientQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyRequest;
 import static za.co.polygon.mapper.Mapper.toPolicyRequestQueryModel;
+import static za.co.polygon.mapper.Mapper.toPolicyUpdateCommandModel;
 import static za.co.polygon.mapper.Mapper.toProductQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
+import static za.co.polygon.mapper.Mapper.toRequestQuestionnaireQueryModel;
+import static za.co.polygon.mapper.Mapper.toRequestTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
-import static za.co.polygon.mapper.Mapper.toPolicyUpdateCommandModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,18 +62,16 @@ import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
+import za.co.polygon.domain.PolicyRequestType;
 import za.co.polygon.domain.Product;
 import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.RequestQuestionnaire;
+import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
-import static za.co.polygon.mapper.Mapper.fromClaimRequestCommandModel;
-import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
-import static za.co.polygon.mapper.Mapper.toClaimRequest;
-import static za.co.polygon.mapper.Mapper.toClaimRequestQueryModel;
-import static za.co.polygon.mapper.Mapper.toClaimTypeQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
@@ -78,12 +82,15 @@ import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
+import za.co.polygon.model.PolicyRequestTypeCommandModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.RequestQuestionnaireQueryModel;
+import za.co.polygon.model.RequestTypeQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
 import za.co.polygon.model.SubAgentQueryModel;
 import za.co.polygon.model.UserQueryModel;
@@ -97,12 +104,15 @@ import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
 import za.co.polygon.repository.PolicyRepository;
 import za.co.polygon.repository.PolicyRequestRepository;
+import za.co.polygon.repository.PolicyRequestTypeRepository;
 import za.co.polygon.repository.ProductRepository;
 import za.co.polygon.repository.QuestionnaireRepository;
 import za.co.polygon.repository.QuotationOptionRepository;
 import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
+import za.co.polygon.repository.RequestQuestionnaireRepository;
+import za.co.polygon.repository.RequestTypeRepository;
 import za.co.polygon.repository.SubAgentRepository;
 import za.co.polygon.repository.UnderwriterRepository;
 import za.co.polygon.repository.UserRepository;
@@ -114,91 +124,100 @@ import za.co.polygon.service.NotificationService;
 @RestController
 public class Service {
 
-    private static final Logger log = LoggerFactory.getLogger(Service.class);
+	private static final Logger log = LoggerFactory.getLogger(Service.class);
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
+	@Autowired
+	private ProductRepository productRepository;
 
-    @Autowired
-    private QuestionnaireRepository questionnaireRepository;
+	@Autowired
+	private QuestionnaireRepository questionnaireRepository;
 
-    @Autowired
-    private BrokerRepository brokerRepository;
+	@Autowired
+	private BrokerRepository brokerRepository;
 
-    @Autowired
-    private QuotationRequestRepository quotationRequestRepository;
+	@Autowired
+	private QuotationRequestRepository quotationRequestRepository;
 
-    @Autowired
-    private QuotationRequestQuestionnaireRepository quotationRequestQuestionnaireRepository;
+	@Autowired
+	private QuotationRequestQuestionnaireRepository quotationRequestQuestionnaireRepository;
 
-    @Autowired
-    private NotificationService notificationService;
+	@Autowired
+	private NotificationService notificationService;
 
-    @Autowired
-    private QuotationRepository quotationRepository;
+	@Autowired
+	private QuotationRepository quotationRepository;
 
-    @Autowired
-    private QuotationOptionRepository quotationOptionRepository;
+	@Autowired
+	private QuotationOptionRepository quotationOptionRepository;
 
-    @Autowired
-    private PolicyRequestRepository policyRequestRepository;
+	@Autowired
+	private PolicyRequestRepository policyRequestRepository;
 
-    @Autowired
-    private ClientRepository clientRepository;
+	@Autowired
+	private ClientRepository clientRepository;
 
-    @Autowired
-    private PolicyRepository policyRepository;
+	@Autowired
+	private PolicyRepository policyRepository;
+	
+	@Autowired
+	private RequestQuestionnaireRepository requestQuestionnaireRepository;
+	
+	@Autowired
+	private RequestTypeRepository requestTypeRepository;
 
-    @Autowired
-    private DocumentService reportService;
+	@Autowired
+	private PolicyRequestTypeRepository policyRequestTypeRepository;
 
-    @Autowired
-    private UnderwriterRepository underwriterRepository;
+	@Autowired
+	private DocumentService reportService;
 
-    @Autowired
-    private SubAgentRepository subAgentRepository;
+	@Autowired
+	private UnderwriterRepository underwriterRepository;
 
-    @Autowired
-    private BankAccountRepository bankAccountRepository;
+	@Autowired
+	private SubAgentRepository subAgentRepository;
 
-    @Autowired
-    private ContactRepository contactRepository;
+	@Autowired
+	private BankAccountRepository bankAccountRepository;
 
-    @Autowired
-    private ClaimTypeRepository claimTypeRepository;
+	@Autowired
+	private ContactRepository contactRepository;
 
-    @Autowired
-    private ClaimQuestionnaireRepository claimQuestionnaireRepository;
+	@Autowired
+	private ClaimTypeRepository claimTypeRepository;
 
-    @Autowired
-    private ClaimRequestRepository claimRequestRepository;
+	@Autowired
+	private ClaimQuestionnaireRepository claimQuestionnaireRepository;
 
-    @Autowired
-    private ClaimRequestQuestionnaireRepository claimRequestQuestionnaireRepository;
+	@Autowired
+	private ClaimRequestRepository claimRequestRepository;
 
-    @Autowired
-    private DocumentService documentService;
+	@Autowired
+	private ClaimRequestQuestionnaireRepository claimRequestQuestionnaireRepository;
 
-    @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserQueryModel> findAllUsers() {
-        log.info("find user");
-        List<za.co.polygon.domain.User> users = userRepository.findAll();
-        List<UserQueryModel> result = toUserQueryModel(users);
-        log.info("found user, size:{}", result.size());
-        log.info("this service to get all users");
-        return result;
-    }
+	@Autowired
+	private DocumentService documentService;
 
-    @RequestMapping(value = "api/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProductQueryModel> findAllProducts() {
-        log.info("find all products");
-        List<Product> products = productRepository.findAll();
-        log.info("found all products - size:{}", products.size());
-        return toProductQueryModel(products);
-    }
+	@RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<UserQueryModel> findAllUsers() {
+		log.info("find user");
+		List<za.co.polygon.domain.User> users = userRepository.findAll();
+		List<UserQueryModel> result = toUserQueryModel(users);
+		log.info("found user, size:{}", result.size());
+		log.info("this service to get all users");
+		return result;
+	}
+
+	@RequestMapping(value = "api/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ProductQueryModel> findAllProducts() {
+		log.info("find all products");
+		List<Product> products = productRepository.findAll();
+		log.info("found all products - size:{}", products.size());
+		return toProductQueryModel(products);
+	}
 
 
 	@RequestMapping(value = "api/policy-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -226,23 +245,23 @@ public class Service {
 
 		Underwriter underwriter = underwriterRepository.findOne(policyCreationCommandModel.getUnderwriterId());
 		SubAgent subAgent = subAgentRepository.findOne(policyCreationCommandModel.getSubAgentId());
-
 		BankAccount bankAccount = bankAccountRepository.save(fromBankAccountCommandModel(policyCreationCommandModel));
 		Contact contact = contactRepository.save(fromContactCommandModel(policyCreationCommandModel));
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
 		int lastPolicyNumber = policyRepository.findAll().size();
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount,lastPolicyNumber));
-		documentService.policyScheduleReportPDF(policy);
+		//		documentService.policyScheduleReportPDF(policy);
 		return policy.getReference();
 	}
-	
+
 	@Transactional
 	@RequestMapping(value = "api/policy-update/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updatePolicy(@PathVariable("reference") String reference, @RequestBody PolicyQueryModel PolicyQueryModel) throws ParseException {
 		log.info("Updating Policy with reference: "+reference);
 		Policy policy = policyRepository.findByReference(reference);
+		SubAgent subAgent = subAgentRepository.findOne(PolicyQueryModel.getSubAgent().getId());
 		log.info("Product Name: "+policy.getProductName());
-		policyRepository.save(toPolicyUpdateCommandModel(PolicyQueryModel,policy));
+		policyRepository.save(toPolicyUpdateCommandModel(PolicyQueryModel,policy,subAgent));
 	}
 
 	@RequestMapping(value = "api/sub-agents", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -271,252 +290,290 @@ public class Service {
 
 	}
 
-    @RequestMapping(value = "api/products/{productId}/questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<QuestionnaireQuery> findQuestionnaires(@PathVariable("productId") Long productId) {
-        log.info("find questionnaires for product - productId:{}", productId);
-        List<Questionnaire> questionnaires = new ArrayList<Questionnaire>();
-        Product product = productRepository.findOne(productId);
-        if (product != null) {
-            questionnaires = questionnaireRepository.findByProduct(product);
-        }
-        log.info("found questionnaires for product - productId:{}, size:{}", productId, questionnaires.size());
-        List<QuestionnaireQuery> r = toQuestionnaireQueryModel(questionnaires);
-        log.info("mapping done....");
-        return r;
-    }
+	@RequestMapping(value = "api/products/{productId}/questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<QuestionnaireQuery> findQuestionnaires(@PathVariable("productId") Long productId) {
+		log.info("find questionnaires for product - productId:{}", productId);
+		List<Questionnaire> questionnaires = new ArrayList<Questionnaire>();
+		Product product = productRepository.findOne(productId);
+		if (product != null) {
+			questionnaires = questionnaireRepository.findByProduct(product);
+		}
+		log.info("found questionnaires for product - productId:{}, size:{}", productId, questionnaires.size());
+		List<QuestionnaireQuery> r = toQuestionnaireQueryModel(questionnaires);
+		log.info("mapping done....");
+		return r;
+	}
 
-    @RequestMapping(value = "api/brokers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<BrokerQueryModel> findAllBrokers() {
-        log.info("find all brokers");
-        List<Broker> brokers = brokerRepository.findAll();
-        log.info("found all products - size:{}", brokers.size());
-        return toBrokerQueryModel(brokers);
-    }
+	@RequestMapping(value = "api/brokers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<BrokerQueryModel> findAllBrokers() {
+		log.info("find all brokers");
+		List<Broker> brokers = brokerRepository.findAll();
+		log.info("found all products - size:{}", brokers.size());
+		return toBrokerQueryModel(brokers);
+	}
 
-    @Transactional
-    @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
-    public String createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {
-        Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
+	@Transactional
+	@RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+	public String createQuotationRequest(@RequestBody QuotationRequestCommandModel quotationRequestCommandModel) {
+		Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
 
-        Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
+		Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
 
-        QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
-        quotationRequest = quotationRequestRepository.save(quotationRequest);
-        List<Answer> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
-        quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
+		QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
+		quotationRequest = quotationRequestRepository.save(quotationRequest);
+		List<Answer> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
+		quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
 
-        notificationService.sendNotificationForNewQuotationRequest(quotationRequest, broker);
+		notificationService.sendNotificationForNewQuotationRequest(quotationRequest, broker);
 
-        log.info("Quotation Request Created. reference : {} ", quotationRequest.getReference());
-        return quotationRequest.getReference();
-    }
+		log.info("Quotation Request Created. reference : {} ", quotationRequest.getReference());
+		return quotationRequest.getReference();
+	}
 
-    @RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) throws ParseException {
-        log.info("find all the questions and answers inserted for a product");
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-        log.info("find all the questions and answers inserted for a product using the reference");
-        return toQuotationRequestQueryModel(quotationRequest);
-    }
+	@RequestMapping(value = "api/quotation-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public QuotationRequestQueryModel getQuotationRequest(@PathVariable("reference") String reference) throws ParseException {
+		log.info("find all the questions and answers inserted for a product");
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+		log.info("find all the questions and answers inserted for a product using the reference");
+		return toQuotationRequestQueryModel(quotationRequest);
+	}
 
-    @Transactional
-    @RequestMapping(value = "api/quotation-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
-    public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason) {
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-        quotationRequest.setStatus("REJECTED");
-        notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, reason.get("reason"));
-        quotationRequestRepository.save(quotationRequest);
-        log.info("New status :" + quotationRequest.getStatus());
-    }
+	@Transactional
+	@RequestMapping(value = "api/quotation-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+	public void rejectQuotationRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason) {
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+		quotationRequest.setStatus("REJECTED");
+		notificationService.sendNotificationForRejectQuotationRequest(quotationRequest, reason.get("reason"));
+		quotationRequestRepository.save(quotationRequest);
+		log.info("New status :" + quotationRequest.getStatus());
+	}
 
-    @Transactional
-    @RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createNewQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException, JRException {
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
-        quotationRequest.setStatus("ACCEPTED");
-        Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
-        quotation = quotationRepository.save(quotation);
-        log.info("Quotation Command size: " + quotation.getQuotationOptions().size());
-        byte[] data = reportService.generateQuotationPDF(quotation);
-        notificationService.sendNotificationForAcceptQuotationRequest(quotation.getQuotationRequest(), data);
-        log.info("Quotation Created Successfully !!!");
-    }
+	@Transactional
+	@RequestMapping(value = "api/quotations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void createNewQuotation(@RequestBody QuotationCommandModel quotationCommandModel) throws DocumentException, FileNotFoundException, IOException, JRException {
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
+		quotationRequest.setStatus("ACCEPTED");
+		Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
+		quotation = quotationRepository.save(quotation);
+		log.info("Quotation Command size: " + quotation.getQuotationOptions().size());
+		byte[] data = reportService.generateQuotationPDF(quotation);
+		notificationService.sendNotificationForAcceptQuotationRequest(quotation.getQuotationRequest(), data);
+		log.info("Quotation Created Successfully !!!");
+	}
 
-    @RequestMapping(value = "api/quotations/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public QuotationQueryModel getQuotation(@PathVariable("reference") String reference) {
+	@RequestMapping(value = "api/quotations/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public QuotationQueryModel getQuotation(@PathVariable("reference") String reference) {
 
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
 
-        if (quotationRequest.getStatus().equals("ACCEPTED")) {
+		if (quotationRequest.getStatus().equals("ACCEPTED")) {
 
-            Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
+			Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
 
-            log.info("Number of quotation options for this quotation: " + quotationRepository.count());
-            log.info("Quotation request size: " + quotation.getQuotationOptions().size());
+			log.info("Number of quotation options for this quotation: " + quotationRepository.count());
+			log.info("Quotation request size: " + quotation.getQuotationOptions().size());
 
-            log.info("find all the quotation details inserted for a product using the reference");
-            return toQuotationQueryModel(quotation);
+			log.info("find all the quotation details inserted for a product using the reference");
+			return toQuotationQueryModel(quotation);
 
-        }
-        throw new RuntimeException("Quotation has not been Accepted yet");
-    }
+		}
+		throw new RuntimeException("Quotation has not been Accepted yet");
+	}
 
-    @RequestMapping(value = "api/quotations/{reference}/{quotationOptionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public SelectedQuotationQueryModel getQuotationSelected(@PathVariable("reference") String reference, @PathVariable("quotationOptionId") String optionId) {
+	@RequestMapping(value = "api/quotations/{reference}/{quotationOptionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public SelectedQuotationQueryModel getQuotationSelected(@PathVariable("reference") String reference, @PathVariable("quotationOptionId") String optionId) {
 
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-        QuotationOption quotationOption = quotationOptionRepository.findOne(Long.parseLong(optionId));
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+		QuotationOption quotationOption = quotationOptionRepository.findOne(Long.parseLong(optionId));
 
-        if (quotationRequest.getStatus().equals("ACCEPTED")) {
+		if (quotationRequest.getStatus().equals("ACCEPTED")) {
 
-            Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
+			Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
 
-            log.info("Number of quotation options for this quotation: " + quotationRepository.count());
-            log.info("Quotation request size: " + quotation.getQuotationOptions().size());
+			log.info("Number of quotation options for this quotation: " + quotationRepository.count());
+			log.info("Quotation request size: " + quotation.getQuotationOptions().size());
 
-            log.info("find all the quotation details inserted for a product using the reference");
-            return toSelectedQuotationQueryModel(quotation, quotationOption);
+			log.info("find all the quotation details inserted for a product using the reference");
+			return toSelectedQuotationQueryModel(quotation, quotationOption);
 
-        }
-        throw new RuntimeException("Quotation has not been Accepted yet");
-    }
+		}
+		throw new RuntimeException("Quotation has not been Accepted yet");
+	}
 
-    @Transactional
-    @RequestMapping(value = "api/policy-requests", method = RequestMethod.POST)
-    public void createPolicyRequest(@RequestPart(value = "policyRequest") PolicyRequestCommandModel policyRequestCommandModel, @RequestPart(value = "file") MultipartFile file) throws IOException {
+	@Transactional
+	@RequestMapping(value = "api/policy-requests", method = RequestMethod.POST)
+	public void createPolicyRequest(@RequestPart(value = "policyRequest") PolicyRequestCommandModel policyRequestCommandModel, @RequestPart(value = "file") MultipartFile file) throws IOException {
 
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(policyRequestCommandModel.getReference());
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(policyRequestCommandModel.getReference());
 
-        Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
+		Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
 
-        QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
+		QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
 
-        PolicyRequest policyRequest = toPolicyRequest(policyRequestCommandModel, quotation, quotationOption);
-        policyRequest.setBankStatement(file.getBytes());
-        policyRequest = policyRequestRepository.save(policyRequest);
+		PolicyRequest policyRequest = toPolicyRequest(policyRequestCommandModel, quotation, quotationOption);
+		policyRequest.setBankStatement(file.getBytes());
+		policyRequest = policyRequestRepository.save(policyRequest);
 
-        log.info("saved all the values");
-        log.info("Policy Request Object :" + policyRequest.toString());
+		log.info("saved all the values");
+		log.info("Policy Request Object :" + policyRequest.toString());
 
-        notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "polygon.testing@gmail.com", "Polygon Underwritter");
-    }
+		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "polygon.testing@gmail.com", "Polygon Underwritter");
+	}
 
-    @RequestMapping(value = "api/policy-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PolicyRequestQueryModel getPolicyRequest(@PathVariable("reference") String reference) {
+	@RequestMapping(value = "api/policy-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public PolicyRequestQueryModel getPolicyRequest(@PathVariable("reference") String reference) {
 
-        QuotationRequest quotationtRequest = quotationRequestRepository.findByReference(reference);
-        Quotation quotation = quotationRepository.findByQuotationRequest(quotationtRequest);
-        log.info("Quotation object: " + quotation.toString());
-        PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
-        log.info("PolicyRequest object: " + policyRequest.toString());
-        QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequest.getQuotationOption().getId());
-        log.info("QuotationOption object: " + quotationOption.toString() + "\nSelected Option ID: " + quotationOption.getId());
-        return toPolicyRequestQueryModel(policyRequest);
+		QuotationRequest quotationtRequest = quotationRequestRepository.findByReference(reference);
+		Quotation quotation = quotationRepository.findByQuotationRequest(quotationtRequest);
+		log.info("Quotation object: " + quotation.toString());
+		PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
+		log.info("PolicyRequest object: " + policyRequest.toString());
+		QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequest.getQuotationOption().getId());
+		log.info("QuotationOption object: " + quotationOption.toString() + "\nSelected Option ID: " + quotationOption.getId());
+		return toPolicyRequestQueryModel(policyRequest);
 
-    }
+	}
 
-    @Transactional
-    @RequestMapping(value = "api/policy-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
-    public void rejectPolicyRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason) {
-        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-        Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
-        PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
-        policyRequest.setStatus("REJECTED");
-        notificationService.sendNotificationForRejectPolicyRequest(policyRequest, reason.get("reason"));
-        policyRequestRepository.save(policyRequest);
-        log.info("New status :" + policyRequest.getStatus());
-        log.info("Policy Request Rejected succes");
-    }
+	@Transactional
+	@RequestMapping(value = "api/policy-requests/{reference}/reject", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+	public void rejectPolicyRequest(@PathVariable("reference") String reference, @RequestBody Map<String, String> reason) {
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+		Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
+		PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
+		policyRequest.setStatus("REJECTED");
+		notificationService.sendNotificationForRejectPolicyRequest(policyRequest, reason.get("reason"));
+		policyRequestRepository.save(policyRequest);
+		log.info("New status :" + policyRequest.getStatus());
+		log.info("Policy Request Rejected succes");
+	}
 
-    @RequestMapping(value = "api/quotations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<QuotationQueryModel> findAllQuotations() {
-        log.info("find all quotations");
-        List<Quotation> quotation = quotationRepository.findAll();
-        log.info("found all quotations - size:{}", quotation.size());
-        return toQuotationQueryModel(quotation);
-    }
+	@RequestMapping(value = "api/quotations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<QuotationQueryModel> findAllQuotations() {
+		log.info("find all quotations");
+		List<Quotation> quotation = quotationRepository.findAll();
+		log.info("found all quotations - size:{}", quotation.size());
+		return toQuotationQueryModel(quotation);
+	}
 
-    @RequestMapping(value = "api/clients/{clientId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ClientQueryModel getClient(@PathVariable("clientId") Long clientId) {
+	@RequestMapping(value = "api/clients/{clientId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ClientQueryModel getClient(@PathVariable("clientId") Long clientId) {
 
-        Client client = clientRepository.findOne(clientId);
-        log.info("client details");
-        return toClientQueryModel(client);
-    }
+		Client client = clientRepository.findOne(clientId);
+		log.info("client details");
+		return toClientQueryModel(client);
+	}
 
-    @RequestMapping(value = "api/clients", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ClientQueryModel> findAllClients() {
-        log.info("Find all Clients");
-        List<Client> client = clientRepository.findAll();
-        log.info("Found all Cleints - size : ", client.size());
-        return toClientQueryModel(client);
-    }
+	@RequestMapping(value = "api/clients", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClientQueryModel> findAllClients() {
+		log.info("Find all Clients");
+		List<Client> client = clientRepository.findAll();
+		log.info("Found all Cleints - size : ", client.size());
+		return toClientQueryModel(client);
+	}
 
-    /*The get service to return the policy details per specific policy ID*/
-    @RequestMapping(value = "api/policy/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PolicyQueryModel getPolicy(@PathVariable("reference") String reference) {
-        log.info("Find the details of specific policy");
-        Policy policy = policyRepository.findByReference(reference);
+	/*The get service to return the policy details per specific policy ID*/
+	@RequestMapping(value = "api/policy/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public PolicyQueryModel getPolicy(@PathVariable("reference") String reference) {
+		log.info("Find the details of specific policy");
+		Policy policy = policyRepository.findByReference(reference);
 
-        return toPolicyQueryModel(policy);
-    }
+		return toPolicyQueryModel(policy);
+	}
+
+	@RequestMapping(value = "api/claim-types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClaimTypeQueryModel> findAllClaimTypes() {
+		log.info("find all claim Types");
+		List<ClaimType> claimType = claimTypeRepository.findAll();
+		log.info("Found all claim types");
+
+		return toClaimTypeQueryModel(claimType);
+	}
 
 
-    @RequestMapping(value = "api/claim-types/{claimTypeId}/claim-questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ClaimQuestionnaireQuery> findClaimQuestionnaires(@PathVariable("claimTypeId") Long claimTypeId) {
+	@RequestMapping(value = "api/claim-types/{claimTypeId}/claim-questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClaimQuestionnaireQuery> findClaimQuestionnaires(@PathVariable("claimTypeId") Long claimTypeId) {
 
-        log.info("Find all Claim questionaire for a claim type");
-        List<ClaimQuestionnaire> claimQuestionnaire = new ArrayList<ClaimQuestionnaire>();
+		log.info("Find all Claim questionaire for a claim type");
+		List<ClaimQuestionnaire> claimQuestionnaire = new ArrayList<ClaimQuestionnaire>();
 
-        ClaimType claimType = claimTypeRepository.findOne(claimTypeId);
+		ClaimType claimType = claimTypeRepository.findOne(claimTypeId);
 
-        if (claimType != null) {
-            claimQuestionnaire = claimQuestionnaireRepository.findByClaimType(claimType);
-        }
-        log.info("found all the questionnaires for claim type");
-        List<ClaimQuestionnaireQuery> r = toClaimQuestionnaireQueryModel(claimQuestionnaire);
+		if (claimType != null) {
+			claimQuestionnaire = claimQuestionnaireRepository.findByClaimType(claimType);
+		}
+		log.info("found all the questionnaires for claim type");
+		List<ClaimQuestionnaireQuery> r = toClaimQuestionnaireQueryModel(claimQuestionnaire);
 
-        return r;
-    }
+		return r;
+	}
 
-    @Transactional
-    @RequestMapping(value = "api/claim-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String createClaimRequest(@RequestBody ClaimRequestCommandModel claimRequestCommandModel) {
+	@Transactional
+	@RequestMapping(value = "api/claim-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String createClaimRequest(@RequestBody ClaimRequestCommandModel claimRequestCommandModel) {
 
-        Policy policy = policyRepository.findByReference(claimRequestCommandModel.getReference());
+		Policy policy = policyRepository.findByReference(claimRequestCommandModel.getReference());
 
-        ClaimType claimType = claimTypeRepository.findOne(claimRequestCommandModel.getClaimTypeId());
+		ClaimType claimType = claimTypeRepository.findOne(claimRequestCommandModel.getClaimTypeId());
 
-        ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType);
-        claimRequest = claimRequestRepository.save(claimRequest);
+		ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType);
+		claimRequest = claimRequestRepository.save(claimRequest);
 
-        //claimRequest.setComfirmationAmount(file.getBytes());
-        List<ClaimAnswer> claimRequestQuestionnaires = fromClaimRequestCommandModel(claimRequestCommandModel, claimRequest);
+		//claimRequest.setComfirmationAmount(file.getBytes());
+		List<ClaimAnswer> claimRequestQuestionnaires = fromClaimRequestCommandModel(claimRequestCommandModel, claimRequest);
 
-        claimRequestQuestionnaireRepository.save(claimRequestQuestionnaires);
+		claimRequestQuestionnaireRepository.save(claimRequestQuestionnaires);
 
-        notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department");
+		notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department");
 
-        return claimRequest.getClaimNumber();
-    }
+		return claimRequest.getClaimNumber();
+	}
 
-    @RequestMapping(value = "api/claim-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ClaimRequestQueryModel> getAllClaimRequests() {
-        log.info("Find all claim Requests");
-        List<ClaimRequest> claimRequest = claimRequestRepository.findAll();
-        List<ClaimRequestQueryModel> claimRequestQueryModels = toClaimRequestQueryModel(claimRequest);
-        log.info("found all claim requests");
-        return claimRequestQueryModels;
-    }
+	@RequestMapping(value = "api/claim-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClaimRequestQueryModel> getAllClaimRequests() {
+		log.info("Find all claim Requests");
+		List<ClaimRequest> claimRequest = claimRequestRepository.findAll();
+		List<ClaimRequestQueryModel> claimRequestQueryModels = toClaimRequestQueryModel(claimRequest);
+		log.info("found all claim requests");
+		return claimRequestQueryModels;
+	}
 
-    @RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ClaimRequestQueryModel getClaimRequest(@PathVariable("claimNumber") String claimNumber) {
-        log.info("find claim");
-        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
-        log.info("found claim by claim number");
-        return toClaimRequestQueryModel(claimRequest);
-    }
+	@RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ClaimRequestQueryModel getClaimRequest(@PathVariable("claimNumber") String claimNumber) {
+		log.info("find claim");
+		ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+		log.info("found claim by claim number");
+		return toClaimRequestQueryModel(claimRequest);
+	}
 
-  
+	@RequestMapping(value = "api/request-types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<RequestTypeQueryModel> findAllRequestTypes() {
+		log.info("find all request Types");
+		List<RequestType> requestType = requestTypeRepository.findAll();
+		log.info("Found all claim types");
+
+		return toRequestTypeQueryModel(requestType);
+	}
+	
+	@RequestMapping(value = "api/request-types/{requestTypeId}/request-questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<RequestQuestionnaireQueryModel> findRequestTypeQuestionnaires(@PathVariable("requestTypeId") Long requestTypeId) {
+
+		log.info("Find all questionaire for a request type");
+		RequestType requestType = requestTypeRepository.findOne(requestTypeId);
+		List<RequestQuestionnaire> requestQuestionnaire = requestType.getRequestQuestionnaire();
+		 
+		return toRequestQuestionnaireQueryModel(requestQuestionnaire);
+	}
+
+	@Transactional
+	@RequestMapping(value = "api/policy-cancellations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String createPolicyCancellation(@RequestBody PolicyRequestTypeCommandModel policyRequestTypeCommandModel) throws ParseException{
+
+		Policy policy = policyRepository.findByReference(policyRequestTypeCommandModel.getPolicyNo());
+		RequestType requestType = requestTypeRepository.findOne(policyRequestTypeCommandModel.getRequestTypeId());
+		PolicyRequestType policyRequestType = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel,policy,requestType);
+		PolicyRequestType savePolicyRequestType = policyRequestTypeRepository.save(policyRequestType);
+		log.info("Quotation Created Successfully !!!");
+		return savePolicyRequestType.getReference();
+	}
 
 }

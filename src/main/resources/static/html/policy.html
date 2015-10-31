@@ -15,8 +15,8 @@
 
 				<div class="panel-heading">
 					<h4>
-						<b>Policy Summary for Policy Ref.: </b>{{policy.reference}}
-						<div class="pull-right" style='font: 14px arial'>
+						<b>Policy Reference No: </b>{{policy.reference}}
+						<div class="pull-right" style="font: 14px arial">
 							<a href="#/clients/{{policy.client.clientId}}">View Client
 								Details</a>
 						</div>
@@ -81,21 +81,7 @@
 													ng-readonly="isUpdate" class="form-control"
 													ng-model="policy.status" required />
 											</div>
-											<!--
-	                                            <div class="form-group">
-	                                                <label>Underwriter Commission</label> <input type="text"
-	                                                                                      ng-readonly="isUpdate" class="form-control"
-	                                                                                      ng-model="policy.underwriterFee" required />
-	                                            </div>
-												  -->
-											<div class="form-group">
-												<label>Re-Instatement</label> <select class="form-control"
-													ng-model="policy.reInstatement" id="dev" required
-													ng-readonly="isUpdate"
-													ng-options="reInstatementOption for reInstatementOption in policyOptions.reInstatements">
-													<option value=""></option>
-												</select>
-											</div>
+
 											<div class="form-group">
 												<label>Device</label> <select class="form-control"
 													ng-model="policy.device" id="dev" required
@@ -114,9 +100,8 @@
 
 											<div class="form-group form-inline">
 												<input type="checkbox" class="form-control"
-													ng-model="policy.collectByDebitOrder" required
-													ng-readonly="isUpdate" /> <label>Collect By Debit
-													Order</label>
+													ng-model="policy.collectByDebitOrder" readonly disabled/> <label>Collect
+													By Debit Order</label>
 											</div>
 											<div class="form-group form-inline">
 												<input type="checkbox" class="form-control"
@@ -143,40 +128,33 @@
 														<div class="form-group form-inline">
 															<label>Broker Commission</label> <input type="text"
 																class="form-control pull-right"
-																ng-model="policy.brokerCommission" readonly />
+																ng-model="policy.brokerCommission"
+																ng-readonly="isUpdate" required />
 														</div>
 														<div class="form-group form-inline">
-															<label>Underwriter Commission</label> <input type="text"
-																class="form-control pull-right"
-																ng-model="policy.underwriterFee" readonly />
-														</div>
-														<div class="form-group form-inline">
-															<label>UA Commission</label> <input type="text"
-																class="form-control pull-right"
-																ng-model="policy.uacommission" ng-readonly="isUpdate"
-																required />
-														</div>
-														<div class="form-group form-inline">
-															<label>Admin Fee</label> <input type="text"
-																class="form-control pull-right"
-																ng-model="policy.adminFee" readonly />
+															<label>UMA Fee</label> <input type="text"
+																class="form-control pull-right" ng-model="policy.umaFee"
+																ng-readonly="isUpdate" required />
 														</div>
 														<div class="form-group form-inline">
 															<label>Policy Fee</label> <input type="text"
 																class="form-control pull-right"
-																ng-model="policy.policyFee" readonly />
+																ng-model="policy.policyFee" ng-readonly="isUpdate"
+																required />
 														</div>
 														<div class="form-group form-inline">
 															<label>Initial/Additional Fee</label> <input type="text"
 																class="form-control pull-right"
-																ng-model="policy.initalFee" readonly />
+																ng-model="policy.initialFee" ng-readonly="isUpdate"
+																required />
 														</div>
 													</div>
 
-													<div class="col-sm-5">
+													<div class="col-sm-7">
 														<table class="table table-boarded">
 															<thead>
 																<tr>
+																	<th>Select Agent</th>
 																	<th>Agent Name</th>
 																	<th>Commission</th>
 																	<th>Status</th>
@@ -186,18 +164,20 @@
 																<tr>
 																	<td><select class="form-control"
 																		ng-model="policy.subAgentId" ng-readonly="isUpdate"
-																		required
+																		required id="policy.subAgentId"
 																		ng-options="subAgent.id as subAgent.firstName for subAgent in subAgents">
 																			<option value=""></option>
 																	</select></td>
 																	<td><input type="text" class="form-control"
-																		required ng-readonly="isUpdate"
-																		ng-model="policy.uacommission"></td>
+																		readonly
+																		ng-options="subAgent.id as subAgent.firstName for subAgent in subAgents"
+																		ng-model="policy.subAgent.firstName"></td>
 																	<td><input type="text" class="form-control"
 																		required ng-readonly="isUpdate"
-																		ng-model="policy.status"></td>
+																		ng-model="policy.underwriterCommission"></td>
+																	<td><input type="text" class="form-control"
+																		required readonly ng-model="policy.status"></td>
 																</tr>
-
 															</tbody>
 														</table>
 													</div>
@@ -312,9 +292,9 @@
 													<div class="form-group">
 														<label>Special Policy Conditions</label>
 														</h4>
-														<input type="text" class="form-control"
+														<textarea class="form-control"
 															ng-readonly="isUpdate" required
-															ng-model="policy.specialCondition">
+															ng-model="policy.specialCondition"></textarea>
 													</div>
 
 
@@ -351,13 +331,15 @@
 														<tbody>
 															<tr ng-repeat="indemnity in policy.indemnityOption">
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityItemOption"></td>
+																	ng-model="indemnity.indemnityItemOption"
+																	ng-readonly="isUpdate"></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityValue"></td>
+																	ng-model="indemnity.indemnityValue"
+																	ng-readonly="isUpdate"></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.sumInsured"></td>
+																	ng-model="indemnity.sumInsured" ng-readonly="isUpdate"></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.premium"></td>
+																	ng-model="indemnity.premium" ng-readonly="isUpdate"></td>
 															</tr>
 														</tbody>
 													</table>
@@ -392,7 +374,7 @@
 													<div class="form-group">
 														<label>Description</label>
 														<textarea class="form-control"
-															ng-model="policy.conveyances"></textarea>
+															ng-model="policy.conveyances" ng-readonly="isUpdate"></textarea>
 													</div>
 
 													<div class="pull-right">
@@ -426,7 +408,8 @@
 													<div class="form-group">
 														<label>Description</label>
 														<textarea class="form-control"
-															ng-model="policy.geographicalDuration"></textarea>
+															ng-model="policy.geographicalDuration"
+															ng-readonly="isUpdate"></textarea>
 													</div>
 													<div class="pull-right">
 														<a ng-href="#/client" role="link">Update</a> <a
@@ -459,10 +442,6 @@
 														<object data="{{policyScheduleContent}}"
 															style="width: 100%; height: 700px"></object>
 													</div>
-													<div class="pull-right">
-														<a ng-href="#/client" role="link">Update</a> <a
-															ng-href="#/client" role="link">Cancel</a>
-													</div>
 												</div>
 											</div>
 
@@ -478,14 +457,15 @@
 								style="box-shadow: 0 0 30px #ffff;">
 								<div class="panel-body">
 									<div class="pull-center">
-										<a ng-href="#/policy/{{policy.reference}}" ng-click="submitForPolicySchedule(policy.reference)"
+										<a ng-href="#/policy/{{policy.reference}}"
+											ng-click="submitForPolicySchedule(policy.reference)"
 											role="link">Preview Policy Schedule</a> <a
 											ng-href="#/policy/{{policy.reference}}"
-											ng-click="update(false)" role="link">Edit Policy</a>
-											<a	ng-href="#/policy/{{policy.reference}}"
-											ng-click="updatePolicy(policy.reference)" role="link">Update Changes</a>
-											<a	ng-href="#/policy/{{policy.reference}}"
-											ng-click="update(true)" role="link">Cancel Changes</a>
+											ng-click="update(false)" role="link">Edit Policy</a> <a
+											ng-href="#/policy/{{policy.reference}}"
+											ng-click="updatePolicy(policy.reference)" role="link">Update
+											Changes</a> <a ng-href="#/policy/{{policy.reference}}"
+											ng-click="cancel(false)" role="link">Cancel Changes</a>
 									</div>
 								</div>
 							</div>
