@@ -37,6 +37,9 @@ public class PolicyRequestType {
     @Column(name = "reference")
     private String reference;
     
+    @Column(name = "status")
+    private String status;
+    
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date createdDate;
@@ -107,6 +110,14 @@ public class PolicyRequestType {
 
 	public void setReference(String reference) {
 		this.reference = reference;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
     
 }

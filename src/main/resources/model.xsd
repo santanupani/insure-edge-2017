@@ -517,6 +517,63 @@
 		</complexType>
 	</element>
 
+	<element name="RequestTypeQueryModel" type="tns:RequestTypeQueryModel" />
+	<complexType name="RequestTypeQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="requestType" type="string" />
+		</sequence>
+	</complexType>
+
+
+	<element name="RequestQuestionnaireQueryModel" type="tns:RequestQuestionnaireQueryModel" />
+	<complexType name="RequestQuestionnaireQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="sequenceNumber" type="long" />
+			<element name="requestTypeId" type="long" />
+			<element name="question" type="string" />
+			<element name="requestAnswerType" type="string" />
+			<element name="requestAnswerValues" type="string" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element name="isRequired" type="boolean"></element>
+		</sequence>
+	</complexType>
+
+
+	<element name="PolicyRequestTypeCommandModel" type="tns:PolicyRequestTypeCommandModel" />
+	<complexType name="PolicyRequestTypeCommandModel">
+		<sequence>
+			<element name="requestTypeId" type="long" />
+			<element name="reason" type="string" />
+			<element name="effectiveDate" type="string" />
+			<element name="policyNo" type="string" />
+			<element name="status" type="string" />
+			<element name="requestQuestionnaire" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="question" type="string" />
+						<element name="answer" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<element name="PolicyRequestTypeQueryModel" type="tns:PolicyRequestTypeQueryModel" />
+	<complexType name="PolicyRequestTypeQueryModel">
+		<sequence>
+			<element name="reason" type="string" />
+			<element name="reference" type="string" />
+			<element name="effectiveDate" type="string" />
+			<element name="status" type="string" />
+			<element name="policy" minOccurs="0" maxOccurs="1"
+				type="tns:PolicyQueryModel" />
+			<element name="requestType" minOccurs="0" maxOccurs="1"
+				type="tns:RequestTypeQueryModel" />
+		</sequence>
+	</complexType>
 
 	<element name="ClaimRequestCommandModel">
 		<complexType>
@@ -543,6 +600,7 @@
 						<sequence>
 							<element name="question" type="string" />
 							<element name="answer" type="string" />
+							<element name="attachment" type="hexBinary" />
 						</sequence>
 					</complexType>
 				</element>
@@ -579,67 +637,10 @@
 					<sequence>
 						<element name="question" type="string" />
 						<element name="answer" type="string" />
+						<element name="attachment" type="hexBinary" />
 					</sequence>
 				</complexType>
 			</element>
 		</sequence>
 	</complexType>
-
-	<!-- Generic requests on existing policy -->
-	<element name="RequestTypeQueryModel" type="tns:RequestTypeQueryModel" />
-	<complexType name="RequestTypeQueryModel">
-		<sequence>
-			<element name="id" type="long" />
-			<element name="requestType" type="string" />
-		</sequence>
-	</complexType>
-
-
-	<element name="RequestQuestionnaireQueryModel" type="tns:RequestQuestionnaireQueryModel" />
-	<complexType name="RequestQuestionnaireQueryModel">
-		<sequence>
-			<element name="id" type="long" />
-			<element name="sequenceNumber" type="long" />
-			<element name="requestTypeId" type="long" />
-			<element name="question" type="string" />
-			<element name="requestAnswerType" type="string" />
-			<element name="requestAnswerValues" type="string" minOccurs="0"
-				maxOccurs="unbounded">
-			</element>
-			<element name="isRequired" type="boolean"></element>
-		</sequence>
-	</complexType>
-
-
-	<element name="PolicyRequestTypeCommandModel" type="tns:PolicyRequestTypeCommandModel" />
-	<complexType name="PolicyRequestTypeCommandModel">
-		<sequence>
-			<element name="requestTypeId" type="long" />
-			<element name="reason" type="string" />
-			<element name="effectiveDate" type="string" />
-			<element name="policyNo" type="string" />
-			<element name="requestQuestionnaire" minOccurs="0" maxOccurs="unbounded">
-				<complexType>
-					<sequence>
-						<element name="question" type="string" />
-						<element name="answer" type="string" />
-					</sequence>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
-
-	<element name="PolicyRequestTypeQueryModel" type="tns:PolicyRequestTypeQueryModel" />
-	<complexType name="PolicyRequestTypeQueryModel">
-		<sequence>
-			<element name="reason" type="string" />
-			<element name="reference" type="string" />
-			<element name="effectiveDate" type="string" />
-			<element name="policy" minOccurs="0" maxOccurs="1"
-				type="tns:PolicyQueryModel" />
-			<element name="requestType" minOccurs="0" maxOccurs="1"
-				type="tns:RequestTypeQueryModel" />
-		</sequence>
-	</complexType>
-	<!-- End -->
 </schema>

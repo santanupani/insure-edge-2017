@@ -55,6 +55,7 @@ import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.ClaimAnswer;
+import za.co.polygon.domain.ClaimAnswerType;
 import za.co.polygon.domain.ClaimQuestionnaire;
 import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.ClaimType;
@@ -96,6 +97,7 @@ import za.co.polygon.model.SubAgentQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BankAccountRepository;
 import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.ClaimAnswerTypeRepository;
 import za.co.polygon.repository.ClaimQuestionnaireRepository;
 import za.co.polygon.repository.ClaimRequestQuestionnaireRepository;
 import za.co.polygon.repository.ClaimRequestRepository;
@@ -118,8 +120,6 @@ import za.co.polygon.repository.UnderwriterRepository;
 import za.co.polygon.repository.UserRepository;
 import za.co.polygon.service.DocumentService;
 import za.co.polygon.service.NotificationService;
-
-
 
 @RestController
 public class Service {
@@ -161,10 +161,10 @@ public class Service {
 
 	@Autowired
 	private PolicyRepository policyRepository;
-	
+
 	@Autowired
 	private RequestQuestionnaireRepository requestQuestionnaireRepository;
-	
+
 	@Autowired
 	private RequestTypeRepository requestTypeRepository;
 
@@ -188,6 +188,9 @@ public class Service {
 
 	@Autowired
 	private ClaimTypeRepository claimTypeRepository;
+
+	@Autowired
+	private ClaimAnswerTypeRepository claimAnswerTypeRepository;
 
 	@Autowired
 	private ClaimQuestionnaireRepository claimQuestionnaireRepository;
@@ -506,19 +509,38 @@ public class Service {
 
 		return r;
 	}
+	
+	@RequestMapping(value = "api/claim-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ClaimRequestQueryModel> getAllClaimRequests() {
+		log.info("Find all claim Requests");
+		List<ClaimQuestionnaire> claimQuestionnaires = claimQuestionnaireRepository.findAll();
+		List<ClaimRequest> claimRequest = claimRequestRepository.findAll();
+		List<ClaimRequestQueryModel> claimRequestQueryModels = toClaimRequestQueryModel(claimRequest, claimQuestionnaires);
+		log.info("found all claim requests");
+		return claimRequestQueryModels;
+	}
+
+	@RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ClaimRequestQueryModel getClaimRequest(@PathVariable("claimNumber") String claimNumber) {
+		log.info("find claim");
+		List<ClaimQuestionnaire> claimQuestionnaires = claimQuestionnaireRepository.findAll();
+		ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+		log.info("found claim by claim number");
+		return toClaimRequestQueryModel(claimRequest, claimQuestionnaires);
+	}
 
 	@Transactional
-	@RequestMapping(value = "api/claim-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String createClaimRequest(@RequestBody ClaimRequestCommandModel claimRequestCommandModel) {
+	@RequestMapping(value = "api/claim-requests", method = RequestMethod.POST)
+	public String createClaimRequest(@RequestPart(value = "claimRequest") ClaimRequestCommandModel claimRequestCommandModel, @RequestPart("file") MultipartFile[]  file) throws IOException {
 
 		Policy policy = policyRepository.findByReference(claimRequestCommandModel.getReference());
 
 		ClaimType claimType = claimTypeRepository.findOne(claimRequestCommandModel.getClaimTypeId());
+		List<ClaimQuestionnaire> claimQuestionnaires = claimQuestionnaireRepository.findAll();
 
-		ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType);
+		ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType, claimQuestionnaires,file);
 		claimRequest = claimRequestRepository.save(claimRequest);
 
-		//claimRequest.setComfirmationAmount(file.getBytes());
 		List<ClaimAnswer> claimRequestQuestionnaires = fromClaimRequestCommandModel(claimRequestCommandModel, claimRequest);
 
 		claimRequestQuestionnaireRepository.save(claimRequestQuestionnaires);
@@ -527,43 +549,27 @@ public class Service {
 
 		return claimRequest.getClaimNumber();
 	}
-
-	@RequestMapping(value = "api/claim-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<ClaimRequestQueryModel> getAllClaimRequests() {
-		log.info("Find all claim Requests");
-		List<ClaimRequest> claimRequest = claimRequestRepository.findAll();
-		List<ClaimRequestQueryModel> claimRequestQueryModels = toClaimRequestQueryModel(claimRequest);
-		log.info("found all claim requests");
-		return claimRequestQueryModels;
-	}
-
-	@RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ClaimRequestQueryModel getClaimRequest(@PathVariable("claimNumber") String claimNumber) {
-		log.info("find claim");
-		ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
-		log.info("found claim by claim number");
-		return toClaimRequestQueryModel(claimRequest);
-	}
-
+	
 	@RequestMapping(value = "api/request-types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RequestTypeQueryModel> findAllRequestTypes() {
 		log.info("find all request Types");
 		List<RequestType> requestType = requestTypeRepository.findAll();
-		log.info("Found all claim types");
+		log.info("Found all request types");
 
 		return toRequestTypeQueryModel(requestType);
 	}
-	
-	@RequestMapping(value = "api/request-types/{requestTypeId}/request-questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "api/request-type/{requestTypeId}/request-questionnaire", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RequestQuestionnaireQueryModel> findRequestTypeQuestionnaires(@PathVariable("requestTypeId") Long requestTypeId) {
 
 		log.info("Find all questionaire for a request type");
 		RequestType requestType = requestTypeRepository.findOne(requestTypeId);
 		List<RequestQuestionnaire> requestQuestionnaire = requestType.getRequestQuestionnaire();
-		 
+
 		return toRequestQuestionnaireQueryModel(requestQuestionnaire);
 	}
 
+	
 	@Transactional
 	@RequestMapping(value = "api/policy-cancellations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createPolicyCancellation(@RequestBody PolicyRequestTypeCommandModel policyRequestTypeCommandModel) throws ParseException{
@@ -575,5 +581,4 @@ public class Service {
 		log.info("Quotation Created Successfully !!!");
 		return savePolicyRequestType.getReference();
 	}
-
 }

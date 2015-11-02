@@ -1,0 +1,118 @@
+<div class="row" style="padding: 25px;" ng-init="init()">
+	<div class="alert alert-success alert-dismissible" role="alert"
+		ng-if="message">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close" ng-click="closeNotification()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Success ! </strong>{{message}}
+	</div>
+
+	<div class="col-md-12">
+
+		<form data-toggle="validator" role="form" name="form" id="for">
+
+			<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+				<div class="panel-heading">
+					<h4>Policy Request against Policy
+						{{policyRequestType.policyNo}}</h4>
+				</div>
+				<div class="panel-body" align="center">
+					<div class="form-group">
+						<select class="form-control"
+							ng-options="requestType.id as requestType.requestType for requestType in requestTypes"
+							ng-model="policyRequestType.requestTypeId"
+							ng-change="getRequestQuestionnaire(policyRequestType.requestTypeId)"
+							form="form" required>
+							<option value="">Select Request Type</option>
+						</select>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+				<div class="panel-heading">
+					<h4>Please Fill Up the request details</h4>
+				</div>
+				<div class="panel-body" align="left">
+
+					<div ng-repeat="requestQuestionnaire in requestQuestionnaires">
+
+						<div
+							ng-if="requestQuestionnaires[requestQuestionnaire.dependsOn - 1].answer.toString() == requestQuestionnaire.onAnswer.toString()">
+
+							<div ng-if="requestQuestionnaire.requestAnswerType == 'text'"
+								class="form-group">
+								<label for="q_{{requestQuestionnaire.id}}">{{requestQuestionnaire.question}}</label>
+								<input type="text" class="form-control"
+									id="q_{{requestQuestionnaire.id}}"
+									ng-model="requestQuestionnaire.answer"
+									ng-required="requestQuestionnaire.isRequired" />
+							</div>
+
+							<div ng-if="requestQuestionnaire.requestAnswerType == 'date'"
+								class="form-group">
+								<label for="q_{{requestQuestionnaire.id}}">{{requestQuestionnaire.question}}</label>
+								<input type="date" class="form-control"
+									id="q_{{requestQuestionnaire.id}}"
+									ng-model="requestQuestionnaire.answer"
+									ng-required="requestQuestionnaire.isRequired" />
+							</div>
+
+							<div ng-if="claimQuestionnaire.claimAnswerType == 'checkbox'"
+								class="checkbox">
+								<label><input type="checkbox"
+									ng-model="claimQuestionnaire.answer">{{claimQuestionnaire.question}}</label>
+							</div>
+
+							<div ng-if="claimQuestionnaire.claimAnswerType == 'select'"
+								class="form-group">
+								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+								<select class="form-control" id="q_{{claimQuestionnaire.id}}"
+									ng-model="claimQuestionnaire.answer"
+									ng-options="claimAnswerValue for claimAnswerValue in claimQuestionnaire.claimAnswerValues"
+									ng-required="claimQuestionnaire.isRequired">
+									<option value=""></option>
+								</select>
+							</div>
+
+							<div ng-if="claimQuestionnaire.claimAnswerType == 'textarea'"
+								class="form-group">
+								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+								<textarea class="form-control" id="q_{{claimQuestionnaire.id}}"
+									name="{{claimQuestionnaire.id}}"
+									ng-model="claimQuestionnaire.answer"></textarea>
+							</div>
+
+							<div ng-if="claimQuestionnaire.claimAnswerType == 'date'"
+								class="form-group">
+								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+								<input type="date" class="form-control"
+									id="q_{{claimQuestionnaire.id}}"
+									ng-model="claimQuestionnaire.answer"
+									ng-required="claimQuestionnaire.isRequired" />
+							</div>
+
+
+							<div ng-if="claimQuestionnaire.claimAnswerType == 'other'"
+								class="form-group">
+								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
+								<input type="text" class="form-control"
+									id="q_{{claimQuestionnaire.id}}"
+									ng-model="claimQuestionnaire.answer"
+									ng-required="claimQuestionnaire.isRequired" />
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer text-right">
+
+						<div class="form-group">
+							<button class="btn btn-success"
+								ng-click="submitClaimRequest(form)" role="button">Submit
+								Request</button>
+						</div>
+
+					</div>
+		</form>
+	</div>
