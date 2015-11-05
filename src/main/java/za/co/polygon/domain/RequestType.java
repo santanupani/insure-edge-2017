@@ -1,7 +1,7 @@
 package za.co.polygon.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "request_types")
 public class RequestType {
@@ -19,9 +21,12 @@ public class RequestType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
+    
     @Column(name = "request_type")
     private String requestType;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "requestType")
+    private List<PolicyRequestType> policyRequestTypes;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requestType")
@@ -35,6 +40,7 @@ public class RequestType {
         this.id = id;
     }
 
+    
 	public String getRequestType() {
 		return requestType;
 	}
@@ -50,6 +56,13 @@ public class RequestType {
 	public void setRequestQuestionnaire(List<RequestQuestionnaire> requestQuestionnaire) {
 		this.requestQuestionnaire = requestQuestionnaire;
 	}
-    
 
+	public List<PolicyRequestType> getPolicyRequestTypes() {
+		return policyRequestTypes;
+	}
+
+	public void setPolicyRequestTypes(List<PolicyRequestType> policyRequestTypes) {
+		this.policyRequestTypes = policyRequestTypes;
+	}
+    
 }

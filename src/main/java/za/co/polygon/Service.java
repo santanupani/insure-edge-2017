@@ -28,6 +28,7 @@ import static za.co.polygon.mapper.Mapper.toRequestTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+import static za.co.polygon.mapper.Mapper.toPolicyRequestTypeQueryModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -55,7 +56,6 @@ import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.ClaimAnswer;
-import za.co.polygon.domain.ClaimAnswerType;
 import za.co.polygon.domain.ClaimQuestionnaire;
 import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.ClaimType;
@@ -69,6 +69,7 @@ import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.RequestAnswer;
 import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
@@ -84,6 +85,7 @@ import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
 import za.co.polygon.model.PolicyRequestTypeCommandModel;
+import za.co.polygon.model.PolicyRequestTypeQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
@@ -113,6 +115,7 @@ import za.co.polygon.repository.QuotationOptionRepository;
 import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
+import za.co.polygon.repository.RequestAnswersRepository;
 import za.co.polygon.repository.RequestQuestionnaireRepository;
 import za.co.polygon.repository.RequestTypeRepository;
 import za.co.polygon.repository.SubAgentRepository;
@@ -164,7 +167,7 @@ public class Service {
 
 	@Autowired
 	private RequestQuestionnaireRepository requestQuestionnaireRepository;
-
+	
 	@Autowired
 	private RequestTypeRepository requestTypeRepository;
 
@@ -200,6 +203,9 @@ public class Service {
 
 	@Autowired
 	private ClaimRequestQuestionnaireRepository claimRequestQuestionnaireRepository;
+	
+	@Autowired
+	private RequestAnswersRepository requestAnswersRepository;
 
 	@Autowired
 	private DocumentService documentService;
@@ -571,14 +577,28 @@ public class Service {
 
 	
 	@Transactional
-	@RequestMapping(value = "api/policy-cancellations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String createPolicyCancellation(@RequestBody PolicyRequestTypeCommandModel policyRequestTypeCommandModel) throws ParseException{
+	@RequestMapping(value = "api/generic-policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String createGenericPolicyRequest(@RequestBody PolicyRequestTypeCommandModel policyRequestTypeCommandModel) throws ParseException{
 
 		Policy policy = policyRepository.findByReference(policyRequestTypeCommandModel.getPolicyNo());
 		RequestType requestType = requestTypeRepository.findOne(policyRequestTypeCommandModel.getRequestTypeId());
 		PolicyRequestType policyRequestType = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel,policy,requestType);
 		PolicyRequestType savePolicyRequestType = policyRequestTypeRepository.save(policyRequestType);
-		log.info("Quotation Created Successfully !!!");
+		
+		List<RequestAnswer> requestAnswers = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policyRequestType);
+
+		requestAnswersRepository.save(requestAnswers);
+		
+		notificationService.sendNotificationForNewGenericPolicyRequest(savePolicyRequestType,"polygon.testing@gmail.com");
+		log.info("Generic policy request created Successfully !!!");
 		return savePolicyRequestType.getReference();
+	}
+	
+	@RequestMapping(value = "api/generic-policy-request/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public PolicyRequestTypeQueryModel getGenericPolicyRequest(@PathVariable("reference") String reference) {
+		log.info("Find the details of specific generic policy");
+		PolicyRequestType policyRequestType = policyRequestTypeRepository.findByReference(reference);
+		
+		return toPolicyRequestTypeQueryModel(policyRequestType);
 	}
 }

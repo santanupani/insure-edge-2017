@@ -57,6 +57,7 @@ import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
 import za.co.polygon.model.PolicyRequestQueryModel;
 import za.co.polygon.model.PolicyRequestTypeCommandModel;
+import za.co.polygon.model.PolicyRequestTypeQueryModel;
 import za.co.polygon.model.ProductQueryModel;
 import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
@@ -942,13 +943,12 @@ public class Mapper {
 
 	public static PolicyRequestType fromPolicyRequestTypeCommandModel(PolicyRequestTypeCommandModel policyRequestTypeCommandModel, Policy policy,RequestType requestType) throws ParseException {
 		PolicyRequestType policyRequestType = new PolicyRequestType();
-
+	
 		policyRequestType.setReference(UUID.randomUUID().toString());
 		policyRequestType.setPolicy(policy);
 		policyRequestType.setCreatedDate(new Date());
-		policyRequestType.setEffectiveDate(new SimpleDateFormat("dd/MM/yyyy").parse(policyRequestTypeCommandModel.getEffectiveDate()));
-		policyRequestType.setReason(policyRequestTypeCommandModel.getReason());
 		policyRequestType.setStatus("APPLIED");
+		policyRequestType.setRequestType(requestType);
 		List<RequestAnswer> answerList = new ArrayList<RequestAnswer>();
 		for (PolicyRequestTypeCommandModel.RequestQuestionnaire requestQuestionnaire : policyRequestTypeCommandModel.getRequestQuestionnaire()) {
 			RequestAnswer requestAnswer = new RequestAnswer();
@@ -959,6 +959,38 @@ public class Mapper {
 		}
 
 		return policyRequestType;
-	}        
-	/* End */
+	}
+	
+	public static List<RequestAnswer> fromPolicyRequestTypeCommandModel(PolicyRequestTypeCommandModel policyRequestTypeCommandModel, PolicyRequestType policyRequestType) {
+		List<RequestAnswer> result = new ArrayList<RequestAnswer>();
+		for (PolicyRequestTypeCommandModel.RequestQuestionnaire questionnaire : policyRequestTypeCommandModel.getRequestQuestionnaire()) {
+			RequestAnswer requestAnswer = new RequestAnswer();
+			requestAnswer.setQuestion(questionnaire.getQuestion());
+			requestAnswer.setAnswer(questionnaire.getAnswer());
+			requestAnswer.setPolicyRequestType(policyRequestType);;
+			
+			result.add(requestAnswer);
+		}
+		return result;
+	}
+	
+
+	public static PolicyRequestTypeQueryModel toPolicyRequestTypeQueryModel(PolicyRequestType policyRequestType){
+		PolicyRequestTypeQueryModel policyRequestTypeQueryModel = new PolicyRequestTypeQueryModel();
+		policyRequestTypeQueryModel.setReference(policyRequestType.getReference());
+		policyRequestTypeQueryModel.setCreatedDate( new SimpleDateFormat("dd/MM/yyyy").format(policyRequestType.getCreatedDate()));
+		policyRequestTypeQueryModel.setPolicy(toPolicyQueryModel(policyRequestType.getPolicy()));
+		policyRequestTypeQueryModel.setRequestType(toRequestTypeQueryModel(policyRequestType.getRequestType()));
+		for (RequestAnswer requestAnswer : policyRequestType.getRequestAnswers()) {
+			PolicyRequestTypeQueryModel.RequestQuestionnaire questionairre = new PolicyRequestTypeQueryModel.RequestQuestionnaire();
+			questionairre.setQuestion(requestAnswer.getQuestion());
+			questionairre.setAnswer(requestAnswer.getAnswer());
+			policyRequestTypeQueryModel.getRequestQuestionnaire().add(questionairre);
+
+		}
+		
+		return policyRequestTypeQueryModel;
+	}
+	
+	
 }

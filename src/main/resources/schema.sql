@@ -321,25 +321,10 @@ create table claim_answers(
      constraint claim_answer_fk1 foreign key (claim_request_id) references  claim_requests(id)
 );
 
-create table policy_request_type(
-     id integer auto_increment not null primary key,
-     request_type varchar(32) not null,
-     policy_id varchar(16) not null,
-     status_from varchar(16),
-     reason varchar(128) not null,
-     reference varchar(60) not null,
-     created_date date not null,
-     effective_date date,
-     status varchar(16) not null,
-     constraint policy_request_type_fk1 foreign key (policy_id) references  policies(id)
-);
-
-
 create table request_types(
     id integer auto_increment not null primary key,
     request_type varchar(32) not null
 );
-
 
 create table request_answer_types(
    id integer auto_increment not null primary key,
@@ -354,7 +339,7 @@ create table request_questionnaires(
    sequence_number integer not null,
    is_required boolean not null,
    constraint request_questionnaires_fk1 foreign key (request_answer_type_id) references request_answer_types(id),
-   constraint request_questinnaires_fk1 foreign key (request_type_id) references request_types(id)
+   constraint request_questinnaires_fk2 foreign key (request_type_id) references request_types(id)
 );
 
 create table request_answer_values(
@@ -364,11 +349,24 @@ create table request_answer_values(
     constraint request_answer_values_fk1 foreign key (request_questionnaire_id) references request_questionnaires (id)
 );
 
+create table policy_request_type(
+     id integer auto_increment not null primary key,
+     request_type_id varchar(32) not null,
+     policy_id varchar(16) not null,
+     status_from varchar(16),
+     reference varchar(60) not null,
+     created_date date not null,
+     effective_date date,
+     status varchar(16) not null,
+     constraint policy_request_type_fk1 foreign key (policy_id) references  policies(id),
+     constraint policy_request_type_fk2 foreign key (request_type_id) references  request_types(id)
+);
+
 create table request_answers(
       id integer auto_increment not null primary key,
      request_type_id integer not null,
      question varchar(128) not null,
      answer varchar(512),
-     constraint request_answer_fk1 foreign key (request_type_id) references  request_types(id)
+     constraint request_answer_fk1 foreign key (request_type_id) references  policy_request_type(id)
 );
 

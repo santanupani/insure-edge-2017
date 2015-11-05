@@ -1,14 +1,17 @@
 package za.co.polygon.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,14 +28,15 @@ public class PolicyRequestType {
     @JoinColumn(name="policy_id")
     private Policy policy;
     
-    @Column(name = "request_type")
-    private String requestType;
+    @ManyToOne
+    @JoinColumn(name = "request_type_id")
+    private RequestType requestType;
+    
+    @OneToMany(mappedBy = "policyRequestType", fetch = FetchType.EAGER)
+	private List<RequestAnswer> requestAnswers;
     
     @Column(name = "status_from")
     private String statusFrom;
-    
-    @Column(name = "reason")
-    private String reason;
     
     @Column(name = "reference")
     private String reference;
@@ -64,11 +68,12 @@ public class PolicyRequestType {
 		this.policy = policy;
 	}
 
-	public String getRequestType() {
+	
+	public RequestType getRequestType() {
 		return requestType;
 	}
 
-	public void setRequestType(String requestType) {
+	public void setRequestType(RequestType requestType) {
 		this.requestType = requestType;
 	}
 
@@ -78,14 +83,6 @@ public class PolicyRequestType {
 
 	public void setStatusFrom(String statusFrom) {
 		this.statusFrom = statusFrom;
-	}
-
-	public String getReason() {
-		return reason;
-	}
-
-	public void setReason(String reason) {
-		this.reason = reason;
 	}
 
 	public Date getCreatedDate() {
@@ -118,6 +115,14 @@ public class PolicyRequestType {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<RequestAnswer> getRequestAnswers() {
+		return requestAnswers;
+	}
+
+	public void setRequestAnswers(List<RequestAnswer> requestAnswers) {
+		this.requestAnswers = requestAnswers;
 	}
     
 }

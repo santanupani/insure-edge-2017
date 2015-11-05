@@ -548,7 +548,9 @@ insert into request_answer_types(request_answer_type) values('select');
 insert into request_answer_types(request_answer_type) values('checkbox');
 insert into request_answer_types(request_answer_type) values('textarea');
 insert into request_answer_types(request_answer_type) values('date');
-insert into request_answer_types(request_answer_type) values('other');
 insert into request_answer_types(request_answer_type) values('blob');
+
 insert into request_questionnaires(request_type_id, sequence_number,question, request_answer_type_id, is_required)values('1','1', 'Reason For Cancellation', 1, true);
 insert into request_questionnaires(request_type_id, sequence_number,question, request_answer_type_id, is_required)values('1','2', 'Effective Date', 6, true);
+
+

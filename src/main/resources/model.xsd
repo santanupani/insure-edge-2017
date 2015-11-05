@@ -546,10 +546,7 @@
 	<complexType name="PolicyRequestTypeCommandModel">
 		<sequence>
 			<element name="requestTypeId" type="long" />
-			<element name="reason" type="string" />
-			<element name="effectiveDate" type="string" />
 			<element name="policyNo" type="string" />
-			<element name="status" type="string" />
 			<element name="requestQuestionnaire" minOccurs="0" maxOccurs="unbounded">
 				<complexType>
 					<sequence>
@@ -564,14 +561,23 @@
 	<element name="PolicyRequestTypeQueryModel" type="tns:PolicyRequestTypeQueryModel" />
 	<complexType name="PolicyRequestTypeQueryModel">
 		<sequence>
-			<element name="reason" type="string" />
 			<element name="reference" type="string" />
+			<element name="createdDate" type="string" />
 			<element name="effectiveDate" type="string" />
+			<element name="statusFrom" type="string" />
 			<element name="status" type="string" />
 			<element name="policy" minOccurs="0" maxOccurs="1"
 				type="tns:PolicyQueryModel" />
 			<element name="requestType" minOccurs="0" maxOccurs="1"
 				type="tns:RequestTypeQueryModel" />
+			<element name="requestQuestionnaire" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="question" type="string" />
+						<element name="answer" type="string" />
+					</sequence>
+				</complexType>
+			</element>
 		</sequence>
 	</complexType>
 

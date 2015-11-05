@@ -20,9 +20,9 @@ public class RequestAnswer {
 
     @ManyToOne
     @JoinColumn(name = "request_type_id")
-    RequestType requesType;
-    
-    @Column(name = "question")
+    PolicyRequestType policyRequestType;
+
+	@Column(name = "question")
     private String question;
 
     @Column(name = "answer")
@@ -51,4 +51,12 @@ public class RequestAnswer {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
+	public PolicyRequestType getPolicyRequestType() {
+		return policyRequestType;
+	}
+
+	public void setPolicyRequestType(PolicyRequestType policyRequestType) {
+		this.policyRequestType = policyRequestType;
+	}
 }

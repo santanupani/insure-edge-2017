@@ -36,15 +36,55 @@ clientAdmin.directive('fileModel', ['$parse', function ($parse) {
 	};
 }]);
 
-clientAdmin.controller('genericPolicyRequestsCtrl', function ($scope, $routeParams, $http, $rootScope, $window) {
+clientAdmin.controller('genericPolicyRequestsCtrl', function ($scope, $routeParams, $http, $rootScope, $window,$location) {
 
 	$scope.policyRequestType = {};
 	$scope.init = function () {
 		$scope.getRequestType();
 		$scope.policyRequestType.policyNo = $routeParams.reference;
-				
+
 	};
-	
+
+	$scope.submitGenericRequest = function (form) {
+
+		if (form.$invalid) {
+			console.log("Form Validation Failure");
+		} else {
+			console.log("Form Validation Success");
+			$scope.policyRequestType.requestQuestionnaire = [];
+			
+			console.log("Request type ID: "+$scope.policyRequestType.requestTypeId);
+			for (var i = 0; i < $scope.requestQuestionnaires.length; i++) {
+				$scope.policyRequestType.requestQuestionnaire[i] = {};
+				
+				$scope.policyRequestType.requestQuestionnaire[i].question = $scope.requestQuestionnaires[i].question;
+				$scope.policyRequestType.requestQuestionnaire[i].answer = $scope.requestQuestionnaires[i].answer;
+			}
+			
+			
+			console.log($scope.policyRequestType);
+			$http({
+				url: '/api/generic-policy-requests',
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				data: $scope.policyRequestType
+			}).success(function (data, status) {
+				if (status == 200) {
+					console.log('All the questions and answers saved succesfullly');
+					$rootScope.message = "Reference Number : " + data;
+					$location.path("/policy-request/"+$scope.policyRequestType.policyNo);
+				} else {
+					console.log('status:' + status);
+				}
+			}).error(function (error) {
+				console.log(error);
+				$rootScope.message = error;
+			});
+		}
+	};
+
 	$scope.getRequestQuestionnaire = function (requestTypeId) {
 
 		$http({
@@ -92,17 +132,17 @@ clientAdmin.controller('genericPolicyRequestsCtrl', function ($scope, $routePara
 		});
 	};
 
-	
+
 	$rootScope.getPolicy = function (reference) {
 		angular.forEach($rootScope.policies, function (policy) {
 			if (angular.equals(reference, policy.reference)) {
 				$scope.policy = policy;
-				
+
 			}
 		});
 	};
-	
-	
+
+
 	$scope.getPolicies = function () {
 		$http({
 			url: '/api/policies',

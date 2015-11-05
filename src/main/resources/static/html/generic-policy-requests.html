@@ -60,56 +60,38 @@
 									ng-required="requestQuestionnaire.isRequired" />
 							</div>
 
-							<div ng-if="claimQuestionnaire.claimAnswerType == 'checkbox'"
+							<div ng-if="requestQuestionnaire.requestAnswerType == 'checkbox'"
 								class="checkbox">
 								<label><input type="checkbox"
-									ng-model="claimQuestionnaire.answer">{{claimQuestionnaire.question}}</label>
+									ng-model="requestQuestionnaire.answer">{{requestQuestionnaire.question}}</label>
 							</div>
 
-							<div ng-if="claimQuestionnaire.claimAnswerType == 'select'"
+							<div ng-if="requestQuestionnaire.requestAnswerType == 'select'"
 								class="form-group">
-								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
-								<select class="form-control" id="q_{{claimQuestionnaire.id}}"
-									ng-model="claimQuestionnaire.answer"
-									ng-options="claimAnswerValue for claimAnswerValue in claimQuestionnaire.claimAnswerValues"
-									ng-required="claimQuestionnaire.isRequired">
+								<label for="q_{{requestQuestionnaire.id}}">{{requestQuestionnaire.question}}</label>
+								<select class="form-control" id="q_{{requestQuestionnaire.id}}"
+									ng-model="requestQuestionnaire.answer"
+									ng-options="requestAnswerValue for requestAnswerValue in requestQuestionnaire.requestAnswerValues"
+									ng-required="requestQuestionnaire.isRequired">
 									<option value=""></option>
 								</select>
 							</div>
 
-							<div ng-if="claimQuestionnaire.claimAnswerType == 'textarea'"
+							<div ng-if="requestQuestionnaire.requestAnswerType == 'textarea'"
 								class="form-group">
-								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
-								<textarea class="form-control" id="q_{{claimQuestionnaire.id}}"
-									name="{{claimQuestionnaire.id}}"
-									ng-model="claimQuestionnaire.answer"></textarea>
+								<label for="q_{{requestQuestionnaire.id}}">{{requestQuestionnaire.question}}</label>
+								<textarea class="form-control" id="q_{{requestQuestionnaire.id}}"
+									name="{{requestQuestionnaire.id}}"
+									ng-model="requestQuestionnaire.answer"></textarea>
 							</div>
 
-							<div ng-if="claimQuestionnaire.claimAnswerType == 'date'"
-								class="form-group">
-								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
-								<input type="date" class="form-control"
-									id="q_{{claimQuestionnaire.id}}"
-									ng-model="claimQuestionnaire.answer"
-									ng-required="claimQuestionnaire.isRequired" />
-							</div>
-
-
-							<div ng-if="claimQuestionnaire.claimAnswerType == 'other'"
-								class="form-group">
-								<label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
-								<input type="text" class="form-control"
-									id="q_{{claimQuestionnaire.id}}"
-									ng-model="claimQuestionnaire.answer"
-									ng-required="claimQuestionnaire.isRequired" />
-							</div>
 						</div>
 					</div>
 					<div class="panel-footer text-right">
 
 						<div class="form-group">
 							<button class="btn btn-success"
-								ng-click="submitClaimRequest(form)" role="button">Submit
+								ng-click="submitGenericRequest(form)" role="button">Submit
 								Request</button>
 						</div>
 
