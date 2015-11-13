@@ -70,6 +70,50 @@
 					</sequence>
 				</complexType>
 			</element>
+			<element name="histories" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="id" type="long" />
+						<element name="eventDate" type="string" />
+						<element name="typeOfLoss" type="string" />
+						<element name="lossValue" type="double" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="locationOptions" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="id" type="long" />
+						<element name="commodity" type="string" />
+						<element name="distance" type="string" />
+						<element name="fromLocation" type="string" />
+						<element name="toLocation" type="string" />
+						<element name="limit" type="double" />
+						<element name="staticLimit" type="double" />
+						<element name="sabsCategory" type="string" />
+						<element name="professionalCarriers" type="string" />
+						<element name="duration" type="string" />
+						<element name="staticMaxAmount" type="string" />
+						<element name="totalValue" type="string" />
+						<element name="totalValueStatic" type="string" />
+						<element name="isFirstLossCover" type="boolean" />
+						<element name="isServiceCarrier" type="boolean" />
+						<element name="carrierName" type="string" />
+						<element name="specificCarrier" type="string" />
+						<element name="goodsDescription" type="string" />
+						<element name="isStoreVault" type="boolean" />
+						<element name="isConcreteSecured" type="boolean" />
+						<element name="isSeismicDetector" type="boolean" />
+						<element name="isCctv" type="boolean" />
+						<element name="isAlarmed" type="boolean" />
+						<element name="isGoodsMoved" type="boolean" />
+						<element name="storageType" type="string" />
+						<element name="vaultAddress" type="string" />
+						<element name="otherSecureMeans" type="string" />
+
+					</sequence>
+				</complexType>
+			</element>
 		</sequence>
 	</complexType>
 
@@ -315,6 +359,47 @@
 						<sequence>
 							<element name="question" type="string" />
 							<element name="answer" type="string" />
+						</sequence>
+					</complexType>
+				</element>
+				<element name="histories" minOccurs="0" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="eventDate" type="string" />
+							<element name="typeOfLoss" type="string" />
+							<element name="lossValue" type="double" />
+						</sequence>
+					</complexType>
+				</element>
+				<element name="locationOptions" minOccurs="0" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="commodity" type="string" />
+							<element name="distance" type="string" />
+							<element name="fromLocation" type="string" />
+							<element name="toLocation" type="string" />
+							<element name="limit" type="double" />
+							<element name="staticLimit" type="double" />
+							<element name="sabsCategory" type="string" />
+							<element name="professionalCarriers" type="string" />
+							<element name="duration" type="string" />
+							<element name="staticMaxAmount" type="string" />
+							<element name="totalValue" type="string" />
+							<element name="totalValueStatic" type="string" />
+							<element name="isFirstLossCover" type="boolean" />
+							<element name="isServiceCarrier" type="boolean" />
+							<element name="carrierName" type="string" />
+							<element name="specificCarrier" type="string" />
+							<element name="goodsDescription" type="string" />
+							<element name="isStoreVault" type="boolean" />
+							<element name="isConcreteSecured" type="boolean" />
+							<element name="isGoodsMoved" type="boolean" />
+							<element name="isSeismicDetector" type="boolean" />
+							<element name="isCctv" type="boolean" />
+							<element name="isAlarmed" type="boolean" />
+							<element name="storageType" type="string" />
+							<element name="vaultAddress" type="string" />
+							<element name="otherSecureMeans" type="string" />
 						</sequence>
 					</complexType>
 				</element>

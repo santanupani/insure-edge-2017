@@ -1,10 +1,9 @@
-
 package za.co.polygon.domain;
-
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,45 +18,49 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "quotation_requests")
 public class QuotationRequest {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "reference")
     private String reference;
-    
+
     @Column(name = "applicant_name")
     private String applicantName;
-    
+
     @Column(name = "company_name")
     private String companyName;
-    
+
     @Column(name = "applicant_email")
     private String applicantEmail;
-    
+
     @ManyToOne
     @JoinColumn(name = "broker_id")
     private Broker broker;
-    
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    
+
+    @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
+    private List<LocationOption> locationOptions;
+
+    @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
+    private List<History> history;
+
     @Column(name = "create_date")
     private Date createDate;
-   
+
     @Column(name = "status")
     private String status;
-    
+
     @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
     private List<Answer> answers;
-    
+
     @OneToMany(mappedBy = "quotationRequest", fetch = FetchType.EAGER)
     private List<Quotation> quotation;
-    
-    
 
     public Long getId() {
         return id;
@@ -90,8 +93,7 @@ public class QuotationRequest {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-    
-    
+
     public String getApplicantEmail() {
         return applicantEmail;
     }
@@ -123,7 +125,7 @@ public class QuotationRequest {
     public void setCreateDate(Date createdDate) {
         this.createDate = createdDate;
     }
-    
+
     public String getStatus() {
         return status;
     }
@@ -133,10 +135,11 @@ public class QuotationRequest {
     }
 
     public List<Answer> getAnswers() {
-    	if(answers== null) 
-    		return new ArrayList<Answer>();
-    	else
-    		return answers;
+        if (answers == null) {
+            return new ArrayList<Answer>();
+        } else {
+            return answers;
+        }
     }
 
     public void setAnswers(List<Answer> quotationRequestQuestionnaire) {
@@ -150,5 +153,22 @@ public class QuotationRequest {
     public void setQuotation(List<Quotation> quotation) {
         this.quotation = quotation;
     }
-  
+
+    public List<LocationOption> getLocationOptions() {
+        return locationOptions;
+    }
+
+    public void setLocationOptions(List<LocationOption> locationOptions) {
+        this.locationOptions = locationOptions;
+    }
+
+    public List<History> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<History> history) {
+        this.history = history;
+    }
+    
+
 }

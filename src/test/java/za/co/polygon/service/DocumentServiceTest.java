@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLDocument;
-
 import org.dom4j.DocumentException;
 import org.junit.Test;
 

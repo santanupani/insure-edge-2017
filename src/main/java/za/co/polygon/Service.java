@@ -4,6 +4,7 @@ import static za.co.polygon.mapper.Mapper.fromBankAccountCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClaimRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClientCommandModel;
 import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
+import static za.co.polygon.mapper.Mapper.fromLocationOptionsCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyRequestTypeCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
@@ -17,6 +18,7 @@ import static za.co.polygon.mapper.Mapper.toClientQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyRequest;
 import static za.co.polygon.mapper.Mapper.toPolicyRequestQueryModel;
+import static za.co.polygon.mapper.Mapper.toPolicyRequestTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyUpdateCommandModel;
 import static za.co.polygon.mapper.Mapper.toProductQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
@@ -28,7 +30,6 @@ import static za.co.polygon.mapper.Mapper.toRequestTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
-import static za.co.polygon.mapper.Mapper.toPolicyRequestTypeQueryModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -61,6 +62,8 @@ import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
+import za.co.polygon.domain.History;
+import za.co.polygon.domain.LocationOption;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.PolicyRequestType;
@@ -74,6 +77,8 @@ import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
+import za.co.polygon.mapper.Mapper;
+import static za.co.polygon.mapper.Mapper.fromHistoryCommandModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
@@ -106,6 +111,8 @@ import za.co.polygon.repository.ClaimRequestRepository;
 import za.co.polygon.repository.ClaimTypeRepository;
 import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
+import za.co.polygon.repository.HistoryRepository;
+import za.co.polygon.repository.LocationOptionRepository;
 import za.co.polygon.repository.PolicyRepository;
 import za.co.polygon.repository.PolicyRequestRepository;
 import za.co.polygon.repository.PolicyRequestTypeRepository;
@@ -136,6 +143,9 @@ public class Service {
 	private ProductRepository productRepository;
 
 	@Autowired
+	private LocationOptionRepository locationOptionRepository;
+
+	@Autowired
 	private QuestionnaireRepository questionnaireRepository;
 
 	@Autowired
@@ -143,6 +153,9 @@ public class Service {
 
 	@Autowired
 	private QuotationRequestRepository quotationRequestRepository;
+
+	@Autowired
+	private HistoryRepository historyRepository;
 
 	@Autowired
 	private QuotationRequestQuestionnaireRepository quotationRequestQuestionnaireRepository;
@@ -167,7 +180,7 @@ public class Service {
 
 	@Autowired
 	private RequestQuestionnaireRepository requestQuestionnaireRepository;
-	
+
 	@Autowired
 	private RequestTypeRepository requestTypeRepository;
 
@@ -203,7 +216,7 @@ public class Service {
 
 	@Autowired
 	private ClaimRequestQuestionnaireRepository claimRequestQuestionnaireRepository;
-	
+
 	@Autowired
 	private RequestAnswersRepository requestAnswersRepository;
 
@@ -259,7 +272,6 @@ public class Service {
 		Client client = clientRepository.save(fromClientCommandModel(policyCreationCommandModel, contact, bankAccount));
 		int lastPolicyNumber = policyRepository.findAll().size();
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount,lastPolicyNumber));
-		//		documentService.policyScheduleReportPDF(policy);
 		return policy.getReference();
 	}
 
@@ -299,6 +311,15 @@ public class Service {
 
 	}
 
+	@RequestMapping(value = "api/quotation-request-pdf/{reference}", method = RequestMethod.GET,produces="application/pdf")
+	public byte[] viewQuotationPDF(@PathVariable("reference") String reference) throws JRException, IOException{
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+		Quotation quotation  = quotationRepository.findByQuotationRequest(quotationRequest);
+		
+		return documentService.generateQuotationPDF(quotation);
+
+	}
+
 	@RequestMapping(value = "api/products/{productId}/questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<QuestionnaireQuery> findQuestionnaires(@PathVariable("productId") Long productId) {
 		log.info("find questionnaires for product - productId:{}", productId);
@@ -328,13 +349,17 @@ public class Service {
 
 		Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
 
-		QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product);
+		QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product,quotationRequestRepository.findAll().size());
 		quotationRequest = quotationRequestRepository.save(quotationRequest);
 		List<Answer> quotationRequestQuestionnaires = fromQuotationRequestCommandModel(quotationRequestCommandModel, quotationRequest);
 		quotationRequestQuestionnaireRepository.save(quotationRequestQuestionnaires);
-
+		List<LocationOption> locationOptions = fromLocationOptionsCommandModel(quotationRequestCommandModel, quotationRequest);
+		locationOptionRepository.save(locationOptions);
+		if(quotationRequestCommandModel.getHistories() != null){
+			List<History> histories = fromHistoryCommandModel(quotationRequestCommandModel, quotationRequest);
+			historyRepository.save(histories);
+		}
 		notificationService.sendNotificationForNewQuotationRequest(quotationRequest, broker);
-
 		log.info("Quotation Request Created. reference : {} ", quotationRequest.getReference());
 		return quotationRequest.getReference();
 	}
@@ -365,8 +390,17 @@ public class Service {
 		Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
 		quotation = quotationRepository.save(quotation);
 		log.info("Quotation Command size: " + quotation.getQuotationOptions().size());
-		byte[] data = reportService.generateQuotationPDF(quotation);
-		notificationService.sendNotificationForAcceptQuotationRequest(quotation.getQuotationRequest(), data);
+		log.info("Quotation Created Successfully !!!");
+		
+	}
+	
+	@RequestMapping(value = "api/quotation-submit/{reference}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void submitNewQuotation(@PathVariable("reference") String reference) throws DocumentException, FileNotFoundException, IOException, JRException {
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+
+		byte[] data = reportService.generateQuotationPDF(quotationRepository.findByQuotationRequest(quotationRequest));
+		notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
+		
 		log.info("Quotation Created Successfully !!!");
 	}
 
@@ -515,7 +549,7 @@ public class Service {
 
 		return r;
 	}
-	
+
 	@RequestMapping(value = "api/claim-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<ClaimRequestQueryModel> getAllClaimRequests() {
 		log.info("Find all claim Requests");
@@ -555,7 +589,7 @@ public class Service {
 
 		return claimRequest.getClaimNumber();
 	}
-	
+
 	@RequestMapping(value = "api/request-types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RequestTypeQueryModel> findAllRequestTypes() {
 		log.info("find all request Types");
@@ -575,7 +609,7 @@ public class Service {
 		return toRequestQuestionnaireQueryModel(requestQuestionnaire);
 	}
 
-	
+
 	@Transactional
 	@RequestMapping(value = "api/generic-policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createGenericPolicyRequest(@RequestBody PolicyRequestTypeCommandModel policyRequestTypeCommandModel) throws ParseException{
@@ -584,21 +618,21 @@ public class Service {
 		RequestType requestType = requestTypeRepository.findOne(policyRequestTypeCommandModel.getRequestTypeId());
 		PolicyRequestType policyRequestType = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel,policy,requestType);
 		PolicyRequestType savePolicyRequestType = policyRequestTypeRepository.save(policyRequestType);
-		
+
 		List<RequestAnswer> requestAnswers = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policyRequestType);
 
 		requestAnswersRepository.save(requestAnswers);
-		
+
 		notificationService.sendNotificationForNewGenericPolicyRequest(savePolicyRequestType,"polygon.testing@gmail.com");
 		log.info("Generic policy request created Successfully !!!");
 		return savePolicyRequestType.getReference();
 	}
-	
+
 	@RequestMapping(value = "api/generic-policy-request/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public PolicyRequestTypeQueryModel getGenericPolicyRequest(@PathVariable("reference") String reference) {
 		log.info("Find the details of specific generic policy");
 		PolicyRequestType policyRequestType = policyRequestTypeRepository.findByReference(reference);
-		
+
 		return toPolicyRequestTypeQueryModel(policyRequestType);
 	}
 }

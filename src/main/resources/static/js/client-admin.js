@@ -269,158 +269,168 @@ clientAdmin.controller('clientAdminCtrl', function ($scope, $routeParams, $http,
 	};
 });
 
-
 clientAdmin.controller('claimCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {
 
-	$scope.init = function () {
-		$scope.getClaimType();
-		$scope.reference = $routeParams.reference;
-	};
+    $scope.init = function () {
+        $scope.getClaimType();
+        $scope.reference = $routeParams.reference;
+    };
 
-	$scope.getClaimQuestionnaire = function (clientTypeId) {
-
-
-		$http({
-			url: '/api/claim-types/' + clientTypeId + '/claim-questionnaires',
-			method: 'get'
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('retrived successfully');
-				$scope.claimQuestionnaires = data;
-				for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
-					if ($scope.claimQuestionnaires[i].claimAnswerType == 'checkbox') {
-
-						$scope.claimQuestionnaires[i].answer = 'false';
-					}
-				}
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
-
-			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.error = error;
-			;
-		});
-	};
+    $scope.getClaimQuestionnaire = function (clientTypeId) {
 
 
-	$scope.getClaimType = function () {
-		console.log('get Claim types');
-		$http({
-			url: '/api/claim-types',
-			method: 'get'
-		}).success(function (data, status) {
-			if (status === 200) {
-				console.log('retrived successfully');
-				$scope.claimTypes = data;
-				console.log('Claim Type: ' + $scope.claimTypes[0].claimType);
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
-				;
-			}
-		}).error(function (error) {
-			$rootScope.message = "Oops, we received your request, but there was an error processing it";
-		});
-	};
+        $http({
+            url: '/api/claim-types/' + clientTypeId + '/claim-questionnaires',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('retrived successfully');
+                $scope.claimQuestionnaires = data;
+                for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
+                    if ($scope.claimQuestionnaires[i].claimAnswerType == 'checkbox') {
 
-	$scope.getClaimQuestionnaire = function (clientTypeId) {
+                        $scope.claimQuestionnaires[i].answer = 'false';
+                    }
+                }
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
 
-
-		$http({
-			url: '/api/claim-types/' + clientTypeId + '/claim-questionnaires',
-			method: 'get'
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('retrived successfully');
-				$rootScope.claimQuestionnaires = data;
-				for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
-					if ($scope.claimQuestionnaires[i].claimAnswerType == 'checkbox') {
-
-						$scope.claimQuestionnaires[i].answer = 'false';
-					}
-				}
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
-
-			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.error = error;
-			;
-		});
-	};
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+            ;
+        });
+    };
 
 
-	$scope.submitClaimRequest = function (form) {
+    $scope.getClaimType = function () {
+        console.log('get Claim types');
+        $http({
+            url: '/api/claim-types',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $scope.claimTypes = data;
+                console.log('Claim Type: ' + $scope.claimTypes[0].claimType);
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
+    };
 
-		if (form.$invalid) {
-			console.log("Form Validation Failure");
-		} else {
-			//console.log($scope.claimQuestionnaire.attachment);
-			console.log("Form Validation Success");
-			$scope.claimRequest.claimQuestionnaires = [];
+    $scope.getClaimQuestionnaire = function (clientTypeId) {
 
-			for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
-				$scope.claimRequest.claimQuestionnaires[i] = {};
 
-				if ($scope.claimQuestionnaires[i].claimAnswerType == 'blob') {
+        $http({
+            url: '/api/claim-types/' + clientTypeId + '/claim-questionnaires',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log('retrived successfully');
+                $rootScope.claimQuestionnaires = data;
+                for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
+                    if ($scope.claimQuestionnaires[i].claimAnswerType == 'checkbox') {
 
-					$scope.claimRequest.claimQuestionnaires[i].question = $scope.claimQuestionnaires[i].question;
-					$scope.claimRequest.claimQuestionnaires[i].attachment = $scope.claimQuestionnaires[i].attachment;
-					console.log($scope.claimQuestionnaires[i].attachment);
+                        $scope.claimQuestionnaires[i].answer = 'false';
+                    }
+                }
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
 
-				}
-				else {
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+            ;
+        });
+    };
 
-					$scope.claimRequest.claimQuestionnaires[i].question = $scope.claimQuestionnaires[i].question;
-					$scope.claimRequest.claimQuestionnaires[i].answer = $scope.claimQuestionnaires[i].answer;
 
-				}
+    $scope.submitClaimRequest = function (form) {
 
-			}
-			console.log($scope.claimRequest);
-			// console.log($scope.claimRequest.claimQuestionnaires.attachment);
-			$scope.claimRequest.reference = $routeParams.reference;
-			$http({
-				url: '/api/claim-requests',
-				method: 'post',
-				headers: {
-					'Content-Type': undefined,
-				},
-				transformRequest: function (data) {
-					var formData = new FormData();
+        if (form.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            console.log("Form Validation Success");
+            $scope.claimRequest.claimQuestionnaires = [];
+            $scope.files = [];
 
-					formData.append('claimRequest', new Blob([angular.toJson(data.claimRequest)], {
-						type: "application/json"
-					}));
+            for (var i = 0; i < $scope.claimQuestionnaires.length; i++) {
+                $scope.claimRequest.claimQuestionnaires[i] = {};
+                if ($scope.claimQuestionnaires[i].claimAnswerType == 'blob'){
+                    $scope.claimRequest.claimQuestionnaires[i].question = $scope.claimQuestionnaires[i].question;
+                    $scope.claimRequest.claimQuestionnaires[i].attachment = null;
+                    console.log($scope.claimQuestionnaires[i].attachment);
+                    $scope.files[i] = {};
+                    if ($scope.claimQuestionnaires[i].attachment == undefined) {
+                        console.log("it is null");
+                    } else {
+                        $scope.files[i] = $scope.claimQuestionnaires[i].attachment;
+                        console.log("got it");
+                    }
+                }
+                else {
 
-					for (var i = 0; i < data.claimRequest.length; i++) {
-						formData.append("file[" + i + "]", data.claimRequests.claimQuestionnaires.attachment[i]);
-					}
+                    $scope.claimRequest.claimQuestionnaires[i].question = $scope.claimQuestionnaires[i].question;
+                    $scope.claimRequest.claimQuestionnaires[i].answer = $scope.claimQuestionnaires[i].answer;
 
-					return formData;
-				},
-				data: {claimRequest: $scope.claimRequest, file: $scope.claimRequest.claimQuestionnaires.attachment}
-			}).success(function (data, status) {
-				if (status == 200) {
-					console.log('All the questions and answers saved succesfullly');
-					$rootScope.message = "Claim Number : " + data;
-					$location.path("/clients/" + 2);
-				} else {
-					console.log('status:' + status);
-				}
-			}).error(function (error) {
-				console.log(error);
-				$rootScope.message = error;
-			});
-		}
+                }
 
-	};
+            }
+            console.log($scope.claimRequest);
+            console.log($scope.files);
+            $scope.claimRequest.reference = $routeParams.reference;
+            console.log($routeParams.reference);
+
+            $http({
+                url: '/api/claim-requests',
+                method: 'post',
+                headers: {
+                    'Content-Type': undefined,
+                },
+                transformRequest: function (data) {
+                    var formData = new FormData();
+
+                    formData.append('claimRequest', new Blob([angular.toJson(data.claimRequest)], {
+                        type: "application/json"
+                    }));
+
+                    console.log("transform request");
+
+                    for (var i = 23; i < data.files.length; i++) {
+                        formData.append('file' + i, data.files[i]);
+                        console.log(data.files[i]);
+                        console.log("appending...");
+                    }
+                    console.log("File size: " + data.files.length);
+
+                    return formData;
+                    console.log(data);
+                },
+                data: {claimRequest: $scope.claimRequest, files: $scope.files}
+
+            }).success(function (data, status) {
+                if (status == 200) {
+                    console.log('All the questions and answers saved succesfullly');
+                    $rootScope.message = "Claim Number : " + data;
+                    $location.path("/clients/" + 2);
+                } else {
+                    console.log('status:' + status);
+                }
+            }).error(function (error) {
+                console.log(error);
+                $rootScope.message = error;
+            });
+        }
+
+    };
 
 });
-
-

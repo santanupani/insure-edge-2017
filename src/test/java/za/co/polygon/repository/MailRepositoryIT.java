@@ -1,8 +1,6 @@
 package za.co.polygon.repository;
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import za.co.polygon.domain.Notification;
 

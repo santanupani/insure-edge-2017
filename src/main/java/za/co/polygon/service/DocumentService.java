@@ -57,13 +57,13 @@ public class DocumentService{
 		
 		for (Answer answer : quotation.getQuotationRequest().getAnswers()) {
             if (answer.getAnswer() != null) {
-                if (answer.getAnswer().equals("Once-Off")) {
+                if (answer.getAnswer().equals("Specific Period (Once-Off)")) {
                 	this.setQuotationWording("Quote only valid for 7 days"
                             + " and acceptance thereof by underwriters subject to a fully completed rist assesment, proposal "
                             + "form  and signed debit order form. Underwriters serve the right to refuse "
                             + "acceptance of the risk as declared to us.\n");
                     
-                } else if (answer.getAnswer().equals("Annually") || answer.getAnswer().equals("Monthly")) {
+                } else if (answer.getAnswer().equals("On-going, paid monthly") || answer.getAnswer().equals("On-going, paid annually")) {
                 	this.setQuotationWording("Quote only valid for 15 days"
                             + " and acceptance thereof by underwriters subject to a fully completed rist assessment, proposal "
                             + "form  and signed debit order form. Underwriters serve the right to refuse"

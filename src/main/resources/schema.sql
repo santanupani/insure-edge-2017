@@ -69,6 +69,50 @@ create table quotation_requests(
     constraint quotation_requests_fk2 foreign key (product_id) references products (id)
 );
 
+
+create table histories(
+   id integer auto_increment not null primary key,
+   quotation_request_id integer not null,
+   event_date varchar(26),
+   loss_value double,
+   type_of_loss varchar(64),
+   constraint histories_fk1 foreign key (quotation_request_id) references quotation_requests(id)  
+);
+
+
+/* table : location_options */
+create table location_options(
+    id integer auto_increment not null primary key,
+    quotation_request_id integer not null,
+    commodity varchar(256) not null,
+    from_location varchar(32) not null,
+    to_location varchar(32),
+    distance varchar(32) not null,
+    max_limit double,
+    static_limit double,
+    static_max_amount varchar(32),
+    sabs_category varchar(32),
+    total_value varchar(64),
+    total_value_static varchar(64),
+    professional_carriers varchar(32),
+    duration varchar(32) not null,
+    is_first_loss_cover boolean,
+    is_goods_moved boolean,
+    is_service_carrier boolean not null,
+    carrier_name varchar(32),
+    specific_carrier varchar(32),
+    goods_description varchar(64),
+    is_store_vault boolean,
+    is_concrete_secured boolean,
+    is_seismic_detector boolean,
+    is_cctv boolean,
+    is_alarmed boolean,
+    storage_type varchar(32),
+    vault_address varchar(128),
+    other_secure_means varchar(256),
+    constraint location_options_fk1 foreign key (quotation_request_id) references quotation_requests (id)   
+);
+
 /* table : quotation_questoionnaires */
 create table answers(
     id integer auto_increment not null primary key,
@@ -369,4 +413,3 @@ create table request_answers(
      answer varchar(512),
      constraint request_answer_fk1 foreign key (request_type_id) references  policy_request_type(id)
 );
-
