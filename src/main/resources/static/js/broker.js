@@ -23,16 +23,17 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 	$scope.reject;
 	$scope.com ;
 	$scope.questionnairres = [];
-	
+
 
 	$scope.init = function () {
 		$scope.reference = $routeParams.reference;
 		$scope.isQuotationCreated = true;
 		$scope.reject = {};
 		$scope.quotation = {
-				"options" :[{"name": "Category 1"}]
+				"options" :[]
 		};
 		$scope.getQuotationRequest($scope.reference);
+
 	};
 
 	$scope.getQuotationRequest = function () {
@@ -46,6 +47,34 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 				$scope.quotationRequest = data;
 				$scope.questionnairres = $scope.quotationRequest.questionnaire;
 
+				for(var i=0;i<$scope.quotationRequest.questionnaire.length;i++){
+
+					if(angular.equals($scope.quotationRequest.questionnaire[i].answer,'true')){
+						$scope.quotationRequest.questionnaire[i].answer = 'Yes';
+						console.log($scope.quotationRequest.questionnaire[i].answer);
+					}else if(angular.equals($scope.quotationRequest.questionnaire[i].answer,'false')){
+						$scope.quotationRequest.questionnaire[i].answer = 'No';
+						console.log($scope.quotationRequest.questionnaire[i].answer);
+					}
+				}
+
+				for(var i=0;i<$scope.quotationRequest.locationOptions.length;i++){
+
+					if(angular.equals($scope.quotationRequest.locationOptions[i].isFirstLossCover,'true')){
+						$scope.quotationRequest.locationOptions[i].isFirstLossCover = 'Yes';
+						console.log($scope.quotationRequest.locationOptions[i].isFirstLossCover);
+					}else if(angular.equals($scope.quotationRequest.locationOptions[i].isFirstLossCover,'false')){
+						$scope.quotationRequest.locationOptions[i].isFirstLossCover = 'No';
+						console.log($scope.quotationRequest.locationOptions[i].isFirstLossCover);
+					}
+				}
+
+				angular.forEach($scope.quotationRequest.locationOptions,function(locationOption){
+					locationOption.cover = 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery - as per standard policy';
+					locationOption.excess = '0% minimum R 0,000,000.00 (Own armoured/ vehicles/secure vault)';
+					locationOption.premium = 'R 00,000.00 (per month excluding 0% vat)';
+					locationOption.pavement = 'R 0,000.00';
+				});
 				console.log('Quotation Request Detail::' + $scope.quotationRequest);
 				console.log('Questionairres Detail::' + $scope.questionnairres);
 			} else {
@@ -126,7 +155,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 			console.log("Ref Test : "+$scope.reference);
 			for(var i=0;i<$scope.quotationRequest.locationOptions.length;i++){
 				$scope.quotation.options[i] = {};
-				$scope.quotation.options[i].cover = $scope.quotationRequest.product.name;
+				$scope.quotation.options[i].cover = $scope.quotationRequest.locationOptions[i].cover;
 				$scope.quotation.options[i].commodity = $scope.quotationRequest.locationOptions[i].commodity;
 				$scope.quotation.options[i].location = $scope.quotationRequest.locationOptions[i].fromLocation;
 				$scope.quotation.options[i].duration = $scope.quotationRequest.locationOptions[i].duration;
@@ -136,7 +165,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 				$scope.quotation.options[i].staticLimit = $scope.quotationRequest.locationOptions[i].staticLimit;
 				$scope.quotation.options[i].pavement = $scope.quotationRequest.locationOptions[i].pavement;
 			}; 
-			
+
 			console.log($scope.quotation); 
 			$http({
 				url: '/api/quotations',
@@ -154,7 +183,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 //					$scope.mode = undefined;
 					$scope.isQuotationCreated = false;
 					$scope.viewQuotationPDF($scope.quotation.reference );
-					
+
 				} else {
 					console.log('status:' + status);
 				}
@@ -163,30 +192,30 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 			}); 
 		}
 	};
-	
+
 	$scope.submitQuotation = function(){
 
-			$http({
-				url: '/api/quotation-submit/'+$scope.reference,
-				method: 'post',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				data: $scope.reference
-			}).success(function (data, status) {
-				console.log('Submit quotation status :' + status);
-				if (status === 200) {
-					console.log('Email notification send succesfully to the client');
-					$scope.init();
-					$scope.quotationView = true;
-					$scope.mode = undefined;
-					$rootScope.message = "Quotation Accepted Successfully";
-				} else {
-					console.log('status:' + status);
-				}
-			}).error(function (error) {
-				$rootScope.message = "Oops, we received your request, but there was an error processing it";
-			}); 
+		$http({
+			url: '/api/quotation-submit/'+$scope.reference,
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			data: $scope.reference
+		}).success(function (data, status) {
+			console.log('Submit quotation status :' + status);
+			if (status === 200) {
+				console.log('Email notification send succesfully to the client');
+				$scope.init();
+				$scope.quotationView = true;
+				$scope.mode = undefined;
+				$rootScope.message = "Quotation Accepted Successfully";
+			} else {
+				console.log('status:' + status);
+			}
+		}).error(function (error) {
+			$rootScope.message = "Oops, we received your request, but there was an error processing it";
+		}); 
 	};
 
 	$scope.formatNumber = function(nmbr){

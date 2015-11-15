@@ -960,6 +960,7 @@ public class Mapper {
                     MultipartFile file = attachments[claimQuestions.size()];
                     claimAnswer.setQuestion(claimquestionnaires.getQuestion());
                     claimAnswer.setAttachment(file.getBytes());
+                 
 
                 } else {
 
