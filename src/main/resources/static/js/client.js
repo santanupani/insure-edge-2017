@@ -89,13 +89,23 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 			$scope.getQuestionnaires($routeParams['id']);
 			$scope.location = {"options": []};
 			$scope.add();
+                       // $scope.isHistory = false;
 		}
 	};
 	
-	$scope.addHistory = function(){
-		$scope.isHistory = true;
-		$scope.histories[0] = {};
+	$scope.addHistory = function(isHistory){
+              console.log("checked");
+              console.log(isHistory);
+                if(isHistory == true){
+                    		$scope.isHistory = true;
+		               $scope.histories[0] = {};
 		console.log('Histories size: '+$scope.histories.length);
+                }
+                else{
+                    $scope.isHistory = false;
+		$scope.histories = [];
+                }
+
 	};
 	
 	$scope.removeHistory = function(){
@@ -132,6 +142,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 		
 		var option = {};
 		option.isGoodsMoved = false;
+		option.isGoodsMovedStatic = false;
 		option.isServiceCarrier = false;
 		option.isStoreVault = false;
 		option.optionName = "Location-Option-" + ($scope.location.options.length + 1);

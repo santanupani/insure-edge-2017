@@ -54,6 +54,9 @@ public class LocationOption {
 
     @Column(name = "total_value")
     private String totalValue;
+    
+    @Column(name = "transit_total_value")
+    private String transitTotalValue;
 
     @Column(name = "total_value_static")
     private String totalvaluestatic;
@@ -63,6 +66,9 @@ public class LocationOption {
 
     @Column(name = "is_goods_moved")
     private boolean isGoodsMoved;
+    
+    @Column(name = "is_goods_moved_static")
+    private boolean isGoodsMovedStatic;
 
     @Column(name = "is_service_carrier")
     private boolean isServiceCarrier;
@@ -323,5 +329,86 @@ public class LocationOption {
     public void setGoodsMoved(boolean isGoodsMoved) {
         this.isGoodsMoved = isGoodsMoved;
     }
+
+    public String getTransitTotalValue() {
+        return transitTotalValue;
+    }
+
+    public void setTransitTotalValue(String transitTotalValue) {
+        this.transitTotalValue = transitTotalValue;
+    }
+
+    public boolean isIsFirstLossCover() {
+        return isFirstLossCover;
+    }
+
+    public void setIsFirstLossCover(boolean isFirstLossCover) {
+        this.isFirstLossCover = isFirstLossCover;
+    }
+
+    public boolean isIsGoodsMoved() {
+        return isGoodsMoved;
+    }
+
+    public void setIsGoodsMoved(boolean isGoodsMoved) {
+        this.isGoodsMoved = isGoodsMoved;
+    }
+
+    public boolean isIsServiceCarrier() {
+        return isServiceCarrier;
+    }
+
+    public void setIsServiceCarrier(boolean isServiceCarrier) {
+        this.isServiceCarrier = isServiceCarrier;
+    }
+
+    public boolean isIsStoreVault() {
+        return isStoreVault;
+    }
+
+    public void setIsStoreVault(boolean isStoreVault) {
+        this.isStoreVault = isStoreVault;
+    }
+
+    public boolean isIsConcreteSecured() {
+        return isConcreteSecured;
+    }
+
+    public void setIsConcreteSecured(boolean isConcreteSecured) {
+        this.isConcreteSecured = isConcreteSecured;
+    }
+
+    public boolean isIsSeismicDetector() {
+        return isSeismicDetector;
+    }
+
+    public void setIsSeismicDetector(boolean isSeismicDetector) {
+        this.isSeismicDetector = isSeismicDetector;
+    }
+
+    public boolean isIsCctv() {
+        return isCctv;
+    }
+
+    public void setIsCctv(boolean isCctv) {
+        this.isCctv = isCctv;
+    }
+
+    public boolean isIsAlarmed() {
+        return isAlarmed;
+    }
+
+    public void setIsAlarmed(boolean isAlarmed) {
+        this.isAlarmed = isAlarmed;
+    }
+
+    public boolean isIsGoodsMovedStatic() {
+        return isGoodsMovedStatic;
+    }
+
+    public void setIsGoodsMovedStatic(boolean isGoodsMovedStatic) {
+        this.isGoodsMovedStatic = isGoodsMovedStatic;
+    }
+    
 
 }

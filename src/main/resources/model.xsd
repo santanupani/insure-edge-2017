@@ -95,6 +95,7 @@
 						<element name="duration" type="string" />
 						<element name="staticMaxAmount" type="string" />
 						<element name="totalValue" type="string" />
+						<element name="transitTotalValue" type="string" />
 						<element name="totalValueStatic" type="string" />
 						<element name="isFirstLossCover" type="boolean" />
 						<element name="isServiceCarrier" type="boolean" />
@@ -107,6 +108,7 @@
 						<element name="isCctv" type="boolean" />
 						<element name="isAlarmed" type="boolean" />
 						<element name="isGoodsMoved" type="boolean" />
+						<element name="isGoodsMovedStatic" type="boolean" />
 						<element name="storageType" type="string" />
 						<element name="vaultAddress" type="string" />
 						<element name="otherSecureMeans" type="string" />
@@ -385,6 +387,7 @@
 							<element name="duration" type="string" />
 							<element name="staticMaxAmount" type="string" />
 							<element name="totalValue" type="string" />
+                                                        <element name="transitTotalValue" type="string" />
 							<element name="totalValueStatic" type="string" />
 							<element name="isFirstLossCover" type="boolean" />
 							<element name="isServiceCarrier" type="boolean" />
@@ -394,6 +397,7 @@
 							<element name="isStoreVault" type="boolean" />
 							<element name="isConcreteSecured" type="boolean" />
 							<element name="isGoodsMoved" type="boolean" />
+							<element name="isGoodsMovedStatic" type="boolean" />
 							<element name="isSeismicDetector" type="boolean" />
 							<element name="isCctv" type="boolean" />
 							<element name="isAlarmed" type="boolean" />

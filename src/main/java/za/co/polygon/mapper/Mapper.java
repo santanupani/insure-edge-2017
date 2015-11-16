@@ -212,6 +212,7 @@ public class Mapper {
             location.setStorageType(locationOption.getStorageType());
             location.setTotalvaluestatic(locationOption.getTotalValueStatic());
             location.setTotalValue(locationOption.getTotalValue());
+            location.setTransitTotalValue(locationOption.getTransitTotalValue());
             location.setStaticMaxAmount(locationOption.getStaticMaxAmount());
             location.setServiceCarrier(locationOption.isIsServiceCarrier());
             location.setStoreVault(locationOption.isIsStoreVault());
@@ -221,6 +222,7 @@ public class Mapper {
             location.setSabsCategory(locationOption.getSabsCategory());
             location.setProfessionalCarriers(locationOption.getProfessionalCarriers());
             location.setGoodsMoved(locationOption.isIsGoodsMoved());
+            location.setIsGoodsMovedStatic(locationOption.isIsGoodsMovedStatic());
             location.setQuotationRequest(quotationRequest);
             locationOptions.add(location);
 
@@ -254,6 +256,7 @@ public class Mapper {
             location.setStorageType(locationOption.getStorageType());
             location.setTotalValue(locationOption.getTotalValueStatic());
             location.setTotalValue(locationOption.getTotalValue());
+            location.setTransitTotalValue(locationOption.getTransitTotalValue());
             location.setStaticMaxAmount(locationOption.getStaticMaxAmount());
             location.setServiceCarrier(locationOption.isIsServiceCarrier());
             location.setStoreVault(locationOption.isIsStoreVault());
@@ -262,6 +265,7 @@ public class Mapper {
             location.setSabsCategory(locationOption.getSabsCategory());
             location.setProfessionalCarriers(locationOption.getProfessionalCarriers());
             location.setGoodsMoved(locationOption.isIsGoodsMoved());
+            location.setIsGoodsMovedStatic(locationOption.isIsGoodsMovedStatic());
             location.setQuotationRequest(quotationRequest);
             result.add(location);
         }
@@ -365,6 +369,7 @@ public class Mapper {
             locationOption.setStorageType(location.getStorageType());
             locationOption.setTotalValueStatic(location.getTotalvaluestatic());
             locationOption.setTotalValue(location.getTotalValue());
+            locationOption.setTransitTotalValue(location.getTransitTotalValue());
             locationOption.setStaticMaxAmount(location.getStaticMaxAmount());
             locationOption.setIsServiceCarrier(location.isServiceCarrier());
             locationOption.setIsStoreVault(location.isStoreVault());
@@ -373,6 +378,7 @@ public class Mapper {
             locationOption.setSabsCategory(location.getSabsCategory());
             locationOption.setProfessionalCarriers(location.getProfessionalCarriers());
             locationOption.setIsGoodsMoved(location.isGoodsMoved());
+            locationOption.setIsGoodsMovedStatic(location.isIsGoodsMovedStatic());
             result.getLocationOptions().add(locationOption);
 
         }
