@@ -71,9 +71,9 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
 				angular.forEach($scope.quotationRequest.locationOptions,function(locationOption){
 					locationOption.cover = 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery - as per standard policy';
-					locationOption.excess = '0% minimum R 0,000,000.00 (Own armoured/ vehicles/secure vault)';
-					locationOption.premium = 'R 00,000.00 (per month excluding 0% vat)';
-					locationOption.pavement = 'R 0,000.00';
+					locationOption.excess = '0% minimum R 0,000,000.00 (Own armoured vehicles/static/onsite)';
+					locationOption.premium = 'R 00,000.00 (per month excluding 14% vat)';
+					locationOption.pavement = 'R 0,000.00 per cross pavement carry.';
 				});
 				console.log('Quotation Request Detail::' + $scope.quotationRequest);
 				console.log('Questionairres Detail::' + $scope.questionnairres);
