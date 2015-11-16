@@ -1,5 +1,4 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-
     <div class="alert alert-success alert-dismissible" role="alert"
          ng-if="error">
         <button type="button" class="close" data-dismiss="alert"
@@ -420,49 +419,52 @@
                     <button class="btn btn-success"
                             ng-click="changeMode('accept');
                                         optionInfo();">Accept</button>
-                    <button class="btn btn-danger" ng-click="changeMode('reject')">Reject</button>
-                </span>
+					<button class="btn btn-danger" ng-click="changeMode('reject')">Reject</button>
+				</span>
 
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group"
-                         ng-repeat="questionnaire in quotationRequest.questionnaire">
-                        <div ng-if="questionnaire.answer != null">
-                            <label class="control-label" for="q_{{index}}">Q:
-                                {{questionnaire.question}}</label>
-                            <textarea class="form-control" id="q_{{index}}"
-                                      ng-model="questionnaire.answer" readonly="readonly"></textarea>
-                        </div>
-                    </div>
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="form-group"
+						ng-repeat="questionnaire in quotationRequest.questionnaire">
+						<div ng-if="questionnaire.answer != null">
+							<label class="control-label" for="q_{{index}}">Q:
+								{{questionnaire.question}}</label>
+							<textarea class="form-control" id="q_{{index}}"
+								ng-model="questionnaire.answer" readonly="readonly"></textarea>
+						</div>
+					</div>
 
-                    <div class="form-group" ng-if="quotationRequest.histories.length > 0">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr><th colspan="3">Loss History</th></tr>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>Value</th>
-                                    <th>Type Of loss</th>
-                                </tr>
-                            </thead>
-                            <tbody ng-repeat="history in quotationRequest.histories">
-                                <tr>
-                                    <td><input type="text" class="form-control"
-                                               ng-model="history.eventDate" readonly></td>
-                                    <td><input type="number" class="form-control"
-                                               ng-model="history.lossValue" readonly></td>
-                                    <td><input type="text" class="form-control"
-                                               ng-model="history.typeOfLoss" readonly></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+					<div class="form-group"
+						ng-if="quotationRequest.histories.length > 0">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th colspan="3">Loss History</th>
+								</tr>
+								<tr>
+									<th>Year</th>
+									<th>Value</th>
+									<th>Type Of loss</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="history in quotationRequest.histories">
+								<tr>
+									<td><input type="text" class="form-control"
+										ng-model="history.eventDate" readonly></td>
+									<td><input type="number" class="form-control"
+										ng-model="history.lossValue" readonly></td>
+									<td><input type="text" class="form-control"
+										ng-model="history.typeOfLoss" readonly></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-        </div>
+		</div>
 
-    </div>
+	</div>
 </div>

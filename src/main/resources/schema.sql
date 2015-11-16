@@ -139,14 +139,14 @@ create table quotations(
 create table quotation_options(
     id integer auto_increment not null primary key,
     quotation_id integer not null,
-    location varchar(32) not null,
-    limits varchar(32) not  null ,
-    commodity varchar(32) not null,
+    location varchar(64) not null,
+    limits varchar(64) not  null ,
+    commodity varchar(64) not null,
     cover varchar(256) not null,
     duration varchar(256) not null,
     excess varchar(256) not null,
-    cross_pavement varchar(32),
-    static_limit varchar(32),
+    cross_pavement varchar(256),
+    static_limit varchar(256),
     premium varchar(256) not null,
     constraint quotation_options_fk1 foreign key (quotation_id) references quotations (id)
 );

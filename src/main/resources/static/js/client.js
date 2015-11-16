@@ -101,13 +101,14 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 	$scope.numberOfDecimals = 2;
 	$scope.histories = [];
 	$scope.questionnaires = [];
+	$scope.isHistory;
 	$scope.location;
 	$scope.quotationRequest = {};
-	
+
 	$scope.models = [];
 
 	$scope.init = function () {
-
+		$scope.isHistory = false;
 		if ($rootScope.products == undefined) {
 			$scope.getProducts();
 		} else {
@@ -116,39 +117,32 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 			$scope.getQuestionnaires($routeParams['id']);
 			$scope.location = {"options": []};
 			$scope.add();
-                       // $scope.isHistory = false;
 		}
 	};
-	
 
 	$scope.addRemoveHistory = function(){
-		if($scope.isHistory == undefined || $scope.isHistory){
-			$scope.histories[0] = {};
-			console.log('History size now: '+$scope.histories.length);
-			
-		}else if($scope.isHistory){
+
+		if($scope.isHistory){
 			$scope.histories = [];
-			console.log('No history: '+$scope.histories.length);
+			console.log($scope.histories);
+		}else{
+			$scope.histories[0] = {};
+			console.log($scope.histories);
 		}
 	};
-	
+
 	$scope.addMoreHistory = function(){
 		$scope.histories[$scope.histories.length] = {};
-		console.log('Histories size: '+$scope.histories.length);
 	};
-	
+
 	$scope.removeMoreHistory = function(){
 		$scope.histories.pop();
 		if($scope.histories.length == 0 || !$scope.isHistory){
 			$scope.histories = [];
 			$scope.isHistory = undefined;
-			console.log('History size wen zero: '+$scope.histories.length);
-		}else{
-			
-			console.log('History size after remove: '+$scope.histories.length);
 		}
 	};
-	
+
 	$scope.add = function () {
 		var model = {};
 		model = {
@@ -157,18 +151,17 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 				preciousStone: false,
 				other:false,
 				diamonds: false,
+				otherExtra:false
 		};
 		$scope.models.push(model);
-		
+
 		var option = {};
-		option.isGoodsMoved = 'No';
-		option.isGoodsMovedStatic = 'No';
-		option.isServiceCarrier = 'No';
-		option.isStoreVault = 'No';
+		option.isGoodsMoved = false;
+		option.isGoodsMovedStatic = false;
+		option.isServiceCarrier = false;
+		option.isStoreVault = false;
 		option.optionName = "Location-Option-" + ($scope.location.options.length + 1);
 		$scope.location.options.push(option);
-		console.log('Options added by client: ' + $scope.location.options.length);
-
 	};
 
 	$scope.remove = function () {
@@ -254,13 +247,13 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 		} else {
 			console.log("Form Validation Success");
 			$scope.quotationRequest.locationOptions = [];
-					
+
 			for (var i = 0; i < $scope.location.options.length; i++) {
-				var commodity = "";
+				var commodity ='';
 				var tokens = $scope.models[i].cash + $scope.models[i].bullion + $scope.models[i].diamonds + $scope.models[i].preciousStone +$scope.models[i].otherExtra;
 				angular.forEach(tokens.split("false"),function(token){
 					if(token != ''){
-						commodity = token+' , '+commodity;
+						commodity = token+'/'+commodity;
 					}
 				});
 				$scope.location.options[i].commodity = commodity;
@@ -274,12 +267,9 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 				$scope.quotationRequest.questionnaires[i].question = $scope.questionnaires[i].question;
 				$scope.quotationRequest.questionnaires[i].answer = $scope.questionnaires[i].answer;
 			}
-//			if($scope.histories == undefined || angular.equals($scope.histories[0].lossValue,'' )){
-//				$scope.quotationRequest.histories = [];
-//			}else{
-//				$scope.quotationRequest.histories = $scope.histories;
-//			}
-					
+
+			console.log($scope.histories);
+			$scope.quotationRequest.histories = $scope.histories;
 			console.log($scope.quotationRequest);
 			console.log($scope.quotationRequest.histories);
                         $scope.quotationRequest.brokerId = 1;
