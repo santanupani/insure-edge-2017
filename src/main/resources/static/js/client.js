@@ -134,10 +134,10 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 		$scope.models.push(model);
 		
 		var option = {};
-		option.isGoodsMoved = false;
-		option.isGoodsMovedStatic = false;
-		option.isServiceCarrier = false;
-		option.isStoreVault = false;
+		option.isGoodsMoved = 'No';
+		option.isGoodsMovedStatic = 'No';
+		option.isServiceCarrier = 'No';
+		option.isStoreVault = 'No';
 		option.optionName = "Location-Option-" + ($scope.location.options.length + 1);
 		$scope.location.options.push(option);
 		console.log('Options added by client: ' + $scope.location.options.length);
@@ -233,7 +233,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 				var tokens = $scope.models[i].cash + $scope.models[i].bullion + $scope.models[i].diamonds + $scope.models[i].preciousStone +$scope.models[i].otherExtra;
 				angular.forEach(tokens.split("false"),function(token){
 					if(token != ''){
-						commodity = token+'/'+commodity;
+						commodity = token+' , '+commodity;
 					}
 				});
 				$scope.location.options[i].commodity = commodity;
@@ -247,11 +247,11 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 				$scope.quotationRequest.questionnaires[i].question = $scope.questionnaires[i].question;
 				$scope.quotationRequest.questionnaires[i].answer = $scope.questionnaires[i].answer;
 			}
-			if($scope.histories == undefined || angular.equals($scope.histories[0].lossValue,'' )){
-				$scope.quotationRequest.histories = [];
-			}else{
-				$scope.quotationRequest.histories = $scope.histories;
-			}
+//			if($scope.histories == undefined || angular.equals($scope.histories[0].lossValue,'' )){
+//				$scope.quotationRequest.histories = [];
+//			}else{
+//				$scope.quotationRequest.histories = $scope.histories;
+//			}
 					
 			console.log($scope.quotationRequest);
 			console.log($scope.quotationRequest.histories);

@@ -120,25 +120,25 @@
                                             </div>
 
                                             <div class="form-group" ng-if="productId != 4">
-                                                <label><input type="checkbox"
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isGoodsMoved" /> Is the above amount the
                                                     total full value of the goods being moved?</label>
                                             </div>
 
                                             <div class="form-group" ng-if="productId == 4"> 
-                                                <label><input type="checkbox"
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isGoodsMovedStatic" /> Is the above amount 
                                                     the total full value of the goods being moved in Cash in transit ?</label>
                                             </div>
 
-                                            <div class="form-group" ng-if="option.isGoodsMovedStatic == false && productId != 4">
+                                            <div class="form-group" ng-if="option.isGoodsMoved == 'No' && productId != 4">
                                                 <label class="control-label" for="commodity">What is
                                                     the total full value of the goods being moved?</label> <input
                                                     type="text" class="form-control"
                                                     ng-model="option.totalValue">
                                             </div>
 
-                                            <div class="form-group" ng-if="option.isGoodsMovedStatic == false && productId == 4">
+                                            <div class="form-group" ng-if="option.isGoodsMovedStatic == 'No' && productId == 4">
                                                 <label class="control-label" for="commodity">What is the total full value 
                                                     of the goods being moved in Cash in transit ?</label> <input
                                                     type="text" class="form-control"
@@ -153,7 +153,7 @@
                                                     there will be no cover in force for that particular load.</label>
                                             </div>
                                             <div class="form-group">
-                                                <label> <input ng-model="option.isFirstLossCover"
+                                                <label> <input ng-model="option.isFirstLossCover" ng-true-value="'Yes'" ng-false-value="'No'"
                                                                type="checkbox" name="radio"> For additional
                                                     premium, do you want first loss cover?
                                                 </label>
@@ -161,7 +161,7 @@
 
 
                                             <div class="form-group">
-                                                <label> <input type="checkbox" name="radio"
+                                                <label> <input type="checkbox" name="radio" ng-true-value="'Yes'" ng-false-value="'No'"
                                                                ng-model="option.isServiceCarrier"> Do you use the
                                                     services of a professional valuables carriers?
                                                 </label>
@@ -174,7 +174,7 @@
                                             </div>
 
                                             <div class="form-group"
-                                                 ng-if="option.isServiceCarrier == true">
+                                                 ng-if="option.isServiceCarrier == 'Yes'">
                                                 <label class="control-label" for="isServiceCarrier">What
                                                     is the name of the professional valuables carriers?</label> <select
                                                     class="form-control" ng-model="option.professionalCarriers"
@@ -189,7 +189,7 @@
                                             </div>
 
                                             <div class="form-group"
-                                                 ng-if="option.isServiceCarrier == false">
+                                                 ng-if="option.isServiceCarrier == 'No'">
                                                 <label class="control-label" for="commodity">Please
                                                     specify by whom and how are the valuables carried?</label> <input
                                                     type="text" class="form-control"
@@ -197,26 +197,20 @@
                                             </div>
 
                                             <div class="form-group" ng-if="productId == 4">
-                                                <hr style="color: #F87431; height: 1px" />
-                                                    <h4>For Static Cover</h4>
-                                                <hr style="color: #F87431; height: 1px" />
-                                            </div>
-
-                                            <div class="form-group" ng-if="productId == 4">
                                                 <label class="control-label" for="productName">What is the maximum amount
                                                     you wish to insure in Static ?</label> <input
-                                                    type="text" class="form-control" ng-model="option.staicLimit"
-                                                    required><label ng-show='option.staicLimit'>{{option.staicLimit | currency:'R '}}</label>
+                                                    type="text" class="form-control" ng-model="option.staticLimit"
+                                                    required><label ng-show='option.staticLimit'>{{option.staticLimit | currency:'R '}}</label>
                                             </div>
 
 
                                             <div class="form-group" ng-if="productId == 4"> 
-                                                <label><input type="checkbox"
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isGoodsMoved" /> Is the above amount 
                                                     the total full value of the goods being stored in static ?</label>
                                             </div>
 
-                                            <div class="form-group" ng-if="option.isGoodsMoved == false && productId == 4">
+                                            <div class="form-group" ng-if="option.isGoodsMoved == 'No' && productId == 4">
                                                 <label class="control-label" for="commodity">What is
                                                     the total full value of the goods being stored in static?</label> <input
                                                     type="text" class="form-control"
@@ -230,33 +224,33 @@
                                                     ng-model="option.goodsDescription">
                                             </div>
                                             <div class="form-group" ng-if="productId == 2 || productId == 4">
-                                                <label><input type="checkbox"
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isStoreVault" /> Are the goods going to
                                                     be stored in vault?</label>
                                             </div>
-                                            <div class="form-group" ng-if="option.isStoreVault == true">
-                                                <label><input type="checkbox"
+                                            <div class="form-group" ng-if="option.isStoreVault == 'Yes'">
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isConcreteSecured" /> Is the vault
                                                     secured with reinforced concrete on all sides as well as
                                                     top and bottom ?</label>
                                             </div>
-                                            <div class="form-group" ng-if="option.isStoreVault == true">
-                                                <label><input type="checkbox"
+                                            <div class="form-group" ng-if="option.isStoreVault == 'Yes'">
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isSeismicDetector" /> Is vault fitted
                                                     with interior seismic detectors inside the vault ?</label>
                                             </div>
-                                            <div class="form-group" ng-if="option.isStoreVault == true">
-                                                <label><input type="checkbox"
+                                            <div class="form-group" ng-if="option.isStoreVault == 'Yes'">
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isCctv" /> Is vault equipped with 24 hour
                                                     infra-red cameras and normal CCTV 24 hours recording ?</label>
                                             </div>
-                                            <div class="form-group" ng-if="option.isStoreVault == true">
-                                                <label><input type="checkbox"
+                                            <div class="form-group" ng-if="option.isStoreVault == 'Yes'">
+                                                <label><input type="checkbox" ng-true-value="'Yes'" ng-false-value="'No'"
                                                               ng-model="option.isAlarmed" /> Does the vault have an
                                                     alarm and is it linked to an external response company ?</label>
                                             </div>
                                             <div class="form-group"
-                                                 ng-if="option.isStoreVault == false && (productId == 2 || productId == 4)">
+                                                 ng-if="option.isStoreVault == 'No' && (productId == 2 || productId == 4)">
                                                 <label class="control-label" for="commodity">If
                                                     Goods are not stored in a vault, Please supply details of
                                                     storage?</label> <input type="text" class="form-control"
@@ -389,7 +383,7 @@
 
 							<div ng-if="questionnaire.answerType == 'checkbox'"
 								class="checkbox">
-								<label><input type="checkbox"
+								<label for="q_{{questionnaire.id}}"><input type="checkbox"
 									ng-model="questionnaire.answer">{{questionnaire.question}}</label>
 							</div>
 
@@ -491,7 +485,7 @@
 								additionally, you will not have a valid claim in the
 								circumstances described above. </span><br>
 							<hr style="color: #F87431; height: 1px" />
-							<input type="checkbox" required checked="true"> <span> I hereby
+							<input type="checkbox" required > <span> I hereby
 								acknowledge that I have read and understood the policy wording.
 								The wording is also available by visiting <a
 								href="http://www.polygongroup.co.za">polygongroup</a> or by
@@ -531,5 +525,4 @@
 		</div>
 
 	</div>
->>>>>>> e99d643b8014575dfb09cc9f133ffbc54a211577
 </div>
