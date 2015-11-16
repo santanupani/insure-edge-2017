@@ -1,69 +1,70 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-    <div class="col-md-3">
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Product</h4>
-            </div>
-            <div class="panel-body" align="center" style="height: 300px;">
-                <img class="img-circle" ng-src="{{product.image}}" width="140"
-                     height="140">
-                <h3>{{product.name}}</h3>
-                <p>{{product.description}}</p>
-            </div>
-            <div class="panel-footer text-right">
-                <p>
-                    <a class="btn btn-default" ng-href="#/products" role="button">All
-                        Products</a>
-                </p>
-            </div>
-        </div>
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4 title="We request all answers">Please provide the following
-                    details</h4>
-            </div>
-            <div class="panel-body" align="center" style="height: 210px;">
-                <div class="form-group">
-                    <input type="text" class="form-control"
-                           placeholder="Your Full Name"
-                           ng-model="quotationRequest.applicantName" form="form" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control"
-                           placeholder="Your Company Name"
-                           ng-model="quotationRequest.companyName" form="form" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Your Email"
-                           ng-model="quotationRequest.applicantEmail" form="form" required>
-                </div>
-                <div class="form-group">
-                    <select class="form-control"
-                            ng-options="broker.id as broker.name for broker in brokers"
-                            ng-model="quotationRequest.brokerId" form="form" required>
-                        <option value="">Select Broker</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-md-9">
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Please answer the following questions</h4>
-            </div>
-            <div class="panel-body" align="left">
-                <form data-toggle="validator" role="form" name="form" id="form">
-                    <div ng-repeat="option in location.options">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion"
-                                       href="/#{{option.optionName}}">{{option.optionName}}</a>
-                                </h4>
-                            </div>
-                            <div id="{{option.optionName}}" class="panel-collapse">
+	<div class="col-md-3">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Product</h4>
+			</div>
+			<div class="panel-body" align="center" style="height: 300px;">
+				<img class="img-circle" ng-src="{{product.image}}" width="140"
+					height="140">
+				<h3>{{product.name}}</h3>
+				<p>{{product.description}}</p>
+			</div>
+			<div class="panel-footer text-right">
+				<p>
+					<a class="btn btn-default" ng-href="#/products" role="button">All
+						Products</a>
+				</p>
+			</div>
+		</div>
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4 title="We request all answers">Please provide the following
+					details</h4>
+			</div>
+			<div class="panel-body" align="center" style="height: 210px;">
+				<div class="form-group">
+					<input type="text" class="form-control"
+						placeholder="Your Full Name"
+						ng-model="quotationRequest.applicantName" form="form" required>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control"
+						placeholder="Your Company Name"
+						ng-model="quotationRequest.companyName" form="form" required>
+				</div>
+				<div class="form-group">
+					<input type="email" class="form-control" placeholder="Your Email"
+						ng-model="quotationRequest.applicantEmail" form="form" required>
+				</div>
+				<div class="form-group">
+					<select class="form-control"
+						ng-options="broker.id as broker.name for broker in brokers"
+						ng-model="quotationRequest.brokerId" form="form" required>
+						<option value="">Select Broker</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-9">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Please answer the following questions</h4>
+			</div>
+			<div class="panel-body" align="left">
+				<form data-toggle="validator" role="form" name="form" id="form">
+					<div ng-repeat="option in location.options">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="/#{{option.optionName}}">{{option.optionName}}</a>
+								</h4>
+							</div>
+							       <div id="{{option.optionName}}" class="panel-collapse">
                                 <div class="panel-body">
                                     <div>
                                         <div>
@@ -353,180 +354,193 @@
                                 </div>
 
                             </div>
-                        </div>
-                    </div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label><input type="checkbox"
+							ng-click="addRemoveLocation(isMoreCovers)"
+							ng-model="isMoreCovers" /> Do you require cover for more than
+							one store/outlet/location for this cover?</label>
 
-                    <div ng-repeat="questionnaire in questionnaires">
+						<div class="form-group" ng-if="isMoreCovers == true">
+							<div class="pull-right">
+								<button class="btn btn-info btn-sm" ng-click="add()">Add
+									Location</button>
+								<button class="btn btn-warning btn-sm" ng-click="remove()">Remove
+									Location</button>
+							</div>
+						</div>
 
-                        <div
-                            ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">
+					</div>
+					
+					<div ng-repeat="questionnaire in questionnaires">
 
-                            <div ng-if="questionnaire.answerType == 'text'"
-                                 class="form-group">
-                                <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-                                <input type="text" class="form-control"
-                                       id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-                                       ng-required="questionnaire.isRequired" required />
-                            </div>
+						<div
+							ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">
 
-                            <div ng-if="questionnaire.answerType == 'number'"
-                                 class="form-group">
-                                <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+							<div ng-if="questionnaire.answerType == 'text'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<input type="text" class="form-control"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required />
+							</div>
 
-                                <input type="number" class="form-control"
-                                       id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-                                       ng-required="questionnaire.isRequired" required> <label
-                                       ng-show='questionnaire.answer'>{{questionnaire.answer|
+							<div ng-if="questionnaire.answerType == 'number'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+
+								<input type="number" class="form-control"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required> <label
+									ng-show='questionnaire.answer'>{{questionnaire.answer|
 									currency:'ZAR '}}</label>
-                            </div>
+							</div>
 
-                            <div ng-if="questionnaire.answerType == 'checkbox'"
-                                 class="checkbox">
-                                <label><input type="checkbox"
-                                              ng-model="questionnaire.answer">{{questionnaire.question}}</label>
-                            </div>
+							<div ng-if="questionnaire.answerType == 'checkbox'"
+								class="checkbox">
+								<label><input type="checkbox"
+									ng-model="questionnaire.answer">{{questionnaire.question}}</label>
+							</div>
 
-                            <div ng-if="questionnaire.answerType == 'select'"
-                                 class="form-group">
-                                <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-                                <select class="form-control" id="q_{{questionnaire.id}}"
-                                        ng-model="questionnaire.answer"
-                                        ng-options="answerValue for answerValue in questionnaire.answerValues"
-                                        ng-required="questionnaire.isRequired" required>
-                                    <option value=""></option>
-                                </select>
-                            </div>
+							<div ng-if="questionnaire.answerType == 'select'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<select class="form-control" id="q_{{questionnaire.id}}"
+									ng-model="questionnaire.answer"
+									ng-options="answerValue for answerValue in questionnaire.answerValues"
+									ng-required="questionnaire.isRequired" required>
+									<option value=""></option>
+								</select>
+							</div>
 
-                            <div ng-if="questionnaire.answerType == 'textarea'"
-                                 class="form-group">
-                                <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-                                <textarea class="form-control" id="q_{{questionnaire.id}}"
-                                          name="{{questionnaire.id}}" ng-model="questionnaire.answer"
-                                          required></textarea>
-                            </div>
+							<div ng-if="questionnaire.answerType == 'textarea'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<textarea class="form-control" id="q_{{questionnaire.id}}"
+									name="{{questionnaire.id}}" ng-model="questionnaire.answer"
+									required></textarea>
+							</div>
 
-                            <div ng-if="questionnaire.answerType == 'date'"
-                                 class="form-group">
-                                <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-                                <input type="date" class="form-control"
-                                       id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-                                       ng-required="questionnaire.isRequired" required />
-                            </div>
-
-
-                            <div ng-if="questionnaire.answerType == 'other'"
-                                 class="form-group">
-                                <label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-                                <input type="text" class="form-control"
-                                       id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-                                       ng-required="questionnaire.isRequired" required />
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" ng-checked="addHistory(option.isGoodsMoved)"
-                                      ng-model="option.isGoodsMoved" /> Have you suffered any losses of
-                            valuable goods over the past 5 years?</label>
-                    </div>
-<!--                    <div class="form-group">
-                        <span><label>Have you suffered any losses of
-                                valuable goods over the past 5 years?</label></span>
-                        <div class="pull-right">
-                            <button class="btn btn-info btn-sm" ng-click="addHistory()">Yes</button>
-                            <button class="btn btn-warning btn-sm" ng-click="removeHistory()">No</button>
-                        </div>
-                    </div>-->
-                    <div class="form-group" ng-if="isHistory == true">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>Value</th>
-                                    <th>Type Of loss</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="history in histories track by $index">
-                                    <td><input type="number" class="form-control"
-                                               ng-model="history.eventDate" required></td>
-                                    <td><input type="number" class="form-control"
-                                               ng-model="history.lossValue" required></td>
-                                    <td><input type="text" class="form-control"
-                                               ng-model="history.typeOfLoss" required></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="3">
-                                        <div class="form-group">
-                                            <div class="pull-left">
-                                                <label>Do you have more history?</label>
-                                            </div>
-                                            <div class="pull-right">
-                                                <button class="btn btn-info btn-sm"
-                                                        ng-click="addMoreHistory()">Add More History</button>
-                                                <button class="btn btn-warning btn-sm"
-                                                        ng-click="removeMoreHistory()">Remove History</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-body" align="left">
-                            <h4>SASRIA (South African Special Risks Insurance
-                                Association)</h4>
-
-                            <span>It is state-owned underwriter established to provide
-                                business with an insurance safety net for political and
-                                non-political riot, labour unrest, terrorism and related
-                                risk.Claims arising from these occurrence are excluded in terms
-                                of our policy wording and should you not purchase this cover
-                                additionally, you will not have a valid claim in the
-                                circumstances described above. </span><br>
-                            <hr style="color: #F87431; height: 1px" />
-                            <input type="checkbox" required> <span> I hereby
-                                acknowledge that I have read and understood the policy wording.
-                                The wording is also available by visiting <a
-                                    href="http://www.polygongroup.co.za">polygongroup</a> or by
-                                sending an <a href="mailto:lkonaite@gmail.com">email</a> to us.
-                                I understand that this policy is not in place until confirmation
-                                is received from the insurer. I am aware of the fact that
-                                insurance premiums are payable in advance by the 7th of each and
-                                every month and that failure to do so will result in cover being
-                                suspended for the period in which premiums are unpaid. <br>
-                                <br> <b>IMPORTANT :</b> This proposal forms the basis of
-                                the insurance contract between the Insured and the Insurer once
-                                completed by the Insured and accepted by the Insurer. making a
-                                false statement or withholding any material fact may give the
-                                Insurer the right to repudiate any claim made under the policy
-                                or may result in a policy being declared null or void from
-                                inception, a material fact is any fact which influences the
-                                acceptance of risk or conditions and premiums on which it is
-                                accepted. This proposal must therefore be fully/accurately
-                                completed and accepted by the proposer.
-                            </span>
-                        </div>
-                    </div>
-            </div>
-
-            </form>
+							<div ng-if="questionnaire.answerType == 'date'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<input type="date" class="form-control"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required />
+							</div>
 
 
-            <div class="panel-footer text-right">
+							<div ng-if="questionnaire.answerType == 'other'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<input type="text" class="form-control"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required />
+							</div>
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary" form="form"
-                            ng-click="submitQuotationRequest(form)">Request Quote</button>
-                </div>
+						</div>
 
-            </div>
+					</div>
+					
+					<div>
+						<label><input type="checkbox"
+							ng-click="addRemoveHistory()"
+							ng-model="isHistory" /> Have you suffered any losses of valuable
+							goods over the past 5 years?</label>
+					</div>
+					
+					<div class="form-group" ng-if="isHistory == true">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Year</th>
+									<th>Value</th>
+									<th>Type Of loss</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="history in histories">
+									<td><input type="number" class="form-control"
+										ng-model="history.eventDate" required></td>
+									<td><input type="number" class="form-control"
+										ng-model="history.lossValue" required></td>
+									<td><input type="text" class="form-control"
+										ng-model="history.typeOfLoss" required></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="3">
+										<div class="form-group">
+											<div class="pull-left">
+												<label>Do you have more history?</label>
+											</div>
+											<div class="pull-right">
+												<button class="btn btn-info btn-sm"
+													ng-click="addMoreHistory()">Add More History</button>
+												<button class="btn btn-warning btn-sm"
+													ng-click="removeMoreHistory()">Remove History</button>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body" align="left">
+							<h4>SASRIA (South African Special Risks Insurance
+								Association)</h4>
 
-        </div>
+							<span>It is state-owned underwriter established to provide
+								business with an insurance safety net for political and
+								non-political riot, labour unrest, terrorism and related
+								risk.Claims arising from these occurrence are excluded in terms
+								of our policy wording and should you not purchase this cover
+								additionally, you will not have a valid claim in the
+								circumstances described above. </span><br>
+							<hr style="color: #F87431; height: 1px" />
+							<input type="checkbox" required checked="true"> <span> I hereby
+								acknowledge that I have read and understood the policy wording.
+								The wording is also available by visiting <a
+								href="http://www.polygongroup.co.za">polygongroup</a> or by
+								sending an <a href="mailto:lkonaite@gmail.com">email</a> to us.
+								I understand that this policy is not in place until confirmation
+								is received from the insurer. I am aware of the fact that
+								insurance premiums are payable in advance by the 7th of each and
+								every month and that failure to do so will result in cover being
+								suspended for the period in which premiums are unpaid. <br>
+								<br> <b>IMPORTANT :</b> This proposal forms the basis of
+								the insurance contract between the Insured and the Insurer once
+								completed by the Insured and accepted by the Insurer. making a
+								false statement or withholding any material fact may give the
+								Insurer the right to repudiate any claim made under the policy
+								or may result in a policy being declared null or void from
+								inception, a material fact is any fact which influences the
+								acceptance of risk or conditions and premiums on which it is
+								accepted. This proposal must therefore be fully/accurately
+								completed and accepted by the proposer.
+							</span>
+						</div>
+					</div>
+			</div>
 
-    </div>
+			</form>
+
+
+			<div class="panel-footer text-right">
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" form="form"
+						ng-click="submitQuotationRequest(form)">Request Quote</button>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+>>>>>>> e99d643b8014575dfb09cc9f133ffbc54a211577
 </div>

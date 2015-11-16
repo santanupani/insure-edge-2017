@@ -225,15 +225,22 @@
 											<div class="panel panel-default">
 												<div class="panel-body">
 													<div class="form-group">
+														<label class="control-label" for="limit">Cover Limits</label> <input
+															type="text" class="form-control" ng-model="option.limit"
+															readonly>
+													</div>
+													<div class="form-group">
 														<label class="control-label" for="commodity">Commodity</label>
 														<input type="text" class="form-control"
 															ng-model="option.commodity" readonly>
 													</div>
+													
 													<div class="form-group">
-														<label class="control-label" for="limit">Limit</label> <input
-															type="text" class="form-control" ng-model="option.limit"
-															readonly>
+														<label class="control-label" for="limit">Cover</label>
+														<textarea ng-model="option.cover" class="form-control"></textarea>
 													</div>
+													
+													
 
 													<div class="form-group"
 														ng-if="quotationRequest.product.id == 4">
