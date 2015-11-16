@@ -64,8 +64,8 @@
 										href="/#{{option.optionName}}">{{option.optionName}}</a>
 								</h4>
 							</div>
-							       <div id="{{option.optionName}}" class="panel-collapse">
-                                <div class="panel-body">
+							<div id="{{option.optionName}}" class="panel-collapse">
+								<div class="panel-body">
                                     <div>
                                         <div>
                                             <div>
@@ -138,7 +138,7 @@
                                                     ng-model="option.totalValue">
                                             </div>
 
-                                            <div class="form-group" ng-if="option.isGoodsMoved == false && productId == 4">
+                                            <div class="form-group" ng-if="option.isGoodsMovedStatic == false && productId == 4">
                                                 <label class="control-label" for="commodity">What is the total full value 
                                                     of the goods being moved in Cash in transit ?</label> <input
                                                     type="text" class="form-control"
@@ -341,19 +341,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel-footer">
-                                    <div class="form-group">
-                                        <span><label>Require cover for more than one
-                                                store/outlet/location for this cover?</label></span>
-                                        <div class="pull-right">
-                                            <button class="btn btn-info btn-sm" ng-click="add()">Add
-                                                Location</button>
-                                            <button class="btn btn-warning btn-sm" ng-click="remove()">Remove</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+								
+							</div>
 						</div>
 					</div>
 					
