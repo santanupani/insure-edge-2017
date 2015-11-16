@@ -1,5 +1,6 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
 
+
 	<div class="alert alert-success alert-dismissible" role="alert"
 		ng-if="error">
 		<button type="button" class="close" data-dismiss="alert"
@@ -107,10 +108,10 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent="#accordion"
-										href="/#{{$index+1}}">Location Option {{$index+1}}</a>
+										href="/#{{$index + 1}}">Location Option {{$index + 1}}</a>
 								</h4>
 							</div>
-							<div id="{{$index+1}}" class="panel-collapse collapse-in">
+							<div id="{{$index + 1}}" class="panel-collapse collapse-in">
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-md-8">
@@ -118,106 +119,209 @@
 												<div class="panel-body">
 
 													<div class="row">
-														<div class="col-sm-6">
-															<div class="form-inline">
+														<div class="col-md-6">
+															<div class="form-group">
 																<label class="control-label" for="option.commodity">What
 																	do you wish to insure?</label> <input type="text"
 																	class="form-control" ng-model="option.commodity"
 																	readonly>
 
 															</div>
-														</div>
-														<div class="col-sm-6">
-															<label class="form-inline" for="option.limit">Maximum
-																amount you wish to insure?</label> <input type="text"
-																class="form-control" ng-model="option.limit" readonly>
-														</div>
-													</div>
+															<div class="form-group"
+																ng-if="quotationRequest.product.id != 4">
+																<label class="form-group" for="option.limit">Maximum
+																	amount you wish to insure?</label> <input type="text"
+																	class="form-control" ng-model="option.limit" readonly>
+															</div>
 
-													<div class="row">
-														<div class="col-sm-6">
-															<div class="form-inline">
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 4">
+																<label class="control-label" for="productName">What
+																	is the maximum amount you wish to insure in Cash in
+																	transit ?</label> <input type="text" class="form-control"
+																	ng-model="option.limit" readonly>
+															</div>
+
+															<div class="form-group"
+																ng-if="quotationRequest.product.id != 4">
 																<label class="control-label">Is the above amount
 																	the total full value of the goods being moved?</label> <input
 																	type="text" class="form-control"
 																	ng-model="option.isGoodsMoved" readonly>
 															</div>
-														</div>
-														<div class="col-sm-6">
-															<label class="form-inline" for="productName">What
-																is the total full value of the goods being moved?</label> <input
-																type="text" class="form-control"
-																ng-model="option.totalValue" readonly>
-														</div>
-													</div>
 
-													<div class="row">
-														<div class="col-sm-6">
-															<div class="form-inline">
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 4">
+																<label class="control-label">Is the above amount
+																	the total full value of the goods being moved in Cash
+																	in transit ?</label><input type="text" class="form-control"
+																	ng-model="option.isGoodsMovedStatic" readonly />
+															</div>
+
+															<div class="form-group" ng-if="option.totalValue != null">
+																<label class="control-label" for="productName">What
+																	is the total full value of the goods being moved?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.totalValue" readonly>
+															</div>
+
+															<div class="form-group"
+																ng-if="option.transitTotalValue != null">
+																<label class="control-label" for="commodity">What
+																	is the total full value of the goods being moved in
+																	Cash in transit ?</label> <input type="text"
+																	class="form-control"
+																	ng-model="option.transitTotalValue" readonly>
+															</div>
+															<div class="form-group">
 																<label class="control-label">For additional
 																	premium, do you want first loss cover?</label> <input
 																	type="text" class="form-control"
 																	ng-model="option.isFirstLossCover" readonly>
 															</div>
-														</div>
-														<div class="col-sm-6">
-															<label class="form-inline" for="productName">Do
-																you use the services of a professional valuables
-																carriers?</label> <input type="text" class="form-control"
-																ng-model="option.isServiceCarrier" readonly>
-														</div>
-													</div>
 
-													<div class="row">
-														<div class="col-sm-6">
-															<label class="form-inline" for="productName">Do
-																you use the services of a professional valuables
-																carriers?</label> <input type="text" class="form-control"
-																ng-model="option.isServiceCarrier" readonly>
+
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 4">
+																<label class="control-label" for="productName">What
+																	is the maximum amount you wish to insure in Static ?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.staticLimit" readonly>
+															</div>
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 4">
+																<label> Is the above amount the total full value
+																	of the goods being stored in static ?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.isGoodsMoved" readonly />
+															</div>
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 4 && option.staticMaxAmount != null">
+																<label class="control-label" for="commodity">What
+																	is the total full value of the goods being stored in
+																	static?</label> <input type="text" class="form-control"
+																	ng-model="option.staticMaxAmount" readonly>
+															</div>
+
+															<div class="form-group"
+																ng-if="option.storageDeatails != null && (quotationRequest.product.id == 2 || quotationRequest.product.id == 4)">
+																<label class="control-label" for="commodity">If
+																	Goods are not stored in a vault, Please supply details
+																	of storage?</label> <input type="text" class="form-control"
+																	ng-model="option.storageDeatails" readonly>
+															</div>
+
+
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
+																<label class="control-label" for="commodity">What
+																	is the address of the stored vault ?</label> <input type="text"
+																	class="form-control" ng-model="option.vaultAddress"
+																	readonly>
+															</div>
+
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
+																<label class="control-label" for="sabsCategory">Please
+																	select the SABS safety category of the vault ?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.sabsCategory" readonly>
+															</div>
 														</div>
-														<div class="col-sm-6">
-															<div class="form-inline">
-																<label class="control-label">What is the name of
-																	the professional valuables carriers?</label> <input type="text"
-																	class="form-control"
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label" for="isServiceCarrier">Do
+																	you use the services of a professional valuables
+																	carriers?</label> <input type="text" class="form-control"
+																	ng-model="option.isServiceCarrier" readonly>
+															</div>
+
+
+															<div class="form-group"
+																ng-if="option.professionalCarriers != null">
+																<label class="control-label" for="professionalCarriers">What
+																	is the name of the professional valuables carriers?</label> <input
+																	type="text" class="form-control"
 																	ng-model="option.professionalCarriers" readonly>
 															</div>
-														</div>
-													</div>
-
-													<div class="row">
-														<div class="col-sm-6">
-															<label class="form-inline" for="productName">Please
-																specify by whom and how are the valuables carried?</label> <input
-																type="text" class="form-control"
-																ng-model="option.specificCarrier" readonly>
-														</div>
-														<div class="col-sm-6">
-															<div class="form-inline">
-																<label class="control-label">To where are the
-																	valuables being carried?</label> <input type="text"
-																	class="form-control" ng-model="option.toLocation"
+															<div class="form-group"
+																ng-if="option.specificCarrier != null">
+																<label class="control-label" for="specificCarrier">Please
+																	specify by whom and how are the valuables carried?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.specificCarrier" readonly>
+															</div>
+															<div class="form-group">
+																<label class="control-label" for="toLocation">To
+																	where are the valuables being carried?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.toLocation" readonly>
+															</div>
+															<div class="form-group">
+																<label class="control-label" for="distance">What
+																	is the approximate distance?</label> <input type="text"
+																	class="form-control" ng-model="option.distance"
 																	readonly>
 															</div>
-														</div>
-													</div>
 
-													<div class="row">
-														<div class="col-sm-6">
-															<label class="form-inline" for="productName">What
-																is the approximate distance?</label> <input type="text"
-																class="form-control" ng-model="option.distance" readonly>
-														</div>
-														<div class="col-sm-6">
-															<div class="form-inline">
-																<label class="control-label">How many times are
-																	the valuables being carried?</label> <input type="text"
-																	class="form-control" ng-model="option.duration"
-																	readonly>
+															<div class="form-group">
+																<label class="control-label" for="duration">How
+																	many times are the valuables being carried?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.duration" readonly>
 															</div>
-														</div>
-													</div>
 
+															<div class="form-group"
+																ng-if="option.goodsDescription != null && (quotationRequest.product.id == 2 || quotationRequest.product.id == 4)">
+																<label class="control-label" for="commodity">Please
+																	give a full description of the goods to be insured?</label> <input
+																	type="text" class="form-control"
+																	ng-model="option.goodsDescription" readonly>
+															</div>
+
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
+																<label class="control-label">Are the goods going
+																	to be stored in vault?</label><input type="text"
+																	class="form-control" ng-model="option.isStoreVault"
+																	readonly />
+															</div>
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
+																<label class="control-label"> Is the vault
+																	secured with reinforced concrete on all sides as well
+																	as top and bottom ?</label><input type="text"
+																	class="form-control"
+																	ng-model="option.isConcreteSecured" readonly />
+															</div>
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
+																<label class="control-label"> Is vault fitted
+																	with interior seismic detectors inside the vault ?</label><input
+																	type="text" class="form-control"
+																	ng-model="option.isSeismicDetector" readonly />
+															</div>
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
+																<label class="control-label"> Is vault equipped
+																	with 24 hour infra-red cameras and normal CCTV 24 hours
+																	recording ?</label><input type="text" class="form-control"
+																	ng-model="option.isCctv" readonly />
+															</div>
+															<div class="form-group"
+																ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
+																<label class="control-label"> Does the vault
+																	have an alarm and is it linked to an external response
+																	company ?</label><input type="text" class="form-control"
+																	ng-model="option.isAlarmed" readonly />
+															</div>
+
+														</div>
+
+
+
+													</div>
 												</div>
 											</div>
 										</div>
@@ -225,22 +329,22 @@
 											<div class="panel panel-default">
 												<div class="panel-body">
 													<div class="form-group">
-														<label class="control-label" for="limit">Cover Limits</label> <input
-															type="text" class="form-control" ng-model="option.limit"
-															readonly>
+														<label class="control-label" for="limit">Cover
+															Limits</label> <input type="text" class="form-control"
+															ng-model="option.limit" readonly>
 													</div>
 													<div class="form-group">
 														<label class="control-label" for="commodity">Commodity</label>
 														<input type="text" class="form-control"
 															ng-model="option.commodity" readonly>
 													</div>
-													
+
 													<div class="form-group">
 														<label class="control-label" for="limit">Cover</label>
 														<textarea ng-model="option.cover" class="form-control"></textarea>
 													</div>
-													
-													
+
+
 
 													<div class="form-group"
 														ng-if="quotationRequest.product.id == 4">
@@ -263,16 +367,16 @@
 													</div>
 													<div class="form-group">
 														<label class="control-label" for="excess">Excess
-															Amount</label> <textarea class="form-control"
-															placeholder="Excess" ng-model="option.excess" required></textarea>
-														<label ng-show='option.excess'>{{option.excess |
+															Amount</label> <input type="text" class="form-control"
+															placeholder="Excess" ng-model="option.excess" required>
+														<label ng-show='option.excess'>{{option.excess|
 															currency:'R '}}</label>
 													</div>
 													<div class="form-group">
 														<label class="control-label" for="premium">Premium</label>
-														<textarea class="form-control"
-															placeholder="Premium" ng-model="option.premium" required></textarea>
-														<label ng-show='option.premium'>{{option.premium |
+														<input type="text" class="form-control"
+															placeholder="Premium" ng-model="option.premium" required>
+														<label ng-show='option.premium'>{{option.premium|
 															currency:'R '}}</label>
 													</div>
 													<div class="form-group">
@@ -286,6 +390,7 @@
 											</div>
 
 										</div>
+
 									</div>
 								</div>
 							</div>
@@ -319,12 +424,16 @@
 				</div>
 
 
-				<div class="panel-footer text-right"><button ng-if="isQuotationCreated" type="submit" class="btn btn-success" ng-click="save(form)">Create
+				<div class="panel-footer text-right">
+					<button ng-if="isQuotationCreated" type="submit"
+						class="btn btn-success" ng-click="save(form)">Create
 						Quotation</button>
-					<button class="btn btn-info" ng-readonly="quotationView" ng-if="isQuotationCreated == false"
-						ng-click="">Update/Preview Quotation</button>
-						<button class="btn btn-warning" ng-click="changeMode(undefined)">Cancel</button>
-					<button type="submit" class="btn btn-success" ng-click="submitQuotation()" ng-if="isQuotationCreated == false">Submit
+					<button class="btn btn-info" ng-readonly="quotationView"
+						ng-if="isQuotationCreated == false" ng-click="">Update/Preview
+						Quotation</button>
+					<button class="btn btn-warning" ng-click="changeMode(undefined)">Cancel</button>
+					<button type="submit" class="btn btn-success"
+						ng-click="submitQuotation()" ng-if="isQuotationCreated == false">Submit
 						Quotation</button>
 
 				</div>
@@ -337,7 +446,8 @@
 				ng-if="mode == undefined && quotationRequest.status == 'APPLIED'">
 				<span class="text-right">
 					<button class="btn btn-success"
-						ng-click="changeMode('accept');optionInfo();">Accept</button>
+						ng-click="changeMode('accept');
+                                        optionInfo();">Accept</button>
 					<button class="btn btn-danger" ng-click="changeMode('reject')">Reject</button>
 				</span>
 
@@ -354,10 +464,13 @@
 						</div>
 					</div>
 
-					<div class="form-group" ng-if="quotationRequest.histories.length > 0">
+					<div class="form-group"
+						ng-if="quotationRequest.histories.length > 0">
 						<table class="table table-bordered">
 							<thead>
-								<tr><th colspan="3">Loss History</th></tr>
+								<tr>
+									<th colspan="3">Loss History</th>
+								</tr>
 								<tr>
 									<th>Year</th>
 									<th>Value</th>

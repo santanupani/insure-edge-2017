@@ -102,7 +102,6 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 			$scope.histories[0] = {};
 			console.log($scope.histories);
 		}
-
 	};
 
 	$scope.addMoreHistory = function(){
@@ -131,6 +130,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 
 		var option = {};
 		option.isGoodsMoved = false;
+		option.isGoodsMovedStatic = false;
 		option.isServiceCarrier = false;
 		option.isStoreVault = false;
 		option.optionName = "Location-Option-" + ($scope.location.options.length + 1);
@@ -240,6 +240,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 				$scope.quotationRequest.questionnaires[i].question = $scope.questionnaires[i].question;
 				$scope.quotationRequest.questionnaires[i].answer = $scope.questionnaires[i].answer;
 			}
+
 			console.log($scope.histories);
 			$scope.quotationRequest.histories = $scope.histories;
 			console.log($scope.quotationRequest);
