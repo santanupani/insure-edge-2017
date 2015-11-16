@@ -8,10 +8,10 @@
             <div class="panel-body" align="center" style="height: 250px;">
                 <img class="img-responsive" ng-src="/img/products/headerblue.png" >
                 <h4>All requests for quotations will be processed through
-		     an independent intermediary, Blue Quanta Risk Management (Pty) Ltd.
-	            A representative will be in contact with you upon completion of the
-		   questions and formulation of the terms.</h4>
-                
+                    an independent intermediary, Blue Quanta Risk Management (Pty) Ltd.
+                    A representative will be in contact with you upon completion of the
+                    questions and formulation of the terms.</h4>
+
             </div>
         </div>
         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
@@ -50,9 +50,8 @@
                 <div class="form-group">
                     <input type="email" class="form-control" placeholder="Your Email"
                            ng-model="quotationRequest.applicantEmail" form="form" required>
-                    <input type='hidden' ng-model="quotationRequest.brokerId = 00001" form="form" />
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -113,18 +112,27 @@
                                                 </div>
                                             </div>
                                             <br />
+
+
                                             <div class="form-group" ng-if="productId != 4">
                                                 <label class="control-label" for="productName">What
-                                                    is the maximum amount you wish to insure?</label> <input
-                                                    type="text" placeholder="100 000 000" class="form-control" ng-model="option.limit"
-                                                    required><label ng-show='option.limit'>{{option.limit| currency:'R '}}</label>
+                                                    is the maximum amount you wish to insure?</label>
+                                                <div class = "input-group">
+                                                    <span class = "input-group-addon">R</span>
+                                                    <input type="text" placeholder="100 000 000" class="form-control" ng-model="option.limit"
+                                                           pattern="[0-9]+([\.,][0-9]+)*" format  required>
+                                                </div>                                             
+
                                             </div>
 
                                             <div class="form-group" ng-if="productId == 4">
                                                 <label class="control-label" for="productName">What
-                                                    is the maximum amount you wish to insure in Cash in transit ?</label> <input
-                                                    type="text" placeholder="100 000 000" class="form-control" ng-model="option.limit"
-                                                    required><label ng-show='option.limit'>{{option.limit| currency:'R '}}</label>
+                                                    is the maximum amount you wish to insure in Cash in transit ?</label>
+                                                <div class = "input-group">
+                                                    <span class = "input-group-addon">R</span>
+                                                    <input type="text" placeholder="100 000 000" class="form-control" ng-model="option.limit"
+                                                           pattern="[0-9]+([\.,][0-9]+)*" format required>
+                                                </div>
                                             </div>
 
                                             <div class="form-group" ng-if="productId != 4">
@@ -142,14 +150,14 @@
                                             <div class="form-group" ng-if="option.isGoodsMoved == 'No' && productId != 4">
                                                 <label class="control-label" for="commodity">What is
                                                     the total full value of the goods being moved?</label> <input
-                                                    type="text" placeholder="100 000 000"class="form-control"
+                                                    type="text" placeholder="100 000 000 or differs from day to day" class="form-control"
                                                     ng-model="option.totalValue">
                                             </div>
 
                                             <div class="form-group" ng-if="option.isGoodsMovedStatic == 'No' && productId == 4">
                                                 <label class="control-label" for="commodity">What is the total full value 
                                                     of the goods being moved in Cash in transit ?</label> <input
-                                                    type="text" placeholder="100 000 000" class="form-control"
+                                                    type="text" placeholder="100 000 000 or differs from day to day" class="form-control"
                                                     ng-model="option.transitTotalValue">
                                             </div>
 
@@ -206,9 +214,12 @@
 
                                             <div class="form-group" ng-if="productId == 4">
                                                 <label class="control-label" for="productName">What is the maximum amount
-                                                    you wish to insure in Static ?</label> <input
-                                                    type="text" class="form-control" ng-model="option.staticLimit" placeholder="100 000 000"
-                                                    required><label ng-show='option.staticLimit'>{{option.staticLimit| currency:'R '}}</label>
+                                                    you wish to insure in Static ?</label> 
+                                                <div class = "input-group">
+                                                    <span class = "input-group-addon">R</span>
+                                                    <input type="text" class="form-control" ng-model="option.staticLimit" placeholder="100 000 000"
+                                                           pattern="[0-9]+([\.,][0-9]+)*" format required>
+                                                </div>
                                             </div>
 
 
@@ -221,7 +232,7 @@
                                             <div class="form-group" ng-if="option.isGoodsMoved == 'No' && productId == 4">
                                                 <label class="control-label" for="commodity">What is
                                                     the total full value of the goods being stored in static?</label> <input
-                                                    type="text" class="form-control" placeholder="100 000 000"
+                                                    type="text" class="form-control" placeholder="100 000 000 or differs from day to day"
                                                     ng-model="option.staticMaxAmount">
                                             </div>
 
@@ -273,7 +284,7 @@
                                                 <label class="control-label" for="sabsCategory">Please
                                                     select the SABS safety category of the vault :</label> <select
                                                     class="form-control" ng-model="option.sabsCategory"                                                     required>
-                                                     <option value="" disabled selected>Select your SABS Category</option>
+                                                    <option value="" disabled selected>Select your SABS Category</option>
                                                     <option value="No SABS grading">No SABS grading</option>
                                                     <option value="SABS Category I">SABS Category I</option>
                                                     <option value="SABS Category II">SABS Category II</option>
@@ -316,7 +327,7 @@
                                                                                       ng-model="option.distance"
                                                                                       placeholder="Approximate Distance in km"
                                                                                       ng-required="questionnaire.isRequired" required>
-                                                        <option value="" disabled selected>Select your approximate distance in km</option>
+                                                    <option value="" disabled selected>Select your approximate distance in km</option>
                                                     <option value="0km to 100km">0km to 100km</option>
                                                     <option value="100km to 200km">100km to 200km</option>
                                                     <option value="200km to 300km">200km to 300km</option>
@@ -456,13 +467,14 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="history in histories">
-                                    <td><input type="number" class="form-control"
+                                    <td><input type="number" class="form-control" placeholder="YYYY"
                                                ng-model="history.eventDate" required></td>
-                                    <td><input type="number" class="form-control"
-                                               ng-model="history.lossValue" required></td>
+                                    <td><input type="text" class="form-control" placeholder="R 100,000,00,"
+                                                                                  pattern="[0-9]+([\.,][0-9]+)*" format ng-model="history.lossValue" required></td>
                                     <td><input type="text" class="form-control"
-                                               ng-model="history.typeOfLoss" required></td>
+                                               ng-model="history.typeOfLoss" placeholder="Eg. Robbery" required></td>
                                 </tr>
+                                
                             </tbody>
                             <tfoot>
                                 <tr>

@@ -20,6 +20,33 @@ polygon.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 
+polygon.directive('format', function ($filter) {
+        'use strict';
+
+        return {
+            require: '?ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                if (!ctrl) {
+                    return;
+                }
+
+                ctrl.$formatters.unshift(function () {
+                    return $filter('number')(ctrl.$modelValue);
+                });
+
+                ctrl.$parsers.unshift(function (viewValue) {
+                    var plainNumber = viewValue.replace(/[\,\.]/g, ''),
+                        b = $filter('number')(plainNumber);
+
+                    elem.val(b);
+
+                    return plainNumber;
+                });
+            }
+        };
+    });
+
+
 polygon.directive('fileModel', ['$parse', function ($parse) {
 	return {
 		restrict: 'A',
@@ -255,6 +282,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 					
 			console.log($scope.quotationRequest);
 			console.log($scope.quotationRequest.histories);
+                        $scope.quotationRequest.brokerId = 1;
 			$http({
 				url: '/api/quotation-requests',
 				method: 'post',

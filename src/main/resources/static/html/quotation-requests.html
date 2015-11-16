@@ -209,7 +209,7 @@
                                                             <div class="form-group" ng-if="quotationRequest.product.id == 2 || quotationRequest.product.id == 4">
                                                                 <label class="control-label" for="sabsCategory">Please
                                                                     select the SABS safety category of the vault ?</label> <input
-                                                                        type="text" class="form-control" ng-model="option.sabsCategory"
+                                                                    type="text" class="form-control" ng-model="option.sabsCategory"
                                                                     readonly>                           
                                                             </div>
                                                         </div>
@@ -338,24 +338,29 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label" for="excess">Excess
-                                                            Amount</label> <input type="text" class="form-control"
-                                                                              placeholder="Excess" ng-model="option.excess" required>
-                                                        <label ng-show='option.excess'>{{option.excess|
-															currency:'R '}}</label>
+                                                            Amount</label>
+                                                        <div class = "input-group">
+                                                            <span class = "input-group-addon">R</span><input type="text" class="form-control"
+                                                                                                             placeholder="Excess" pattern="[0-9]+([\.,][0-9]+)*" format ng-model="option.excess" required>
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label" for="premium">Premium</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Premium" ng-model="option.premium" required>
-                                                        <label ng-show='option.premium'>{{option.premium|
-															currency:'R '}}</label>
+                                                        <div class = "input-group">
+                                                            <span class = "input-group-addon">R</span>
+                                                            <input type="text" class="form-control"
+                                                                   placeholder="Premium" ng-model="option.premium" pattern="[0-9]+([\.,][0-9]+)*" format required>
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label" for="crossPavement">Cross
-                                                            Pavement</label> <input type="text" class="form-control"
-                                                                                placeholder="Cross Pavement" ng-model="option.pavement"
-                                                                                required> <label ng-show='option.pavement'>{{option.pavement
-                                                                                                        | currency:'R '}}</label>
+                                                            Pavement</label>
+                                                        <div class = "input-group">
+                                                            <span class = "input-group-addon">R</span>
+                                                            <input type="text" class="form-control"
+                                                                   placeholder="Cross Pavement" ng-model="option.pavement"
+                                                                   pattern="[0-9]+([\.,][0-9]+)*" format required> 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
