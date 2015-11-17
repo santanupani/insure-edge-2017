@@ -1,5 +1,7 @@
 /*login*/
 insert into login (user_name, password, enabled, role) values('admin', 'secret', true, 'ROLE_ADMIN');
+insert into login (user_name, password, enabled, role) values('broker', 'secret', true, 'BROKER');
+insert into login (user_name, password, enabled, role) values('underwritter', 'secret', true, 'UNDERWRITTER');
 
 /*products*/
 insert into products(name, description, image) values('Cash and Valuables in Transit', 'All risk cover for your cash and valuables whilst in transit.', '/img/products/Cash and Valuables in Transit.jpg');
