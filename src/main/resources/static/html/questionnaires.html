@@ -1,6 +1,4 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
-<<<<<<< HEAD
-
     <div class="col-md-3">
         <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
             <div class="panel-heading">
@@ -8,10 +6,10 @@
             </div>
             <div class="panel-body" align="center" style="height: 250px;">
                 <img class="img-responsive" ng-src="/img/products/headerblue.png" >
-                <h4>All requests for quotations will be processed through
-                    an independent intermediary, Blue Quanta Risk Management (Pty) Ltd.
-                    A representative will be in contact with you upon completion of the
-                    questions and formulation of the terms.</h4>
+                <span>All requests for quotations will be processed through an
+					independent intermediary, Blue Quanta Risk Management (Pty) Ltd. A
+					representative will be in contact with you upon completion of the
+					questions and formulation of the terms.</span>
 
             </div>
         </div>
@@ -82,26 +80,28 @@
                                                         <label class="control-label">What do you wish to
                                                             insure?</label>
                                                         <div class="col-lg-10">
+                                                            
                                                             <label class="checkbox-inline"> <input
                                                                     ng-true-value="'Cash'" ng-false-value="''"
                                                                     ng-model="models[$index].cash" type="checkbox"
-                                                                    name="radio"> Cash
+                                                                    name="radio" ng-checked="" > Cash
                                                             </label> <label class="checkbox-inline"> <input
                                                                     ng-true-value="'Bullion'" ng-false-value="''"
                                                                     ng-model="models[$index].bullion" type="checkbox"
-                                                                    name="radio"> Bullion
+                                                                    name="radio" > Bullion
                                                             </label> <label class="checkbox-inline"> <input
                                                                     ng-true-value="'Diamonds'" ng-false-value="''"
                                                                     ng-model="models[$index].diamonds" type="checkbox"
-                                                                    name="radio"> Diamonds
+                                                                    name="radio"  > Diamonds
                                                             </label> <label class="checkbox-inline"> <input
                                                                     ng-true-value="'Precious Stones'" ng-false-value="''"
                                                                     ng-model="models[$index].preciousStone" type="checkbox"
-                                                                    name="radio"> Precious Stones
+                                                                    name="radio" > Precious Stones
                                                             </label> <label class="checkbox-inline"> <input
                                                                     ng-model="models[$index].other" type="checkbox"
                                                                     ng-false-value="''" name="radio"> Other
                                                             </label>
+                                                          
                                                         </div>
                                                         <div ng-if="models[$index].other == true"
                                                              class="form-group">
@@ -109,9 +109,11 @@
                                                                 other?</label> <input type="text" class="form-control"
                                                                                   ng-model="models[$index].otherExtra" required>
                                                         </div>
+                                                     
                                                     </div>
                                                 </div>
                                             </div>
+                         
                                             <br />
 
 
@@ -344,7 +346,7 @@
                                                 <label class="control-label" for="staticLimit">How
                                                     many times are the valuables being carried?</label>
                                                 <div class="form-group form-inline">
-                                                    <input type="text" class="form-control" size="5"
+                                                    <input type="number" class="form-control" size="5"
                                                            placeholder="No of Times" ng-model="models[$index].noOfTimes"
                                                            required> <select class="form-control"
                                                            ng-model="models[$index].period" required>
