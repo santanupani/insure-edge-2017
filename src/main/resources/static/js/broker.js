@@ -61,7 +61,39 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 		$scope.getQuotationRequest($scope.reference);
 
 	};
+	
+	
+	$scope.updateQuotation = function(form){
 
+		if (form.$invalid) {
+			console.log("Form Validation Failure");
+		} else {
+			$scope.quotation.reference = $scope.reference;
+			$scope.quotation.options = $scope.quotationRequest.locationOptions;
+			console.log($scope.quotation); 
+			$http({
+				url: 'api/quotation-update/'+$scope.quotation.reference,
+				method: 'put',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				data: $scope.quotation
+			}).success(function (data, status) {
+				if (status === 200) {
+					$rootScope.message = "Quotation Updated Successfully";
+					$scope.viewQuotationPDF($scope.quotation.reference );
+
+				} else {
+					console.log('status:' + status);
+				}
+			}).error(function (error) {
+				$rootScope.message = "Oops, we received your request, but there was an error processing it";
+			}); 
+		}
+	};
+	
+	
+	
 	$scope.getQuotationRequest = function () {
 		$http({
 			url: '/api/quotation-requests/' + $scope.reference,
@@ -81,17 +113,6 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 					}else if(angular.equals($scope.quotationRequest.questionnaire[i].answer,'false')){
 						$scope.quotationRequest.questionnaire[i].answer = 'No';
 						console.log($scope.quotationRequest.questionnaire[i].answer);
-					}
-				}
-
-				for(var i=0;i<$scope.quotationRequest.locationOptions.length;i++){
-
-					if(angular.equals($scope.quotationRequest.locationOptions[i].isFirstLossCover,'true')){
-						$scope.quotationRequest.locationOptions[i].isFirstLossCover = 'Yes';
-						console.log($scope.quotationRequest.locationOptions[i].isFirstLossCover);
-					}else if(angular.equals($scope.quotationRequest.locationOptions[i].isFirstLossCover,'false')){
-						$scope.quotationRequest.locationOptions[i].isFirstLossCover = 'No';
-						console.log($scope.quotationRequest.locationOptions[i].isFirstLossCover);
 					}
 				}
 

@@ -4,10 +4,12 @@ import static za.co.polygon.mapper.Mapper.fromBankAccountCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClaimRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClientCommandModel;
 import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
+import static za.co.polygon.mapper.Mapper.fromHistoryCommandModel;
 import static za.co.polygon.mapper.Mapper.fromLocationOptionsCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyRequestTypeCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
+import static za.co.polygon.mapper.Mapper.fromQuotationUpdateCommandModel;
 import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimRequest;
@@ -77,8 +79,6 @@ import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
-import za.co.polygon.mapper.Mapper;
-import static za.co.polygon.mapper.Mapper.fromHistoryCommandModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
@@ -104,7 +104,6 @@ import za.co.polygon.model.SubAgentQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BankAccountRepository;
 import za.co.polygon.repository.BrokerRepository;
-import za.co.polygon.repository.ClaimAnswerTypeRepository;
 import za.co.polygon.repository.ClaimQuestionnaireRepository;
 import za.co.polygon.repository.ClaimRequestQuestionnaireRepository;
 import za.co.polygon.repository.ClaimRequestRepository;
@@ -123,7 +122,6 @@ import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
 import za.co.polygon.repository.RequestAnswersRepository;
-import za.co.polygon.repository.RequestQuestionnaireRepository;
 import za.co.polygon.repository.RequestTypeRepository;
 import za.co.polygon.repository.SubAgentRepository;
 import za.co.polygon.repository.UnderwriterRepository;
@@ -179,9 +177,6 @@ public class Service {
 	private PolicyRepository policyRepository;
 
 	@Autowired
-	private RequestQuestionnaireRepository requestQuestionnaireRepository;
-
-	@Autowired
 	private RequestTypeRepository requestTypeRepository;
 
 	@Autowired
@@ -204,9 +199,6 @@ public class Service {
 
 	@Autowired
 	private ClaimTypeRepository claimTypeRepository;
-
-	@Autowired
-	private ClaimAnswerTypeRepository claimAnswerTypeRepository;
 
 	@Autowired
 	private ClaimQuestionnaireRepository claimQuestionnaireRepository;
@@ -392,6 +384,15 @@ public class Service {
 		log.info("Quotation Command size: " + quotation.getQuotationOptions().size());
 		log.info("Quotation Created Successfully !!!");
 		
+	}
+	
+	@Transactional
+	@RequestMapping(value = "api/quotation-update/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updateQuotation(@PathVariable("reference") String reference, @RequestBody QuotationCommandModel quotationCommandModel) throws ParseException {
+		log.info("Updating Quotation with reference: "+reference);
+		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
+		Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
+		quotationOptionRepository.save(fromQuotationUpdateCommandModel(quotationCommandModel,quotation));
 	}
 	
 	@RequestMapping(value = "api/quotation-submit/{reference}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
