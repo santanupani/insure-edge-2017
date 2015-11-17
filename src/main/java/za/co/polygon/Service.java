@@ -307,7 +307,6 @@ public class Service {
 	public byte[] viewQuotationPDF(@PathVariable("reference") String reference) throws JRException, IOException{
 		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
 		Quotation quotation  = quotationRepository.findByQuotationRequest(quotationRequest);
-		
 		return documentService.generateQuotationPDF(quotation);
 
 	}
@@ -390,9 +389,13 @@ public class Service {
 	@RequestMapping(value = "api/quotation-update/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateQuotation(@PathVariable("reference") String reference, @RequestBody QuotationCommandModel quotationCommandModel) throws ParseException {
 		log.info("Updating Quotation with reference: "+reference);
+		
 		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(quotationCommandModel.getReference());
-		Quotation quotation = fromQuotationRequestCommandModel(quotationCommandModel, quotationRequest);
-		quotationOptionRepository.save(fromQuotationUpdateCommandModel(quotationCommandModel,quotation));
+		Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
+		List<QuotationOption> quotationOptions = fromQuotationUpdateCommandModel(quotationCommandModel,quotation);
+		quotationOptionRepository.save(quotationOptions);
+		log.info("QuotationOptions updated successfully : "+quotationOptions.size());
+		
 	}
 	
 	@RequestMapping(value = "api/quotation-submit/{reference}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

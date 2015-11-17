@@ -49,6 +49,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 	$scope.reject;
 	$scope.com ;
 	$scope.questionnairres = [];
+	$scope.updateQuotation;
 
 
 	$scope.init = function () {
@@ -62,38 +63,50 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
 	};
 	
-	
-	$scope.updateQuotation = function(form){
+		
+	$scope.updateQuotation = function () {
 
-		if (form.$invalid) {
-			console.log("Form Validation Failure");
-		} else {
-			$scope.quotation.reference = $scope.reference;
-			$scope.quotation.options = $scope.quotationRequest.locationOptions;
-			console.log($scope.quotation); 
-			$http({
-				url: 'api/quotation-update/'+$scope.quotation.reference,
-				method: 'put',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				data: $scope.quotation
-			}).success(function (data, status) {
-				if (status === 200) {
-					$rootScope.message = "Quotation Updated Successfully";
-					$scope.viewQuotationPDF($scope.quotation.reference );
-
-				} else {
-					console.log('status:' + status);
-				}
-			}).error(function (error) {
-				$rootScope.message = "Oops, we received your request, but there was an error processing it";
-			}); 
+		$scope.updateQuotation = {};
+		
+		$scope.updateQuotation.reference = $scope.quotationRequest.reference;
+		console.log('Updated quotation reference: '+$scope.updateQuotation.reference);
+		$scope.updateQuotation.options = [];;
+		for(var i=0;i<$scope.quotationRequest.locationOptions.length;i++){
+			$scope.updateQuotation.options[i] = {};
+			$scope.updateQuotation.options[i].pavement = $scope.quotationRequest.locationOptions[i].pavement;
+			$scope.updateQuotation.options[i].commodity = $scope.quotationRequest.locationOptions[i].commodity;
+			$scope.updateQuotation.options[i].staticLimit = $scope.quotationRequest.locationOptions[i].staticLimit;
+			$scope.updateQuotation.options[i].duration = $scope.quotationRequest.locationOptions[i].duration;
+			$scope.updateQuotation.options[i].cover = $scope.quotationRequest.locationOptions[i].cover;
+			$scope.updateQuotation.options[i].excess = $scope.quotationRequest.locationOptions[i].excess;
+			$scope.updateQuotation.options[i].limit = $scope.quotationRequest.locationOptions[i].limit;
+			$scope.updateQuotation.options[i].location = $scope.quotationRequest.locationOptions[i].fromLocation;
+			$scope.updateQuotation.options[i].premium = $scope.quotationRequest.locationOptions[i].premium;
 		}
+		
+		$http({
+			url: '/api/quotation-update/'+$scope.updateQuotation.reference,
+			method: 'put',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			data: $scope.updateQuotation
+		}).success(function (data, status) {
+			console.log('get success code:' + status);
+			if (status == 200) {
+				$rootScope.message = "Quotation updated Successfully";
+				$scope.viewQuotationPDF($scope.updateQuotation.reference);
+			} else {
+				console.log('status:' + status);
+			}
+		})
+		.error(function (error) {
+			$rootScope.message = "Oops we recieved your request but there was a problem processing it";
+			console.log(error);
+		});
 	};
 	
-	
-	
+
 	$scope.getQuotationRequest = function () {
 		$http({
 			url: '/api/quotation-requests/' + $scope.reference,

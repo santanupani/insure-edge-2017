@@ -6,9 +6,9 @@
 			</div>
 			<div class="panel-body" align="center" style="height: 250px;">
 				<img class="img-responsive" ng-src="/img/products/headerblue.png"><br>
-				<span>All requests for quotations will be processed through an
-					independent intermediary, Blue Quanta Risk Management (Pty) Ltd. A
-					representative will be in contact with you upon completion of the
+				<span>All requests for quotations will be processed through
+					an independent intermediary, Blue Quanta Risk Management (Pty) Ltd.
+					A representative will be in contact with you upon completion of the
 					questions and formulation of the terms.</span>
 
 			</div>
@@ -349,8 +349,6 @@
 													ng-model="option.distance"
 													placeholder="Approximate Distance in km"
 													ng-required="questionnaire.isRequired" required>
-													<option value="" disabled selected>Select your
-														approximate distance in km</option>
 													<option value="0km to 100km">0km to 100km</option>
 													<option value="100km to 200km">100km to 200km</option>
 													<option value="200km to 300km">200km to 300km</option>
@@ -499,7 +497,8 @@
 											<option value="2012">2012</option>
 											<option value="2013">2013</option>
 											<option value="2014">2014</option>
-											<option value="2015">2015</option></select></td>
+											<option value="2015">2015</option>
+									</select></td>
 									<td><input type="text" class="form-control"
 										placeholder="R 100,000,00," pattern="[0-9]+([\.,][0-9]+)*"
 										format ng-model="history.lossValue" required></td>

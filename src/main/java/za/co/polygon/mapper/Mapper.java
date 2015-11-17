@@ -357,6 +357,7 @@ public class Mapper {
             locationOption.setFromLocation(location.getFromLocation());
             locationOption.setToLocation(location.getToLocation());
             locationOption.setDuration(location.getDuration());
+            locationOption.setCommodity(location.getCommodity());
             locationOption.setLimit(location.getLimit());
             locationOption.setProfessionalCarriers(location.getProfessionalCarriers());
             locationOption.setGoodsDescription(location.getGoodsDescription());
@@ -429,7 +430,8 @@ public class Mapper {
     	List<QuotationOption> quotationOption = quotation.getQuotationOptions();
     	List<QuotationCommandModel.Options> locationOptions = quotationCommandModel.getOptions();
     	List<QuotationOption> results = new ArrayList<QuotationOption>();
-    	for(int i=0;i<locationOptions.size();i++){
+    	for(int i=0;i<quotation.getQuotationOptions().size();i++){
+    		quotationOption.get(i).setQuotation(quotation);
     		quotationOption.get(i).setCover(locationOptions.get(i).getCover());
     		quotationOption.get(i).setPremium(locationOptions.get(i).getPremium());
     		quotationOption.get(i).setPavements(locationOptions.get(i).getPavement());
