@@ -202,6 +202,8 @@ public class Mapper {
             location.setFirstLossCover(locationOption.isIsFirstLossCover());
             location.setFromLocation(locationOption.getFromLocation());
             location.setToLocation(locationOption.getToLocation());
+            
+            
             location.setLimit(locationOption.getLimit());
             location.setProfessionalCarriers(locationOption.getProfessionalCarriers());
             location.setGoodsDescription(locationOption.getGoodsDescription());
@@ -350,12 +352,8 @@ public class Mapper {
         for (LocationOption location : quotationRequest.getLocationOptions()) {
             QuotationRequestQueryModel.LocationOptions locationOption = new QuotationRequestQueryModel.LocationOptions();
             locationOption.setId(location.getId());
-            locationOption.setIsAlarmed(location.isAlarmed());
-            locationOption.setIsCctv(location.isCctv());
             locationOption.setCarrierName(location.getCarrierName());
-            locationOption.setIsConcreteSecured(location.isConcreteSecured());
             locationOption.setDistance(location.getDistance());
-            locationOption.setIsFirstLossCover(location.isFirstLossCover());
             locationOption.setFromLocation(location.getFromLocation());
             locationOption.setToLocation(location.getToLocation());
             locationOption.setDuration(location.getDuration());
@@ -371,14 +369,31 @@ public class Mapper {
             locationOption.setTotalValue(location.getTotalValue());
             locationOption.setTransitTotalValue(location.getTransitTotalValue());
             locationOption.setStaticMaxAmount(location.getStaticMaxAmount());
-            locationOption.setIsServiceCarrier(location.isServiceCarrier());
-            locationOption.setIsStoreVault(location.isStoreVault());
-            locationOption.setCommodity(location.getCommodity());
-            locationOption.setIsSeismicDetector(location.isSeismicDetector());
-            locationOption.setSabsCategory(location.getSabsCategory());
-            locationOption.setProfessionalCarriers(location.getProfessionalCarriers());
-            locationOption.setIsGoodsMoved(location.isGoodsMoved());
-            locationOption.setIsGoodsMovedStatic(location.isIsGoodsMovedStatic());
+            if(location.isServiceCarrier() == true  ||location.isStoreVault() == true
+                    || location.isSeismicDetector() == true || location.isGoodsMoved() == true
+                    || location.isIsGoodsMovedStatic() == true  || location.isAlarmed() == true
+                    || location.isCctv() == true   || location.isConcreteSecured() == true || location.isFirstLossCover() == true){
+                locationOption.setIsServiceCarrier("Yes");
+                locationOption.setIsStoreVault("Yes");
+                locationOption.setIsSeismicDetector("Yes");
+                locationOption.setIsGoodsMoved("Yes");
+                locationOption.setIsGoodsMovedStatic("Yes");
+                locationOption.setIsAlarmed("Yes");
+                locationOption.setIsCctv("Yes");
+                locationOption.setIsConcreteSecured("Yes");
+                locationOption.setIsFirstLossCover("Yes");
+            }
+            else{
+                locationOption.setIsServiceCarrier("No");
+                locationOption.setIsStoreVault("No");
+                locationOption.setIsSeismicDetector("No");
+                locationOption.setIsGoodsMoved("No");
+                locationOption.setIsGoodsMovedStatic("No");
+                locationOption.setIsAlarmed("No");
+                locationOption.setIsCctv("No");
+                locationOption.setIsConcreteSecured("No");
+                locationOption.setIsFirstLossCover("No");
+            }                    
             result.getLocationOptions().add(locationOption);
 
         }
