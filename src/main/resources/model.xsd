@@ -387,7 +387,7 @@
 							<element name="duration" type="string" />
 							<element name="staticMaxAmount" type="string" />
 							<element name="totalValue" type="string" />
-                                                        <element name="transitTotalValue" type="string" />
+							<element name="transitTotalValue" type="string" />
 							<element name="totalValueStatic" type="string" />
 							<element name="isFirstLossCover" type="boolean" />
 							<element name="isServiceCarrier" type="boolean" />

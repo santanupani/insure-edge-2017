@@ -409,6 +409,22 @@ public class Mapper {
         quotation.setQuotationOptions(quotationOptionList);
         return quotation;
     }
+    
+    public static List<QuotationOption> fromQuotationUpdateCommandModel(QuotationCommandModel quotationCommandModel,Quotation quotation){
+    	List<QuotationOption> quotationOption = quotation.getQuotationOptions();
+    	List<QuotationCommandModel.Options> locationOptions = quotationCommandModel.getOptions();
+    	List<QuotationOption> results = new ArrayList<QuotationOption>();
+    	for(int i=0;i<locationOptions.size();i++){
+    		quotationOption.get(i).setCover(locationOptions.get(i).getCover());
+    		quotationOption.get(i).setPremium(locationOptions.get(i).getPremium());
+    		quotationOption.get(i).setPavements(locationOptions.get(i).getPavement());
+    		quotationOption.get(i).setExcess(locationOptions.get(i).getExcess());
+    		results.add(quotationOption.get(i));
+    	}
+    	quotation.setQuotationOptions(results);
+    	
+    	return quotationOption;
+    }
 
     public static QuotationQueryModel toQuotationQueryModel(Quotation quotation) {
 
