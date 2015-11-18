@@ -31,7 +31,7 @@ public class SecurityService {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     public ResponseEntity<String> login(@RequestParam(value = "state", required = false, defaultValue = "/") String state) {
         try {
             state = URLEncoder.encode(state, "UTF-8");
@@ -39,7 +39,7 @@ public class SecurityService {
             state = "%2F";
         }
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add("Location", "/loginForm.html");
+        headers.add("Location", "/signin.html");
         headers.add("Set-Cookie", "state=" + state + ";");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
@@ -72,7 +72,7 @@ public class SecurityService {
             return new ResponseEntity<String>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-            headers.add("Location", "/loginForm.html");
+            headers.add("Location", "/signin.html");
             headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
             headers.add("Pragma", "no-cache");
             headers.add("Expires", "0");
@@ -95,7 +95,7 @@ public class SecurityService {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ResponseEntity<String> logout() {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add("Location", "/loginForm.html");
+        headers.add("Location", "/signin.html");
         headers.add("Set-Cookie", "token=; Max-Age=0");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");

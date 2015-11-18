@@ -1,4 +1,4 @@
-var broker = angular.module('broker', ['ngRoute']);
+var broker = angular.module('broker', ['ngRoute','ngCookies']);
 
 broker.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
@@ -37,7 +37,36 @@ broker.directive('format', function ($filter) {
                 });
             }
         };
-    });
+});
+    
+broker.controller('rootCtrl', function ($scope, $rootScope, $http, $cookies, $window) {
+	
+	$scope.init = function(){
+		if($cookies.token == undefined){
+			console.log($window);
+			$window.location.href= "/login?state="+encodeURIComponent($window.location.href);
+		} else {
+			$scope.validate($cookies.token);
+		}
+	};
+	
+	$scope.validate = function(token){
+		$http({
+            method: 'POST',
+            url: '/validate',
+            headers: {
+            	"Content-Type": "text/html"
+            },
+            data: token
+        }).success(function(data, status){
+            $rootScope.session = data;
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookies.token;
+        }).error(function(error, status){
+            $window.location.href= "/logout";
+        });
+	};
+	
+});
 
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location, $rootScope, $sce) {
 
