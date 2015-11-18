@@ -5,11 +5,14 @@ broker.config(['$routeProvider', function ($routeProvider) {
 	.when('/quotation-requests/:reference', {
 		'templateUrl': '/html/quotation-requests.html',
 		'controller': 'quotationRequestsCtrl'
+	}).when('/quotation-requests', {
+		'templateUrl': '/html/quotation-requests-list.html',
+		'controller': 'listQuotationRequestCtrl'
 	}).when('/quotations', {
 		'templateUrl': '/html/broker-scheduler.html',
 		'controller': 'brokerSchedulerCtrl'
 	}).otherwise({
-		redirectTo: '/products'
+		redirectTo: '/quotation-requests'
 	});
 }]);
 
@@ -315,6 +318,39 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 
 });
 
+broker.controller('listQuotationRequestCtrl', function ($scope, $rootScope, $http,$filter) {
+
+
+	$scope.init = function () {
+		$scope.getAllQuotations();
+	};
+
+
+	$scope.getAllQuotations = function () {
+		console.log('get all quotations');
+		$http({
+			url: '/api/quotations',
+			method: 'get'
+		}).success(function (data, status) {
+			if (status === 200) {
+				console.log('retrived successfully');
+				$scope.quotations = data;
+			} else {
+				console.log('status:' + status);
+				$rootScope.error = "error status code : " + status;
+				;
+			}
+		}).error(function (error) {
+			$rootScope.message = "Oops, we received your request, but there was an error processing it";
+		});
+	};
+
+	$scope.closeNotification = function () {
+		$rootScope.message = undefined;
+	};
+
+
+});
 
 broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http,$filter) {
 
