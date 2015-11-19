@@ -83,6 +83,8 @@ public class Mapper {
         UserQueryModel user = new UserQueryModel();
         user.setId(from.getId());
         user.setUserName(from.getUserName());
+        user.setFirstName(from.getFirstName());
+        user.setLastName(from.getLastName());
         user.setRole(from.getRole());
         return user;
     }
@@ -155,12 +157,12 @@ public class Mapper {
         return brokerQueryModels;
     }
 
-    public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product,int count) {
+    public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product, int count) {
         QuotationRequest quotationRequest = new QuotationRequest();
         quotationRequest.setApplicantName(quotationRequestCommandModel.getApplicantName());
         quotationRequest.setApplicantEmail(quotationRequestCommandModel.getApplicantEmail());
         quotationRequest.setCompanyName(quotationRequestCommandModel.getCompanyName());
-        quotationRequest.setReference("QUO-"+String.format("%04d", count));
+        quotationRequest.setReference("QUO-" + String.format("%04d", count));
         quotationRequest.setStatus("APPLIED");
         quotationRequest.setCreateDate(new Date());
         quotationRequest.setProduct(product);
@@ -202,8 +204,7 @@ public class Mapper {
             location.setFirstLossCover(locationOption.isIsFirstLossCover());
             location.setFromLocation(locationOption.getFromLocation());
             location.setToLocation(locationOption.getToLocation());
-            
-            
+
             location.setLimit(locationOption.getLimit());
             location.setProfessionalCarriers(locationOption.getProfessionalCarriers());
             location.setGoodsDescription(locationOption.getGoodsDescription());
@@ -370,10 +371,10 @@ public class Mapper {
             locationOption.setTotalValue(location.getTotalValue());
             locationOption.setTransitTotalValue(location.getTransitTotalValue());
             locationOption.setStaticMaxAmount(location.getStaticMaxAmount());
-            if(location.isServiceCarrier() == true  ||location.isStoreVault() == true
+            if (location.isServiceCarrier() == true || location.isStoreVault() == true
                     || location.isSeismicDetector() == true || location.isGoodsMoved() == true
-                    || location.isIsGoodsMovedStatic() == true  || location.isAlarmed() == true
-                    || location.isCctv() == true   || location.isConcreteSecured() == true || location.isFirstLossCover() == true){
+                    || location.isIsGoodsMovedStatic() == true || location.isAlarmed() == true
+                    || location.isCctv() == true || location.isConcreteSecured() == true || location.isFirstLossCover() == true) {
                 locationOption.setIsServiceCarrier("Yes");
                 locationOption.setIsStoreVault("Yes");
                 locationOption.setIsSeismicDetector("Yes");
@@ -383,8 +384,7 @@ public class Mapper {
                 locationOption.setIsCctv("Yes");
                 locationOption.setIsConcreteSecured("Yes");
                 locationOption.setIsFirstLossCover("Yes");
-            }
-            else{
+            } else {
                 locationOption.setIsServiceCarrier("No");
                 locationOption.setIsStoreVault("No");
                 locationOption.setIsSeismicDetector("No");
@@ -394,12 +394,21 @@ public class Mapper {
                 locationOption.setIsCctv("No");
                 locationOption.setIsConcreteSecured("No");
                 locationOption.setIsFirstLossCover("No");
-            }                    
+            }
             result.getLocationOptions().add(locationOption);
 
         }
 
         return result;
+    }
+
+    public static List<QuotationRequestQueryModel> toQuotationRequestQueryModel(List<QuotationRequest> fromList) {
+        List<QuotationRequestQueryModel> quotationRequestQueryModels = new ArrayList<QuotationRequestQueryModel>();
+        for (QuotationRequest quotationRequest : fromList) {
+            quotationRequestQueryModels.add(toQuotationRequestQueryModel(quotationRequest));
+
+        }
+        return quotationRequestQueryModels;
     }
 
     public static Quotation fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel, QuotationRequest quotationRequest) {
@@ -425,22 +434,22 @@ public class Mapper {
         quotation.setQuotationOptions(quotationOptionList);
         return quotation;
     }
-    
-    public static List<QuotationOption> fromQuotationUpdateCommandModel(QuotationCommandModel quotationCommandModel,Quotation quotation){
-    	List<QuotationOption> quotationOption = quotation.getQuotationOptions();
-    	List<QuotationCommandModel.Options> locationOptions = quotationCommandModel.getOptions();
-    	List<QuotationOption> results = new ArrayList<QuotationOption>();
-    	for(int i=0;i<quotation.getQuotationOptions().size();i++){
-    		quotationOption.get(i).setQuotation(quotation);
-    		quotationOption.get(i).setCover(locationOptions.get(i).getCover());
-    		quotationOption.get(i).setPremium(locationOptions.get(i).getPremium());
-    		quotationOption.get(i).setPavements(locationOptions.get(i).getPavement());
-    		quotationOption.get(i).setExcess(locationOptions.get(i).getExcess());
-    		results.add(quotationOption.get(i));
-    	}
-    	quotation.setQuotationOptions(results);
-    	
-    	return quotationOption;
+
+    public static List<QuotationOption> fromQuotationUpdateCommandModel(QuotationCommandModel quotationCommandModel, Quotation quotation) {
+        List<QuotationOption> quotationOption = quotation.getQuotationOptions();
+        List<QuotationCommandModel.Options> locationOptions = quotationCommandModel.getOptions();
+        List<QuotationOption> results = new ArrayList<QuotationOption>();
+        for (int i = 0; i < quotation.getQuotationOptions().size(); i++) {
+            quotationOption.get(i).setQuotation(quotation);
+            quotationOption.get(i).setCover(locationOptions.get(i).getCover());
+            quotationOption.get(i).setPremium(locationOptions.get(i).getPremium());
+            quotationOption.get(i).setPavements(locationOptions.get(i).getPavement());
+            quotationOption.get(i).setExcess(locationOptions.get(i).getExcess());
+            results.add(quotationOption.get(i));
+        }
+        quotation.setQuotationOptions(results);
+
+        return quotationOption;
     }
 
     public static QuotationQueryModel toQuotationQueryModel(Quotation quotation) {
@@ -999,7 +1008,6 @@ public class Mapper {
                     MultipartFile file = attachments[claimQuestions.size()];
                     claimAnswer.setQuestion(claimquestionnaires.getQuestion());
                     claimAnswer.setAttachment(file.getBytes());
-                 
 
                 } else {
 

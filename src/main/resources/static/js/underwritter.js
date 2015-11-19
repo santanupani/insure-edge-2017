@@ -39,6 +39,35 @@ $(document).ready(function () {
 	$("#regId").mouseout().css("text-transform", "uppercase");
 });
 
+underwritter.controller('underwritterCtrl ', function ($scope, $rootScope, $http, $cookies, $window) {
+	
+	$scope.init = function(){
+		if($cookies.token == undefined){
+			console.log($window);
+			$window.location.href= "/login?state="+encodeURIComponent($window.location.href);
+		} else {
+			$scope.validate($cookies.token);
+		}
+	};
+	
+	$scope.validate = function(token){
+		$http({
+            method: 'POST',
+            url: '/validate',
+            headers: {
+            	"Content-Type": "text/html"
+            },
+            data: token
+        }).success(function(data, status){
+            $rootScope.session = data;
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookies.token;
+        }).error(function(error, status){
+            $window.location.href= "/logout";
+        });
+	};
+	
+});
+
 underwritter.controller('policyRequestCtrl', function ($scope, $rootScope, $http, $routeParams, $cookieStore) {
 	$scope.mode;
 	$rootScope.reference;
