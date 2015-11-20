@@ -43,12 +43,12 @@ broker.directive('format', function ($filter) {
     };
 });
 
-broker.controller('rootCtrl', function ($scope, $rootScope, $http, $cookies, $window) {
+broker.controller('brokerCtrl', function ($scope, $rootScope, $http, $cookies, $window) {
 
     $scope.init = function () {
         if ($cookies.token == undefined) {
             console.log($window);
-            $window.location.href = "/login?state=" + encodeURIComponent($window.location.href);
+                $window.location.href = "/login?state="+encodeURIComponent($window.location.href);
         } else {
             $scope.validate($cookies.token);
         }

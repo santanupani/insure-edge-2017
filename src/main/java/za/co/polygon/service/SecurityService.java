@@ -39,7 +39,7 @@ public class SecurityService {
             state = "%2F";
         }
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add("Location", "/signin.html");
+        headers.add("Location", "polygon/signin.html");
         headers.add("Set-Cookie", "state=" + state + ";");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
@@ -47,32 +47,44 @@ public class SecurityService {
         return new ResponseEntity<String>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestParam("userName") String userName,
-            @RequestParam("password") String password,
+    @RequestMapping(value = "/polygon/login", method = RequestMethod.POST)
+    public ResponseEntity<String> login(@RequestParam("userName") String userName, @RequestParam("password") String password,
             @CookieValue(value = "state", required = false, defaultValue = "%2F") String state) {
+
         LOGGER.info("user login - userName:{}, password:{}, state:{}", userName, password, state);
-        
+
         User user = userRepository.findByUserNameAndPassword(userName, password);
-        
+
         if (user != null) {
             try {
                 state = URLDecoder.decode(state, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 state = "/";
             }
+            LOGGER.info("Role : " + user.getRole());
             String token = user.getUserName() + ":" + user.getPassword();
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-            headers.add("Location", state);
-            headers.add("Set-Cookie", "token=" + new String(Base64.encode(token.getBytes())));
-            headers.add("Set-Cookie", "state=; Max-Age=0");
-            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-            headers.add("Pragma", "no-cache");
-            headers.add("Expires", "0");
+            if (user.getRole().equals("BROKER")) {
+                headers.add("Location", "/polygon/broker.html");
+                headers.add("Set-Cookie", "token=" + new String(Base64.encode(token.getBytes())));
+                headers.add("Set-Cookie", "state=; Max-Age=0");
+                headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+                headers.add("Pragma", "no-cache");
+                headers.add("Expires", "0");
+
+            } else if (user.getRole().equals("UNDERWRITTER")) {
+
+                headers.add("Location", "/polygon/underwritter.html");
+                headers.add("Set-Cookie", "token=" + new String(Base64.encode(token.getBytes())));
+                headers.add("Set-Cookie", "state=; Max-Age=0");
+                headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+                headers.add("Pragma", "no-cache");
+                headers.add("Expires", "0");
+            }
             return new ResponseEntity<String>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-            headers.add("Location", "/signin.html");
+            headers.add("Location", "/polygon/signin.html");
             headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
             headers.add("Pragma", "no-cache");
             headers.add("Expires", "0");
@@ -85,7 +97,11 @@ public class SecurityService {
         byte[] value = Base64.decode(token.getBytes());
         String username = new String(value).split(":")[0];
         String password = new String(value).split(":")[1];
+
         User user = userRepository.findByUserNameAndPassword(username, password);
+        
+        
+
         if (user != null) {
             return toUserQueryModel(user);
         }
@@ -95,7 +111,7 @@ public class SecurityService {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ResponseEntity<String> logout() {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add("Location", "/signin.html");
+        headers.add("Location", "/polygon/signin.html");
         headers.add("Set-Cookie", "token=; Max-Age=0");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");

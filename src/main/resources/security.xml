@@ -8,9 +8,14 @@
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
  
-    <http use-expressions="true" create-session="stateless">
-        <intercept-url pattern="/api/private/**"     access="isAuthenticated()" />
-        <http-basic />
+  <http use-expressions="true" create-session="stateless">
+
+        <intercept-url pattern="/api/**" method="GET" access="isAuthenticated()"/>
+        <intercept-url pattern="/api/**" method="POST" access="isAuthenticated()"/>
+        <intercept-url pattern="/api/**" method="PUT" access="isAuthenticated()"/>
+        <intercept-url pattern="/api/**" method="DELETE" access="isAuthenticated()"/>
+
+        <http-basic/>
     </http>
  
     <authentication-manager>

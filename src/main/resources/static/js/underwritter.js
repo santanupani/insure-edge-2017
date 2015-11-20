@@ -39,7 +39,7 @@ $(document).ready(function () {
 	$("#regId").mouseout().css("text-transform", "uppercase");
 });
 
-underwritter.controller('underwritterCtrl ', function ($scope, $rootScope, $http, $cookies, $window) {
+underwritter.controller('underwritterCtrl', function ($scope, $rootScope, $http, $cookies, $window) {
 	
 	$scope.init = function(){
 		if($cookies.token == undefined){

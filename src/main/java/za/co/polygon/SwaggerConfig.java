@@ -11,22 +11,22 @@ import com.wordnik.swagger.model.ApiInfo;
 
 @Configuration
 @EnableSwagger
-class SwaggerConfig  {
-	
-	@Autowired
-	private SpringSwaggerConfig springSwaggerConfig;
+class SwaggerConfig {
 
-	@Bean
-	public SwaggerSpringMvcPlugin customImplementation() {
-		return new SwaggerSpringMvcPlugin(this.springSwaggerConfig).apiInfo(
-				apiInfo()).includePatterns("/.*");
-	}
-	
-	private ApiInfo apiInfo() {
-		ApiInfo apiInfo = new ApiInfo("Polygon API", "API for Polygon",
-				"Polygon API terms of service", "manmay.e.mohanty@gmail.com",
-				"Polygon API Licence Type", "Polygon API License URL");
-		return apiInfo;
-	}
-   
+    @Autowired
+    private SpringSwaggerConfig springSwaggerConfig;
+
+    @Bean
+    public SwaggerSpringMvcPlugin customImplementation() {
+        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig).apiInfo(
+                apiInfo()).includePatterns("/.*");
+    }
+
+    private ApiInfo apiInfo() {
+        ApiInfo apiInfo = new ApiInfo("Polygon API", "API for Polygon",
+                "Polygon API terms of service", "manmay.e.mohanty@gmail.com",
+                "Polygon API Licence Type", "Polygon API License URL");
+        return apiInfo;
+    }
+
 }
