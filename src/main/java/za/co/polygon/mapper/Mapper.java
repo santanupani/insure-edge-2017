@@ -371,31 +371,35 @@ public class Mapper {
             locationOption.setTotalValue(location.getTotalValue());
             locationOption.setTransitTotalValue(location.getTransitTotalValue());
             locationOption.setStaticMaxAmount(location.getStaticMaxAmount());
-            if (location.isServiceCarrier() == true || location.isStoreVault() == true
-                    || location.isSeismicDetector() == true || location.isGoodsMoved() == true
-                    || location.isIsGoodsMovedStatic() == true || location.isAlarmed() == true
-                    || location.isCctv() == true || location.isConcreteSecured() == true || location.isFirstLossCover() == true) {
-                locationOption.setIsServiceCarrier("Yes");
-                locationOption.setIsStoreVault("Yes");
-                locationOption.setIsSeismicDetector("Yes");
-                locationOption.setIsGoodsMoved("Yes");
-                locationOption.setIsGoodsMovedStatic("Yes");
-                locationOption.setIsAlarmed("Yes");
-                locationOption.setIsCctv("Yes");
-                locationOption.setIsConcreteSecured("Yes");
-                locationOption.setIsFirstLossCover("Yes");
-            } else {
-                locationOption.setIsServiceCarrier("No");
-                locationOption.setIsStoreVault("No");
-                locationOption.setIsSeismicDetector("No");
-                locationOption.setIsGoodsMoved("No");
-                locationOption.setIsGoodsMovedStatic("No");
-                locationOption.setIsAlarmed("No");
-                locationOption.setIsCctv("No");
-                locationOption.setIsConcreteSecured("No");
-                locationOption.setIsFirstLossCover("No");
-            }
-            result.getLocationOptions().add(locationOption);
+            
+            if(location.isServiceCarrier() == true){
+            locationOption.setIsServiceCarrier("Yes");}else{
+            locationOption.setIsServiceCarrier("No");}
+            if(location.isStoreVault() == true){
+            locationOption.setIsStoreVault("Yes");}else{
+            locationOption.setIsStoreVault("No");}
+            if(location.isSeismicDetector() == true){
+            locationOption.setIsSeismicDetector("Yes");}else{
+            locationOption.setIsSeismicDetector("No");}
+            if(location.isGoodsMoved() == true){
+            locationOption.setIsGoodsMoved("Yes");}else{
+            locationOption.setIsGoodsMoved("No");}
+            if(location.isIsGoodsMovedStatic() == true){
+            locationOption.setIsGoodsMovedStatic("Yes");}else{
+            locationOption.setIsGoodsMovedStatic("No");}
+            if(location.isAlarmed() == true){
+            locationOption.setIsAlarmed("Yes");}else{
+            locationOption.setIsAlarmed("No");}
+            if(location.isCctv() == true){
+            locationOption.setIsCctv("Yes");}else{
+            locationOption.setIsCctv("No");}
+            if(location.isConcreteSecured()== true){
+            locationOption.setIsConcreteSecured("Yes");}else{
+            locationOption.setIsConcreteSecured("No");}
+            if(location.isFirstLossCover() == true){
+            locationOption.setIsFirstLossCover("Yes");}else{
+            locationOption.setIsFirstLossCover("No");}
+                 result.getLocationOptions().add(locationOption);
 
         }
 

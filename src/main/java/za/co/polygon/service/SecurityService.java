@@ -99,8 +99,6 @@ public class SecurityService {
         String password = new String(value).split(":")[1];
 
         User user = userRepository.findByUserNameAndPassword(username, password);
-        
-        
 
         if (user != null) {
             return toUserQueryModel(user);

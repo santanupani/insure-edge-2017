@@ -6,14 +6,22 @@ broker.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/quotation-requests-list.html',
                     'controller': 'listQuotationRequestCtrl'
                 })
+                .when('/approved-quotation-requests', {
+                    'templateUrl': '/html/rejected-quotation-requests-.html',
+                    'controller': 'approvedQuotationRequestCtrl'
+                })
+                .when('/rejected-quotation-requests', {
+                    'templateUrl': '/html/approved-quotation-requests.html',
+                    'controller': 'rejectedQuotationRequestCtrl'
+                })
                 .when('/quotation-requests/:reference', {
                     'templateUrl': '/html/quotation-requests.html',
                     'controller': 'quotationRequestsCtrl'
                 }).when('/quotations', {
-                    'templateUrl': '/html/broker-scheduler.html',
-                    'controller': 'brokerSchedulerCtrl'
+            'templateUrl': '/html/broker-scheduler.html',
+            'controller': 'brokerSchedulerCtrl'
         }).otherwise({
-                     redirectTo: '/quotation-requests'
+            redirectTo: '/quotation-requests'
         });
     }]);
 
@@ -48,7 +56,7 @@ broker.controller('brokerCtrl', function ($scope, $rootScope, $http, $cookies, $
     $scope.init = function () {
         if ($cookies.token == undefined) {
             console.log($window);
-                $window.location.href = "/login?state="+encodeURIComponent($window.location.href);
+            $window.location.href = "/login?state=" + encodeURIComponent($window.location.href);
         } else {
             $scope.validate($cookies.token);
         }
@@ -338,6 +346,78 @@ broker.controller('listQuotationRequestCtrl', function ($scope, $rootScope, $htt
             if (status === 200) {
                 console.log('retrived successfully');
                 $scope.quotationRequests = data;
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
+    };
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
+
+
+});
+broker.controller('rejectedQuotationRequestCtrl', function ($scope, $rootScope, $http, $filter) {
+
+
+    $scope.init = function () {
+        $scope.getAllQuotations();
+    };
+
+
+    $scope.getAllQuotations = function () {
+        console.log('get all quotations');
+        $http({
+            url: '/api/quotation-requests',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $scope.quotationRequests = data;
+                if ($scope.quotationRequests.status == 'REJECTED') {
+                    $scope.rejectQuotationRequests = $scope.quotationRequests;
+                }
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
+    };
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
+
+
+});
+broker.controller('approvedQuotationRequestCtrl', function ($scope, $rootScope, $http, $filter) {
+
+
+    $scope.init = function () {
+        $scope.getAllQuotations();
+    };
+
+
+    $scope.getAllQuotations = function () {
+        console.log('get all quotations');
+        $http({
+            url: '/api/quotation-requests',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $scope.quotationRequests = data;
+                if ($scope.quotationRequests.status == 'ACCEPTED') {
+                    $scope.acceptedQuotationRequests = $scope.quotationRequests;
+                }
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;

@@ -1,0 +1,43 @@
+<div  ng-init="init()">
+    <div class="row" style="padding: 25px;">
+        <div class="col-md-12">
+            <div class="input-group input-group-lg" style="box-shadow: 0 0 30px black;">
+                <span class="input-group-addon" id="sizing-addon1">Quotations</span>
+                <input ng-model="rejectedQuotationRequest" type="text" class="form-control" placeholder="Search..." aria-describedby="sizing-addon1">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 25px;" >
+        <div class="col-md-12">
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel-body">
+                    <div>          
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Contact Person</th>
+                                    <th>Email</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="quotationRequest in rejectedQuotationRequests| filter:rejectedQuotationRequest">
+                                <tr>
+                                    <td>{{quotationRequest.companyName}}</td>
+                                    <td>{{quotationRequest.applicantName}}</td>
+                                    <td>{{quotationRequest.applicantEmail}}</td>
+                                    <td><a class="btn btn-info" ng-href="#/quotation-requests/{{quotationRequest.reference}}">View Quote</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -234,11 +234,11 @@
 											</div>
 
 
-											<div class="form-group" ng-if="productId == 4">
-												<label><input type="checkbox"
-													ng-model="option.isGoodsMoved" /> Is the above amount the
-													total full value of the goods being stored in static ?</label>
-											</div>
+                                                                                        <div class="form-group" ng-if="productId == 4">
+                                                                                            <label><input type="checkbox"
+                                                                                                          ng-model="option.isGoodsMoved" /> Is the above amount the
+                                                                                                total full value of the goods being stored in static ?</label>
+                                                                                        </div>
 
 											<div class="form-group"
 												ng-if="option.isGoodsMoved == false && productId == 4">
@@ -403,8 +403,7 @@
 
 					<div ng-repeat="questionnaire in questionnaires">
 
-						<div
-							ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">
+						<div ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">
 
 							<div ng-if="questionnaire.answerType == 'text'"
 								class="form-group">
