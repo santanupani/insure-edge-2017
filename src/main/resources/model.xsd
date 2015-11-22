@@ -177,8 +177,6 @@
 			<sequence>
 				<element name="quotation" minOccurs="0" maxOccurs="1"
 					type="tns:QuotationQueryModel" />
-				<element name="quotationOption" minOccurs="0" maxOccurs="1"
-					type="tns:QuotationOptionQueryModel" />
 				<element name="companyRegNumber" type="string" />
 				<element name="vatRegNumber" type="string" />
 				<element name="telephoneNumber" type="string" />
@@ -324,6 +322,8 @@
 			<element name="indemnityValue" type="string" />
 			<element name="sumInsured" type="double" />
 			<element name="premium" type="double" />
+			<element name="pavement" type="double" />
+			<element name="staticLimit" type="double" />
 		</sequence>
 	</complexType>
 
@@ -458,7 +458,6 @@
 				<element name="debitOrderDate" type="string" />
 				<element name="bankStatement" type="hexBinary" />
 				<element name="quotationId" type="long" />
-				<element name="quotationOptionId" type="long" />
 			</sequence>
 		</complexType>
 	</element>
@@ -573,6 +572,8 @@
 							<element name="indemnityValue" type="string" />
 							<element name="sumInsured" type="double" />
 							<element name="premium" type="double" />
+							<element name="pavement" type="double" />
+							<element name="staticLimit" type="double" />
 						</sequence>
 					</complexType>
 				</element>

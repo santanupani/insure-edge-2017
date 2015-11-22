@@ -8,7 +8,6 @@ import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 
 public interface PolicyRequestRepository  extends JpaRepository<PolicyRequest, Long> {
-	public PolicyRequest findByQuotation(Quotation quotation);
-	public PolicyRequest findByQuotationOption(QuotationOption quotationOption);
+	public PolicyRequest findByQuotation(Quotation quotation);	
 	
 }

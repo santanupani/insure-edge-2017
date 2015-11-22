@@ -56,60 +56,99 @@
 		</div>
 	</div>
 
-	<div class="col-md-9" ng-repeat=" option in quotation.option">
-
+	<div class="col-md-9">
 		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 			<div class="panel-heading">
-				<h4>Quotation Options</h4>
-
+				<h4>Quotation(s) Application</h4>
 			</div>
 			<div class="panel-body">
-				<div>
-					<div class="form-group">
-						<label class="control-label" for="q_{{index}}">Location: </label>
-						<input type="text" class="form-control" id="q_{{index}}"
-							ng-model="option.location" readonly="readonly"> <label
-							class="control-label" for="q_{{index}}">Commodity: </label> <input
-							type="text" class="form-control" id="q_{{index}}"
-							ng-model="option.commodity" readonly="readonly"> <label
-							class="control-label" for="q_{{index}}">Limit: </label> <input
-							type="text" class="form-control" id="q_{{index}}"
-							ng-model="option.limit" readonly="readonly">
 
-						<div ng-if="quotation.quotationRequest.product.id == 4">
-							<label class="control-label" for="q_{{index}}">Static
-								Limit :</label> <input type="text" class="form-control" id="q_{{index}}"
-								ng-model="option.staticLimit" readonly="readonly">
+				<div ng-repeat="option in quotation.option">
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion"
+									href="/#{{$index + 1}}">Location Option {{$index + 1}}</a>
+							</h4>
 						</div>
+						<div id="{{$index + 1}}" class="panel-collapse collapse-in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="panel panel-default">
+											<div class="panel-body">
+												<div class="form-group">
+													<label class="control-label" for="limit">Cover
+														Limits</label> <input type="text" class="form-control"
+														ng-model="option.limit" readonly>
+												</div>
+												<div class="form-group">
+													<label class="control-label" for="commodity">Commodity</label>
+													<input type="text" class="form-control"
+														ng-model="option.commodity" readonly>
+												</div>
 
-						<label class="control-label" for="q_{{index}}">Cover: </label> <input
-							type="text" class="form-control" id="q_{{index}}"
-							ng-model="option.cover" readonly="readonly"> <label
-							class="control-label" for="q_{{index}}">Excess: </label> <input
-							type="text" class="form-control" id="q_{{index}}"
-							ng-model="option.excess" readonly="readonly"> <label
-							class="control-label" for="q_{{index}}">Premium: </label> <input
-							type="text" class="form-control" id="q_{{index}}"
-							ng-model="option.premium" readonly="readonly"> <label
-							class="control-label" for="q_{{index}}">Cross Pavements:
-						</label> <input type="text" class="form-control" id="q_{{index}}"
-							ng-model="option.pavement" readonly="readonly">
+												<div class="form-group">
+													<label class="control-label" for="limit">Cover</label>
+													<textarea ng-model="option.cover" class="form-control" readonly></textarea>
+												</div>
+
+												<div class="form-group"
+													ng-if="quotationRequest.product.id == 4">
+													<label class="control-label" for="staticLimit">Static
+														Limit</label> <input type="text" class="form-control"
+														placeholder="static limit" ng-model="option.staticLimit"
+														readonly>
+												</div>
+
+												<div class="form-group">
+													<label class="control-label" for="duration">Duration</label>
+													<input type="text" class="form-control"
+														ng-model="option.duration" readonly>
+												</div>
+												<div class="form-group">
+													<label class="control-label" for="location">From
+														Location</label> <input type="text" class="form-control"
+														placeholder="Location" ng-model="option.location"
+														readonly>
+												</div>
+												<div class="form-group">
+													<label class="control-label" for="excess">Excess
+														Amount</label>
+													<textarea class="form-control" placeholder="Excess"
+														ng-model="option.excess" readonly></textarea>
+												</div>
+												<div class="form-group">
+													<label class="control-label" for="premium">Premium</label>
+													<textarea class="form-control" ng-model="option.premium"
+														readonly></textarea>
+												</div>
+												<div class="form-group">
+													<label class="control-label" for="crossPavement">Cross
+														Pavement</label>
+													<textarea class="form-control" placeholder="Cross Pavement"
+														ng-model="option.pavement" readonly></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-
 			</div>
+
 			<div class="panel-footer text-right">
 				<p>
 					<a class="btn btn-info"
-						ng-href="#/quotations/{{quotation.quotationRequest.reference}}/{{option.quotationOptionId}}"
+						ng-href="#/quotations/{{quotation.quotationRequest.reference}}/application"
 						role="button">Apply For Policy</a>
 				</p>
 			</div>
 		</div>
-
-
 	</div>
-
-
 </div>
 

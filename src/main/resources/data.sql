@@ -120,14 +120,14 @@ values(12.5,0.0,0.0,0.0,'2015-1203','2015-09-17',2,1,1,'2015-09-17','Cash and Va
 insert into policies(underwriter_commission,uma_fee,policy_fee,initial_fee,reference,anniversary_date,sub_agent_id,client_id,underwriter_id,policy_inception_date,product_name,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,collect_by_debit_order,exclude_sasria,sum_insured,max_sum_insured,broker_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration,notes) 
 values(12.5,0.0,0.0,0.0,'2015-1204','2015-09-17',1,1,1,'2015-09-17','Cash and Valuables in Transit','2015-09-19','2015-09-19',2015,'Acive','Declaration','N/A','Nedbank Cameo',false,false,65000,75000,0.00,550.00,0.00,'1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS','Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured.','Art','By Artery','As discussed','Limit','Discussion Value','This policy has qualified for cover, await approval from Manager');
 
-insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium)
-values(1,'Policy Vault','Per vehicle per transit (6* weekly)',650000,2310);
+insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium,pavement,static_limit)
+values(1,'Policy Vault','Per vehicle per transit (6* weekly)',650000,2310,0,2019000);
 
-insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium)
-values(2,'Policy Vault','Per vehicle(3* weekly)',750000,3070);
+insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium,pavement,static_limit)
+values(2,'Policy Vault','Per vehicle(3* weekly)',750000,3070,0,2019000);
 
-insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium)
-values(1,'Policy Limit','Per Cash per transit (4* weekly)',120000,4050);
+insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium,pavement,static_limit)
+values(1,'Policy Limit','Per Cash per transit (4* weekly)',120000,4050,0,0);
 
 
 insert into claim_types (claim_type) values('ONSITE ROBBERY');

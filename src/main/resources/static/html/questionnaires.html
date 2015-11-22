@@ -4,12 +4,15 @@
 			<div class="panel-heading">
 				<h4>Broker</h4>
 			</div>
-			<div class="panel-body" align="center" style="height: 250px;">
+			<div class="panel-body" align="center" style="height: 300px;">
 				<img class="img-responsive" ng-src="/img/products/headerblue.png"><br>
 				<span>All requests for quotations will be processed through
 					an independent intermediary, Blue Quanta Risk Management (Pty) Ltd.
 					A representative will be in contact with you upon completion of the
-					questions and formulation of the terms.</span>
+					questions and formulation of the terms.<br> <br> <b>Blue
+						Quanta Risk Management (Pty) Ltd is an Authorised Financial
+						Services Provider.</b>
+				</span>
 
 			</div>
 		</div>
@@ -62,6 +65,43 @@
 			</div>
 			<div class="panel-body" align="left">
 				<form data-toggle="validator" role="form" name="form" id="form">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="form-group">
+									<label class="control-label">What do you wish to
+										insure?</label>
+									<div class="col-lg-10">
+										<label class="checkbox-inline"> <input
+											ng-true-value="'Cash'" ng-false-value="''"
+											ng-model="models.cash" type="checkbox" name="radio">
+											Cash
+										</label> <label class="checkbox-inline"> <input
+											ng-true-value="'Bullion'" ng-false-value="''"
+											ng-model="models.bullion" type="checkbox" name="radio">
+											Bullion
+										</label> <label class="checkbox-inline"> <input
+											ng-true-value="'Diamonds'" ng-false-value="''"
+											ng-model="models.diamonds" type="checkbox" name="radio">
+											Diamonds
+										</label> <label class="checkbox-inline"> <input
+											ng-true-value="'Precious Stones'" ng-false-value="''"
+											ng-model="models.preciousStone" type="checkbox" name="radio">
+											Precious Stones
+										</label> <label class="checkbox-inline"> <input
+											ng-model="models.other" type="checkbox" ng-false-value="''"
+											name="radio"> Other
+										</label>
+									</div>
+									<div ng-if="models.other == true" class="form-group">
+										<label class="control-label">Please specify for other?</label>
+										<input type="text" class="form-control"
+											ng-model="models.otherExtra" required>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div ng-repeat="option in location.options">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -74,45 +114,6 @@
 								<div class="panel-body">
 									<div>
 										<div>
-											<div>
-												<div class="form-group">
-													<div class="form-group">
-														<label class="control-label">What do you wish to
-															insure?</label>
-														<div class="col-lg-10">
-															<label class="checkbox-inline"> <input
-																ng-true-value="'Cash'" ng-false-value="''"
-																ng-model="models[$index].cash" type="checkbox"
-																name="radio"> Cash
-															</label> <label class="checkbox-inline"> <input
-																ng-true-value="'Bullion'" ng-false-value="''"
-																ng-model="models[$index].bullion" type="checkbox"
-																name="radio"> Bullion
-															</label> <label class="checkbox-inline"> <input
-																ng-true-value="'Diamonds'" ng-false-value="''"
-																ng-model="models[$index].diamonds" type="checkbox"
-																name="radio"> Diamonds
-															</label> <label class="checkbox-inline"> <input
-																ng-true-value="'Precious Stones'" ng-false-value="''"
-																ng-model="models[$index].preciousStone" type="checkbox"
-																name="radio"> Precious Stones
-															</label> <label class="checkbox-inline"> <input
-																ng-model="models[$index].other" type="checkbox"
-																ng-false-value="''" name="radio"> Other
-															</label>
-														</div>
-														<div ng-if="models[$index].other == true"
-															class="form-group">
-															<label class="control-label">Please specify for
-																other?</label> <input type="text" class="form-control"
-																ng-model="models[$index].otherExtra" required>
-														</div>
-													</div>
-												</div>
-											</div>
-											<br />
-
-
 											<div class="form-group" ng-if="productId != 4">
 												<label class="control-label" for="productName">What
 													is the maximum amount you wish to insure?</label>
@@ -170,10 +171,11 @@
 
 											<div>
 												<label class="control-label" for="productName"
-													style="font-family: 14px bold; color: red">NB NB
-													NB: If you have not request first loss cover, and the value
-													carried exceeds your sum insured as requested adjacent,
-													there will be no cover in force for that particular load.</label>
+													style="font-family: 10px bold; color: red"><em>NB
+														NB NB: If you have not request first loss cover, and the
+														value carried exceeds your sum insured as requested
+														adjacent, there will be no cover in force for that
+														particular load.</em></label>
 											</div>
 											<div class="form-group">
 												<label> <input ng-model="option.isFirstLossCover"
@@ -191,9 +193,9 @@
 											</div>
 											<div>
 												<label class="control-label" for="productName"
-													style="font-family: 14px bold; color: red">NB: If a
-													professional carrier is not used, valuables will only be
-													insured up to R10 000.00.</label>
+													style="font-family: 10px bold; color: red"><em>NB:
+														If a professional carrier is not used, valuables will only
+														be insured up to R10 000.00.</em></label>
 											</div>
 
 											<div class="form-group"
@@ -220,6 +222,52 @@
 													type="text" class="form-control"
 													placeholder="Your Carrier name"
 													ng-model="option.specificCarrier">
+											</div>
+
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label" for="commodity">From
+															where are the valuables being carried?</label> <input type="text"
+															placeholder="Pick up location" class="form-control"
+															ng-model="option.fromLocation">
+													</div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label" for="commodity">To
+															where are the valuables being carried?</label> <input type="text"
+															placeholder="Destination" class="form-control"
+															ng-model="option.toLocation">
+													</div>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="control-label" for="limit">What is the
+													approximate distance?</label> <select class="form-control"
+													ng-model="option.distance"
+													placeholder="Approximate Distance in km"
+													ng-required="questionnaire.isRequired" required>
+													<option value="0km to 100km">0km to 100km</option>
+													<option value="100km to 200km">100km to 200km</option>
+													<option value="200km to 300km">200km to 300km</option>
+													<option value="300km to 400km">300km to 400km</option>
+													<option value="400km to 500km">400km to 500km</option>
+													<option value="500km to 600km">500km to 600km</option>
+													<option value="Over 600km">Over 600km</option>
+												</select>
+											</div>
+
+											<div class="form-group">
+												<label class="control-label" for="staticLimit">How
+													many times per week are the valuables being carried?</label>
+												<div class="form-group form-inline">
+													<input type="number" class="form-control" size="5"
+														placeholder="No of Times" ng-model="option.noOfTimes"
+														required>
+												</div>
 											</div>
 
 											<div class="form-group" ng-if="productId == 4">
@@ -320,62 +368,6 @@
 														Category IV grading</option>
 												</select>
 											</div>
-
-
-
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label class="control-label" for="commodity">From
-															where are the valuables being carried?</label> <input type="text"
-															placeholder="Pick up location" class="form-control"
-															ng-model="option.fromLocation">
-													</div>
-												</div>
-
-												<div class="col-md-6">
-													<div class="form-group">
-														<label class="control-label" for="commodity">To
-															where are the valuables being carried?</label> <input type="text"
-															placeholder="Destination" class="form-control"
-															ng-model="option.toLocation">
-													</div>
-												</div>
-											</div>
-
-											<div class="form-group form-inlin">
-												<label class="control-label" for="limit">What is the
-													approximate distance?</label> <select class="form-control"
-													ng-model="option.distance"
-													placeholder="Approximate Distance in km"
-													ng-required="questionnaire.isRequired" required>
-													<option value="0km to 100km">0km to 100km</option>
-													<option value="100km to 200km">100km to 200km</option>
-													<option value="200km to 300km">200km to 300km</option>
-													<option value="300km to 400km">300km to 400km</option>
-													<option value="400km to 500km">400km to 500km</option>
-													<option value="500km to 600km">500km to 600km</option>
-													<option value="Over 600km">Over 600km</option>
-												</select>
-											</div>
-
-											<div class="form-group">
-												<label class="control-label" for="staticLimit">How
-													many times are the valuables being carried?</label>
-												<div class="form-group form-inline">
-													<input type="number" class="form-control" size="5"
-														placeholder="No of Times"
-														ng-model="models[$index].noOfTimes" required> <select
-														class="form-control" ng-model="models[$index].period"
-														required>
-														<option value="" disabled selected>Select Period</option>
-														<option value=" x Weekly">x Weekly</option>
-														<option value=" x Monthly">x Monthly</option>
-														<option value=" x Annually">x Annually</option>
-														<option value=" x Daily">x Daily</option>
-													</select>
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -401,80 +393,11 @@
 
 					</div>
 
-					<div ng-repeat="questionnaire in questionnaires">
-
-						<div
-							ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">
-
-							<div ng-if="questionnaire.answerType == 'text'"
-								class="form-group">
-								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-								<input type="text" class="form-control"
-									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-									ng-required="questionnaire.isRequired" required />
-							</div>
-
-							<div ng-if="questionnaire.answerType == 'number'"
-								class="form-group">
-								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-
-								<input type="number" class="form-control"
-									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-									ng-required="questionnaire.isRequired" required> <label
-									ng-show='questionnaire.answer'>{{questionnaire.answer|
-									currency:'ZAR '}}</label>
-							</div>
-
-							<div ng-if="questionnaire.answerType == 'checkbox'"
-								class="checkbox">
-								<label for="q_{{questionnaire.id}}"><input
-									type="checkbox" ng-model="questionnaire.answer">{{questionnaire.question}}</label>
-							</div>
-
-							<div ng-if="questionnaire.answerType == 'select'"
-								class="form-group">
-								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-								<select class="form-control" id="q_{{questionnaire.id}}"
-									ng-model="questionnaire.answer"
-									ng-options="answerValue for answerValue in questionnaire.answerValues"
-									ng-required="questionnaire.isRequired" required>
-									<option value=""></option>
-								</select>
-							</div>
-
-							<div ng-if="questionnaire.answerType == 'textarea'"
-								class="form-group">
-								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-								<textarea class="form-control" id="q_{{questionnaire.id}}"
-									name="{{questionnaire.id}}" ng-model="questionnaire.answer"
-									required></textarea>
-							</div>
-
-							<div ng-if="questionnaire.answerType == 'date'"
-								class="form-group">
-								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-								<input type="date" class="form-control"
-									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-									ng-required="questionnaire.isRequired" required />
-							</div>
-
-
-							<div ng-if="questionnaire.answerType == 'other'"
-								class="form-group">
-								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
-								<input type="text" class="form-control"
-									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
-									ng-required="questionnaire.isRequired" required />
-							</div>
-
-						</div>
-
-					</div>
-
 					<div>
 						<label><input type="checkbox"
 							ng-click="addRemoveHistory()" ng-model="isHistory" /> Have you
-							suffered any losses of valuable goods over the past 5 years?</label>
+							suffered any losses of valuable goods over the past 5 years –
+							both insured and uninsured?</label>
 					</div>
 
 					<div class="form-group" ng-if="isHistory == true">
@@ -527,6 +450,74 @@
 							</tfoot>
 						</table>
 					</div>
+
+					<div ng-repeat="questionnaire in questionnaires">
+						<div
+							ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">
+
+							<div ng-if="questionnaire.answerType == 'text'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<input type="text" class="form-control"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required />
+							</div>
+
+							<div ng-if="questionnaire.answerType == 'number'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+
+								<input type="number" class="form-control"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required>
+							</div>
+
+							<div ng-if="questionnaire.answerType == 'checkbox'"
+								class="checkbox">
+								<label for="q_{{questionnaire.id}}"><input
+									type="checkbox" ng-model="questionnaire.answer">{{questionnaire.question}}</label>
+							</div>
+
+							<div ng-if="questionnaire.answerType == 'select'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<select class="form-control" id="q_{{questionnaire.id}}"
+									ng-model="questionnaire.answer"
+									ng-options="answerValue for answerValue in questionnaire.answerValues"
+									ng-required="questionnaire.isRequired" required>
+									<option value=""></option>
+								</select>
+							</div>
+
+							<div ng-if="questionnaire.answerType == 'textarea'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<textarea class="form-control" id="q_{{questionnaire.id}}"
+									name="{{questionnaire.id}}" ng-model="questionnaire.answer"
+									required></textarea>
+							</div>
+
+							<div ng-if="questionnaire.answerType == 'date'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<input type="text" class="form-control" placeholder="dd/MM/yyyy"
+									pattern="[\d]{2}[/][\d]{2}[/][\d]{4}"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required />
+							</div>
+
+
+							<div ng-if="questionnaire.answerType == 'other'"
+								class="form-group">
+								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
+								<input type="text" class="form-control"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									ng-required="questionnaire.isRequired" required />
+							</div>
+
+						</div>
+
+					</div>
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<h4>SASRIA (South African Special Risks Insurance
@@ -540,36 +531,36 @@
 								additionally, you will not have a valid claim in the
 								circumstances described above. </span><br>
 							<hr style="color: #F87431; height: 1px" />
-							<input type="checkbox" required> <span> I hereby
-								acknowledge that I have read and understood the policy wording.
-								The wording is also available by visiting <a
-								href="http://www.polygongroup.co.za">polygongroup</a> or by
-								sending an <a href="mailto:lkonaite@gmail.com">email</a> to us.
-								I understand that this policy is not in place until confirmation
-								is received from the insurer. I am aware of the fact that
-								insurance premiums are payable in advance by the 7th of each and
-								every month and that failure to do so will result in cover being
-								suspended for the period in which premiums are unpaid. <br>
-								<br> <b>IMPORTANT :</b> This proposal forms the basis of
-								the insurance contract between the Insured and the Insurer once
-								completed by the Insured and accepted by the Insurer. making a
-								false statement or withholding any material fact may give the
-								Insurer the right to repudiate any claim made under the policy
-								or may result in a policy being declared null or void from
-								inception, a material fact is any fact which influences the
-								acceptance of risk or conditions and premiums on which it is
-								accepted. This proposal must therefore be fully/accurately
-								completed and accepted by the proposer.
-							</span>
+							<span> I hereby acknowledge that I have read and
+								understood the policy wording. The wording is also available by
+								visiting <a href="http://www.polygongroup.co.za">www.polygongroup.co.za</a>
+								or by sending an email to <a
+								href="mailto:info@polygongroup.co.za">info@polygongroup.co.za</a>.
+								<br> <br>I understand that this policy is not in place
+								until confirmation is received from the insurer. <br> <br>I
+								am aware of the fact that insurance premiums are payable in
+								advance by the 7th of each and every month and that failure to
+								do so will result in cover being suspended for the period in
+								which premiums are unpaid. <br> <br> <b>IMPORTANT
+									:</b><em>This proposal forms the basis of the insurance
+									contract between the Insured and the Insurer once completed by
+									the Insured and accepted by the Insurer. Making a false
+									statement or withholding any material fact may give the Insurer
+									the right to repudiate any claim made under the policy or may
+									result in a policy being declared null and void from inception,
+									a material fact is any fact which influences the acceptance of
+									risk or conditions and premiums on which it is accepted. This
+									proposal must therefore be fully/accurately completed.</em>
+							</span><br> <br> <input type="checkbox"
+								ng-model="quotationRequest.acceptedQuote" required> <label>I
+								declare that the answers given above are true and correct</label>
 						</div>
 					</div>
 			</div>
 
 			</form>
 
-
 			<div class="panel-footer text-right">
-
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary" form="form"
 						ng-click="submitQuotationRequest(form)">Request Quote</button>

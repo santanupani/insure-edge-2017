@@ -155,7 +155,6 @@ create table quotation_options(
 create table policy_requests(
     id integer auto_increment not null primary key,
     quotation_id integer not null,
-    quotation_option_id integer not null,
     company_reg_number varchar(32) not null,
     vat_reg_number varchar(32) not  null ,
     telephone_number varchar(32) not null,
@@ -174,8 +173,7 @@ create table policy_requests(
     debit_order_date varchar(32) not null,
     bank_statement longblob not null,
     status varchar(32) not null,
-    constraint policy_requests_fk1 foreign key (quotation_id) references quotations (id),
-    constraint policy_requests_fk2 foreign key (quotation_option_id) references quotation_options (id)
+    constraint policy_requests_fk1 foreign key (quotation_id) references quotations (id)
 );
 
 
@@ -258,7 +256,7 @@ create table policies(
     inception_date date not null,
     renewal_date date not null,
     anniversary_date date not null,
-    product_name varchar(45) not null,
+    product_name varchar(128) not null,
     underwriting_year integer not null,
     status varchar(20) not null,
     frequency varchar(30) not null,
@@ -277,10 +275,10 @@ create table policies(
     sasria_premium decimal not null,
     schedule_attaching varchar(1024) not null,
     type_of_cover varchar(1024) not null,
-    subject_matter varchar(16) not null,
+    subject_matter varchar(64) not null,
     excess_structure varchar(256) not null,
     special_condition varchar(1024) not null,
-    conveyances varchar(64) not null,
+    conveyances varchar(256) not null,
     geographical_duration varchar(2048) not null,
     notes varchar(256) not null,
     constraint policies_fk1 foreign key (sub_agent_id) references sub_agents (id),
@@ -294,8 +292,10 @@ create table indemnity_options(
     id integer auto_increment not null primary key,
     policy_id integer not null,
     indemity_item_option varchar(64) not null,   
-    indemnity_value varchar(64) not null,
+    indemnity_value varchar(128) not null,
     sum_insured decimal not null,
+    pavement decimal,
+    static_limit decimal,
     premium decimal not null,
     constraint indemnity_options_fk1 foreign key (policy_id) references policies (id)
 );

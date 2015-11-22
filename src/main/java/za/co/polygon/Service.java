@@ -455,9 +455,7 @@ public class Service {
 
 		Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
 
-		QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequestCommandModel.getQuotationOptionId());
-
-		PolicyRequest policyRequest = toPolicyRequest(policyRequestCommandModel, quotation, quotationOption);
+		PolicyRequest policyRequest = toPolicyRequest(policyRequestCommandModel, quotation);
 		policyRequest.setBankStatement(file.getBytes());
 		policyRequest = policyRequestRepository.save(policyRequest);
 
@@ -475,8 +473,7 @@ public class Service {
 		log.info("Quotation object: " + quotation.toString());
 		PolicyRequest policyRequest = policyRequestRepository.findByQuotation(quotation);
 		log.info("PolicyRequest object: " + policyRequest.toString());
-		QuotationOption quotationOption = quotationOptionRepository.findOne(policyRequest.getQuotationOption().getId());
-		log.info("QuotationOption object: " + quotationOption.toString() + "\nSelected Option ID: " + quotationOption.getId());
+		
 		return toPolicyRequestQueryModel(policyRequest);
 
 	}

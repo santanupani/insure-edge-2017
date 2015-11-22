@@ -24,6 +24,12 @@ public class IndemnityOption {
     @Column(name = "indemnity_value")
     private String indemnityValue;
     
+    @Column(name = "pavement")
+    private double pavement;
+    
+    @Column(name = "static_limit")
+    private double staticLimit;
+    
     @Column(name = "sum_insured")
     private double sumInsured;
     
@@ -59,8 +65,25 @@ public class IndemnityOption {
     public void setIndemnityValue(String indemnityValue) {
         this.indemnityValue = indemnityValue;
     }
+    
 
-    public double getSumInsured() {
+    public double getPavement() {
+		return pavement;
+	}
+
+	public void setPavement(double pavement) {
+		this.pavement = pavement;
+	}
+
+	public double getStaticLimit() {
+		return staticLimit;
+	}
+
+	public void setStaticLimit(double staticLimit) {
+		this.staticLimit = staticLimit;
+	}
+
+	public double getSumInsured() {
         return sumInsured;
     }
 
