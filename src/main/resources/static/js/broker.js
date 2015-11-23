@@ -7,11 +7,11 @@ broker.config(['$routeProvider', function ($routeProvider) {
                     'controller': 'listQuotationRequestCtrl'
                 })
                 .when('/approved-quotation-requests', {
-                    'templateUrl': '/html/rejected-quotation-requests-.html',
+                    'templateUrl': '/html/rejected-quotations.html',
                     'controller': 'approvedQuotationRequestCtrl'
                 })
                 .when('/rejected-quotation-requests', {
-                    'templateUrl': '/html/approved-quotation-requests.html',
+                    'templateUrl': '/html/approved-quotations.html',
                     'controller': 'rejectedQuotationRequestCtrl'
                 })
                 .when('/quotation-requests/:reference', {
@@ -59,6 +59,7 @@ broker.controller('brokerCtrl', function ($scope, $rootScope, $http, $cookies, $
             $window.location.href = "/login?state=" + encodeURIComponent($window.location.href);
         } else {
             $scope.validate($cookies.token);
+            console.log($window.location.href);
         }
     };
 
@@ -72,6 +73,11 @@ broker.controller('brokerCtrl', function ($scope, $rootScope, $http, $cookies, $
             data: token
         }).success(function (data, status) {
             $rootScope.session = data;
+            console.log("role" + $rootScope.session.role);
+            if ($rootScope.session.role != "BROKER"){
+                $window.location.href = "/logout";
+            }
+            console.log($rootScope.session);
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookies.token;
         }).error(function (error, status) {
             $window.location.href = "/logout";
@@ -346,6 +352,9 @@ broker.controller('listQuotationRequestCtrl', function ($scope, $rootScope, $htt
             if (status === 200) {
                 console.log('retrived successfully');
                 $scope.quotationRequests = data;
+                if($scope.quotationRequests.status == "APPLIED"){
+                    $scope.newQuotationRequests = $scope.quotationRequests;
+                }
             } else {
                 console.log('status:' + status);
                 $rootScope.error = "error status code : " + status;
