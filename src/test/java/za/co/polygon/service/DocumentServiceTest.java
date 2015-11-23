@@ -39,7 +39,7 @@ public class DocumentServiceTest {
         quotationOption.setCommodity("Gold");
         quotationOption.setLocation("Midrand");
         quotationOption.setExcess("1231");
-        quotationOption.setLimit("1000");
+        quotationOption.setLimit("100044");
         quotationOption.setPremium("12334");
         quotationOption.setDuration("Annually");
         quotationOption.setCover("Static cover");
@@ -50,7 +50,7 @@ public class DocumentServiceTest {
         quotationOption2.setCommodity("Cash");
         quotationOption2.setLocation("Sandton");
         quotationOption2.setExcess("12000");
-        quotationOption2.setLimit("998");
+        quotationOption2.setLimit("998211");
         quotationOption2.setPremium("1999");
         quotationOption2.setDuration("Weekly");
         quotationOption2.setPavements("0.00");
@@ -62,7 +62,7 @@ public class DocumentServiceTest {
         quotationOption3.setCommodity("Cash");
         quotationOption3.setLocation("Sandton");
         quotationOption3.setExcess("12000");
-        quotationOption3.setLimit("998");
+        quotationOption3.setLimit("1998223");
         quotationOption3.setPremium("1999");
         quotationOption3.setPavements("2190.88");
         quotationOption3.setCover("Cash In Transit");

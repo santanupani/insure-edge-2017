@@ -35,7 +35,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>za.co.jasperfonts</groupId>
+			<groupId>za.co.polygon.jasperfonts</groupId>
 			<artifactId>jasperfonts</artifactId>
 			<version>1.0.0</version>
 			<scope>system</scope>

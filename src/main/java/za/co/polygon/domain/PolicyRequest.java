@@ -78,11 +78,7 @@ public class PolicyRequest {
     @ManyToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
-    
-    @ManyToOne
-    @JoinColumn(name = "quotation_option_id")
-    private QuotationOption quotationOption; 
-
+   
     public Long getId() {
         return id;
     }
@@ -99,14 +95,7 @@ public class PolicyRequest {
         this.quotation = quotation;
     }
 
-    public QuotationOption getQuotationOption() {
-        return quotationOption;
-    }
-
-    public void setQuotationOption(QuotationOption quotationOption) {
-        this.quotationOption = quotationOption;
-    }
-
+    
     public String getCompanyRegNumber() {
         return companyRegNumber;
     }

@@ -204,7 +204,6 @@ public class Mapper {
             location.setFirstLossCover(locationOption.isIsFirstLossCover());
             location.setFromLocation(locationOption.getFromLocation());
             location.setToLocation(locationOption.getToLocation());
-
             location.setLimit(locationOption.getLimit());
             location.setProfessionalCarriers(locationOption.getProfessionalCarriers());
             location.setGoodsDescription(locationOption.getGoodsDescription());
@@ -487,7 +486,7 @@ public class Mapper {
         return quotationQueryModel;
     }
 
-    public static PolicyRequest toPolicyRequest(PolicyRequestCommandModel policyRequestCommandModel, Quotation quotation, QuotationOption quotationOption) {
+    public static PolicyRequest toPolicyRequest(PolicyRequestCommandModel policyRequestCommandModel, Quotation quotation) {
         PolicyRequest policyRequest = new PolicyRequest();
 
         policyRequest.setCompanyRegNumber(policyRequestCommandModel.getCompanyRegNumber());
@@ -508,7 +507,6 @@ public class Mapper {
         policyRequest.setDebitOrderDate(policyRequestCommandModel.getDebitOrderDate());
         policyRequest.setStatus("APPLIED");
         policyRequest.setQuotation(quotation);
-        policyRequest.setQuotationOption(quotationOption);
 
         return policyRequest;
     }
@@ -534,7 +532,6 @@ public class Mapper {
         PolicyRequestQueryModel policyRequestQueryModel = new PolicyRequestQueryModel();
 
         policyRequestQueryModel.setQuotation(toQuotationQueryModel(policyRequest.getQuotation()));
-        policyRequestQueryModel.setQuotationOption(toQuotationOptionQueryModel(policyRequest.getQuotationOption()));
         policyRequestQueryModel.setCompanyRegNumber(policyRequest.getCompanyRegNumber());
         policyRequestQueryModel.setVatRegNumber(policyRequest.getVatRegNumber());
         policyRequestQueryModel.setTelephoneNumber(policyRequest.getTelephoneNumber());
@@ -569,6 +566,7 @@ public class Mapper {
 
     public static SelectedQuotationQueryModel toSelectedQuotationQueryModel(Quotation quotation, QuotationOption quotationOption) {
         SelectedQuotationQueryModel selectedQuotationQueryModel = new SelectedQuotationQueryModel();
+        
         selectedQuotationQueryModel.setQuotation(toQuotationQueryModel(quotation));
         selectedQuotationQueryModel.setSelectedQuotation(toQuotationOptionQueryModel(quotationOption));
 
@@ -740,6 +738,8 @@ public class Mapper {
         indemnityOptionQueryModel.setIndemnityItemOption(indemnityOption.getIndemnityItemOption());
         indemnityOptionQueryModel.setIndemnityValue(indemnityOption.getIndemnityValue());
         indemnityOptionQueryModel.setPremium(Double.valueOf(indemnityOption.getPremium()));
+        indemnityOptionQueryModel.setPavement(indemnityOption.getPavement());
+        indemnityOptionQueryModel.setStaticLimit(indemnityOption.getStaticLimit());
         indemnityOptionQueryModel.setSumInsured(Double.valueOf(indemnityOption.getSumInsured()));
 
         return indemnityOptionQueryModel;
@@ -843,7 +843,7 @@ public class Mapper {
         policyResult.setExclude_sasria(policyCreationCommandModel.isExcludeSasria());
         policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
         LocalDateTime now = LocalDateTime.now();
-        policyResult.setReference(now.getYear() + "-" + now.getMonthValue() + "" + lastPolicyNumber);
+        policyResult.setReference(now.getYear() + "-" + now.getMonthValue() + "" + String.format("%02d", lastPolicyNumber));
         policyResult.setStatus(policyCreationCommandModel.getStatus());
         policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
         policyResult.setNotes(policyCreationCommandModel.getNotes());
@@ -873,6 +873,8 @@ public class Mapper {
             indemnityOption.setIndemnityValue(options.getIndemnityValue());
             indemnityOption.setPremium(options.getPremium());
             indemnityOption.setSumInsured(options.getSumInsured());
+            indemnityOption.setPavement(options.getPavement());
+            indemnityOption.setStaticLimit(options.getStaticLimit());
             indemnityOption.setPolicy(policyResult);
             indemnityOptionsList.add(indemnityOption);
 

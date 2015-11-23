@@ -1,209 +1,269 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
 
 
-    <div class="alert alert-success alert-dismissible" role="alert" ng-if="error">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Sorry ! </strong>{{error}}
-    </div>
+	<div class="alert alert-success alert-dismissible" role="alert"
+		ng-if="error">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close" ng-click="closeNotification()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Sorry ! </strong>{{error}}
+	</div>
 
-    <div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Success ! </strong>{{message}}
-    </div>
-
-    
-
-        <form data-toggle="validator" role="form" name="rejectform" id="rejectform">
-            <div ng-if="mode == 'reject'" class="panel panel-default"
-                 style="box-shadow: 0 0 30px black;">
-                <div class="panel-heading">
-                    <h4>Reject Policy Request</h4>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <div class="form-group">
-                            <textarea placeholder="Please fill in reason for rejection here" rows="9"
-                                      class="form-control" type="text" ng-model="reject.reason" required></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer text-right">
-                    <button type="submit" class="btn btn-danger" ng-click="rejectPolicyRequest(rejectform)">Reject</button>
-                    <button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
-                </div>
-            </div>
-        </form>
+	<div class="alert alert-success alert-dismissible" role="alert"
+		ng-if="message">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close" ng-click="closeNotification()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Success ! </strong>{{message}}
+	</div>
 
 
-       
 
-        <div>
-            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+	<form data-toggle="validator" role="form" name="rejectform"
+		id="rejectform">
+		<div ng-if="mode == 'reject'" class="panel panel-default"
+			style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Reject Policy Request</h4>
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="form-group">
+						<textarea placeholder="Please fill in reason for rejection here"
+							rows="9" class="form-control" type="text"
+							ng-model="reject.reason" required></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer text-right">
+				<button type="submit" class="btn btn-danger"
+					ng-click="rejectPolicyRequest(rejectform)">Reject</button>
+				<button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
+			</div>
+		</div>
+	</form>
 
-                <div class="panel-heading text-right" ng-if="mode == undefined && policyRequest.status == 'APPLIED'">
-                    <p>
-                        <a class="btn btn-info" ng-href="#/policies" role="button">Proceed</a>
-                        <button class="btn btn-danger"   ng-click="changeMode('reject')">Reject</button>
-                    </p>
-                </div>
-                <div class="panel-heading">
-                    <h4>Quotation Options</h4>
 
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <div class="form-group">
 
-                            <label class="control-label" for="premium">Location</label>
-                            <input type="text" class="form-control" id="premium"
-                                   ng-model="policyRequest.quotationOption.location" readonly="readonly">
 
-                            <label class="control-label" for="commodity">Commodity</label>
-                            <input type="text" class="form-control" id="commodity"
-                                   ng-model="policyRequest.quotationOption.commodity" readonly="readonly">
+	<div>
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 
-                            <label class="control-label" for="limit">Limit</label>
-                            <input type="text" class="form-control" id="limit"
-                                   ng-model="policyRequest.quotationOption.limit" readonly="readonly">
+			<div class="panel-heading text-right"
+				ng-if="mode == undefined && policyRequest.status == 'APPLIED'">
+				<p>
+					<a class="btn btn-info" ng-href="#/policies" role="button">Proceed</a>
+					<button class="btn btn-danger" ng-click="changeMode('reject')">Reject</button>
+				</p>
+			</div>
+			<div class="panel-body">
+				<div class="panel-body">
 
-                            <label class="control-label" for="cover">Cover Amount</label>
-                            <input type="text" class="form-control" id="cover"
-                                   ng-model="policyRequest.quotationOption.cover" readonly="readonly">
+					<div
+						ng-repeat="option in policyRequest.quotation.option">
 
-                            <label class="control-label" for="excess">Excess Amount</label>
-                            <input type="text" class="form-control" id="excess"
-                                   ng-model="policyRequest.quotationOption.excess" readonly="readonly">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="/#{{$index + 1}}">Location Option {{$index + 1}}</a>
+								</h4>
+							</div>
+							<div id="{{$index + 1}}" class="panel-collapse collapse-in">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="panel panel-default">
+												<div class="panel-body">
+													<div class="form-group">
+														<label class="control-label" for="limit">Cover
+															Limits</label> <input type="text" class="form-control"
+															ng-model="option.limit" readonly>
+													</div>
+													<div class="form-group">
+														<label class="control-label" for="commodity">Commodity</label>
+														<input type="text" class="form-control"
+															ng-model="option.commodity" readonly>
+													</div>
 
-                            <label class="control-label" for="premium">Premium</label>
-                            <input type="text" class="form-control" id="premium"
-                                   ng-model="policyRequest.quotationOption.premium" readonly="readonly">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
+													<div class="form-group">
+														<label class="control-label" for="limit">Cover</label>
+														<textarea ng-model="option.cover" class="form-control"
+															readonly></textarea>
+													</div>
 
-        
-        
-                <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Product</h4>
-            </div>
-            <div class="panel-body" align="center" style="height: 300px;">
-                <img class="img-circle" ng-src="{{policyRequest.quotation.quotationRequest.product.image}}"
-                     width="140" height="140">
-                <h3>{{policyRequest.quotation.quotationRequest.product.name}}</h3>
-                <p>{{policyRequest.quotation.quotationRequest.product.description}}</p>
-            </div>
-        </div>
+													<div class="form-group"
+														ng-if="quotationRequest.product.id == 4">
+														<label class="control-label" for="staticLimit">Static
+															Limit</label> <input type="text" class="form-control"
+															placeholder="static limit" ng-model="option.staticLimit"
+															readonly>
+													</div>
 
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4>Client Details</h4>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <label class="control-label" for="reference">Reference</label> <input
-                            type="text" class="form-control" id="reference"
-                            ng-model="policyRequest.quotation.quotationRequest.reference" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="companyName">Company</label> <input
-                            type="text" class="form-control" id="companyName"
-                            ng-model="policyRequest.quotation.quotationRequest.companyName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="applicant">Applicant</label> <input
-                            type="text" class="form-control" id="applicant"
-                            ng-model="policyRequest.quotation.quotationRequest.applicantName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="appliedOn">Applied On</label> <input
-                            type="text" class="form-control" id="appliedOn"
-                            ng-model="policyRequest.quotation.quotationRequest.createDate" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="status">Status</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.quotation.quotationRequest.status" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="telephoneNumber">Telephone Number</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.telephoneNumber" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="faxNumber">Fax Number</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.faxNumber" readonly="readonly"/>
-                    </div>
-                </div>
-            </div>
-            </div>
-    
-    <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+													<div class="form-group">
+														<label class="control-label" for="duration">Duration</label>
+														<input type="text" class="form-control"
+															ng-model="option.duration" readonly>
+													</div>
+													<div class="form-group">
+														<label class="control-label" for="location">From
+															Location</label> <input type="text" class="form-control"
+															placeholder="Location" ng-model="option.location"
+															readonly>
+													</div>
+													<div class="form-group">
+														<label class="control-label" for="excess">Excess
+															Amount</label>
+														<textarea class="form-control" placeholder="Excess"
+															ng-model="option.excess" readonly></textarea>
+													</div>
+													<div class="form-group">
+														<label class="control-label" for="premium">Premium</label>
+														<textarea class="form-control" ng-model="option.premium"
+															readonly></textarea>
+													</div>
+													<div class="form-group">
+														<label class="control-label" for="crossPavement">Cross
+															Pavement</label>
+														<textarea class="form-control"
+															placeholder="Cross Pavement" ng-model="option.pavement"
+															readonly></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
 
-            <div class="panel-heading">
-                <h4>Client Bank Details</h4>
-            </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            <div class="panel-body">
-                <div>
-                    <div class="form-group">
-                        <label class="control-label" for="bankName">Bank Name</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.bankName" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="accountNumber">Account Number</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.accountNumber" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="branchCode">Branch Code</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.branchCode" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="accountType">Account Type</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.accType" readonly="readonly"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="debitorder">Debit Order Date</label> <input
-                            type="text" class="form-control" id="status"
-                            ng-model="policyRequest.debitOrderDate" readonly="readonly"/>
-                    </div>
-                </div>
-            </div>
-    </div>
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Product</h4>
+			</div>
+			<div class="panel-body" align="center" style="height: 300px;">
+				<img class="img-circle"
+					ng-src="{{policyRequest.quotation.quotationRequest.product.image}}"
+					width="140" height="140">
+				<h3>{{policyRequest.quotation.quotationRequest.product.name}}</h3>
+				<p>{{policyRequest.quotation.quotationRequest.product.description}}</p>
+			</div>
+		</div>
 
-        <div>
-            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Client Details</h4>
+			</div>
+			<div class="panel-body">
+				<div>
+					<div class="form-group">
+						<label class="control-label" for="reference">Reference</label> <input
+							type="text" class="form-control" id="reference"
+							ng-model="policyRequest.quotation.quotationRequest.reference"
+							readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="companyName">Company</label> <input
+							type="text" class="form-control" id="companyName"
+							ng-model="policyRequest.quotation.quotationRequest.companyName"
+							readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="applicant">Applicant</label> <input
+							type="text" class="form-control" id="applicant"
+							ng-model="policyRequest.quotation.quotationRequest.applicantName"
+							readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="appliedOn">Applied On</label> <input
+							type="text" class="form-control" id="appliedOn"
+							ng-model="policyRequest.quotation.quotationRequest.createDate"
+							readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="status">Status</label> <input
+							type="text" class="form-control" id="status"
+							ng-model="policyRequest.quotation.quotationRequest.status"
+							readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="telephoneNumber">Telephone
+							Number</label> <input type="text" class="form-control" id="status"
+							ng-model="policyRequest.telephoneNumber" readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="faxNumber">Fax Number</label> <input
+							type="text" class="form-control" id="status"
+							ng-model="policyRequest.faxNumber" readonly="readonly" />
+					</div>
+				</div>
+			</div>
+		</div>
 
-                <div class="panel-heading">
-                    <h1>Q and A</h1>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <div class="form-group"
-                             ng-repeat="questionnaire in policyRequest.quotation.quotationRequest.questionnaire">
-                            <div ng-if="questionnaire.answer != null">
-                                <label class="control-label" for="q_{{index}}">Q:
-                                    {{questionnaire.question}}</label>
-                                <textarea class="form-control" id="q_{{index}}"
-                                          ng-model="questionnaire.answer" readonly="readonly"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-</div>
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+
+			<div class="panel-heading">
+				<h4>Client Bank Details</h4>
+			</div>
+
+			<div class="panel-body">
+				<div>
+					<div class="form-group">
+						<label class="control-label" for="bankName">Bank Name</label> <input
+							type="text" class="form-control" id="status"
+							ng-model="policyRequest.bankName" readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="accountNumber">Account
+							Number</label> <input type="text" class="form-control" id="status"
+							ng-model="policyRequest.accountNumber" readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="branchCode">Branch Code</label>
+						<input type="text" class="form-control" id="status"
+							ng-model="policyRequest.branchCode" readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="accountType">Account
+							Type</label> <input type="text" class="form-control" id="status"
+							ng-model="policyRequest.accType" readonly="readonly" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="debitorder">Debit Order
+							Date</label> <input type="text" class="form-control" id="status"
+							ng-model="policyRequest.debitOrderDate" readonly="readonly" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+
+				<div class="panel-heading">
+					<h1>Q and A</h1>
+				</div>
+				<div class="panel-body">
+					<div>
+						<div class="form-group"
+							ng-repeat="questionnaire in policyRequest.quotation.quotationRequest.questionnaire">
+							<div ng-if="questionnaire.answer != null">
+								<label class="control-label" for="q_{{index}}">Q:
+									{{questionnaire.question}}</label>
+								<textarea class="form-control" id="q_{{index}}"
+									ng-model="questionnaire.answer" readonly="readonly"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>

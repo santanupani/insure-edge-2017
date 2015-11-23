@@ -69,17 +69,12 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<label>Frequency</label> <select class="form-control"
-													ng-model="policy.frequency" id="fre" required
-													ng-readonly="isUpdate"
-													ng-options="frequencyOption for frequencyOption in policyOptions.frequencyOptions">
-													<option value=""></option>
-												</select>
+												<label>Frequency</label> <input type="text"
+													class="form-control" ng-model="policy.frequency" readonly />
 											</div>
 											<div class="form-group">
-												<label>Status</label> <input type="text"
-													ng-readonly="isUpdate" class="form-control"
-													ng-model="policy.status" required />
+												<label>Status</label> <input type="text" readonly
+													class="form-control" ng-model="policy.status" />
 											</div>
 
 											<div class="form-group">
@@ -95,18 +90,19 @@
 											<div class="form-group">
 												<label>Notes</label>
 												<textarea class="form-control" rows="8"
-													ng-readonly="isUpdate" ng-model="policy.notes" required></textarea>
+													placeholder="[Add notes for this policy]"
+													ng-readonly="isUpdate" ng-model="policy.notes"></textarea>
 											</div>
 
 											<div class="form-group form-inline">
 												<input type="checkbox" class="form-control"
-													ng-model="policy.collectByDebitOrder" readonly disabled/> <label>Collect
-													By Debit Order</label>
+													ng-model="policy.collectByDebitOrder" readonly disabled />
+												<label>Collect By Debit Order</label>
 											</div>
 											<div class="form-group form-inline">
-												<input type="checkbox" class="form-control"
-													ng-readonly="isUpdate" ng-model="policy.excludeSasria" />
-												<label>Exclude Sasria</label>
+												<input type="checkbox" class="form-control" readonly
+													ng-model="policy.excludeSasria" /> <label>Exclude
+													Sasria</label>
 											</div>
 
 										</div>
@@ -292,9 +288,8 @@
 													<div class="form-group">
 														<label>Special Policy Conditions</label>
 														</h4>
-														<textarea class="form-control"
-															ng-readonly="isUpdate" required
-															ng-model="policy.specialCondition"></textarea>
+														<textarea class="form-control" ng-readonly="isUpdate"
+															required ng-model="policy.specialCondition"></textarea>
 													</div>
 
 
@@ -325,6 +320,12 @@
 																<th>Indemnity Option</th>
 																<th>Indemnity Value</th>
 																<th>Sum Insured</th>
+																<th
+																	ng-if="policyRequest.quotation.option[0].staticLimit != 0">Static
+																	Limit</th>
+																<th
+																	ng-if="policyRequest.quotation.option[0].pavement != 0">Cross
+																	Pavements</th>
 																<th>Premium</th>
 															</tr>
 														</thead>
@@ -333,11 +334,19 @@
 																<td><input type="text" class="form-control"
 																	ng-model="indemnity.indemnityItemOption"
 																	ng-readonly="isUpdate"></td>
+																<td><textarea class="form-control"
+																		ng-model="indemnity.indemnityValue"
+																		ng-readonly="isUpdate"></textarea></td>
 																<td><input type="text" class="form-control"
-																	ng-model="indemnity.indemnityValue"
-																	ng-readonly="isUpdate"></td>
-																<td><input type="text" class="form-control"
-																	ng-model="indemnity.sumInsured" ng-readonly="isUpdate"></td>
+																	ng-model="indemnity.sumInsured" readonly></td>
+																<td
+																	ng-if="policyRequest.quotation.option[0].staticLimit != 0"><input
+																	type="text" class="form-control"
+																	ng-model="indemnity.staticLimit" readonly></td>
+																<td
+																	ng-if="policyRequest.quotation.option[0].pavement != 0"><input
+																	type="text" class="form-control"
+																	ng-model="indemnity.pavement" ng-readonly="isUpdate"></td>
 																<td><input type="text" class="form-control"
 																	ng-model="indemnity.premium" ng-readonly="isUpdate"></td>
 															</tr>
@@ -451,7 +460,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" ng-if="message">
 						<div class="col-md-12">
 							<div class="panel panel-default"
 								style="box-shadow: 0 0 30px #ffff;">

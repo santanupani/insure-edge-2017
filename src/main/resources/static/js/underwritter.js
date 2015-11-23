@@ -43,7 +43,7 @@ underwritter.controller('underwritterCtrl', function ($scope, $rootScope, $http,
 
     $scope.init = function () {
         if ($cookies.token == undefined) {
-            console.log($window);
+
             $window.location.href = "/login?state=" + encodeURIComponent($window.location.href);
         } else {
             $scope.validate($cookies.token);
@@ -60,7 +60,7 @@ underwritter.controller('underwritterCtrl', function ($scope, $rootScope, $http,
             data: token
         }).success(function (data, status) {
             $rootScope.session = data;
-            console.log("role" + $rootScope.session.role);
+
             if ($rootScope.session.role != "UNDERWRITTER") {
                 $window.location.href = "/logout";
             }
@@ -94,6 +94,7 @@ underwritter.controller('policyRequestCtrl', function ($scope, $rootScope, $http
             if (status == 200) {
                 console.log('policy Request retrived sucessfully');
                 $rootScope.policyRequest = data;
+                console.log($rootScope.policyRequest.quotation.quotationRequest.locationOptions[0].premium);
                 $cookieStore.put('reference', $rootScope.policyRequest.quotation.quotationRequest.reference);
                 console.log('Returned policy request: ' + data);
             } else {
@@ -351,7 +352,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             console.log('New policy creation');
             $scope.isUpdate = false;
             $scope.initNewPolicy($rootScope.policy);
-//			$scope.getPolicyRequest($cookieStore.get('reference'));
+//	$scope.getPolicyRequest($cookieStore.get('reference'));
             $scope.getPolicies();
             $scope.getSubAgents();
         }
@@ -440,6 +441,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.policyFee = '0.0';
             $scope.policy.initialFee = '0.0';
             $scope.policy.umaFee = '0.0';
+            $scope.policy.collectByDebitOrder = true;
             $scope.policy.brokerCommission = 12.5;
             $scope.policy.underwritingYear = new Date().getFullYear();
             ;
@@ -465,19 +467,17 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
             $scope.policy.client.bankAccount.bankName = $rootScope.policyRequest.bankName;
             $scope.policy.client.bankAccount.accountNumber = $rootScope.policyRequest.accountNumber;
             $scope.policy.scheduleAttaching = $scope.wording.scheduleAttaching;
-            $scope.policy.premium = $rootScope.policyRequest.quotationOption.premium;
-            $scope.policy.excessStructure = $rootScope.policyRequest.quotationOption.excess;
             $scope.policy.specialCondition = $scope.wording.specialCondition;
-            $scope.policy.conveyances = $scope.wording.conveyances;
+
             angular.forEach($scope.policyRequest.quotation.quotationRequest.questionnaire, function (questionnairre) {
                 switch (questionnairre.question) {
-                    case 'What do you wish to insure ?':
-                        console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
-                        $scope.policy.subjectMatter = questionnairre.answer;
-                        break;
-                    case 'Please select the duration for your cover ?':
+                    case 'Please select the duration for your cover  ?':
                         console.log('Question for duration:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
                         $scope.policy.frequency = questionnairre.answer;
+                        break;
+                    case 'Do you require SASRIA cover ?':
+                        console.log('Question for duration:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
+                        $scope.policy.excludeSasria = questionnairre.answer;
                         break;
                     case 'What is the maximum amount you wish to insure ?':
                         console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
@@ -496,7 +496,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                             break;
                         } else {
                             var subString = new Date($filter('limitTo')(questionnairre.answer, 10, 0));
-                            $scope.policy.policyInceptionDate = $filter('date')(subString, "yyyy-MM-dd");
+                            $scope.policy.policyInceptionDate = questionnairre.answer;
                             console.log('Policy inception date: ' + $scope.policy.policyInceptionDate);
                             break;
                         }
@@ -506,7 +506,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                             break;
                         } else {
                             var subString = new Date($filter('limitTo')(questionnairre.answer, 10, 0));
-                            $scope.policy.policyInceptionDate = $filter('date')(subString, "yyyy-MM-dd");
+                            $scope.policy.policyInceptionDate = questionnairre.answer
                             console.log('Policy inception date: ' + $scope.policy.policyInceptionDate);
                             break;
                         }
@@ -516,7 +516,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                             break;
                         } else {
                             var subString = new Date($filter('limitTo')(questionnairre.answer, 10, 0));
-                            $scope.policy.policyInceptionDate = $filter('date')(subString, "yyyy-MM-dd");
+                            $scope.policy.policyInceptionDate = questionnairre.answer
                             console.log('Policy inception date: ' + $scope.policy.policyInceptionDate);
                             break;
                         }
@@ -527,56 +527,52 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
                         break;
                 }
             });
-            $scope.policy.typeOfCover = $scope.wording.typeOfCover;
+            $scope.policy.typeOfCover = $rootScope.policyRequest.quotation.option[0].cover;
+            $scope.policy.subjectMatter = $rootScope.policyRequest.quotation.option[0].commodity;
+            $scope.policy.excessStructure = $rootScope.policyRequest.quotation.option[0].excess;
             $scope.policy.geographicalDuration = $scope.wording.geographicalDuration;
+            var conveyans = '';
+            angular.forEach($scope.policyRequest.quotation.quotationRequest.locationOptions, function (locationOption) {
+                if ($scope.policyRequest.quotation.quotationRequest.product.id == 1 || $scope.policyRequest.quotation.quotationRequest.product.id == 4) {
+                    conveyans = conveyans.concat('Per Road per Vehicle of ' + locationOption.professionalCarriers + '\n');
+                } else {
+                    conveyans = conveyans.concat('Vault or other specific storage');
+                }
+            });
+            $scope.policy.conveyances = conveyans;
 
-            if ($rootScope.policyRequest.quotationOption.staticLimit == null) {
+            $scope.options = $rootScope.policyRequest.quotation.option;
+            $scope.policy.indemnityOption = [];
+            for (var i = 0; i < $scope.options.length; i++) {
+                if ($scope.options[i].staticLimit == 0) {
+                    if ($rootScope.policyRequest.quotation.quotationRequest.product.id == 1) {
 
-                $scope.policy.indemnityOption = [];
-                for (var i = 0; i < 1; i++) {
-                    $scope.policy.indemnityOption[i] = {};
-                    $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
-                    $scope.policy.indemnityOption[i].indemnityValue = $scope.noOfTimesPerWeek + ' service';
-                    $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.limit;
-                    $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
+                        $scope.policy.indemnityOption[i] = {};
+                        $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
+                        $scope.policy.indemnityOption[i].indemnityValue = $scope.options[i].duration + ' whilst in transit and per cross pavement carry limit';
+                        $scope.policy.indemnityOption[i].sumInsured = $scope.options[i].limit;
+                        $scope.policy.indemnityOption[i].pavement = $scope.options[i].pavement;
+                        $scope.policy.indemnityOption[i].premium = $scope.options[i].premium;
 
+                    } else if ($rootScope.policyRequest.quotation.quotationRequest.product.id == 2
+                            || $rootScope.policyRequest.quotation.quotationRequest.product.id == 3) {
+                        $scope.policy.indemnityOption[i] = {};
+                        $scope.policy.indemnityOption[i].indemnityItemOption = 'Vault Limit';
+                        $scope.policy.indemnityOption[i].indemnityValue = $scope.options[i].duration + ' Service';
+                        $scope.policy.indemnityOption[i].sumInsured = $scope.options[i].limit;
+                        $scope.policy.indemnityOption[i].premium = $scope.options[i].premium;
+                    }
+                } else {
+                    if ($rootScope.policyRequest.quotation.quotationRequest.product.id == 4) {
+                        $scope.policy.indemnityOption[i] = {};
+                        $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy/Vault Limit';
+                        $scope.policy.indemnityOption[i].indemnityValue = $scope.options[i].duration + ' service whilst in transit and per cross-pavement carry limit';
+                        $scope.policy.indemnityOption[i].pavement = $scope.options[i].pavement;
+                        $scope.policy.indemnityOption[i].staticLimit = $scope.options[i].staticLimit;
+                        $scope.policy.indemnityOption[i].sumInsured = $scope.options[i].limit;
+                        $scope.policy.indemnityOption[i].premium = $scope.options[i].premium;
+                    }
                 }
-                ;
-                for (var i = 1; i < 2; i++) {
-                    $scope.policy.indemnityOption[i] = {};
-                    $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
-                    $scope.policy.indemnityOption[i].indemnityValue = 'Per cross pavement carry limit';
-                    $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.pavement;
-                    $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
-                }
-                ;
-            } else {
-
-                $scope.policy.indemnityOption = [];
-                for (var i = 0; i < 1; i++) {
-                    $scope.policy.indemnityOption[i] = {};
-                    $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
-                    $scope.policy.indemnityOption[i].indemnityValue = $scope.noOfTimesPerWeek + ' service';
-                    $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.limit;
-                    $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
-                }
-                ;
-                for (var i = 1; i < 2; i++) {
-                    $scope.policy.indemnityOption[i] = {};
-                    $scope.policy.indemnityOption[i].indemnityItemOption = 'Policy Limit';
-                    $scope.policy.indemnityOption[i].indemnityValue = 'Per cross pavement carry limit';
-                    $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.pavement;
-                    $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
-                }
-                ;
-                for (var i = 2; i < 3; i++) {
-                    $scope.policy.indemnityOption[i] = {};
-                    $scope.policy.indemnityOption[i].indemnityItemOption = 'Vault Limit';
-                    $scope.policy.indemnityOption[i].indemnityValue = $scope.noOfTimesPerWeek + ' service';
-                    $scope.policy.indemnityOption[i].sumInsured = $rootScope.policyRequest.quotationOption.staticLimit;
-                    $scope.policy.indemnityOption[i].premium = $rootScope.policyRequest.quotationOption.premium;
-                }
-                ;
             }
             ;
         } else {
@@ -753,7 +749,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
         'specialCondition': '1) Geographical and duration: Cash - once cash has recorded as deposited into the CIMA Managed Unit including authorised collection of the security.' +
                 '\n2) Premium: The minimum monthly premium of R0.00 is made up of: R0.00 miniun deposit',
         'conveyances': 'Per Road vehicle of Protea Coin Group',
-        'notes': '[Add notes for this policy]'
+        'notes': ''
 
     };
     $scope.getClient = function () {

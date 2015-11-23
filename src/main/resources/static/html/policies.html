@@ -21,10 +21,10 @@
                 <h4>Product</h4>
             </div>
             <div class="panel-body" align="center" style="height: 300px;">
-                <img class="img-circle" ng-src="{{quotationSelected.quotation.quotationRequest.product.image}}"
+                <img class="img-circle" ng-src="{{quotation.quotationRequest.product.image}}"
                      width="140" height="140">
-                <h3>{{quotationSelected.quotation.quotationRequest.product.name}}</h3>
-                <p>{{quotationSelected.quotation.quotationRequest.product.description}}</p>
+                <h3>{{quotation.quotationRequest.product.name}}</h3>
+                <p>{{quotation.quotationRequest.product.description}}</p>
             </div>
         </div>
 
@@ -37,27 +37,27 @@
                     <div class="form-group">
                         <label class="control-label" for="reference">Reference</label> <input
                             type="text" class="form-control" id="reference"
-                            ng-model="quotationSelected.quotation.quotationRequest.reference" readonly="readonly"/>
+                            ng-model="quotation.quotationRequest.reference" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="companyName">Company</label> <input
                             type="text" class="form-control" id="companyName"
-                            ng-model="quotationSelected.quotation.quotationRequest.companyName" readonly="readonly"/>
+                            ng-model="quotation.quotationRequest.companyName" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="applicant">Applicant</label> <input
                             type="text" class="form-control" id="applicant"
-                            ng-model="quotationSelected.quotation.quotationRequest.applicantName" readonly="readonly"/>
+                            ng-model="quotation.quotationRequest.applicantName" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="appliedOn">Applied On</label> <input
                             type="text" class="form-control" id="appliedOn"
-                            ng-model="quotationSelected.quotation.quotationRequest.createDate" readonly="readonly"/>
+                            ng-model="quotation.quotationRequest.createDate" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="status">Status</label> <input
                             type="text" class="form-control" id="status"
-                            ng-model="quotationSelected.quotation.quotationRequest.status" readonly="readonly"/>
+                            ng-model="quotation.quotationRequest.status" readonly="readonly"/>
                     </div>
                 </div>
             </div>
