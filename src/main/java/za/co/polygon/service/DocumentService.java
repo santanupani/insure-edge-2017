@@ -34,6 +34,7 @@ import za.co.polygon.domain.QuotationOption;
 public class DocumentService{
 
 	private String quotationWording;
+	NumberFormat nfm = NumberFormat.getCurrencyInstance(Locale.CANADA_FRENCH);
 
 
 	FileResolver fileResolver = new FileResolver() {
@@ -53,7 +54,7 @@ public class DocumentService{
 
 	public byte[] generateQuotationPDF(Quotation quotation) throws JRException{
 		
-		NumberFormat nfm = NumberFormat.getCurrencyInstance(Locale.CANADA_FRENCH);
+		
 		
 		Map<String,Object> reportData = new HashMap<String,Object>();
 		
@@ -62,10 +63,7 @@ public class DocumentService{
 			quotation.getQuotationOptions().get(i).setLimit(nfm.format(Double.parseDouble(quotation.getQuotationOptions().get(i).getLimit())).replace(",", ".").replace("$", ""));
 			quotation.getQuotationOptions().get(i).setPavements(nfm.format(Double.parseDouble(quotation.getQuotationOptions().get(i).getPavements())).replace(",", ".").replace("$", ""));
 			quotation.getQuotationOptions().get(i).setStaticLimit(nfm.format(Double.parseDouble(quotation.getQuotationOptions().get(i).getStaticLimit())).replace(",", ".").replace("$", ""));
-			quotation.getQuotationOptions().get(i)
-			.setCommodity(quotation.getQuotationOptions()
-					.get(i).getCommodity()
-					.substring(0, quotation.getQuotationOptions().get(i).getCommodity().length()-1));
+			
 			for(Answer answer:quotation.getQuotationRequest().getAnswers()){
 				if(answer.getAnswer() != null && answer.getAnswer().contains("On-going, paid monthly")){
 					quotation.getQuotationOptions().get(i).setPremium(nfm
@@ -118,7 +116,7 @@ public class DocumentService{
 		Map<String,Object> reportData = new HashMap<String,Object>();
 		reportData.put("policy", policy);
 		reportData.put("POLYGON_REPORT_FILE_RESOLVER", fileResolver);
-
+		
 		JRBeanCollectionDataSource indemnityOptionsDS = new JRBeanCollectionDataSource(policy.getIndemnityOptions());
 		InputStream jasperIS = getClass().getResourceAsStream("/reports/policyReport.jrxml");
 

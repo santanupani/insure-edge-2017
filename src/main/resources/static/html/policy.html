@@ -320,8 +320,12 @@
 																<th>Indemnity Option</th>
 																<th>Indemnity Value</th>
 																<th>Sum Insured</th>
-																<th ng-if="policyRequest.quotation.option[0].pavement != 0">Cross Pavements</th>
-																<th ng-if="policyRequest.quotation.option[0].staticLimit != 0">Static Limit</th>
+																<th
+																	ng-if="policyRequest.quotation.option[0].staticLimit != 0">Static
+																	Limit</th>
+																<th
+																	ng-if="policyRequest.quotation.option[0].pavement != 0">Cross
+																	Pavements</th>
 																<th>Premium</th>
 															</tr>
 														</thead>
@@ -331,15 +335,18 @@
 																	ng-model="indemnity.indemnityItemOption"
 																	ng-readonly="isUpdate"></td>
 																<td><textarea class="form-control"
-																	ng-model="indemnity.indemnityValue"
-																	ng-readonly="isUpdate"></textarea></td>
+																		ng-model="indemnity.indemnityValue"
+																		ng-readonly="isUpdate"></textarea></td>
 																<td><input type="text" class="form-control"
 																	ng-model="indemnity.sumInsured" readonly></td>
-																<td ng-if="policyRequest.quotation.option[0].pavement != 0"><input type="text" class="form-control"
-																	ng-model="indemnity.pavement"
-																	ng-readonly="isUpdate"></td>
-																<td ng-if="policyRequest.quotation.option[0].staticLimit != 0"><input type="text" class="form-control"
+																<td
+																	ng-if="policyRequest.quotation.option[0].staticLimit != 0"><input
+																	type="text" class="form-control"
 																	ng-model="indemnity.staticLimit" readonly></td>
+																<td
+																	ng-if="policyRequest.quotation.option[0].pavement != 0"><input
+																	type="text" class="form-control"
+																	ng-model="indemnity.pavement" ng-readonly="isUpdate"></td>
 																<td><input type="text" class="form-control"
 																	ng-model="indemnity.premium" ng-readonly="isUpdate"></td>
 															</tr>
@@ -453,7 +460,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" ng-if="message">
 						<div class="col-md-12">
 							<div class="panel panel-default"
 								style="box-shadow: 0 0 30px #ffff;">

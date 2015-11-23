@@ -374,7 +374,7 @@
 															pattern="[0-9]+([\.,][0-9]+)*" format
 															ng-model="option.premium" required>
 													</div>
-													<div class="form-group" ng-if="quotationRequest.product.id != 2 || quotationRequest.product.id != 3">
+													<div class="form-group" ng-if="quotationRequest.product.id == 1 || quotationRequest.product.id == 4">
 														<label class="control-label" for="crossPavement">Cross
 															Pavement</label> <input type="text" class="form-control"
 															placeholder="R 100,000,00,"

@@ -498,6 +498,14 @@ public class Service {
 		log.info("found all quotations - size:{}", quotation.size());
 		return toQuotationQueryModel(quotation);
 	}
+        
+	@RequestMapping(value = "api/quotation-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<QuotationRequestQueryModel> findAllQuotationRequest() {
+		log.info("find all quotations");
+		List<QuotationRequest> quotationRequests = quotationRequestRepository.findAll();
+		log.info("found all quotations - size:{}", quotationRequests.size());
+		return toQuotationRequestQueryModel(quotationRequests);
+	}
 
 	@RequestMapping(value = "api/clients/{clientId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ClientQueryModel getClient(@PathVariable("clientId") Long clientId) {

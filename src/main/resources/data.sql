@@ -1,7 +1,7 @@
 /*login*/
-insert into login (user_name, password, enabled, role) values('admin', 'secret', true, 'ROLE_ADMIN');
-insert into login (user_name, password, enabled, role) values('broker', 'secret', true, 'BROKER');
-insert into login (user_name, password, enabled, role) values('underwritter', 'secret', true, 'UNDERWRITTER');
+insert into login (user_name, password, first_name, last_name, enabled, role) values('admin', 'secret', 'admin','admin', true, 'ROLE_ADMIN');
+insert into login (user_name, password, first_name, last_name, enabled, role) values('broker', 'secret', 'Hentie','Snyder', true, 'BROKER');
+insert into login (user_name, password, first_name, last_name, enabled, role) values('underwritter', 'secret', 'Eric','Lehmann', true, 'UNDERWRITTER');
 
 /*products*/
 insert into products(name, description, image) values('Cash and Valuables in Transit', 'All risk cover for your cash and valuables whilst in transit.', '/img/products/Cash and Valuables in Transit.jpg');
@@ -60,7 +60,7 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '12', 'Please specify from date for once-off:'                     ,                    6,    1,  'Specific Period (Once-Off)', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '13', 'Please specify end date for once-off :'                     ,                    6,    1,  'Specific Period (Once-Off)', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '14', 'Are you currently insured ?'                     ,                    4,    null,  null, 'false');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('1', '15', 'Please provide details of your previous insurance company :',           1,    6,  'true', 'true');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '15', 'Please provide details of your previous insurance company :',           1,    6,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('2', '16', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 
 
@@ -88,7 +88,7 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '27', 'Please specify policy inception date for monthly cover :'                     ,                    6,    1,  'On-going, paid monthly', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '28', 'Please specify from date for once-off:'                     ,                    6,    1,  'Specific Period (Once-Off)', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '29', 'Please specify end date for once-off :'                     ,                    6,    1,  'Specific Period (Once-Off)', 'true');
-insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('3', '30', 'Are you currently insured ?'                     ,                    4,    null,  null, 'false');
+insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '30', 'Are you currently insured ?'                     ,                    4,    null,  null, 'false');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '31', 'Please provide details of your previous insurance company :'                     ,                    1,    6,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '32', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 

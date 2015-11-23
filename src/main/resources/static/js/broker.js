@@ -1,43 +1,85 @@
-var broker = angular.module('broker', ['ngRoute']);
+var broker = angular.module('broker', ['ngRoute', 'ngCookies']);
 
 broker.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider
-	.when('/quotation-requests/:reference', {
-		'templateUrl': '/html/quotation-requests.html',
-		'controller': 'quotationRequestsCtrl'
-	}).when('/quotations', {
-		'templateUrl': '/html/broker-scheduler.html',
-		'controller': 'brokerSchedulerCtrl'
-	}).otherwise({
-		redirectTo: '/products'
-	});
-}]);
+        $routeProvider
+                .when('/quotation-requests', {
+                    'templateUrl': '/html/quotation-requests-list.html',
+                    'controller': 'listQuotationRequestCtrl'
+                })
+                .when('/approved-quotation-requests', {
+                    'templateUrl': '/html/rejected-quotation-requests-.html',
+                    'controller': 'approvedQuotationRequestCtrl'
+                })
+                .when('/rejected-quotation-requests', {
+                    'templateUrl': '/html/approved-quotation-requests.html',
+                    'controller': 'rejectedQuotationRequestCtrl'
+                })
+                .when('/quotation-requests/:reference', {
+                    'templateUrl': '/html/quotation-requests.html',
+                    'controller': 'quotationRequestsCtrl'
+                }).when('/quotations', {
+            'templateUrl': '/html/broker-scheduler.html',
+            'controller': 'brokerSchedulerCtrl'
+        }).otherwise({
+            redirectTo: '/quotation-requests'
+        });
+    }]);
 
 broker.directive('format', function ($filter) {
-        'use strict';
+    'use strict';
 
-        return {
-            require: '?ngModel',
-            link: function (scope, elem, attrs, ctrl) {
-                if (!ctrl) {
-                    return;
-                }
+    return {
+        require: '?ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            if (!ctrl) {
+                return;
+            }
 
-                ctrl.$formatters.unshift(function () {
-                    return $filter('number')(ctrl.$modelValue);
-                });
+            ctrl.$formatters.unshift(function () {
+                return $filter('number')(ctrl.$modelValue);
+            });
 
-                ctrl.$parsers.unshift(function (viewValue) {
-                    var plainNumber = viewValue.replace(/[\,\.]/g, ''),
+            ctrl.$parsers.unshift(function (viewValue) {
+                var plainNumber = viewValue.replace(/[\,\.]/g, ''),
                         b = $filter('number')(plainNumber);
 
-                    elem.val(b);
+                elem.val(b);
 
-                    return plainNumber;
-                });
-            }
-        };
-    });
+                return plainNumber;
+            });
+        }
+    };
+});
+
+broker.controller('brokerCtrl', function ($scope, $rootScope, $http, $cookies, $window) {
+
+    $scope.init = function () {
+        if ($cookies.token == undefined) {
+            console.log($window);
+            $window.location.href = "/login?state=" + encodeURIComponent($window.location.href);
+        } else {
+            $scope.validate($cookies.token);
+        }
+    };
+
+    $scope.validate = function (token) {
+        $http({
+            method: 'POST',
+            url: '/validate',
+            headers: {
+                "Content-Type": "text/html"
+            },
+            data: token
+        }).success(function (data, status) {
+            $rootScope.session = data;
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookies.token;
+        }).error(function (error, status) {
+            $window.location.href = "/logout";
+        });
+    };
+
+});
+
 
 broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http, $location, $rootScope, $sce) {
 
@@ -70,9 +112,10 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 		
 		$scope.updateQuotation.reference = $scope.quotationRequest.reference;
 		console.log('Updated quotation reference: '+$scope.updateQuotation.reference);
-		$scope.updateQuotation.options = [];;
+		$scope.updateQuotation.options = [];
+		$scope.updateQuotation.options = $scope.quotationRequest.locationOptions;
 		for(var i=0;i<$scope.quotationRequest.locationOptions.length;i++){
-			$scope.updateQuotation.options[i] = {};
+//			$scope.updateQuotation.options[i] = {};
 			$scope.updateQuotation.options[i].pavement = $scope.quotationRequest.locationOptions[i].pavement;
 			$scope.updateQuotation.options[i].commodity = $scope.quotationRequest.locationOptions[i].commodity;
 			$scope.updateQuotation.options[i].staticLimit = $scope.quotationRequest.locationOptions[i].staticLimit;
@@ -221,7 +264,12 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 				$scope.quotation.options[i].premium = $scope.quotationRequest.locationOptions[i].premium;
 				$scope.quotation.options[i].limit = $scope.quotationRequest.locationOptions[i].limit;
 				$scope.quotation.options[i].staticLimit = $scope.quotationRequest.locationOptions[i].staticLimit;
-				$scope.quotation.options[i].pavement = $scope.quotationRequest.locationOptions[i].pavement;
+				if($scope.quotationRequest.locationOptions[i].pavement == null){
+					$scope.quotation.options[i].pavement =0;
+				}else{
+					$scope.quotation.options[i].pavement = $scope.quotationRequest.locationOptions[i].pavement;
+				}
+				
 			}; 
 
 			console.log($scope.quotation); 
@@ -285,75 +333,184 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 });
 
 
-broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http,$filter) {
-
-	$scope.mode ;
-	$scope.noOfDays=[];
-	$scope.quotations = [];
-	$scope.currDate; 
-
-	$scope.init = function () {
-		$scope.currDate = $filter("date")(Date.now(),'dd/MM/yyyy');
-		$scope.getAllQuotations();
-	};
+broker.controller('listQuotationRequestCtrl', function ($scope, $rootScope, $http, $filter) {
 
 
-	$scope.getAllQuotations = function () {
-		console.log('get all quotations');
-		$http({
-			url: '/api/quotations',
-			method: 'get'
-		}).success(function (data, status) {
-			if (status === 200) {
-				console.log('retrived successfully');
-				$scope.quotations = data;
-				for (var i = 0; i < $scope.quotations.length; i++) {
-					$scope.noOfDays[i] = $scope.dayDiff($scope.quotations[i].quotationRequest.createDate,$scope.currDate);
-				}
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
-				;
-			}
-		}).error(function (error) {
-			$rootScope.message = "Oops, we received your request, but there was an error processing it";
-		});
-	};
+    $scope.init = function () {
+        $scope.getAllQuotations();
+    };
 
-	$scope.closeNotification = function () {
-		$rootScope.message = undefined;
-	};
 
-	$scope.getQuotation = function (reference) {
-		angular.forEach($scope.quotations,function(quotation){
-			if(quotation.quotationRequest.reference == referennce){
-				return quotation;
-			}
-		});
-	};
+    $scope.getAllQuotations = function () {
+        console.log('get all quotations');
+        $http({
+            url: '/api/quotation-requests',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $scope.quotationRequests = data;
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
+    };
 
-	$scope.changeMode = function(mode){
-		$scope.mode = mode;
-	};
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
 
-	$scope.closeNotification = function () {
-		$rootScope.message = undefined;
-	};
 
-	$scope.dayDiff = function(firstDate,secondDate){
-		var date2 = new Date($scope.formatString(secondDate));
-		var date1 = new Date($scope.formatString(firstDate));
-		var timeDiff = Math.abs(date2.getTime() - date1.getTime());   
-		$scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
-		return $scope.dayDifference;
-	};
+});
 
-	$scope.formatString = function(format) {
-		var day   = parseInt(format.substring(0,2));
-		var month  = parseInt(format.substring(3,5));
-		var year   = parseInt(format.substring(6,10));
-		var date = new Date(year, month-1, day);
-		return date;
-	};
+
+broker.controller('rejectedQuotationRequestCtrl', function ($scope, $rootScope, $http, $filter) {
+
+
+    $scope.init = function () {
+        $scope.getAllQuotations();
+    };
+
+
+    $scope.getAllQuotations = function () {
+        console.log('get all quotations');
+        $http({
+            url: '/api/quotation-requests',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $scope.quotationRequests = data;
+                if ($scope.quotationRequests.status == 'REJECTED') {
+                    $scope.rejectQuotationRequests = $scope.quotationRequests;
+                }
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
+    };
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
+
+
+});
+
+broker.controller('approvedQuotationRequestCtrl', function ($scope, $rootScope, $http, $filter) {
+
+
+    $scope.init = function () {
+        $scope.getAllQuotations();
+    };
+
+
+    $scope.getAllQuotations = function () {
+        console.log('get all quotations');
+        $http({
+            url: '/api/quotation-requests',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $scope.quotationRequests = data;
+                if ($scope.quotationRequests.status == 'ACCEPTED') {
+                    $scope.acceptedQuotationRequests = $scope.quotationRequests;
+                }
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
+    };
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
+
+
+});
+
+broker.controller('brokerSchedulerCtrl', function ($scope, $rootScope, $http, $filter) {
+
+    $scope.mode;
+    $scope.noOfDays = [];
+    $scope.quotations = [];
+    $scope.currDate;
+
+    $scope.init = function () {
+        $scope.currDate = $filter("date")(Date.now(), 'dd/MM/yyyy');
+        $scope.getAllQuotations();
+    };
+
+
+    $scope.getAllQuotations = function () {
+        console.log('get all quotations');
+        $http({
+            url: '/api/quotations',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $scope.quotations = data;
+                for (var i = 0; i < $scope.quotations.length; i++) {
+                    $scope.noOfDays[i] = $scope.dayDiff($scope.quotations[i].quotationRequest.createDate, $scope.currDate);
+                }
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
+    };
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
+
+    $scope.getQuotation = function (reference) {
+        angular.forEach($scope.quotations, function (quotation) {
+            if (quotation.quotationRequest.reference == referennce) {
+                return quotation;
+            }
+        });
+    };
+
+    $scope.changeMode = function (mode) {
+        $scope.mode = mode;
+    };
+
+    $scope.closeNotification = function () {
+        $rootScope.message = undefined;
+    };
+
+    $scope.dayDiff = function (firstDate, secondDate) {
+        var date2 = new Date($scope.formatString(secondDate));
+        var date1 = new Date($scope.formatString(firstDate));
+        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        return $scope.dayDifference;
+    };
+
+    $scope.formatString = function (format) {
+        var day = parseInt(format.substring(0, 2));
+        var month = parseInt(format.substring(3, 5));
+        var year = parseInt(format.substring(6, 10));
+        var date = new Date(year, month - 1, day);
+        return date;
+    };
 });
 

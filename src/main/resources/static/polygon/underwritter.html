@@ -17,9 +17,9 @@
         <script  type="text/javascript" src="/js/underwritter.js"></script>
     </head>
 
-    <body style="background: silver;">
+    <body ng-controller="underwritterCtrl" ng-init="init()" style="background: silver;">
 
-        <div id="wrapper" class="container-fluid" > 
+        <div ng-if="session" id="wrapper" class="container-fluid" > 
 
             <div id="header" ng-include="'/html/underwritter-header.html'"></div>
             

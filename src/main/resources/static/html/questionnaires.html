@@ -185,13 +185,14 @@
 											</div>
 
 
-											<div class="form-group">
+											<div class="form-group"
+												ng-if="productId == 1 || productId == 4">
 												<label> <input type="checkbox" name="radio"
 													ng-model="option.isServiceCarrier"> Do you use the
 													services of a professional valuables carriers?
 												</label>
 											</div>
-											<div>
+											<div ng-if="productId == 1 || productId == 4">
 												<label class="control-label" for="productName"
 													style="font-family: 10px bold; color: red"><em>NB:
 														If a professional carrier is not used, valuables will only
@@ -199,7 +200,7 @@
 											</div>
 
 											<div class="form-group"
-												ng-if="option.isServiceCarrier == true">
+												ng-if="option.isServiceCarrier == true && (productId == 1 || productId == 4)">
 												<label class="control-label" for="isServiceCarrier">What
 													is the name of the professional valuables carrier?</label> <select
 													class="form-control" ng-model="option.professionalCarriers"
@@ -216,7 +217,7 @@
 											</div>
 
 											<div class="form-group"
-												ng-if="option.isServiceCarrier == false">
+												ng-if="option.isServiceCarrier == false && (productId == 1 || productId == 4)">
 												<label class="control-label" for="commodity">Please
 													specify by whom and how are the valuables carried?</label> <input
 													type="text" class="form-control"
@@ -228,13 +229,13 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="control-label" for="commodity">From
-															where are the valuables being carried?</label> <input type="text"
-															placeholder="Pick up location" class="form-control"
+															where are the valuables being carried/stored?</label> <input type="text"
+															placeholder="Pick/Storage up location" class="form-control"
 															ng-model="option.fromLocation">
 													</div>
 												</div>
 
-												<div class="col-md-6">
+												<div class="col-md-6"  ng-if="productId == 1 || productId == 4">
 													<div class="form-group">
 														<label class="control-label" for="commodity">To
 															where are the valuables being carried?</label> <input type="text"
@@ -244,7 +245,8 @@
 												</div>
 											</div>
 
-											<div class="form-group">
+											<div class="form-group"
+												ng-if="productId == 1 || productId == 4">
 												<label class="control-label" for="limit">What is the
 													approximate distance?</label> <select class="form-control"
 													ng-model="option.distance"
@@ -260,11 +262,12 @@
 												</select>
 											</div>
 
-											<div class="form-group">
+											<div class="form-group"
+												ng-if="productId == 1 || productId == 4">
 												<label class="control-label" for="staticLimit">How
 													many times per week are the valuables being carried?</label>
 												<div class="form-group form-inline">
-													<input type="number" class="form-control" size="5"
+													<input type="number" class="form-control" size="5" min="1"
 														placeholder="No of Times" ng-model="option.noOfTimes"
 														required>
 												</div>
@@ -377,23 +380,24 @@
 					</div>
 
 					<div class="form-group">
+
 						<label><input type="checkbox"
 							ng-click="addRemoveLocation(isMoreCovers)"
 							ng-model="isMoreCovers" /> Do you require cover for more than
 							one store/outlet/location for this cover?</label>
 
-						<div class="form-group" ng-if="isMoreCovers == true">
-							<div class="pull-right">
-								<button class="btn btn-info btn-sm" ng-click="add()">Add
-									Location</button>
-								<button class="btn btn-warning btn-sm" ng-click="remove()">Remove
-									Location</button>
-							</div>
-						</div>
+						<div class="pull-right" ng-if="isMoreCovers == true">
 
+							<button class="btn btn-info btn-sm" ng-click="add()">Add
+								Location</button>
+							<button class="btn btn-warning btn-sm" ng-click="remove()">Remove
+								Location</button>
+
+						</div>
 					</div>
 
-					<div>
+
+					<div class="form-group">
 						<label><input type="checkbox"
 							ng-click="addRemoveHistory()" ng-model="isHistory" /> Have you
 							suffered any losses of valuable goods over the past 5 years –
@@ -429,7 +433,6 @@
 										ng-model="history.typeOfLoss" placeholder="Eg. Robbery"
 										required></td>
 								</tr>
-
 							</tbody>
 							<tfoot>
 								<tr>
@@ -454,7 +457,6 @@
 					<div ng-repeat="questionnaire in questionnaires">
 						<div
 							ng-if="questionnaires[questionnaire.dependsOn - 1].answer.toString() == questionnaire.onAnswer.toString()">
-
 							<div ng-if="questionnaire.answerType == 'text'"
 								class="form-group">
 								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>

@@ -39,6 +39,35 @@ $(document).ready(function () {
 	$("#regId").mouseout().css("text-transform", "uppercase");
 });
 
+underwritter.controller('underwritterCtrl', function ($scope, $rootScope, $http, $cookies, $window) {
+
+	$scope.init = function(){
+		if($cookies.token == undefined){
+			console.log($window);
+			$window.location.href= "/login?state="+encodeURIComponent($window.location.href);
+		} else {
+			$scope.validate($cookies.token);
+		}
+	};
+
+	$scope.validate = function(token){
+		$http({
+			method: 'POST',
+			url: '/validate',
+			headers: {
+				"Content-Type": "text/html"
+			},
+			data: token
+		}).success(function(data, status){
+			$rootScope.session = data;
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + $cookies.token;
+		}).error(function(error, status){
+			$window.location.href= "/logout";
+		});
+	};
+
+});
+
 underwritter.controller('policyRequestCtrl', function ($scope, $rootScope, $http, $routeParams, $cookieStore) {
 	$scope.mode;
 	$rootScope.reference;
@@ -433,7 +462,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			$scope.policy.client.bankAccount.accountNumber = $rootScope.policyRequest.accountNumber;
 			$scope.policy.scheduleAttaching = $scope.wording.scheduleAttaching;
 			$scope.policy.specialCondition = $scope.wording.specialCondition;
-			
+
 			angular.forEach($scope.policyRequest.quotation.quotationRequest.questionnaire, function (questionnairre) {
 				switch (questionnairre.question) {
 				case 'Please select the duration for your cover  ?':
@@ -485,23 +514,27 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 						console.log('Policy inception date: '+$scope.policy.policyInceptionDate);
 						break;
 					}
-				case 'How many times per week are the valuables carried ?':
+					case 'How many times per week are the valuables carried ?':
 					console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
 					$scope.noOfTimesPerWeek = questionnairre.answer;
 					console.log("week " + $scope.noOfTimesPerWeek);
 					break;
-				}
-			});
+					}
+				});
 			$scope.policy.typeOfCover = $rootScope.policyRequest.quotation.option[0].cover;
 			$scope.policy.subjectMatter = $rootScope.policyRequest.quotation.option[0].commodity;
 			$scope.policy.excessStructure = $rootScope.policyRequest.quotation.option[0].excess;
 			$scope.policy.geographicalDuration = $scope.wording.geographicalDuration;
 			var conveyans = '';
 			angular.forEach($scope.policyRequest.quotation.quotationRequest.locationOptions,function(locationOption){
-				conveyans = conveyans.concat('Per Road per Vehicle of '+locationOption.professionalCarriers+'\n');
+				if($scope.policyRequest.quotation.quotationRequest.product.id == 1 || $scope.policyRequest.quotation.quotationRequest.product.id == 4){
+					conveyans = conveyans.concat('Per Road per Vehicle of '+locationOption.professionalCarriers+'\n');
+				}else{
+					conveyans = conveyans.concat('Vault or other specific storage');
+				}
 			});
 			$scope.policy.conveyances = conveyans;
-			
+
 			$scope.options = $rootScope.policyRequest.quotation.option;
 			$scope.policy.indemnityOption = [];
 			for(var i=0; i < $scope.options.length; i++){
@@ -535,192 +568,192 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 					}
 				}
 			};
-		} else {
-			$scope.policy = $rootScope.policy;
-			console.log('Existing Policy :' + $scope.policy.client.clientName);
-		}
-	};
+			} else {
+				$scope.policy = $rootScope.policy;
+				console.log('Existing Policy :' + $scope.policy.client.clientName);
+			}
+		};
 
-	$scope.update = function (isUpdated) {
-		$scope.isUpdate = isUpdated;
-	};
+		$scope.update = function (isUpdated) {
+			$scope.isUpdate = isUpdated;
+		};
 
-	$scope.cancel = function(isUpdated){
-		$window.location.reload();
-	};
+		$scope.cancel = function(isUpdated){
+			$window.location.reload();
+		};
 
-	$scope.submitForPolicy = function (isValid) {
-		if (!isValid) {
-			console.log("Form Validation Failure");
-		} else {
+		$scope.submitForPolicy = function (isValid) {
+			if (!isValid) {
+				console.log("Form Validation Failure");
+			} else {
+				$http({
+					url: '/api/policy',
+					method: 'post',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					data: $scope.policy
+				}).success(function (data, status) {
+					if (status == 200) {
+						console.log('New policy saved successfully');
+						$rootScope.message = "Reference Number : " + data;
+						$location.path('/policy/'+data);
+					} else {
+						console.log('status:' + status);
+					}
+				}).error(function (error) {
+					console.log(error);
+					$rootScope.message = error;
+				});
+			}
+
+		};
+
+
+		$rootScope.getPolicy = function (reference) {
+			angular.forEach($rootScope.policies, function (policy) {
+				if (angular.equals(reference, policy.reference)) {
+					$scope.policy = policy;
+					$scope.update(true);
+					$scope.btnValue = 'Save Changes';
+					$location.path('/policy/' + reference);
+				}
+			});
+		};
+
+
+		$scope.getPolicies = function () {
 			$http({
-				url: '/api/policy',
-				method: 'post',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				data: $scope.policy
+				url: '/api/policies',
+				method: 'get'
 			}).success(function (data, status) {
 				if (status == 200) {
-					console.log('New policy saved successfully');
-					$rootScope.message = "Reference Number : " + data;
-					$location.path('/policy/'+data);
+					console.log('All policies retrived sucessfully');
+					$rootScope.policies = data;
+					console.log($rootScope.policies);
+					console.log('Policies size :' + $rootScope.policies.length);
+					$rootScope.getPolicy($routeParams.reference);
 				} else {
 					console.log('status:' + status);
+					$rootScope.error = "error status code : " + status;
 				}
 			}).error(function (error) {
 				console.log(error);
-				$rootScope.message = error;
+				$rootScope.error = error;
 			});
-		}
-
-	};
-
-
-	$rootScope.getPolicy = function (reference) {
-		angular.forEach($rootScope.policies, function (policy) {
-			if (angular.equals(reference, policy.reference)) {
-				$scope.policy = policy;
-				$scope.update(true);
-				$scope.btnValue = 'Save Changes';
-				$location.path('/policy/' + reference);
+		};
+		$scope.getSubAgents = function () {
+			$http({
+				url: '/api/sub-agents',
+				method: 'get'
+			}).success(function (data, status) {
+				if (status == 200) {
+					console.log('All subAgents retrived sucessfully');
+					$scope.subAgents = data;
+					console.log($scope.subAgents);
+				} else {
+					console.log('status:' + status);
+					$rootScope.error = "error status code : " + status;
+				}
+			}).error(function (error) {
+				console.log(error);
+				$rootScope.error = error;
+			});
+		};
+		$scope.range = function () {
+			var rangeSize = 0;
+			var ret = [];
+			var start;
+			start = $scope.currentPage;
+			if (start > $scope.pageCount() - rangeSize) {
+				start = $scope.pageCount() - rangeSize + 1;
 			}
-		});
-	};
 
-
-	$scope.getPolicies = function () {
-		$http({
-			url: '/api/policies',
-			method: 'get'
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('All policies retrived sucessfully');
-				$rootScope.policies = data;
-				console.log($rootScope.policies);
-				console.log('Policies size :' + $rootScope.policies.length);
-				$rootScope.getPolicy($routeParams.reference);
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
+			for (var i = start; i < start + rangeSize; i++) {
+				ret.push(i);
 			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.error = error;
-		});
-	};
-	$scope.getSubAgents = function () {
-		$http({
-			url: '/api/sub-agents',
-			method: 'get'
-		}).success(function (data, status) {
-			if (status == 200) {
-				console.log('All subAgents retrived sucessfully');
-				$scope.subAgents = data;
-				console.log($scope.subAgents);
-			} else {
-				console.log('status:' + status);
-				$rootScope.error = "error status code : " + status;
+			return ret;
+		};
+		$scope.prevPage = function () {
+			if ($scope.currentPage > 0) {
+				$scope.currentPage--;
 			}
-		}).error(function (error) {
-			console.log(error);
-			$rootScope.error = error;
-		});
-	};
-	$scope.range = function () {
-		var rangeSize = 0;
-		var ret = [];
-		var start;
-		start = $scope.currentPage;
-		if (start > $scope.pageCount() - rangeSize) {
-			start = $scope.pageCount() - rangeSize + 1;
-		}
-
-		for (var i = start; i < start + rangeSize; i++) {
-			ret.push(i);
-		}
-		return ret;
-	};
-	$scope.prevPage = function () {
-		if ($scope.currentPage > 0) {
-			$scope.currentPage--;
-		}
-	};
-	$scope.prevPageDisabled = function () {
-		return $scope.currentPage === 0 ? "disabled" : "";
-	};
-	$scope.pageCount = function () {
-		return Math.ceil($scope.policies.length / $scope.itemsPerPage) - 1;
-	};
-	$scope.nextPage = function () {
-		if ($scope.currentPage < $scope.pageCount()) {
-			$scope.currentPage++;
-		}
-	};
-	$scope.nextPageDisabled = function () {
-		return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
-	};
-	$scope.setPage = function (n) {
-		$scope.currentPage = n;
-	};
-	$scope.commissionInfo = {
-			'brokerCommission': '20%',
-			'adminFee': '0.00',
-			'initialFee': '0.00',
-			'policyFee': '0.00',
-			'umaFee': '0.00'
-	};
-	$scope.policyOptions = {
-			'frequencyOptions': [
-			                     'Declaration',
-			                     'Annually',
-			                     'Monthly',
-			                     'Once Off'
-			                     ],
-			                     'sasriaFrequencyOptions': [
-			                                                'Annually',
-			                                                'Monthly',
-			                                                'N/A'
-			                                                ],
-			                                                'deviceOptions': [
-			                                                                  'Nedbank Cameo',
-			                                                                  'Standard Bnk',
-			                                                                  'N/A',
-			                                                                  ],
-			                                                                  'reInstatements': [
-			                                                                                     'Nedbank Cameo',
-			                                                                                     'Standard Bnk',
-			                                                                                     'N/A',
-			                                                                                     ],
-			                                                                                     'stats': [
-			                                                                                               'Active',
-			                                                                                               'Terminated',
-			                                                                                               'Cancelled',
-			                                                                                               ]
-	};
-	$scope.wording = {
-			'scheduleAttaching': '1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS' +
-			'\n2) POLYGON GENERAL COMPUTER NUCLEAR EXCEPTIONS\n3) POLYGON CASH AND VALUABLES IN TRANSIT WORDING' +
-			'\n4) VAULT AND STATIC RISK COVER WORDING',
-			'typeOfCover': 'Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured. ' +
-			'whilst in the custody and care of Protea Coin Group and/or whilst within the Nedbank Camera Managed Unit at the premises declared' +
-			'to Insurers, Excluding fraud, dishonesty or criminal involvement of the Insured or their employees.',
-			'geographicalDuration': 'refer to special conditions',
-			'specialCondition': '1) Geographical and duration: Cash - once cash has recorded as deposited into the CIMA Managed Unit including authorised collection of the security.' +
-			'\n2) Premium: The minimum monthly premium of R0.00 is made up of: R0.00 miniun deposit',
-			'conveyances': 'Per Road vehicle of Protea Coin Group',
-			'notes': ''
-
-	};
-	$scope.getClient = function () {
-		angular.forEach($rootScope.policies, function (policy) {
-			if (angular.equals($routeParams.reference, policy.reference)) {
-				$scope.policy = policy;
-				$scope.policy.client = policy.client;
-				console.log('Client UI policies size: ' + $rootScope.policies.length);
-				console.log('Client :' + $scope.policy.client);
-				$location.path('/client/' + $routeParams.reference);
+		};
+		$scope.prevPageDisabled = function () {
+			return $scope.currentPage === 0 ? "disabled" : "";
+		};
+		$scope.pageCount = function () {
+			return Math.ceil($scope.policies.length / $scope.itemsPerPage) - 1;
+		};
+		$scope.nextPage = function () {
+			if ($scope.currentPage < $scope.pageCount()) {
+				$scope.currentPage++;
 			}
-		});
-	};
-});
+		};
+		$scope.nextPageDisabled = function () {
+			return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+		};
+		$scope.setPage = function (n) {
+			$scope.currentPage = n;
+		};
+		$scope.commissionInfo = {
+				'brokerCommission': '20%',
+				'adminFee': '0.00',
+				'initialFee': '0.00',
+				'policyFee': '0.00',
+				'umaFee': '0.00'
+		};
+		$scope.policyOptions = {
+				'frequencyOptions': [
+				                     'Declaration',
+				                     'Annually',
+				                     'Monthly',
+				                     'Once Off'
+				                     ],
+				                     'sasriaFrequencyOptions': [
+				                                                'Annually',
+				                                                'Monthly',
+				                                                'N/A'
+				                                                ],
+				                                                'deviceOptions': [
+				                                                                  'Nedbank Cameo',
+				                                                                  'Standard Bnk',
+				                                                                  'N/A',
+				                                                                  ],
+				                                                                  'reInstatements': [
+				                                                                                     'Nedbank Cameo',
+				                                                                                     'Standard Bnk',
+				                                                                                     'N/A',
+				                                                                                     ],
+				                                                                                     'stats': [
+				                                                                                               'Active',
+				                                                                                               'Terminated',
+				                                                                                               'Cancelled',
+				                                                                                               ]
+		};
+		$scope.wording = {
+				'scheduleAttaching': '1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS' +
+				'\n2) POLYGON GENERAL COMPUTER NUCLEAR EXCEPTIONS\n3) POLYGON CASH AND VALUABLES IN TRANSIT WORDING' +
+				'\n4) VAULT AND STATIC RISK COVER WORDING',
+				'typeOfCover': 'Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured. ' +
+				'whilst in the custody and care of Protea Coin Group and/or whilst within the Nedbank Camera Managed Unit at the premises declared' +
+				'to Insurers, Excluding fraud, dishonesty or criminal involvement of the Insured or their employees.',
+				'geographicalDuration': 'refer to special conditions',
+				'specialCondition': '1) Geographical and duration: Cash - once cash has recorded as deposited into the CIMA Managed Unit including authorised collection of the security.' +
+				'\n2) Premium: The minimum monthly premium of R0.00 is made up of: R0.00 miniun deposit',
+				'conveyances': 'Per Road vehicle of Protea Coin Group',
+				'notes': ''
+
+		};
+		$scope.getClient = function () {
+			angular.forEach($rootScope.policies, function (policy) {
+				if (angular.equals($routeParams.reference, policy.reference)) {
+					$scope.policy = policy;
+					$scope.policy.client = policy.client;
+					console.log('Client UI policies size: ' + $rootScope.policies.length);
+					console.log('Client :' + $scope.policy.client);
+					$location.path('/client/' + $routeParams.reference);
+				}
+			});
+		};
+	});

@@ -253,10 +253,11 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 					commodity = token+'/'+commodity;
 				}
 			});
-
+			commodity = commodity.substring(0, commodity.length-1);
 			for (var i = 0; i < $scope.location.options.length; i++) {
 				$scope.location.options[i].commodity = commodity;
-				$scope.location.options[i].duration = $scope.location.options[i].noOfTimes +" X Weekly";
+				console.log($scope.location.options[i].commodity);
+				$scope.location.options[i].duration = $scope.location.options[i].noOfTimes +" x Weekly";
 				$scope.quotationRequest.locationOptions[i] = {};
 				$scope.quotationRequest.locationOptions[i] = $scope.location.options[i];
 				console.log($scope.quotationRequest.locationOptions[i].isGoodsMoved);
