@@ -104,6 +104,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 	$scope.isHistory;
 	$scope.location;
 	$scope.quotationRequest = {};
+	$scope.productId;
 
 	$scope.models = {};
 
@@ -257,7 +258,12 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 			for (var i = 0; i < $scope.location.options.length; i++) {
 				$scope.location.options[i].commodity = commodity;
 				console.log($scope.location.options[i].commodity);
-				$scope.location.options[i].duration = $scope.location.options[i].noOfTimes +" x Weekly";
+				console.log('Product ID: '+$scope.productId);
+				if($scope.productId == 2 || $scope.productId == 3){
+					$scope.location.options[i].duration = "Static";
+				}else{
+					$scope.location.options[i].duration = $scope.location.options[i].noOfTimes +" x Weekly";
+				}
 				$scope.quotationRequest.locationOptions[i] = {};
 				$scope.quotationRequest.locationOptions[i] = $scope.location.options[i];
 				console.log($scope.quotationRequest.locationOptions[i].isGoodsMoved);

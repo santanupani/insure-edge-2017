@@ -35,13 +35,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>za.co.polygon.jasperfonts</groupId>
-			<artifactId>jasperfonts</artifactId>
-			<version>1.0.0</version>
+			<groupId>za.co.polygon.jasper</groupId>
+			<artifactId>polygon-jasper</artifactId>
+			<version>1.0</version>
+			<!-- 
 			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/reports/jasperfonts.jar</systemPath>
+			<systemPath>${basedir}/src/main/resources/reports/jasperfonts.jar</systemPath> -->
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-core</artifactId>
@@ -91,7 +92,6 @@
 			<version>1.49</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>bouncycastle</groupId>
 			<artifactId>bctsp-jdk14</artifactId>
@@ -103,10 +103,6 @@
 			<artifactId>bcmail-jdk15</artifactId>
 			<version>140</version>
 		</dependency>
-
-
-
-
 
 		<dependency>
 			<groupId>com.lowagie</groupId>

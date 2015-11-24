@@ -91,7 +91,7 @@ public class NotificationService {
 						+ "\n"
 						+"Your request for quotation Ref : %s has been accepted" + "\n"
 						+ "\n"
-						+"Please find the attachement t view your quotation" + "\n"
+						+"Please find the attachment to view your quotation" + "\n"
 						+ "\n"
 						+ "Please click the link below to apply for a policy" + " \n"
 						+ "http://%s:%s/polygon/client.html#/quotations/%s " + " \n"

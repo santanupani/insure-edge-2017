@@ -162,7 +162,7 @@ public class Mapper {
         quotationRequest.setApplicantName(quotationRequestCommandModel.getApplicantName());
         quotationRequest.setApplicantEmail(quotationRequestCommandModel.getApplicantEmail());
         quotationRequest.setCompanyName(quotationRequestCommandModel.getCompanyName());
-        quotationRequest.setReference("QUO-" + String.format("%04d", count));
+        quotationRequest.setReference("QUO-" + String.format("%06d", count));
         quotationRequest.setStatus("APPLIED");
         quotationRequest.setCreateDate(new Date());
         quotationRequest.setProduct(product);
@@ -370,6 +370,7 @@ public class Mapper {
             locationOption.setTotalValue(location.getTotalValue());
             locationOption.setTransitTotalValue(location.getTransitTotalValue());
             locationOption.setStaticMaxAmount(location.getStaticMaxAmount());
+            locationOption.setSabsCategory(location.getSabsCategory());
             
             if(location.isServiceCarrier() == true){
             locationOption.setIsServiceCarrier("Yes");}else{

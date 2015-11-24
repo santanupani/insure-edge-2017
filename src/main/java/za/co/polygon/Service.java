@@ -462,7 +462,7 @@ public class Service {
 		log.info("saved all the values");
 		log.info("Policy Request Object :" + policyRequest.toString());
 
-		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "polygon.testing@gmail.com", "Polygon Underwritter");
+		notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "polygon.underwriter@gmail.com", "Polygon Underwritter");
 	}
 
 	@RequestMapping(value = "api/policy-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
