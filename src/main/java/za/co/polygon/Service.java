@@ -65,6 +65,7 @@ import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.History;
+import za.co.polygon.domain.JasperImage;
 import za.co.polygon.domain.LocationOption;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
@@ -111,6 +112,7 @@ import za.co.polygon.repository.ClaimTypeRepository;
 import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
 import za.co.polygon.repository.HistoryRepository;
+import za.co.polygon.repository.JapsperImageRepository;
 import za.co.polygon.repository.LocationOptionRepository;
 import za.co.polygon.repository.PolicyRepository;
 import za.co.polygon.repository.PolicyRequestRepository;
@@ -214,6 +216,7 @@ public class Service {
 
 	@Autowired
 	private DocumentService documentService;
+	
 
 	@RequestMapping(value = "api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<UserQueryModel> findAllUsers() {
@@ -307,6 +310,7 @@ public class Service {
 	public byte[] viewQuotationPDF(@PathVariable("reference") String reference) throws JRException, IOException{
 		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
 		Quotation quotation  = quotationRepository.findByQuotationRequest(quotationRequest);
+		
 		return documentService.generateQuotationPDF(quotation);
 
 	}
@@ -401,7 +405,7 @@ public class Service {
 	@RequestMapping(value = "api/quotation-submit/{reference}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void submitNewQuotation(@PathVariable("reference") String reference) throws DocumentException, FileNotFoundException, IOException, JRException {
 		QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
-
+		
 		byte[] data = reportService.generateQuotationPDF(quotationRepository.findByQuotationRequest(quotationRequest));
 		notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
 		

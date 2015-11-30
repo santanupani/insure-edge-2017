@@ -18,6 +18,13 @@ create table products(
     image varchar(128) 
 );
 
+/* table : jasper_images */
+create table jasper_images(
+    id integer auto_increment not null primary key, 
+    name varchar(64) not null, 
+    image varchar(128) 
+);
+
 /* table: answer_types */
 create table answer_types(
     id integer auto_increment not null primary key,

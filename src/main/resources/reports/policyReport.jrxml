@@ -3,9 +3,10 @@
 <!-- 2015-11-23T08:51:04 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="policyReports" pageWidth="595" pageHeight="900" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<parameter name="POLYGON_REPORT_FILE_RESOLVER" class="net.sf.jasperreports.engine.util.FileResolver"/>
 	<parameter name="policy" class="za.co.polygon.domain.Policy"/>
+	<parameter name="polygon-sched" class="java.lang.String"/>
+	<parameter name="polygon-logo" class="java.lang.String"/>
+	<parameter name="genric-logo" class="java.lang.String"/>
 	<field name="indemnityItemOption" class="java.lang.String"/>
 	<field name="indemnityValue" class="java.lang.String"/>
 	<field name="sumInsured" class="java.lang.Double"/>
@@ -24,7 +25,7 @@
 				</box>
 				<image scaleImage="FillFrame">
 					<reportElement x="141" y="20" width="279" height="71" />
-					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-sched.jpg").toString()]]></imageExpression>
+					<imageExpression><![CDATA[$P{polygon-sched}]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="0" y="117" width="555" height="30" />
@@ -419,11 +420,11 @@
 				</box>
 				<image scaleImage="FillFrame">
 					<reportElement x="14" y="10" width="56" height="53" />
-					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/genric-logo.jpg").toString()]]></imageExpression>
+					<imageExpression><![CDATA[$P{genric-logo}]]></imageExpression>
 				</image>
 				<image scaleImage="FillFrame">
 					<reportElement x="388" y="10" width="160" height="40" />
-					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-sched.jpg").toString()]]></imageExpression>
+					<imageExpression><![CDATA[$P{polygon-sched}]]></imageExpression>
 				</image>
 				<textField>
 					<reportElement x="0" y="10" width="555" height="20" />

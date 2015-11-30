@@ -10,7 +10,11 @@ insert into products(name, description, image) values('Cash and Valuables in Tra
 insert into products(name, description, image) values('Static Cover Cash and Valuables', 'All risk cover for your cash and valuables whilst static/on-site in vault or safe.','/img/products/Static Cover Cash and Valuables1.jpg');
 insert into products(name, description, image) values('Fine Art and Collectables', 'Tailored cover for your treasured possessions.', '/img/products/Fine Art and Collectables.jpg');
 insert into products(name, description, image) values('Static and In Transit Cover Cash and Valuables', 'All risk cover for cash/valuables whilst in transit and static/on-site in vault or safe.', '/img/products/Static and In Transit Cover Cash and Valuables1.jpeg');
-
+/*jaspers*/
+insert into jasper_images(name, image) values('polygon-logo', 'reports/polygon-logo.jpg');
+insert into jasper_images(name, image) values('polygon-footer','reports/polygon-footer.png');
+insert into jasper_images(name, image) values('genric-logo', 'reports/genric-logo.jpg');
+insert into jasper_images(name, image) values('policy-sched', 'reports/policy-sched.jpg');
 
 /*broker*/
 insert into brokers(code, name, email) values ('00001', 'Blue Quanta', 'polygon.broker@gmail.com');
@@ -24,7 +28,6 @@ insert into brokers(code, name, email) values ('00008', 'Multi Risk Admin (Pty) 
 insert into brokers(code, name, email) values ('00009', 'Lazarus Dash and Associates (Pty) Ltd', 'Brian@lazdash.co.za');
 insert into brokers(code, name, email) values ('00010', 'Willem Jacobus Nienaber', 'wjnienaber@telkomsa.net');
 insert into brokers(code, name, email) values ('00011', 'Deposita Systems (Pty) Ltd', 'lizaan.botha@reverside.co.za');
-
 
 /*answer_type*/
 insert into answer_types(answer_type) values('text');

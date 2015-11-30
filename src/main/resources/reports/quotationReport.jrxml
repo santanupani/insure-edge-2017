@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-11-20T19:18:57 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotationReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="quotation" class="za.co.polygon.domain.Quotation"/>
 	<parameter name="quotationWording" class="java.lang.String"/>
-	<parameter name="POLYGON_REPORT_FILE_RESOLVER" class="net.sf.jasperreports.engine.util.FileResolver"/>
+	<parameter name="polygon-logo" class="java.lang.String"/>
+	<parameter name="polygon-footer" class="java.lang.String"/>
 	<field name="location" class="java.lang.String"/>
 	<field name="limit" class="java.lang.String"/>
 	<field name="excess" class="java.lang.String"/>
@@ -30,7 +29,7 @@
 				</box>
 				<image scaleImage="FillFrame">
 					<reportElement x="0" y="0" width="555" height="80" />
-					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-logo.jpg").toString()]]></imageExpression>
+					<imageExpression><![CDATA[$P{polygon-logo}.toString()]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="34" y="85" width="20" height="20" />
@@ -232,7 +231,7 @@
 				<reportElement x="0" y="0" width="555" height="99" />
 				<image scaleImage="FillFrame">
 					<reportElement positionType="FixRelativeToBottom" x="0" y="10" width="555" height="89" />
-					<imageExpression><![CDATA[$P{POLYGON_REPORT_FILE_RESOLVER}.resolveFile("/reports/polygon-footer.png").toString()]]></imageExpression>
+					<imageExpression><![CDATA[$P{polygon-footer}.toString()]]></imageExpression>
 				</image>
 			</frame>
 		</band>

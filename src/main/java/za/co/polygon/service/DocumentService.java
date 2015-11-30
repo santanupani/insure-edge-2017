@@ -12,9 +12,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JRException;
@@ -26,17 +28,22 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.FileResolver;
 import za.co.polygon.domain.Answer;
+import za.co.polygon.domain.JasperImage;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.Quotation;
-import za.co.polygon.domain.QuotationOption;
+import za.co.polygon.repository.JapsperImageRepository;
 
 @Service
 public class DocumentService{
 
 	private String quotationWording;
 	NumberFormat nfm = NumberFormat.getCurrencyInstance(Locale.CANADA_FRENCH);
-
-
+	private List<JasperImage> logos = null;
+	
+	@Autowired
+	private  JapsperImageRepository japsperImageRepository;
+		
+		
 	FileResolver fileResolver = new FileResolver() {
 
 		public File resolveFile(String fileName) {
@@ -50,13 +57,12 @@ public class DocumentService{
 			}
 		}
 	};
-
-
+	
+	
 	public byte[] generateQuotationPDF(Quotation quotation) throws JRException{
 		
-		
-		
 		Map<String,Object> reportData = new HashMap<String,Object>();
+		logos = japsperImageRepository.findAll();
 		
 		for(int i=0;i<quotation.getQuotationOptions().size();i++){
 			
@@ -81,9 +87,11 @@ public class DocumentService{
 				
 			}
 		}
+		
 		reportData.put("quotation", quotation);
-		reportData.put("POLYGON_REPORT_FILE_RESOLVER", fileResolver);
-
+		reportData.put("polygon-logo", logos.get(0).getImage());
+		reportData.put("polygon-footer", logos.get(1).getImage());
+		
 		for (Answer answer : quotation.getQuotationRequest().getAnswers()) {
 			if (answer.getAnswer() != null) {
 				if (answer.getAnswer().equals("Specific Period (Once-Off)")) {
@@ -112,11 +120,12 @@ public class DocumentService{
 
 
 	public byte[] policyScheduleReportPDF(Policy policy) throws JRException, IOException{
-
 		Map<String,Object> reportData = new HashMap<String,Object>();
-		reportData.put("policy", policy);
-		reportData.put("POLYGON_REPORT_FILE_RESOLVER", fileResolver);
-		
+		logos = japsperImageRepository.findAll();
+		reportData.put("polygon-logo", logos.get(0).getImage());
+		reportData.put("genric-logo", logos.get(2).getImage());
+		reportData.put("polygon-sched", logos.get(3).getImage());
+				
 		JRBeanCollectionDataSource indemnityOptionsDS = new JRBeanCollectionDataSource(policy.getIndemnityOptions());
 		InputStream jasperIS = getClass().getResourceAsStream("/reports/policyReport.jrxml");
 
