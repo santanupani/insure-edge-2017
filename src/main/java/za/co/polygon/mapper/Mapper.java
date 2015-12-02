@@ -6,13 +6,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import org.springframework.web.multipart.MultipartFile;
+
 
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
@@ -371,35 +372,53 @@ public class Mapper {
             locationOption.setTransitTotalValue(location.getTransitTotalValue());
             locationOption.setStaticMaxAmount(location.getStaticMaxAmount());
             locationOption.setSabsCategory(location.getSabsCategory());
-            
-            if(location.isServiceCarrier() == true){
-            locationOption.setIsServiceCarrier("Yes");}else{
-            locationOption.setIsServiceCarrier("No");}
-            if(location.isStoreVault() == true){
-            locationOption.setIsStoreVault("Yes");}else{
-            locationOption.setIsStoreVault("No");}
-            if(location.isSeismicDetector() == true){
-            locationOption.setIsSeismicDetector("Yes");}else{
-            locationOption.setIsSeismicDetector("No");}
-            if(location.isGoodsMoved() == true){
-            locationOption.setIsGoodsMoved("Yes");}else{
-            locationOption.setIsGoodsMoved("No");}
-            if(location.isIsGoodsMovedStatic() == true){
-            locationOption.setIsGoodsMovedStatic("Yes");}else{
-            locationOption.setIsGoodsMovedStatic("No");}
-            if(location.isAlarmed() == true){
-            locationOption.setIsAlarmed("Yes");}else{
-            locationOption.setIsAlarmed("No");}
-            if(location.isCctv() == true){
-            locationOption.setIsCctv("Yes");}else{
-            locationOption.setIsCctv("No");}
-            if(location.isConcreteSecured()== true){
-            locationOption.setIsConcreteSecured("Yes");}else{
-            locationOption.setIsConcreteSecured("No");}
-            if(location.isFirstLossCover() == true){
-            locationOption.setIsFirstLossCover("Yes");}else{
-            locationOption.setIsFirstLossCover("No");}
-                 result.getLocationOptions().add(locationOption);
+
+            if (location.isServiceCarrier() == true) {
+                locationOption.setIsServiceCarrier("Yes");
+            } else {
+                locationOption.setIsServiceCarrier("No");
+            }
+            if (location.isStoreVault() == true) {
+                locationOption.setIsStoreVault("Yes");
+            } else {
+                locationOption.setIsStoreVault("No");
+            }
+            if (location.isSeismicDetector() == true) {
+                locationOption.setIsSeismicDetector("Yes");
+            } else {
+                locationOption.setIsSeismicDetector("No");
+            }
+            if (location.isGoodsMoved() == true) {
+                locationOption.setIsGoodsMoved("Yes");
+            } else {
+                locationOption.setIsGoodsMoved("No");
+            }
+            if (location.isIsGoodsMovedStatic() == true) {
+                locationOption.setIsGoodsMovedStatic("Yes");
+            } else {
+                locationOption.setIsGoodsMovedStatic("No");
+            }
+            if (location.isAlarmed() == true) {
+                locationOption.setIsAlarmed("Yes");
+            } else {
+                locationOption.setIsAlarmed("No");
+            }
+            if (location.isCctv() == true) {
+                locationOption.setIsCctv("Yes");
+            } else {
+                locationOption.setIsCctv("No");
+            }
+            if (location.isConcreteSecured() == true) {
+                locationOption.setIsConcreteSecured("Yes");
+            } else {
+                locationOption.setIsConcreteSecured("No");
+            }
+            if (location.isFirstLossCover() == true) {
+                locationOption.setIsFirstLossCover("Yes");
+            } else {
+                locationOption.setIsFirstLossCover("No");
+            }
+            result.getLocationOptions().add(locationOption);
 
         }
 
@@ -567,7 +586,7 @@ public class Mapper {
 
     public static SelectedQuotationQueryModel toSelectedQuotationQueryModel(Quotation quotation, QuotationOption quotationOption) {
         SelectedQuotationQueryModel selectedQuotationQueryModel = new SelectedQuotationQueryModel();
-        
+
         selectedQuotationQueryModel.setQuotation(toQuotationQueryModel(quotation));
         selectedQuotationQueryModel.setSelectedQuotation(toQuotationOptionQueryModel(quotationOption));
 
@@ -997,10 +1016,10 @@ public class Mapper {
         return claimQuestionnaireQuerys;
     }
 
-    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType, List<ClaimQuestionnaire> claimQuestions, MultipartFile[] attachments) throws IOException {
+    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType, List<ClaimQuestionnaire> claimQuestions, int count) throws IOException {
         ClaimRequest claimRequest = new ClaimRequest();
 
-        claimRequest.setClaimNumber(UUID.randomUUID().toString());
+        claimRequest.setClaimNumber("CLM-" + String.format("%06d", count));
         claimRequest.setPolicy(policy);
         claimRequest.setCreateDate(new Date());
         claimRequest.setClaimType(claimType);
@@ -1010,21 +1029,9 @@ public class Mapper {
         for (ClaimQuestionnaires claimquestionnaires : claimRequestCommandModel.getClaimQuestionnaires()) {
             ClaimAnswer claimAnswer = new ClaimAnswer();
 
-            for (ClaimQuestionnaire claimQuestionnaire : claimQuestions) {
-                if (claimQuestionnaire.getClaimAnswerType().getClaimAnswerType().equals("blob")) {
-                    MultipartFile file = attachments[claimQuestions.size()];
-                    claimAnswer.setQuestion(claimquestionnaires.getQuestion());
-                    claimAnswer.setAttachment(file.getBytes());
-
-                } else {
-
-                    claimAnswer.setQuestion(claimquestionnaires.getQuestion());
-                    claimAnswer.setAnswer(claimquestionnaires.getAnswer());
-
-                }
-                claimAnswer.setClaimRequest(claimRequest);
-            }
-
+            claimAnswer.setQuestion(claimquestionnaires.getQuestion());
+            claimAnswer.setAnswer(claimquestionnaires.getAnswer());
+            claimAnswer.setClaimRequest(claimRequest);
             answerList.add(claimAnswer);
 
         }
@@ -1057,14 +1064,12 @@ public class Mapper {
         claimRequestQueryModel.setClaimType(toClaimTypeQueryModel(claimRequest.getClaimType()));
         claimRequestQueryModel.setAffidavit(claimRequest.getAffidavit());
         claimRequestQueryModel.setAmountBanked(claimRequest.getAmountBanked());
-        claimRequestQueryModel.setCaseNumber(claimRequest.getCaseNumber());
-        claimRequestQueryModel.setComfirmationAmount(claimRequest.getComfirmationAmount());
-        claimRequestQueryModel.setInvestigationReport(claimRequest.getInvestigationReport());
+        claimRequestQueryModel.setComfirmationAmount(Arrays.toString(claimRequest.getComfirmationAmount()));
+        claimRequestQueryModel.setInvestigationReport(Arrays.toString(claimRequest.getInvestigationReport()));
         claimRequestQueryModel.setPhoto1(claimRequest.getPhoto1());
         claimRequestQueryModel.setPhoto2(claimRequest.getPhoto2());
         claimRequestQueryModel.setPhoto3(claimRequest.getPhoto3());
         claimRequestQueryModel.setPhoto4(claimRequest.getPhoto4());
-        claimRequestQueryModel.setPhoto5(claimRequest.getPhoto5());
         claimRequestQueryModel.setProofOfPickup(claimRequest.getProofOfPickup());
         claimRequestQueryModel.setQuote(claimRequest.getQuote());
         claimRequestQueryModel.setReport(claimRequest.getReport());
@@ -1073,21 +1078,10 @@ public class Mapper {
         for (ClaimAnswer claimAnswer : claimRequest.getClaimAnswer()) {
             ClaimRequestQueryModel.ClaimQuestionnaire q = new ClaimRequestQueryModel.ClaimQuestionnaire();
 
-            for (ClaimQuestionnaire claimQuestionnaire : claimQuestions) {
-                if (claimQuestionnaire.getClaimAnswerType().getClaimAnswerType().equals("blob")) {
+            q.setQuestion(claimAnswer.getQuestion());
+            q.setAnswer(claimAnswer.getAnswer());
+            claimRequestQueryModel.getClaimQuestionnaire().add(q);
 
-                    q.setQuestion(claimAnswer.getQuestion());
-                    q.setAnswer(claimAnswer.getAnswer());
-                    q.setAttachment(claimAnswer.getAttachment());
-
-                } else {
-
-                    q.setQuestion(claimAnswer.getQuestion());
-                    q.setAnswer(claimAnswer.getAnswer());
-                }
-
-                claimRequestQueryModel.getClaimQuestionnaire().add(q);
-            }
         }
 
         return claimRequestQueryModel;

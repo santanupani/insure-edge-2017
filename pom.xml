@@ -38,8 +38,8 @@
 			<groupId>za.co.polygon.jasper</groupId>
 			<artifactId>polygon-jasper</artifactId>
 			<version>1.0</version>
-			<!-- 
-			<scope>system</scope>
+			 
+<!--			<scope>system</scope>
 			<systemPath>${basedir}/src/main/resources/reports/jasperfonts.jar</systemPath> -->
 		</dependency>
 

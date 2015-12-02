@@ -81,9 +81,6 @@ public class ClaimRequest {
 	@Column(name = "photo4")
 	private byte[] photo4;
 
-	@Column(name = "photo5")
-	private byte[] photo5;
-
 	@Column(name = "create_date")
 	private Date createDate;
 
@@ -214,16 +211,6 @@ public class ClaimRequest {
 	public void setPhoto4(byte[] photo4) {
 		this.photo4 = photo4;
 	}
-
-	public byte[] getPhoto5() {
-		return photo5;
-	}
-
-	public void setPhoto5(byte[] photo5) {
-		this.photo5 = photo5;
-	}
-
-
 
 	public Date getCreateDate() {
 		return createDate;
