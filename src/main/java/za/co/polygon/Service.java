@@ -36,11 +36,11 @@ import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +54,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lowagie.text.DocumentException;
+
 import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
@@ -65,7 +67,6 @@ import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
 import za.co.polygon.domain.History;
-import za.co.polygon.domain.JasperImage;
 import za.co.polygon.domain.LocationOption;
 import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
@@ -112,7 +113,6 @@ import za.co.polygon.repository.ClaimTypeRepository;
 import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
 import za.co.polygon.repository.HistoryRepository;
-import za.co.polygon.repository.JapsperImageRepository;
 import za.co.polygon.repository.LocationOptionRepository;
 import za.co.polygon.repository.PolicyRepository;
 import za.co.polygon.repository.PolicyRequestRepository;
@@ -269,6 +269,14 @@ public class Service {
 		Policy policy = policyRepository.save(fromPolicyCreationCommandModel(policyCreationCommandModel, client, subAgent, underwriter, contact, bankAccount,lastPolicyNumber));
 		return policy.getReference();
 	}
+	
+	@RequestMapping(value = "api/policy-ref", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getPolicyCounts() {
+		log.info("Find all policy for reference");
+		int lastPolicyNumber = policyRepository.findAll().size();
+		LocalDateTime now = LocalDateTime.now();;
+		return (now.getYear() + "-" + now.getMonthValue() + "" + String.format("%02d", lastPolicyNumber)).toString();
+	}
 
 	@Transactional
 	@RequestMapping(value = "api/policy-update/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -410,7 +418,7 @@ public class Service {
 		notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
 		
 		log.info("Quotation Created Successfully !!!");
-	}
+	}	
 
 	@RequestMapping(value = "api/quotations/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public QuotationQueryModel getQuotation(@PathVariable("reference") String reference) {

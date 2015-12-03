@@ -1,9 +1,11 @@
 package za.co.polygon.service;
 
+import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import javax.jms.Session;
+
 import org.bouncycastle.util.encoders.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import za.co.polygon.domain.User;
-import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.UserRepository;
 

@@ -25,7 +25,7 @@
 				</box>
 				<image scaleImage="FillFrame">
 					<reportElement x="141" y="20" width="279" height="71" />
-					<imageExpression><![CDATA[$P{polygon-sched}]]></imageExpression>
+					<imageExpression><![CDATA[$P{polygon-sched}.toString()]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="0" y="117" width="555" height="30" />
@@ -420,11 +420,11 @@
 				</box>
 				<image scaleImage="FillFrame">
 					<reportElement x="14" y="10" width="56" height="53" />
-					<imageExpression><![CDATA[$P{genric-logo}]]></imageExpression>
+					<imageExpression><![CDATA[$P{genric-logo}.toString()]]></imageExpression>
 				</image>
 				<image scaleImage="FillFrame">
 					<reportElement x="388" y="10" width="160" height="40" />
-					<imageExpression><![CDATA[$P{polygon-sched}]]></imageExpression>
+					<imageExpression><![CDATA[$P{polygon-sched}.toString()]]></imageExpression>
 				</image>
 				<textField>
 					<reportElement x="0" y="10" width="555" height="20" />

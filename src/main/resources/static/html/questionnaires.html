@@ -35,7 +35,7 @@
 		</div>
 		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
 			<div class="panel-heading">
-				<h4 title="We request all answers">Please provide the following
+				<h4 title="We request all answers">Please provide us with the following
 					details</h4>
 			</div>
 			<div class="panel-body" align="center" style="height: 210px;">
@@ -503,7 +503,6 @@
 								class="form-group">
 								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
 								<input type="text" class="form-control" placeholder="dd/MM/yyyy"
-									pattern="[\d]{2}[/][\d]{2}[/][\d]{4}"
 									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
 									ng-required="questionnaire.isRequired" required />
 							</div>

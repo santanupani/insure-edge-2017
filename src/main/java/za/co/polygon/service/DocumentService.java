@@ -88,10 +88,6 @@ public class DocumentService{
 			}
 		}
 		
-		reportData.put("quotation", quotation);
-		reportData.put("polygon-logo", logos.get(0).getImage());
-		reportData.put("polygon-footer", logos.get(1).getImage());
-		
 		for (Answer answer : quotation.getQuotationRequest().getAnswers()) {
 			if (answer.getAnswer() != null) {
 				if (answer.getAnswer().equals("Specific Period (Once-Off)")) {
@@ -107,6 +103,9 @@ public class DocumentService{
 		}
 
 		reportData.put("quotationWording", getQuotationWording());
+		reportData.put("quotation", quotation);
+		reportData.put("polygon-logo", logos.get(0).getImage());
+		reportData.put("polygon-footer", logos.get(1).getImage());
 
 		JRBeanCollectionDataSource quotationOptions = new JRBeanCollectionDataSource(quotation.getQuotationOptions());
 		InputStream jasperIS = getClass().getResourceAsStream("/reports/quotationReport.jrxml");
@@ -125,6 +124,7 @@ public class DocumentService{
 		reportData.put("polygon-logo", logos.get(0).getImage());
 		reportData.put("genric-logo", logos.get(2).getImage());
 		reportData.put("polygon-sched", logos.get(3).getImage());
+		reportData.put("policy", policy);
 				
 		JRBeanCollectionDataSource indemnityOptionsDS = new JRBeanCollectionDataSource(policy.getIndemnityOptions());
 		InputStream jasperIS = getClass().getResourceAsStream("/reports/policyReport.jrxml");
