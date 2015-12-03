@@ -342,20 +342,21 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.init = function () {
 
 		$scope.getClient();
-		$scope.btnValue = (angular.equals($scope.policy.policyReference, '[YYYY-MM00]')) ? 'Update' : 'Create Policy';
+//		$scope.btnValue = (angular.equals($scope.policy.policyReference, '[YYYY-MM00]')) ? 'Update' : 'Create Policy';
 		
 		if ($rootScope.policyRequest == undefined) {
 			console.log('Working on existing policy');
 			$scope.getPolicies();
 			$scope.getSubAgents();
 		} else {
-			$scope.getNewPolicyRef();
+			
 			console.log('New policy creation');
+			$scope.getSubAgents();
+			$scope.getNewPolicyRef();
+			console.log('Temp ref created.');
 			$scope.isUpdate = false;
 			$scope.initNewPolicy($rootScope.policy);
-			$scope.getPolicies();
-			$scope.getSubAgents();
-			
+			$scope.getPolicies();			
 		}
 	};
 

@@ -27,9 +27,7 @@ public class ClaimAnswer {
 
     @Column(name = "answer")
     private String answer;
-    
-    @Column(name = "attachment")
-    private byte[] attachment;
+
 
     public Long getId() {
         return id;
@@ -62,15 +60,5 @@ public class ClaimAnswer {
     public void setClaimRequest(ClaimRequest claimRequest) {
         this.claimRequest = claimRequest;
     }
-
-    public byte[] getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(byte[] attachment) {
-        this.attachment = attachment;
-    }
-
-    
 
 }

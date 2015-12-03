@@ -38,19 +38,6 @@
 			<groupId>za.co.polygon.jasper</groupId>
 			<artifactId>polygon-jasper</artifactId>
 			<version>1.0</version>
-
-		</dependency>
-
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-core</artifactId>
-			<version>1.19</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>1.12</version>
 		</dependency>
 
 		<dependency>
@@ -76,8 +63,6 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 			<version>1.2.3.RELEASE</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
@@ -107,16 +92,12 @@
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
 		</dependency>
-
-
 		<!-- Profile : dev -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.188</version>
 		</dependency>
-
-
 
 		<!-- Profile : test -->
 		<dependency>
@@ -138,34 +119,24 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>1.0.1.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
-
-
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.5</version>
 		</dependency>
-
-
 	</dependencies>
-
-
-
-
 	<build>
 		<plugins>
 			<plugin>

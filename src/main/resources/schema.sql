@@ -340,7 +340,6 @@ create table claim_answer_values(
 );
 
 
-
 create table claim_requests(
     id integer auto_increment not null primary key,
     claim_number varchar(64) not null,
@@ -355,14 +354,12 @@ create table claim_requests(
     amount_banked longblob,
     trans_track_document longblob,
     quote longblob,
-    photos longblob,
     report longblob,
     affidavit longblob,
     photo1 longblob,
     photo2 longblob,
     photo3 longblob,
     photo4 longblob,
-    photo5 longblob,
     constraint claim_request_fk1 foreign key (policy_id) references policies(id),
     constraint claim_request_fk2 foreign key (claim_type_id) references claim_types(id)
 );
