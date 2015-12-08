@@ -39,8 +39,8 @@
 			<artifactId>polygon-jasper</artifactId>
 			<version>1.0</version>
 			 
-<!--			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/reports/jasperfonts.jar</systemPath> -->
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/resources/reports/jasperfonts.jar</systemPath> 
 		</dependency>
 
 		<dependency>

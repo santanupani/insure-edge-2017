@@ -150,13 +150,13 @@ insert into claim_answer_types(claim_answer_type) values('blob');
 
 
 
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','1', 'Event', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','2', 'Discovery', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','1', 'Event date', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','2', 'Discovery date', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','3', 'Place where Loss/Damage occurred', 1, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','4', 'Did the incident happen on a premises or in Transit', 3, true);
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(4, 'Yes');
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(4, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','5', 'If on prenises, was it occupied at the time of the incident', 3, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','5', 'If on premises, was it occupied at the time of the incident', 3, true);
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(5, 'Yes');
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(5, 'No');
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('1','6', 'Type of a loss', 3, true);
@@ -193,13 +193,13 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 
 
 
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','24', 'Event', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','25', 'Discovery', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','24', 'Event Date', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','25', 'Discovery Date', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','26', 'Place where Loss/Damage occurred', 1, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','27', 'Did the incident happen on a premises or in Transit', 3, true);
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(27, 'Yes');
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(27, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','28', 'If on prenises, was it occupied at the time of the incident', 3, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','28', 'If on premises, was it occupied at the time of the incident', 3, true);
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(28, 'Yes');
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(28, 'No');
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','29', 'Type of a loss', 3, true);
@@ -233,13 +233,13 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 
 
 
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','47', 'Event', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','48', 'Discovery', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','47', 'Event Date', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','48', 'Discovery Date', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','49', 'Place where Loss/Damage occurred', 1, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','50', 'Did the incident happen on a premises or in Transit', 3, true);
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(50, 'Yes');
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(50, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','51', 'If on prenises, was it occupied at the time of the incident', 3, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','51', 'If on premises, was it occupied at the time of the incident', 3, true);
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(51, 'Yes');
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(51, 'No');
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','52', 'Type of a loss', 3, true);
@@ -274,8 +274,8 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 
 
 
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','70', 'Event', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','71', 'Discovery', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','70', 'Event Date', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','71', 'Discovery Date', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','72', 'Place where Loss/Damage occurred', 1, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','73', 'Did the incident happen on a premises or in Transit', 3, true);
 insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(73, 'Yes');

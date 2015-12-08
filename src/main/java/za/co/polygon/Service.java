@@ -1,6 +1,5 @@
 package za.co.polygon;
 
-import java.io.File;
 import static za.co.polygon.mapper.Mapper.fromBankAccountCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClaimRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClientCommandModel;
@@ -80,6 +79,7 @@ import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
+import static za.co.polygon.mapper.Mapper.toClaimsAttachementsQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
@@ -307,14 +307,6 @@ public class Service {
         Quotation quotation = quotationRepository.findByQuotationRequest(quotationRequest);
 
         return documentService.generateQuotationPDF(quotation);
-
-    }
-
-    @RequestMapping(value = "api/claim/{claimNumber}", method = RequestMethod.GET, produces = "application/*")
-    public byte[] viewclaimPDF(@PathVariable("claimNumber") String claimNumber) throws JRException, IOException {
-        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
-        log.info("byte " + claimRequest.getComfirmationAmount().toString());
-        return claimRequest.getInvestigationReport();
 
     }
 
@@ -575,13 +567,28 @@ public class Service {
         return claimRequestQueryModels;
     }
 
-    @RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = "*/*")
+    @RequestMapping(value = "api/claim-requests/{claimNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ClaimRequestQueryModel getClaimRequest(@PathVariable("claimNumber") String claimNumber) {
         log.info("find claim");
         List<ClaimQuestionnaire> claimQuestionnaires = claimQuestionnaireRepository.findAll();
         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
         log.info("found claim by claim number");
         return toClaimRequestQueryModel(claimRequest, claimQuestionnaires);
+    }
+    
+   
+    @RequestMapping(value = "api/claim/{claimNumber}/attachments", method = RequestMethod.GET, produces = {"application/*","image/*"})
+    public List<byte[]> getAttachments(@PathVariable("claimNumber") String claimNumber) throws JRException, IOException {
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        return toClaimsAttachementsQueryModel(claimRequest);
+
+    }
+    @RequestMapping(value = "api/claim/{claimNumber}/photo4", method = RequestMethod.GET, produces = "image/*")
+    public byte[] getPhoto4(@PathVariable("claimNumber") String claimNumber) throws JRException, IOException {
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+    
+        return claimRequest.getPhoto4();
+
     }
 
     @Transactional
@@ -590,49 +597,15 @@ public class Service {
             @RequestPart(value = "proofOfPickup", required = false) MultipartFile proofOfPickup, @RequestPart(value = "transTrackDocument", required = false) MultipartFile transTrackDocument, @RequestPart(value = "quote", required = false) MultipartFile quote,
             @RequestPart(value = "report", required = false) MultipartFile report, @RequestPart(value = "affidavit", required = false) MultipartFile affidavit,
             @RequestPart(value = "photo1", required = false) MultipartFile photo1, @RequestPart(value = "photo2", required = false) MultipartFile photo2,
-            @RequestPart(value = "photo3", required = false) MultipartFile photo3, @RequestPart(value = "photo4", required = false) MultipartFile photo4, @RequestPart(value = "amountBanked", required = false) MultipartFile amountBanked) throws IOException {
+            @RequestPart(value = "photo3", required = false) MultipartFile photo3, @RequestPart(value = "photo4", required = false) MultipartFile photo4,
+            @RequestPart(value = "amountBanked", required = false) MultipartFile amountBanked, @RequestPart(value = "proofOfPayment", required = false) MultipartFile proofOfPayment) throws IOException {
 
         Policy policy = policyRepository.findByReference(claimRequestCommandModel.getReference());
 
         ClaimType claimType = claimTypeRepository.findOne(claimRequestCommandModel.getClaimTypeId());
         List<ClaimQuestionnaire> claimQuestionnaires = claimQuestionnaireRepository.findAll();
-
-        ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType, claimQuestionnaires, claimRequestRepository.findAll().size());
-
-        log.info("file type" + affidavit.getContentType());
-        if (affidavit != null) {
-            claimRequest.setAffidavit(affidavit.getBytes());
-        }
-        if (report != null) {
-            claimRequest.setReport(report.getBytes());
-        }
-        if (proofOfPickup != null) {
-            claimRequest.setProofOfPickup(proofOfPickup.getBytes());
-        }
-        if (transTrackDocument != null) {
-            claimRequest.setTransTrackDocument(transTrackDocument.getBytes());
-        }
-        if (amountBanked != null) {
-            claimRequest.setAmountBanked(amountBanked.getBytes());
-        }
-        if (comfirmationAmount != null) {
-            claimRequest.setComfirmationAmount(comfirmationAmount.getBytes());
-        }
-        if (investigationReport != null) {
-            claimRequest.setInvestigationReport(investigationReport.getBytes());
-        }
-        if (photo1 != null) {
-            claimRequest.setPhoto1(photo1.getBytes());
-        }
-        if (photo2 != null) {
-            claimRequest.setPhoto2(photo2.getBytes());
-        }
-        if (photo3 != null) {
-            claimRequest.setPhoto3(photo3.getBytes());
-        }
-        if (photo4 != null) {
-            claimRequest.setPhoto4(photo4.getBytes());
-        }
+        int size = claimRequestRepository.findAll().size();
+        ClaimRequest claimRequest = toClaimRequest(claimRequestCommandModel, policy, claimType, investigationReport, comfirmationAmount, proofOfPickup, transTrackDocument, quote, report, affidavit, photo1, photo2, photo3, photo4, amountBanked, proofOfPayment, claimQuestionnaires, size);
 
         claimRequest = claimRequestRepository.save(claimRequest);
 

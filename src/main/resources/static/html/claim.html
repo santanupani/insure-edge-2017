@@ -98,90 +98,160 @@
 
                     </div>
 
-                    <div>
-                        <div>
-                            <label>Upload Investigation Report </label> 
+                        <div ng-show="claimRequest.claimTypeId == 1" > 
+                            <div>
+                                <label>Please upload Investigation Report </label> 
+                                <input class="btn btn-primary pull-right" type="file"  name="investigationReport" file-model="investigationReport" required/>
 
-                            <input class="btn btn-primary pull-right" type="file" name="investigationReport" file-model="investigationReport"/>
-                        </div>
-                        <br>
-                        <div> 
-                            <label>Upload Comfirmation Amount </label> 
+                            </div>
+                            <br>
+                            <div> 
+                                <label>Please upload Confirmation Of Amount </label>                           
+                                <input class="btn btn-primary pull-right" type="file" name="comfirmationAmount" file-model="comfirmationAmount" required/>
 
-                            <input class="btn btn-primary pull-right" type="file" name="comfirmationAmount" file-model="comfirmationAmount"/>
-                        </div>
-                        <br>
-                        <div>
-                            <label>Upload Proof of Pick Up </label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="proofOfPickup" file-model="proofOfPickup"/>
-                        </div>
-                        <br>
-                        <div>
-                            <label>Upload Affidavit </label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="affidavit" file-model="affidavit"/>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Affidavit </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="affidavit" file-model="affidavit" required/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Upload Quote</label> 
+                                <input class="btn btn-primary pull-right" type="file" name="quote" file-model="quote" required/>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Armed Response / Alarm Report </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="report" file-model="report" required/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Upload Photo 1 </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="photo1" file-model="photo1" required/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Upload Photo 2 </label>
+                                <input class="btn btn-primary pull-right" type="file" name="photo2" file-model="photo2"/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Upload Photo 3 </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="photo3" file-model="photo3"/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Upload Photo 4 </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="photo4" file-model="photo4"/>
+                                <br>
+                            </div>
                             <br>
                         </div>
-                        
-                        <div ng-if="claimRequest.claimTypeId == 1">
-                            <label>Upload Amount Banked</label> 
+                        <div ng-show="claimRequest.claimTypeId == 2">
+                            <div>
+                                <label>Please upload Investigation Report </label> 
+                                <input class="btn btn-primary pull-right" type="file"  name="investigationReport" file-model="investigationReport" required/>
 
-                            <input class="btn btn-primary pull-right" type="file" name="amountBanked" file-model="amountBanked"/>
-                            
-                        </div>
-                       <br>
-                        <div ng-if="claimRequest.claimTypeId != 2">
-                            <label>Upload Trans Track Document</label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="transTrackDocument" file-model="transTrackDocument"/>
-                        </div>
-                        <br>
-                        <div ng-if="claimRequest.claimTypeId == 1">
-                            <label>Upload Quote</label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="quote" file-model="quote"/>
+                            </div>
                             <br>
-                        </div>
+                            <div> 
+                                <label>Please upload Confirmation Of Amount </label>                           
+                                <input class="btn btn-primary pull-right" type="file" name="comfirmationAmount" file-model="comfirmationAmount" required/>
 
-                        <div ng-if="claimRequest.claimTypeId == 4">
-                            <label>Please upload Actual amont banked/counted: VMS or Teller Report </label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="amountBanked" file-model="amountBanked"/>
+                            </div>
                             <br>
-                        </div>
-
-                        <div ng-if="claimRequest.claimTypeId == 1">
-                            <label>Upload 'Please upload Armed Response / Alarm Report' </label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="report" file-model="report"/>
+                            <div>
+                                <label>Please upload Affidavit </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="affidavit" file-model="affidavit" required/>
+                                <br>
+                            </div>
                             <br>
+                            <div>
+                                <label>Please upload Proof of Pickup </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="proofOfPickup" file-model="proofOfPickup" required/>
+
+                            </div>
+                            <br>
+
                         </div>
+                        <div ng-show="claimRequest.claimTypeId == 3">
+                            <div>
+                                <label>Please upload Investigation Report </label> 
+                                <input class="btn btn-primary pull-right" type="file"  name="investigationReport" file-model="investigationReport" required/>
 
-                        <div ng-if="claimRequest.claimTypeId == 1">
-                            <label>Upload Photo 1 </label> 
+                            </div>
+                            <br>
+                            <div> 
+                                <label>Please upload Confirmation Of Amount </label>                           
+                                <input class="btn btn-primary pull-right" type="file" name="comfirmationAmount" file-model="comfirmationAmount" required/>
 
-                            <input class="btn btn-primary pull-right" type="file" name="photo1" file-model="photo1"/>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Affidavit </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="affidavit" file-model="affidavit" required/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Proof of Pickup </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="proofOfPickup" file-model="proofOfPickup" required/>
+
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Trans track document (if possible) </label>
+                                <input class="btn btn-primary pull-right" type="file" name="transTrackDocument" file-model="transTrackDocument" required/>
+                                <br>
+                            </div>
+                            <br>
+
                         </div>
+                        <div ng-show="claimRequest.claimTypeId == 4">
+                            <div>
+                                <label>Please upload Investigation Report </label> 
+                                <input class="btn btn-primary pull-right" type="file"  name="investigationReport" file-model="investigationReport" required/>
 
-                        <div ng-if="claimRequest.claimTypeId == 1">
-                            <label>Upload Photo 2 </label> 
+                            </div>
+                            <br>
+                            <div> 
+                                <label>Please upload Confirmation Of Amount </label>                           
+                                <input class="btn btn-primary pull-right" type="file" name="comfirmationAmount" file-model="comfirmationAmount" required/>
 
-                            <input class="btn btn-primary pull-right" type="file" name="photo2" file-model="photo2"/>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Affidavit </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="affidavit" file-model="affidavit" required/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Proof of Pickup </label> 
+                                <input class="btn btn-primary pull-right" type="file" name="proofOfPickup" file-model="proofOfPickup" required/>
+
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Trans track document (if possible) </label>
+                                <input class="btn btn-primary pull-right" type="file" name="transTrackDocument" file-model="transTrackDocument" required/>
+                                <br>
+                            </div>
+                            <br>
+                            <div>
+                                <label>Please upload Actual amont banked/counted: VMS or Teller Report </label>
+                                <input class="btn btn-primary pull-right" type="file" name="amountBanked" file-model="amountBanked" required/>
+                                <br>
+                            </div>
+
                         </div>
-
-                        <div ng-if="claimRequest.claimTypeId == 1">
-                            <label>Upload Photo 3 </label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="photo3" file-model="photo3"/>
-                        </div>
-
-                        <div ng-if="claimRequest.claimTypeId == 1" >
-                            <label>Upload Photo 4 </label> 
-
-                            <input class="btn btn-primary pull-right" type="file" name="photo4" file-model="photo4"/>
-                        </div>
-                    </div>
+                  
 
                     <div class="panel-footer text-right">
 
