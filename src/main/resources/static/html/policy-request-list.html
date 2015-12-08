@@ -23,8 +23,8 @@
                         <td>{{$index + 1}}</td>
                         <td id="q_{{index}}">{{policyRequests.quotation.quotationRequest.companyName}}</td>
                         <td id="q_{{index}}">{{policyRequests.quotation.quotationRequest.applicantName}}</td>
-                        <td id="q_{{index}}"><a ng-href="#/policy/{{policyRequests.quotation.quotationRequest.reference}}"
-                                                ng-click="getPolicy(policyRequests.quotation.quotationRequest.reference)">{{policyRequests.quotation.quotationRequest.reference}}</a></td>
+                        <td id="q_{{index}}"><a ng-href="#/policy-requests/{{policyRequests.quotation.quotationRequest.reference}}"
+                                                ng-click="getPolicyRequest(policyRequests.quotation.quotationRequest.reference)">{{policyRequests.quotation.quotationRequest.reference}}</a></td>
                     </tr>
                 </tbody>
             </table>

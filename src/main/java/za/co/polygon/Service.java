@@ -36,6 +36,7 @@ import static za.co.polygon.mapper.Mapper.toUserQueryModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -300,6 +301,14 @@ public class Service {
         return documentService.policyScheduleReportPDF(policy);
 
     }
+    
+    @RequestMapping(value = "api/policy-ref", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		public String getPolicyCounts() {
+			log.info("Find all policy for reference");
+			int lastPolicyNumber = policyRepository.findAll().size();
+			LocalDateTime now = LocalDateTime.now();;
+			return (now.getYear() + "-" + now.getMonthValue() + "" + String.format("%02d", lastPolicyNumber)).toString();
+		}
 
     @RequestMapping(value = "api/quotation-request-pdf/{reference}", method = RequestMethod.GET, produces = "application/pdf")
     public byte[] viewQuotationPDF(@PathVariable("reference") String reference) throws JRException, IOException {

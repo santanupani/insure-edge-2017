@@ -42,13 +42,7 @@ public class AttachmentService {
         return claimRequest.getProofOfPickup();
 
     }
-    @RequestMapping(value = "api/claim/{claimNumber}/proofOfPayment", method = RequestMethod.GET, produces = "application/*")
-    public byte[] getProofOfPayment(@PathVariable("claimNumber") String claimNumber) throws JRException, IOException {
-        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
-    
-        return claimRequest.getProofOfPayment();
 
-    }
     @RequestMapping(value = "api/claim/{claimNumber}/comfirmationAmount", method = RequestMethod.GET, produces = "application/*")
     public byte[] getComfirmationAmount(@PathVariable("claimNumber") String claimNumber) throws JRException, IOException {
         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);

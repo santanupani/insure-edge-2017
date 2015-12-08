@@ -215,32 +215,7 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
             $rootScope.error = error;
         });
     };
-    $scope.getProofOfPaymentC = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
-        $http({
-            url: '/api/claim/' + claimNumber + '/proofOfPayment',
-            responseType: 'arraybuffer',
-            headers: {'Accept': '*/*'},
-            method: 'get'
-        }).success(function (data, status) {
-            console.log(data);
-            if (status == 200) {
-                console.log('Retrieving proofOfPaymentC');
-                var file = new Blob([data], {type: $rootScope.claimRequest.proofOfPaymentC.toString()});
-                var fileURL = URL.createObjectURL(file);
-                console.log(file);
-                saveAs(file, claimNumber+" - proofOfPayment");
-                $scope.proofOfPayment = $sce.trustAsResourceUrl(fileURL);
-         
-            } else {
-                console.log('status:' + status);
-                $scope.error = "error status code : " + status;
-            }
-        }).error(function (error) {
-            console.log(error);
-            $rootScope.error = error;
-        });
-    };
+
     $scope.getAffidavit = function (claimNumber) {
         console.log('ClaimNumber: ' + claimNumber);
         $http({
