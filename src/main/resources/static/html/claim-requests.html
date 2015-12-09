@@ -138,7 +138,7 @@
                                                             <h4 class="panel-title">
 
                                                                 <a data-toggle="collapse" data-parent="#accordion"
-                                                                   href="/#claimsAttachments">Claims documents for {{claimTypes.name}}</a>
+                                                                   href="/#claimsAttachments">Claims documents for {{claimTypes.claimType}}</a>
 
                                                             </h4>
 
@@ -160,74 +160,74 @@
                                                                         <tbody>
                                                                             <tr ng-if="claimRequest.investigationReportC != null">
                                                                                 <td>Investigation Report</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(investigationReport)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getInvestigationReport(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(investigationReportURL, investigationReportName)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadInvestigationReport()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.comfirmationAmountC != null">
                                                                                 <td>Confirmation Amount</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(comfirmationAmount)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getComfirmationAmount(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(comfirmationAmountURL,comfirmationAmountName)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadComfirmationAmount()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.proofOfPickupC != null">
                                                                                 <td>Proof Of Pick Up</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(proofOfPickupC)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getProofOfPickup(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(proofOfPickupURL,proofOfPickupName)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadProofOfPickup()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                            <tr ng-if="claimRequest.affidavitC != null">
                                                                                 <td>Affidavit</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(affidavit)" ><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getAffidavit(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(affidavitURL,affidavitName)" ><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadAffidavit()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.amountBankedC != null">
                                                                                 <td>Amount Banked</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(amountBanked)" ><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getAmountBanked(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(amountBankedURL,amountBankedName)" ><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadAmountBanked()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.transTrackDocumentC != null">
                                                                                 <td>Trans Track Document</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(transTrackDocument)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getTransTrackDocument(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(transTrackDocumentURL,transTrackDocumentName)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadTransTrackDocument()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.quoteC != null">
                                                                                 <td>Quote</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(quote)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getQuote(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(quoteURL,quoteName)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadQuote()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.reportC != null">
                                                                                 <td>Report</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(report)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getReport(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(reportURL,reportName)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadReport()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.photo1C != null">
                                                                                 <td>Photo 1</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo1)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getPhoto1(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo1URL,photo1Name)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadPhoto1()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                             <tr ng-if="claimRequest.photo1C != null">
                                                                                 <td>Photo 2</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo2)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getPhoto2(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo2URL,photo2Name)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadPhoto2()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
-                                                                            <tr ng-if="claimRequest.photo1C != null">
+                                                                            <tr ng-if="claimRequest.photo2C != null">
                                                                                 <td>Photo 3</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo3)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getPhoto3(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo3URL,photo3Name)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadPhoto3()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
-                                                                            <tr ng-if="claimRequest.photo1C != null">
+                                                                            <tr ng-if="claimRequest.photo2C != null">
                                                                                 <td>Photo4</td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo4)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
-                                                                                <td><a role="button" class="btn btn-default" ng-click="getPhoto4(claimRequest.claimNumber)">
+                                                                                <td><a role="button" class="btn btn-default" ng-click="toggleModal(photo4URL,photo4Name)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
+                                                                                <td><a role="button" class="btn btn-default" ng-click="downloadPhoto4()">
                                                                                         <span class="glyphicon glyphicon-download-alt"></span> download </a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -277,11 +277,13 @@
 
 
                                         </div>
-                                        <modal title="Comfirmation Amount" visible="showModal">
-
+                                        <modal visible="showModal">
+                                            <div class="modal-header">
+                                                <p><b>{{documentName}}</b></p>
+                                            </div>
                                             <div class="modal-body">
                                                 <div class="modal-content">
-                                                    <object data="{{affidavit}}"
+                                                    <object data="{{attachment}}"
                                                             style="width: 100%; height: 700px" ></object>
                                                 </div>
                                             </div>

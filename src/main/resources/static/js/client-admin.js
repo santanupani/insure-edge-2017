@@ -1,4 +1,4 @@
-var clientAdmin = angular.module('clientAdmin', ['ngRoute']);
+var clientAdmin = angular.module('clientAdmin', ['ngRoute','angularjs-datetime-picker']);
 
 clientAdmin.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider

@@ -81,7 +81,7 @@
 
                             <div  ng-if="claimQuestionnaire.claimAnswerType == 'date'" class="form-group">
                                 <label for="q_{{claimQuestionnaire.id}}">{{claimQuestionnaire.question}}</label>
-                                <input type="date" class="form-control" 
+                                <input datetime-picker hour="23" minute='59' class="form-control" 
                                        id="q_{{claimQuestionnaire.id}}"
                                        ng-model="claimQuestionnaire.answer" ng-required="claimQuestionnaire.isRequired" />
                             </div>
