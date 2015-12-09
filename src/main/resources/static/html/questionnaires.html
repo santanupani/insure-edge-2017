@@ -503,7 +503,7 @@
 								class="form-group">
 								<label for="q_{{questionnaire.id}}">{{questionnaire.question}}</label>
 								<input type="text" class="form-control" placeholder="dd/MM/yyyy"
-									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer"
+									id="q_{{questionnaire.id}}" ng-model="questionnaire.answer" pattern="\d{1,2}/\d{1,2}/\d{4}"
 									ng-required="questionnaire.isRequired" required />
 							</div>
 

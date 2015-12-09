@@ -148,136 +148,136 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','22', 'When last valued ?', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','23', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
 
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','24', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','25', 'Please upload Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','26', 'Please upload Quote', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','27', 'Please upload Photos', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','28', 'Please upload Armed Response / Alarm Report', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','29', 'Please upload Affidavit', 8, false);
--- 
--- 
-
-
-
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','24', 'Event', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','25', 'Discovery', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','26', 'Place where Loss/Damage occurred', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','27', 'Did the incident happen on a premises or in Transit', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(27, 'Yes');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(27, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','28', 'If on prenises, was it occupied at the time of the incident', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(28, 'Yes');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(28, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','29', 'Type of a loss', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(29, 'Theft');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(29, 'Robbery');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(29, 'Accidental');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(29, 'Other');
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','30', 'Describe fully how the loss or damage occured stating how (if appicaple) entry was gained to premises?', 5, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','31', 'If Loss/Damage caused by another party give a name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','32', 'If Loss/Damage caused by another party give a contact details?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','33', 'If Loss/Damage caused by another party give a insurers name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','34', 'Security Company name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','35', 'Date Reported :', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','36', 'Security co case number', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','37', 'Investigation officer name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','38', 'Investigation officer contact details?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','39', 'Police Station name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','40', 'Place : ', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','41', 'Date Reported ?', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','42', 'Case number ?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','43', 'Valuables?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','44', 'Cash?', 2, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','45', 'When last valued ?', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','46', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
-
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','53', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','54', 'Please upload Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','55', 'Please upload Proof of pickup', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','56', 'Please upload Affidavit', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','24', 'Please upload Investigation Report ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','25', 'Please upload Confirmation Of Amount ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','26', 'Please upload Quote', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','27', 'Please upload Photos', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','28', 'Please upload Armed Response / Alarm Report', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','29', 'Please upload Affidavit', 8, false);
 
 
 
 
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','47', 'Event', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','48', 'Discovery', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','49', 'Place where Loss/Damage occurred', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','50', 'Did the incident happen on a premises or in Transit', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(50, 'Yes');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(50, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','51', 'If on prenises, was it occupied at the time of the incident', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(51, 'Yes');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(51, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','52', 'Type of a loss', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(52, 'Theft');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(52, 'Robbery');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(52, 'Accidental');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(52, 'Other');
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','53', 'Describe fully how the loss or damage occured stating how (if appicaple) entry was gained to premises?', 5, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','54', 'If Loss/Damage caused by another party give a name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','55', 'If Loss/Damage caused by another party give a contact details?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','56', 'If Loss/Damage caused by another party give a insurers name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','57', 'Security Company name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','58', 'Date Reported :', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','59', 'Security co case number', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','60', 'Investigation officer name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','61', 'Investigation officer contact details?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','62', 'Police Station name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','63', 'Place : ', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','64', 'Date Reported ?', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','65', 'Case number ?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','66', 'Valuables?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','67', 'Cash?', 2, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','68', 'When last valued ?', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','69', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
 
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','80', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','81', 'Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','82', 'Proof Of Pick up', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','83', 'Trans track Report', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','84', 'Affidavit', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','30', 'Event', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','32', 'Discovery', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','32', 'Place where Loss/Damage occurred', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','33', 'Did the incident happen on a premises or in Transit', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(33, 'Yes');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(33, 'No');
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','34', 'If on prenises, was it occupied at the time of the incident', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(34, 'Yes');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(34, 'No');
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','35', 'Type of a loss', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(35, 'Theft');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(35, 'Robbery');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(35, 'Accidental');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(35, 'Other');
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','36', 'Describe fully how the loss or damage occured stating how (if appicaple) entry was gained to premises?', 5, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','37', 'If Loss/Damage caused by another party give a name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','38', 'If Loss/Damage caused by another party give a contact details?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','39', 'If Loss/Damage caused by another party give a insurers name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','40', 'Security Company name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','41', 'Date Reported :', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','42', 'Security co case number', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','43', 'Investigation officer name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','44', 'Investigation officer contact details?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','45', 'Police Station name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','46', 'Place : ', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','47', 'Date Reported ?', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','48', 'Case number ?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','49', 'Valuables?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','50', 'Cash?', 2, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','51', 'When last valued ?', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','52', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
 
-
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','53', 'Please upload Investigation Report ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','54', 'Please upload Confirmation Of Amount ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','55', 'Please upload Proof of pickup', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','56', 'Please upload Affidavit', 8, false);
 
 
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','70', 'Event', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','71', 'Discovery', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','72', 'Place where Loss/Damage occurred', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','73', 'Did the incident happen on a premises or in Transit', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(73, 'Yes');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(73, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','74', 'If on prenises, was it occupied at the time of the incident', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(74, 'Yes');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(74, 'No');
-insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','75', 'Type of a loss', 3, true);
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(75, 'Theft');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(75, 'Robbery');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(75, 'Accidental');
-insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(75, 'Other');
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','76', 'Describe fully how the loss or damage occured stating how (if appicaple) entry was gained to premises?', 5, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','77', 'If Loss/Damage caused by another party give a name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','78', 'If Loss/Damage caused by another party give a contact details?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','79', 'If Loss/Damage caused by another party give a insurers name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','80', 'Security Company name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','81', 'Date Reported :', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','82', 'Security co case number', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','83', 'Investigation officer name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','84', 'Investigation officer contact details?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','85', 'Police Station name?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','86', 'Place : ', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','87', 'Date Reported ?', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','88', 'Case number ?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','89', 'Valuables?', 1, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','90', 'Cash?', 2, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','91', 'When last valued ?', 6, true);
-insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','92', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
 
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','108', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','109', 'Please upload Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','110', 'Please upload Proof of Pickup', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','111', 'Please upload Actual amont banked/counted: VMS or Teller Report', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','112', 'Please upload Trans track document (if possible) ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','113', 'Please upload Affidavit', 8, false);
+
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','57', 'Event', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','58', 'Discovery', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','59', 'Place where Loss/Damage occurred', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','60', 'Did the incident happen on a premises or in Transit', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(60, 'Yes');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(60, 'No');
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','61', 'If on prenises, was it occupied at the time of the incident', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(61, 'Yes');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(61, 'No');
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','62', 'Type of a loss', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(62, 'Theft');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(62, 'Robbery');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(62, 'Accidental');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(62, 'Other');
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','63', 'Describe fully how the loss or damage occured stating how (if appicaple) entry was gained to premises?', 5, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','64', 'If Loss/Damage caused by another party give a name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','65', 'If Loss/Damage caused by another party give a contact details?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','66', 'If Loss/Damage caused by another party give a insurers name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','67', 'Security Company name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','68', 'Date Reported :', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','69', 'Security co case number', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','70', 'Investigation officer name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','71', 'Investigation officer contact details?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','72', 'Police Station name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','73', 'Place : ', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','74', 'Date Reported ?', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','75', 'Case number ?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','76', 'Valuables?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','77', 'Cash?', 2, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','78', 'When last valued ?', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','79', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
+
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','80', 'Please upload Investigation Report ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','81', 'Confirmation Of Amount ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','82', 'Proof Of Pick up', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','83', 'Trans track Report', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','84', 'Affidavit', 8, false);
+
+
+
+
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','85', 'Event', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','86', 'Discovery', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','87', 'Place where Loss/Damage occurred', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','88', 'Did the incident happen on a premises or in Transit', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(88, 'Yes');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(88, 'No');
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','89', 'If on prenises, was it occupied at the time of the incident', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(89, 'Yes');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(89, 'No');
+insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','90', 'Type of a loss', 3, true);
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(90, 'Theft');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(90, 'Robbery');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(90, 'Accidental');
+insert into claim_answer_values(claim_questionnaire_id, claim_answer_value) values(90, 'Other');
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','91', 'Describe fully how the loss or damage occured stating how (if appicaple) entry was gained to premises?', 5, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','92', 'If Loss/Damage caused by another party give a name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','93', 'If Loss/Damage caused by another party give a contact details?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','94', 'If Loss/Damage caused by another party give a insurers name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','95', 'Security Company name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','96', 'Date Reported :', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','97', 'Security co case number', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','98', 'Investigation officer name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','99', 'Investigation officer contact details?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','100', 'Police Station name?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','101', 'Place : ', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','102', 'Date Reported ?', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','103', 'Case number ?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','104', 'Valuables?', 1, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','105', 'Cash?', 2, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','106', 'When last valued ?', 6, true);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','107', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
+
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','108', 'Please upload Investigation Report ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','109', 'Please upload Confirmation Of Amount ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','110', 'Please upload Proof of Pickup', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','111', 'Please upload Actual amont banked/counted: VMS or Teller Report', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','112', 'Please upload Trans track document (if possible) ', 8, false);
+insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','113', 'Please upload Affidavit', 8, false);
 
 
 insert into request_types (request_type) values('CANCELLATION');
