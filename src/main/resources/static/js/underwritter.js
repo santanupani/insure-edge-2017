@@ -342,7 +342,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 	$scope.init = function () {
 
 		$scope.getClient();
-//		$scope.btnValue = (angular.equals($scope.policy.policyReference, '[YYYY-MM00]')) ? 'Update' : 'Create Policy';
+		$scope.btnValue = (angular.equals($scope.policy.policyReference, '[YYYY-MM00]')) ? 'Update' : 'Create Policy';
 		
 		if ($rootScope.policyRequest == undefined) {
 			console.log('Working on existing policy');
