@@ -83,6 +83,15 @@ public class SecurityService {
                 headers.add("Pragma", "no-cache");
                 headers.add("Expires", "0");
             }
+            else if (user.getRole().equals("ClAIMADMIN")) {
+
+                headers.add("Location", "/polygon/claim-admin.html");
+                headers.add("Set-Cookie", "token=" + new String(Base64.encode(token.getBytes())));
+                headers.add("Set-Cookie", "state=; Max-Age=0");
+                headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+                headers.add("Pragma", "no-cache");
+                headers.add("Expires", "0");
+            }
             return new ResponseEntity<String>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
