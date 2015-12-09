@@ -31,7 +31,6 @@ clientAdmin.directive('fileModel', ['$parse', function ($parse) {
                 element.bind('change', function () {
                     scope.$apply(function () {
                         modelSetter(scope, element[0].files[0]);
-
                     });
                 });
             }
@@ -46,6 +45,8 @@ clientAdmin.controller('genericPolicyRequestsCtrl', function ($scope, $routePara
         $scope.policyRequestType.policyNo = $routeParams.reference;
 
     };
+
+
 
     $scope.submitGenericRequest = function (form) {
 
@@ -275,6 +276,8 @@ clientAdmin.controller('uploadCtrl', function ($scope, $routeParams, $http, $roo
 
 
     $scope.upload = function (form) {
+
+
         console.log("1 " + $scope.investigationReport);
         console.log("2 " + $scope.comfirmationAmount);
         console.log("3 " + $scope.proofOfPickup);
@@ -442,6 +445,11 @@ clientAdmin.controller('claimCtrl', function ($scope, $rootScope, $http, $routeP
             console.log("3 " + $scope.proofOfPickup);
             console.log("4 " + $scope.caseNumber);
             console.log("5 " + $scope.amountBanked);
+            console.log("6 " + $scope.transTrackDocument);
+            console.log("7 " + $scope.affidavit);
+            console.log("8 " + $scope.quote);
+            console.log("9 " + $scope.photo1);
+            console.log("10 " + $scope.report);
             $scope.claimRequest.reference = $routeParams.reference;
             console.log($routeParams.reference);
 
@@ -458,77 +466,20 @@ clientAdmin.controller('claimCtrl', function ($scope, $rootScope, $http, $routeP
                         type: "application/json"
                     }));
 
-                    if(data.investigationReport != undefined){
-                       formData.append("investigationReport", data.investigationReport); 
-                    }else{
-                        formData.append("investigationReport", null);
-                    }
-                    
-                    if(data.comfirmationAmount != undefined){
-                       formData.append("comfirmationAmount", data.comfirmationAmount); 
-                    }else{
-                         formData.append("comfirmationAmount", null);
-                    }
-                    
-                    if(data.proofOfPickup != undefined){
-                       formData.append("proofOfPickup", data.proofOfPickup); 
-                    }else{
-                        formData.append("proofOfPickup", null);
-                    }
-                    if(data.caseNumber != undefined){
-                       formData.append("caseNumber", data.caseNumber); 
-                    }else{
-                        formData.append("caseNumber", null);
-                    }
-                    if(data.amountBanked != undefined){
-                       formData.append("amountBanked", data.amountBanked); 
-                    }else{
-                        formData.append("amountBanked", null);
-                    }
-                    if(data.transTrackDocument != undefined){
-                       formData.append("transTrackDocument", data.transTrackDocument); 
-                    }else{
-                        formData.append("transTrackDocument", null);
-                    }
-                    if(data.quote != undefined){
-                       formData.append("quote", data.quote); 
-                    }else{
-                        formData.append("quote", null);
-                    }
-                    if(data.report != undefined){
-                       formData.append("report", data.report); 
-                    }else{
-                        formData.append("report", null);
-                    }
-                    if(data.affidavit != undefined){
-                       formData.append("affidavit", data.affidavit); 
-                    }else{
-                        formData.append("affidavit", null);
-                    }
-                    if(data.photo1 != undefined){
-                       formData.append("photo1", data.photo1); 
-                    }else{
-                        formData.append("photo1", null);
-                    }
-                   
-                    if(data.photo2 != undefined){
-                       formData.append("photo2", data.photo2); 
-                    }else{
-                        formData.append("photo2", null);
-                    }
-                   
-                    if(data.photo3 != undefined){
-                       formData.append("photo3", data.photo3); 
-                    }else{
-                        formData.append("photo3", null);
-                    }
-                   
-                    if(data.photo4 != undefined){
-                       formData.append("photo4", data.photo4); 
-                    }else{
-                        formData.append("photo4", null);
-                    }
-                   
+
+                    formData.append("investigationReport", data.investigationReport);
+                    formData.append("comfirmationAmount", data.comfirmationAmount);
+                    formData.append("proofOfPickup", data.proofOfPickup);
+                    formData.append("caseNumber", data.caseNumber);
+                    formData.append("amountBanked", data.amountBanked);
+                    formData.append("transTrackDocument", data.transTrackDocument);
+                    formData.append("quote", data.quote);
+                    formData.append("report", data.report);
+                    formData.append("affidavit", data.affidavit);
+                    formData.append("photo1", data.photo1);
+                    formData.append("photo2", data.photo2);
+                    formData.append("photo3", data.photo3);
+                    formData.append("photo4", data.photo4);
                     console.log(data);
                     return formData;
                     console.log(data);
@@ -537,6 +488,7 @@ clientAdmin.controller('claimCtrl', function ($scope, $rootScope, $http, $routeP
                     comfirmationAmount: $scope.comfirmationAmount,
                     proofOfPickup: $scope.proofOfPickup,
                     transTrackDocument: $scope.transTrackDocument,
+                    amountBanked: $scope.amountBanked,
                     quote: $scope.quote,
                     report: $scope.report,
                     affidavit: $scope.affidavit,

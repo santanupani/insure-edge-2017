@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -1016,7 +1018,10 @@ public class Mapper {
         return claimQuestionnaireQuerys;
     }
 
-    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType, List<ClaimQuestionnaire> claimQuestions, int count) throws IOException {
+    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType, 
+              MultipartFile investigationReport, MultipartFile comfirmationAmount,MultipartFile proofOfPickup, MultipartFile transTrackDocument,  MultipartFile quote,
+            MultipartFile report, MultipartFile affidavit, MultipartFile photo1,  MultipartFile photo2,MultipartFile photo3,  MultipartFile photo4, MultipartFile amountBanked, 
+            MultipartFile proofOfPayment, List<ClaimQuestionnaire> claimQuestions, int count) throws IOException {
         ClaimRequest claimRequest = new ClaimRequest();
 
         claimRequest.setClaimNumber("CLM-" + String.format("%06d", count));
@@ -1024,6 +1029,52 @@ public class Mapper {
         claimRequest.setCreateDate(new Date());
         claimRequest.setClaimType(claimType);
         claimRequest.setStatus("APPLIED");
+        
+        
+            if (affidavit != null) {
+            claimRequest.setAffidavit(affidavit.getBytes());
+            claimRequest.setAffidavitC(affidavit.getContentType());
+        }
+        if (report != null) {
+            claimRequest.setReport(report.getBytes());
+            claimRequest.setReportC(report.getContentType());
+        }
+        if (proofOfPickup != null) {
+            claimRequest.setProofOfPickup(proofOfPickup.getBytes());
+            claimRequest.setProofOfPickupC(proofOfPickup.getContentType());
+        }
+        if (transTrackDocument != null) {
+            claimRequest.setTransTrackDocument(transTrackDocument.getBytes());
+            claimRequest.setTransTrackDocumentC(transTrackDocument.getContentType());
+        }
+        if (amountBanked != null) {
+            claimRequest.setAmountBanked(amountBanked.getBytes());
+            claimRequest.setAmountBankedC(amountBanked.getContentType());
+        }
+        if (comfirmationAmount != null) {
+            claimRequest.setComfirmationAmount(comfirmationAmount.getBytes());
+            claimRequest.setComfirmationAmountC(comfirmationAmount.getContentType());
+        }
+        if (investigationReport != null) {
+            claimRequest.setInvestigationReport(investigationReport.getBytes());
+            claimRequest.setInvestigationReportC(investigationReport.getContentType());
+        }
+        if (photo1 != null) {
+            claimRequest.setPhoto1(photo1.getBytes());
+            claimRequest.setPhoto1C(photo1.getContentType());
+        }
+        if (photo2 != null) {
+            claimRequest.setPhoto2(photo2.getBytes());
+            claimRequest.setPhoto1C(photo1.getContentType());
+        }
+        if (photo3 != null) {
+            claimRequest.setPhoto3(photo3.getBytes());
+            claimRequest.setPhoto1C(photo1.getContentType());
+        }
+        if (photo4 != null) {
+            claimRequest.setPhoto4(photo4.getBytes());
+            claimRequest.setPhoto1C(photo1.getContentType());
+        }
 
         List<ClaimAnswer> answerList = new ArrayList<ClaimAnswer>();
         for (ClaimQuestionnaires claimquestionnaires : claimRequestCommandModel.getClaimQuestionnaires()) {
@@ -1062,18 +1113,18 @@ public class Mapper {
         claimRequestQueryModel.setCreateDate(new SimpleDateFormat("dd/MM/yyyy").format(claimRequest.getCreateDate()));
         claimRequestQueryModel.setPolicy(toPolicyQueryModel(claimRequest.getPolicy()));
         claimRequestQueryModel.setClaimType(toClaimTypeQueryModel(claimRequest.getClaimType()));
-        claimRequestQueryModel.setAffidavit(claimRequest.getAffidavit());
-        claimRequestQueryModel.setAmountBanked(claimRequest.getAmountBanked());
-        claimRequestQueryModel.setComfirmationAmount(Arrays.toString(claimRequest.getComfirmationAmount()));
-        claimRequestQueryModel.setInvestigationReport(Arrays.toString(claimRequest.getInvestigationReport()));
-        claimRequestQueryModel.setPhoto1(claimRequest.getPhoto1());
-        claimRequestQueryModel.setPhoto2(claimRequest.getPhoto2());
-        claimRequestQueryModel.setPhoto3(claimRequest.getPhoto3());
-        claimRequestQueryModel.setPhoto4(claimRequest.getPhoto4());
-        claimRequestQueryModel.setProofOfPickup(claimRequest.getProofOfPickup());
-        claimRequestQueryModel.setQuote(claimRequest.getQuote());
-        claimRequestQueryModel.setReport(claimRequest.getReport());
-        claimRequestQueryModel.setTransTrackDocument(claimRequest.getTransTrackDocument());
+        claimRequestQueryModel.setAffidavitC(claimRequest.getAffidavitC());
+        claimRequestQueryModel.setAmountBankedC(claimRequest.getAmountBankedC());
+        claimRequestQueryModel.setComfirmationAmountC(claimRequest.getComfirmationAmountC());
+        claimRequestQueryModel.setInvestigationReportC(claimRequest.getInvestigationReportC());
+        claimRequestQueryModel.setPhoto1C(claimRequest.getPhoto1C());
+        claimRequestQueryModel.setPhoto2(claimRequest.getPhoto2C());
+        claimRequestQueryModel.setPhoto3(claimRequest.getPhoto3C());
+        claimRequestQueryModel.setPhoto4(claimRequest.getPhoto4C());
+        claimRequestQueryModel.setProofOfPickupC(claimRequest.getProofOfPickupC());
+        claimRequestQueryModel.setQuoteC(claimRequest.getQuoteC());
+        claimRequestQueryModel.setReportC(claimRequest.getReportC());
+        claimRequestQueryModel.setTransTrackDocumentC(claimRequest.getTransTrackDocumentC());
 
         for (ClaimAnswer claimAnswer : claimRequest.getClaimAnswer()) {
             ClaimRequestQueryModel.ClaimQuestionnaire q = new ClaimRequestQueryModel.ClaimQuestionnaire();
@@ -1094,6 +1145,25 @@ public class Mapper {
             claimRequestList.add(toClaimRequestQueryModel(claimRequest, claimQuestions));
         }
         return claimRequestList;
+    }
+    
+    public static List<byte[]> toClaimsAttachementsQueryModel(ClaimRequest claim){
+        List<byte[]> attachments = new ArrayList<byte[]>();
+        attachments.add(claim.getAffidavit());
+        attachments.add(claim.getAmountBanked());
+        attachments.add(claim.getCaseNumber());
+        attachments.add(claim.getComfirmationAmount());
+        attachments.add(claim.getInvestigationReport());
+        attachments.add(claim.getPhoto1());
+        attachments.add(claim.getPhoto2());
+        attachments.add(claim.getPhoto3());
+        attachments.add(claim.getPhoto4());
+        attachments.add(claim.getProofOfPickup());
+        attachments.add(claim.getQuote());
+        attachments.add(claim.getReport());
+        attachments.add(claim.getTransTrackDocument());
+        
+        return attachments;
     }
 
     /* Generic requests on policy

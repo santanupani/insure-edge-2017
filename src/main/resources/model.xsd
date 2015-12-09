@@ -697,20 +697,21 @@
 			<element name="claimNumber" type="string" />
 			<element name="createDate" type="string" />
 			<element name="status" type="string" />
-			<element name="investigationReport" type="string" />
-			<element name="comfirmationAmount" type="string" />
-			<element name="proofOfPickup" type="hexBinary" />
-			<element name="caseNumber" type="hexBinary" />
-			<element name="amountBanked" type="hexBinary" />
-			<element name="transTrackDocument" type="hexBinary" />
-			<element name="quote" type="hexBinary" />
-			<element name="report" type="hexBinary" />
-			<element name="affidavit" type="hexBinary" />
-			<element name="photo1" type="hexBinary" />
-			<element name="photo2" type="hexBinary" />
-			<element name="photo3" type="hexBinary" />
-			<element name="photo4" type="hexBinary" />
-			<element name="photo5" type="hexBinary" />
+			<element name="investigationReportC" type="string" />
+			<element name="comfirmationAmountC" type="string" />
+			<element name="proofOfPickupC" type="string" />
+			<element name="proofOfPaymentC" type="string" />
+			<element name="caseNumberC" type="string" />
+			<element name="amountBankedC" type="string" />
+			<element name="transTrackDocumentC" type="string" />
+			<element name="quoteC" type="string" />
+			<element name="reportC" type="string" />
+			<element name="affidavitC" type="string" />
+			<element name="photo1C" type="string" />
+			<element name="photo2" type="string" />
+			<element name="photo3" type="string" />
+			<element name="photo4" type="string" />
+			<element name="photo5" type="string" />
 			<element name="policy" minOccurs="0" maxOccurs="1"
 				type="tns:PolicyQueryModel" />
 			<element name="claimType" minOccurs="0" maxOccurs="1"
