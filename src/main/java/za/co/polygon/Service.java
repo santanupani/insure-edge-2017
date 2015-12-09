@@ -649,10 +649,10 @@ public class Service {
     @Transactional
     @RequestMapping(value = "api/generic-policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String createGenericPolicyRequest(@RequestBody PolicyRequestTypeCommandModel policyRequestTypeCommandModel) throws ParseException {
-
+    	int genericPolicyRequests = policyRequestTypeRepository.findAll().size();
         Policy policy = policyRepository.findByReference(policyRequestTypeCommandModel.getPolicyNo());
         RequestType requestType = requestTypeRepository.findOne(policyRequestTypeCommandModel.getRequestTypeId());
-        PolicyRequestType policyRequestType = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policy, requestType);
+        PolicyRequestType policyRequestType = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policy, requestType,genericPolicyRequests);
         PolicyRequestType savePolicyRequestType = policyRequestTypeRepository.save(policyRequestType);
 
         List<RequestAnswer> requestAnswers = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policyRequestType);

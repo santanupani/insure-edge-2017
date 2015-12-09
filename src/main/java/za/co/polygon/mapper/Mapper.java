@@ -1107,7 +1107,6 @@ public class Mapper {
     public static ClaimRequestQueryModel toClaimRequestQueryModel(ClaimRequest claimRequest, List<ClaimQuestionnaire> claimQuestions) {
 
         ClaimRequestQueryModel claimRequestQueryModel = new ClaimRequestQueryModel();
-
         claimRequestQueryModel.setClaimNumber(claimRequest.getClaimNumber());
         claimRequestQueryModel.setStatus(claimRequest.getStatus());
         claimRequestQueryModel.setCreateDate(new SimpleDateFormat("dd/MM/yyyy").format(claimRequest.getCreateDate()));
@@ -1206,10 +1205,23 @@ public class Mapper {
         return requestQuestionnaireQuerys;
     }
 
-    public static PolicyRequestType fromPolicyRequestTypeCommandModel(PolicyRequestTypeCommandModel policyRequestTypeCommandModel, Policy policy, RequestType requestType) throws ParseException {
+    public static PolicyRequestType fromPolicyRequestTypeCommandModel(PolicyRequestTypeCommandModel policyRequestTypeCommandModel, Policy policy, RequestType requestType,int requestCount) throws ParseException {
         PolicyRequestType policyRequestType = new PolicyRequestType();
-
-        policyRequestType.setReference(UUID.randomUUID().toString());
+        switch((int)policyRequestTypeCommandModel.getRequestTypeId()){
+        case 1:
+        	policyRequestType.setReference("CANC-" + String.format("%06d", requestCount));
+        	break;
+        case 2:
+        	policyRequestType.setReference("REINS-" + String.format("%06d", requestCount));
+        	break;
+        case 3:
+        	policyRequestType.setReference("TERMN" + String.format("%06d", requestCount));
+        	break;
+        case 4:
+        	policyRequestType.setReference("ENDR-" + String.format("%06d", requestCount));
+        	break;
+        }
+        
         policyRequestType.setPolicy(policy);
         policyRequestType.setCreatedDate(new Date());
         policyRequestType.setStatus("APPLIED");
