@@ -12,8 +12,6 @@
                 <div class="panel-heading">
                     <h4>
                         <b>Claim Summary for Policy Ref : {{claimRequest.policy.reference}}</b>
-                        <span class="pull-right" style="font: 14px Lucinda red"><b>Logged-In:</b>
-                            Susan</span>
                     </h4>
                 </div>
 
@@ -138,7 +136,7 @@
                                                             <h4 class="panel-title">
 
                                                                 <a data-toggle="collapse" data-parent="#accordion"
-                                                                   href="/#claimsAttachments">Claims documents for {{claimTypes.claimType}}</a>
+                                                                   href="/#claimsAttachments">Claims documents for {{claimRequest.claimType.claimType}}</a>
 
                                                             </h4>
 

@@ -622,7 +622,7 @@ public class Service {
 
         claimRequestQuestionnaireRepository.save(claimRequestQuestionnaires);
 
-        notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department", affidavit.getBytes());
+        notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department");
 
         return claimRequest.getClaimNumber();
     }

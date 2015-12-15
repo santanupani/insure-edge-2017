@@ -131,7 +131,7 @@ public class NotificationService {
 		getMessageRepository().publish(getNotification(), "q.notification");     
 	}
 
-	public void sendNotificationForNewClaimRequest(ClaimRequest claimRequest, String claimsEmail, String claimsName, byte[] affidavit){
+	public void sendNotificationForNewClaimRequest(ClaimRequest claimRequest, String claimsEmail, String claimsName){
 
 		String to = claimsEmail;
 		String subject = "New Claim Request";
@@ -143,7 +143,7 @@ public class NotificationService {
 				port,
 				claimRequest.getClaimNumber());
 
-		setNotification(new Notification(to, subject, message, affidavit, "thabo"));
+		setNotification(new Notification(to, subject, message));
 		getMessageRepository().publish(getNotification(), "q.notification");  
 	}
 	
