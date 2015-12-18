@@ -15,8 +15,6 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.BankAccount;
@@ -1018,9 +1016,9 @@ public class Mapper {
         return claimQuestionnaireQuerys;
     }
 
-    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType, 
-              MultipartFile investigationReport, MultipartFile comfirmationAmount,MultipartFile proofOfPickup, MultipartFile transTrackDocument,  MultipartFile quote,
-            MultipartFile report, MultipartFile affidavit, MultipartFile photo1,  MultipartFile photo2,MultipartFile photo3,  MultipartFile photo4, MultipartFile amountBanked, 
+    public static ClaimRequest toClaimRequest(ClaimRequestCommandModel claimRequestCommandModel, Policy policy, ClaimType claimType,
+            MultipartFile investigationReport, MultipartFile comfirmationAmount, MultipartFile proofOfPickup, MultipartFile transTrackDocument, MultipartFile quote,
+            MultipartFile report, MultipartFile affidavit, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4, MultipartFile amountBanked,
             MultipartFile proofOfPayment, List<ClaimQuestionnaire> claimQuestions, int count) throws IOException {
         ClaimRequest claimRequest = new ClaimRequest();
 
@@ -1028,10 +1026,42 @@ public class Mapper {
         claimRequest.setPolicy(policy);
         claimRequest.setCreateDate(new Date());
         claimRequest.setClaimType(claimType);
-        claimRequest.setStatus("APPLIED");
-        
-        
-            if (affidavit != null) {
+
+        if (claimRequestCommandModel.getClaimTypeId() == 1) {
+            if (investigationReport == null || comfirmationAmount == null || affidavit == null || quote == null || report == null || photo1 == null) {
+                claimRequest.setStatus("Pending Documets");
+            } else {
+                claimRequest.setStatus("APPLIED");
+            }
+
+        }
+
+        if (claimRequestCommandModel.getClaimTypeId() == 2) {
+            if (investigationReport == null || comfirmationAmount == null || affidavit == null || proofOfPickup == null) {
+                claimRequest.setStatus("Pending Documets");
+            } else {
+                claimRequest.setStatus("APPLIED");
+            }
+
+        }
+        if (claimRequestCommandModel.getClaimTypeId() == 3) {
+            if (investigationReport == null || comfirmationAmount == null || affidavit == null || proofOfPickup == null || transTrackDocument == null) {
+                claimRequest.setStatus("Pending Documets");
+            } else {
+                claimRequest.setStatus("APPLIED");
+            }
+
+        }
+        if (claimRequestCommandModel.getClaimTypeId() == 4) {
+            if (investigationReport == null || comfirmationAmount == null || affidavit == null || proofOfPickup == null || transTrackDocument == null || amountBanked == null) {
+                claimRequest.setStatus("Pending Documets");
+            } else {
+                claimRequest.setStatus("APPLIED");
+            }
+
+        }
+
+        if (affidavit != null) {
             claimRequest.setAffidavit(affidavit.getBytes());
             claimRequest.setAffidavitC(affidavit.getContentType());
         }
@@ -1065,15 +1095,15 @@ public class Mapper {
         }
         if (photo2 != null) {
             claimRequest.setPhoto2(photo2.getBytes());
-            claimRequest.setPhoto1C(photo1.getContentType());
+            claimRequest.setPhoto2C(photo2.getContentType());
         }
         if (photo3 != null) {
             claimRequest.setPhoto3(photo3.getBytes());
-            claimRequest.setPhoto1C(photo1.getContentType());
+            claimRequest.setPhoto3C(photo3.getContentType());
         }
         if (photo4 != null) {
             claimRequest.setPhoto4(photo4.getBytes());
-            claimRequest.setPhoto1C(photo1.getContentType());
+            claimRequest.setPhoto4C(photo4.getContentType());
         }
 
         List<ClaimAnswer> answerList = new ArrayList<ClaimAnswer>();
@@ -1145,8 +1175,8 @@ public class Mapper {
         }
         return claimRequestList;
     }
-    
-    public static List<byte[]> toClaimsAttachementsQueryModel(ClaimRequest claim){
+
+    public static List<byte[]> toClaimsAttachementsQueryModel(ClaimRequest claim) {
         List<byte[]> attachments = new ArrayList<byte[]>();
         attachments.add(claim.getAffidavit());
         attachments.add(claim.getAmountBanked());
@@ -1161,7 +1191,7 @@ public class Mapper {
         attachments.add(claim.getQuote());
         attachments.add(claim.getReport());
         attachments.add(claim.getTransTrackDocument());
-        
+
         return attachments;
     }
 
@@ -1205,23 +1235,23 @@ public class Mapper {
         return requestQuestionnaireQuerys;
     }
 
-    public static PolicyRequestType fromPolicyRequestTypeCommandModel(PolicyRequestTypeCommandModel policyRequestTypeCommandModel, Policy policy, RequestType requestType,int requestCount) throws ParseException {
+    public static PolicyRequestType fromPolicyRequestTypeCommandModel(PolicyRequestTypeCommandModel policyRequestTypeCommandModel, Policy policy, RequestType requestType, int requestCount) throws ParseException {
         PolicyRequestType policyRequestType = new PolicyRequestType();
-        switch((int)policyRequestTypeCommandModel.getRequestTypeId()){
-        case 1:
-        	policyRequestType.setReference("CANC-" + String.format("%06d", requestCount));
-        	break;
-        case 2:
-        	policyRequestType.setReference("REINS-" + String.format("%06d", requestCount));
-        	break;
-        case 3:
-        	policyRequestType.setReference("TERMN" + String.format("%06d", requestCount));
-        	break;
-        case 4:
-        	policyRequestType.setReference("ENDR-" + String.format("%06d", requestCount));
-        	break;
+        switch ((int) policyRequestTypeCommandModel.getRequestTypeId()) {
+            case 1:
+                policyRequestType.setReference("CANC-" + String.format("%06d", requestCount));
+                break;
+            case 2:
+                policyRequestType.setReference("REINS-" + String.format("%06d", requestCount));
+                break;
+            case 3:
+                policyRequestType.setReference("TERMN" + String.format("%06d", requestCount));
+                break;
+            case 4:
+                policyRequestType.setReference("ENDR-" + String.format("%06d", requestCount));
+                break;
         }
-        
+
         policyRequestType.setPolicy(policy);
         policyRequestType.setCreatedDate(new Date());
         policyRequestType.setStatus("APPLIED");

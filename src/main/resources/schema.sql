@@ -347,7 +347,7 @@ create table claim_requests(
     policy_id integer not null,
     claim_type_id integer not null,
     create_date date not null,
-    status varchar(16) not null,
+    status varchar(32) not null,
     investigation_report longblob,
     confirmation_amount longblob,
     proof_of_pickup longblob,
