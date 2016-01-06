@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +35,9 @@ public class ClaimRequest {
 
     @OneToMany(mappedBy = "claimRequest", fetch = FetchType.EAGER)
     private List<ClaimAnswer> claimAnswers;
+    
+//    @OneToOne(mappedBy = "claimRequest", fetch = FetchType.EAGER)
+//    private ReleaseForm releaseForm;
 
     @Column(name = "claim_number")
     private String claimNumber;

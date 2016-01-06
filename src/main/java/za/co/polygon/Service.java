@@ -80,11 +80,13 @@ import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.ReleaseForm;
 import za.co.polygon.domain.RequestAnswer;
 import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
+import static za.co.polygon.mapper.Mapper.toReleaseFormCommandModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
@@ -103,6 +105,7 @@ import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.ReleaseFormCommandModel;
 import za.co.polygon.model.RequestQuestionnaireQueryModel;
 import za.co.polygon.model.RequestTypeQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
@@ -127,6 +130,7 @@ import za.co.polygon.repository.QuotationOptionRepository;
 import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
+import za.co.polygon.repository.ReleaseFormRepository;
 import za.co.polygon.repository.RequestAnswersRepository;
 import za.co.polygon.repository.RequestTypeRepository;
 import za.co.polygon.repository.SubAgentRepository;
@@ -211,6 +215,9 @@ public class Service {
 
     @Autowired
     private ClaimRequestRepository claimRequestRepository;
+    
+    @Autowired
+    private ReleaseFormRepository releaseFormRepository;
 
     @Autowired
     private ClaimRequestQuestionnaireRepository claimRequestQuestionnaireRepository;
@@ -394,6 +401,17 @@ public class Service {
         quotation = quotationRepository.save(quotation);
         log.info("Quotation Command size: " + quotation.getQuotationOptions().size());
         log.info("Quotation Created Successfully !!!");
+
+    }
+    
+    @Transactional
+    @RequestMapping(value = "api/releaseForm", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createReleaseForm(@RequestBody ReleaseFormCommandModel releaseFormCommandModel){
+         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(releaseFormCommandModel.getClaimNumber());
+        claimRequest.setStatus("ACCEPTED");        
+        ReleaseForm releaseForm = toReleaseFormCommandModel(releaseFormCommandModel, claimRequest);
+        releaseFormRepository.save(releaseForm);
+        log.info("Release Form Created Successfully !!!");
 
     }
 
