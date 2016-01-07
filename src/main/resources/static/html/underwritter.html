@@ -39,7 +39,7 @@
 			</div>
 			<div class="panel-footer text-right">
 				<button type="submit" class="btn btn-danger"
-					ng-click="rejectPolicyRequest(rejectform)">Reject</button>
+					ng-click="rejectPolicyRequest(rejectform)">Decline</button>
 				<button class="btn btn-primary" ng-click="changeMode(undefined)">Cancel</button>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 				ng-if="mode == undefined && policyRequest.status == 'APPLIED'">
 				<p>
 					<a class="btn btn-info" ng-href="#/policies" role="button">Proceed</a>
-					<button class="btn btn-danger" ng-click="changeMode('reject')">Reject</button>
+					<button class="btn btn-danger" ng-click="changeMode('reject')">Decline</button>
 				</p>
 			</div>
 			<div class="panel-body">
