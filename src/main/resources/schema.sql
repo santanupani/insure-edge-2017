@@ -388,6 +388,20 @@ create table claim_answers(
      constraint claim_answer_fk1 foreign key (claim_request_id) references  claim_requests(id)
 );
 
+
+create table release_form(
+    id integer auto_increment not null primary key,
+    claim_request_id integer not null,
+    insured varchar(64) not null,
+    amount_claim double not null,
+    less_excess varchar(64) not null,
+    total_payeble double not null,
+    good_description varchar(64) not null,
+    loss_date varchar(64) not null,
+    loss_description varchar(128) not null,
+    constraint release_form_fk1 foreign key (claim_request_id) references claim_requests(id) 
+);
+
 create table request_types(
     id integer auto_increment not null primary key,
     request_type varchar(32) not null

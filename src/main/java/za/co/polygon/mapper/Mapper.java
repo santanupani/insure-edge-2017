@@ -6,13 +6,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import za.co.polygon.domain.Answer;
@@ -37,6 +34,7 @@ import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.ReleaseForm;
 import za.co.polygon.domain.RequestAnswer;
 import za.co.polygon.domain.RequestAnswerValue;
 import za.co.polygon.domain.RequestQuestionnaire;
@@ -71,6 +69,7 @@ import za.co.polygon.model.QuotationRequestCommandModel.Histories;
 import za.co.polygon.model.QuotationRequestCommandModel.LocationOptions;
 import za.co.polygon.model.QuotationRequestCommandModel.Questionnaires;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.ReleaseFormCommandModel;
 import za.co.polygon.model.RequestQuestionnaireQueryModel;
 import za.co.polygon.model.RequestTypeQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
@@ -1120,6 +1119,22 @@ public class Mapper {
         claimRequest.setClaimAnswer(answerList);
 
         return claimRequest;
+    }
+    
+    public static ReleaseForm toReleaseFormCommandModel(ReleaseFormCommandModel releaseFormCommandModel, ClaimRequest claimRequest){
+          
+          ReleaseForm releaseForm = new ReleaseForm();
+          
+          releaseForm.setClaimRequest(claimRequest);
+          releaseForm.setAmountClaim(releaseFormCommandModel.getAmountClaim());
+          releaseForm.setGoodDescription(releaseFormCommandModel.getGoodDescription());
+          releaseForm.setInsured(releaseFormCommandModel.getInsured());
+          releaseForm.setLessExcess(releaseFormCommandModel.getLessExcess());
+          releaseForm.setLossDate(releaseFormCommandModel.getLossDate());
+          releaseForm.setLossDescription(releaseFormCommandModel.getLossDescription());
+          releaseForm.setTotalPayeble(releaseFormCommandModel.getTotalPayable());
+          
+          return releaseForm;
     }
 
     public static List<ClaimAnswer> fromClaimRequestCommandModel(ClaimRequestCommandModel claimRequestCommandModel, ClaimRequest claimRequest) {

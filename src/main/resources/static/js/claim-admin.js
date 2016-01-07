@@ -125,14 +125,17 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
     $scope.documentName;
     $scope.mode;
     $scope.decline;
+    $scope.release;
     $scope.approve;
     $scope.init = function () {
 
         $scope.decline = {};
         $scope.approve = {};
+           $scope.release = {};
         $scope.claimNumber = $routeParams.claimNumber;
         $scope.showModal = false;
         $scope.getAllClaimRequest();
+        $scope.releaseFormInfo();
 
     };
 
@@ -178,6 +181,51 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
     };
 
 
+    $scope.releaseFormInfo = function () {
+        angular.forEach($scope.questionnairres, function (questionnairre) {
+            if (angular.equals(questionnairre.question, 'Value of Cash Claimed under the policy?')) {
+                console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
+                $scope.amountClaim = questionnairre.answer;
+            } else if (angular.equals(questionnairre.question, 'Event Date and Time')) {
+                console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
+                $scope.lossDate = questionnairre.answer;
+            } 
+        });
+    };
+    
+        $scope.save = function (form) {
+
+        if (form.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            $scope.release.claimNumber = $scope.claimRequest.claimNumber;
+           // $scope.release.policyNumber=$scope.claimRequest.policy.reference;
+            $scope.release.insured=$scope.claimRequest.policy.client.clientName;
+            $scope.release.lossDate= $scope.lossDate;
+            $scope.release.amountClaim= $scope.amountClaim;
+            
+            console.log($scope.release);
+            $http({
+                url: '/api/releaseForm',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: $scope.release
+            }).success(function (data, status) {
+                console.log('get success code :' + status);
+                if (status === 200) {
+                    console.log('All the data are saved  for release form');					
+                    $rootScope.message = "Quotation Request Accepted Successfully";			
+                } else {
+                    console.log('status:' + status);
+                }
+            }).error(function (error) {
+                $rootScope.message = "Oops, we received your request, but there was an error processing it";
+            });
+        }
+    };
+
     $scope.getClaimRequest = function (claimNumber) {
         $http({
             url: '/api/claim-requests/' + claimNumber,
@@ -186,7 +234,9 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
             if (status == 200) {
                 console.log('claim Request retrived sucessfully');
                 $rootScope.claimRequest = data;
+                $scope.questionnairres = $scope.claimRequest.claimQuestionnaire;
                 $scope.getClientClaims($scope.claimRequest.policy.reference);
+                $scope.releaseFormInfo();
 
                 if ($rootScope.claimRequest.investigationReportC != null) {
                     $scope.getInvestigationReport($rootScope.claimRequest.claimNumber);
@@ -276,19 +326,19 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
 
 
     $scope.approveClaim = function (claimNumber) {
-        
-            $http({
+
+        $http({
             url: '/api/claim-requests/' + claimNumber + "/provisionallyApprove",
             method: 'put',
             headers: {
                 'Content-Type': 'application/json'
             }
-           }).success(function (data, status) {
+        }).success(function (data, status) {
             console.log('get success code:' + status);
             if (status == 200) {
                 console.log('Claim provisionally approved Reason:');
-               $rootScope.message = "Claim Request approved Successfully";
-               $location.path("/claim-requests");
+                $rootScope.message = "Claim Request approved Successfully";
+                $location.path("/claim-requests");
             } else {
                 console.log('status:' + status);
             }
@@ -302,9 +352,9 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
     };
 
     $scope.download = function (attachment, claimNumber, documentName) {
-        saveAs(attachment, claimNumber +" - "+ documentName);
+        saveAs(attachment, claimNumber + " - " + documentName);
     };
-  
+
 
     $scope.getInvestigationReport = function (claimNumber) {
         $http({

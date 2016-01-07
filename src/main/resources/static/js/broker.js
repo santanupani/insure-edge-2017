@@ -103,7 +103,6 @@ broker.controller('brokerCtrl', function ($scope, $rootScope, $http, $cookies, $
 
     $scope.init = function () {
         if ($cookies.token == undefined) {
-
             $window.location.href = "/login?state=" + encodeURIComponent($window.location.href);
         } else {
             $scope.validate($cookies.token);
