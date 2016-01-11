@@ -54,15 +54,16 @@
 			<div class="panel-heading text-right"
 				ng-if="mode == undefined && policyRequest.status == 'APPLIED'">
 				<p>
-					<a class="btn btn-info" ng-href="#/policies" role="button">Proceed</a>
-					<button class="btn btn-danger" ng-click="changeMode('reject')">Decline</button>
+					<a class="btn btn-info"
+						ng-href="#/policies/{{policyRequest.quotation.quotationRequest.reference}}"
+						role="button">Proceed</a>
+					<button class="btn btn-danger" ng-click="changeMode('reject')">Reject</button>
 				</p>
 			</div>
 			<div class="panel-body">
 				<div class="panel-body">
 
-					<div
-						ng-repeat="option in policyRequest.quotation.option">
+					<div ng-repeat="option in policyRequest.quotation.option">
 
 						<div class="panel panel-default">
 							<div class="panel-heading">

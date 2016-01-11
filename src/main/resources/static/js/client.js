@@ -208,10 +208,8 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
 
         if ($scope.isHistory) {
             $scope.histories = [];
-            console.log($scope.histories);
         } else {
             $scope.histories[0] = {};
-            console.log($scope.histories);
         }
     };
 

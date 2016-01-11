@@ -15,11 +15,7 @@
 
 				<div class="panel-heading">
 					<h4>
-						<b>Policy Reference No: </b>{{policy.reference}}
-						<div class="pull-right" style="font: 14px arial">
-							<a href="#/clients/{{policy.client.clientId}}">View Client
-								Details</a>
-						</div>
+						<b>New Policy Reference No: </b>{{policy.reference}}
 					</h4>
 				</div>
 
@@ -47,15 +43,15 @@
 													class="form-control" ng-model="policy.policyInceptionDate"
 													readonly />
 											</div>
-											<div class="form-group">
-												<label>Inception Date</label> <input type="text"
-													ng-readonly="isUpdate" class="form-control"
-													ng-model="policy.inceptionDate" />
+											<div class="form-group form-inline">
+												<input type="checkbox" class="form-control"
+													ng-model="policy.collectByDebitOrder" readonly disabled />
+												<label>Collect By Debit Order</label>
 											</div>
-											<div class="form-group">
-												<label>Renewal Date</label> <input type="text" form="form"
-													class="form-control" ng-model="policy.anniversaryDate"
-													readonly />
+											<div class="form-group form-inline">
+												<input type="checkbox" class="form-control" readonly
+													ng-model="policy.excludeSasria" /> <label>Exclude
+													Sasria</label>
 											</div>
 										</div>
 
@@ -90,18 +86,6 @@
 													placeholder="[Add notes for this policy]"
 													ng-readonly="isUpdate" ng-model="policy.notes"></textarea>
 											</div>
-
-											<div class="form-group form-inline">
-												<input type="checkbox" class="form-control"
-													ng-model="policy.collectByDebitOrder" readonly disabled />
-												<label>Collect By Debit Order</label>
-											</div>
-											<div class="form-group form-inline">
-												<input type="checkbox" class="form-control" readonly
-													ng-model="policy.excludeSasria" /> <label>Exclude
-													Sasria</label>
-											</div>
-
 										</div>
 									</div>
 
@@ -457,31 +441,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="panel panel-default"
-								style="box-shadow: 0 0 30px #ffff;">
-								<div class="panel-body">
-									<div class="pull-center">
-										<a ng-href="#/policy/{{policy.reference}}"
-											ng-click="submitForPolicySchedule(policy.reference)"
-											role="link">Preview Policy Schedule</a> <a
-											ng-href="#/policy/{{policy.reference}}"
-											ng-click="update(false)" role="link">Edit Policy</a> <a
-											ng-href="#/policy/{{policy.reference}}"
-											ng-click="updatePolicy(policy.reference)" role="link">Update
-											Changes</a> <a ng-href="#/policy/{{policy.reference}}"
-											ng-click="cancel(false)" role="link">Cancel Changes</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 
 				<div class="panel-footer text-right">
-					<button class="btn btn-success" type="submit">{{btnValue}}</button>
+
+<!--					<button class="btn btn-success" type="submit">{{btnValue}}</button>-->
 					<button class="btn btn-danger">Decline</button>
+
+					<button class="btn btn-success" type="submit" ng-if="isPolicyCreated == false">Create Policy</button>
+					<button class="btn btn-success" type="submit" ng-if="isPolicyCreated == true">Request Approval</button>
+
 				</div>
 
 			</div>

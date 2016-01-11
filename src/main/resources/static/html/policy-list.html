@@ -27,7 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="policy in policies|  filter:clientPolicy">
+                                <tr ng-repeat="policy in activatedPolicies|  filter:clientPolicy">
 <!--                                <tr ng-repeat="policy in policies| offset: currentPage * itemsPerPage | limitTo: itemsPerPage | filter:clientPolicy">-->
 
                                     <td>{{policy.client.clientName}}</td>

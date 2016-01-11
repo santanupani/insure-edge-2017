@@ -95,9 +95,9 @@ create table location_options(
     id integer auto_increment not null primary key,
     quotation_request_id integer not null,
     commodity varchar(256) not null,
-    from_location varchar(32) not null,
-    to_location varchar(32),
-    distance varchar(32) null,
+    from_location varchar(128),
+    to_location varchar(128),
+    distance varchar(32),
     max_limit double,
     static_limit double,
     static_max_amount varchar(32),
@@ -295,6 +295,39 @@ create table policies(
     constraint policies_fk3 foreign key(underwriter_id) references underwriters(id)
 );
 
+/* table : policy endorsements */
+create table endorsements(
+    id integer auto_increment not null primary key,
+    policy_id integer not null,
+    endorsement_date date not null,
+    inception_date date,
+    renewal_date date,
+    product_name varchar(128),
+    underwriting_year integer,
+    status varchar(20),
+    frequency varchar(30),
+    sasria_frequency varchar(30),
+    device varchar(30),
+    underwriter_commission decimal,
+    broker_commission decimal,
+    uma_fee decimal,
+    policy_fee decimal,
+    initial_fee decimal,
+    sum_insured decimal,
+    max_sum_insured decimal,
+    premium decimal,
+    sasria_premium decimal,
+    schedule_attaching varchar(1024),
+    type_of_cover varchar(1024),
+    subject_matter varchar(64),
+    excess_structure varchar(256),
+    special_condition varchar(1024),
+    conveyances varchar(256),
+    geographical_duration varchar(2048),
+    notes varchar(256),
+    constraint endorsements_fk1 foreign key (policy_id) references policies (id)
+);
+
 /* table : indemnity_option */
 
 create table indemnity_options(
@@ -444,7 +477,7 @@ create table policy_request_type(
 );
 
 create table request_answers(
-      id integer auto_increment not null primary key,
+     id integer auto_increment not null primary key,
      request_type_id integer not null,
      question varchar(128) not null,
      answer varchar(512),

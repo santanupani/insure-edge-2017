@@ -5,19 +5,30 @@
  */
 package za.co.polygon.service;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -30,6 +41,7 @@ import net.sf.jasperreports.engine.util.FileResolver;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.JasperImage;
 import za.co.polygon.domain.Policy;
+import za.co.polygon.domain.PolicyRequestType;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.repository.JapsperImageRepository;
 
@@ -132,9 +144,6 @@ public class DocumentService{
 		JasperReport jasperReport = JasperCompileManager.compileReport(jasperIS);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, reportData, indemnityOptionsDS);
 
-		//		File file = new File("/Policy_Schedule_"+policy.getReference()+".pdf");
-		//		JasperExportManager.exportReportToPdfFile(jasperPrint, file.getName());
-
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
 
@@ -147,6 +156,68 @@ public class DocumentService{
 		this.quotationWording = quotationWording;
 	}
 
+	public List<PolicyRequestType> generateCancellationRequestsFromCIB(MultipartFile file) throws IOException{
+		List<PolicyRequestType> requestByCIB = new ArrayList<PolicyRequestType>();
+		ArrayList<Object> arList=null;
+		ArrayList<Object> al=null;
+		String thisLine;  
+		FileInputStream fis = new FileInputStream(new File("src/main/java/polygonCIB.csv"));
+		DataInputStream myInput = new DataInputStream(fis);
+		int i=0;
+		arList = new ArrayList<Object>();
+		while ((thisLine = myInput.readLine()) != null)
+		{
+			al = new ArrayList<Object>();
+			String strar[] = thisLine.split(",");
+			for(int j=0;j<strar.length;j++)
+			{
+				al.add(strar[j]);
+			}
+			arList.add(al);
+			System.out.println();
+			i++;
+		} 
 
+		try
+		{
+			HSSFWorkbook hwb = new HSSFWorkbook();
+			HSSFSheet sheet = hwb.createSheet("new sheet");
+			for(int k=0;k<arList.size();k++)
+			{
+				ArrayList<Object> ardata = (ArrayList)arList.get(k);
+				HSSFRow row = sheet.createRow((short) 0+k);
+				for(int p=0;p<ardata.size();p++)
+				{
+					HSSFCell cell = row.createCell((short) p);
+					String data = ardata.get(p).toString();
+					if(data.startsWith("=")){
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						data=data.replaceAll("\"", "");
+						data=data.replaceAll("=", "");
+						cell.setCellValue(data);
+					}else if(data.startsWith("\"")){
+						data=data.replaceAll("\"", "");
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						cell.setCellValue(data);
+					}else{
+						data=data.replaceAll("\"", "");
+						cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+						cell.setCellValue(data);
+					}
+				}
+				System.out.println();
+			} 
+			FileOutputStream fileOut = new FileOutputStream("test.xls");
+			hwb.write(fileOut);
+			fileOut.close();
+			System.out.println("Your excel file has been generated");
+		} catch ( Exception ex ) {
+			ex.printStackTrace();
+		} //main method ends
+		finally{
+			myInput.close();
+		}
+		return requestByCIB;
+	}
 
 }

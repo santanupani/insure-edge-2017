@@ -23,6 +23,7 @@ import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
+import za.co.polygon.domain.Endorsement;
 import za.co.polygon.domain.History;
 import za.co.polygon.domain.IndemnityOption;
 import za.co.polygon.domain.LocationOption;
@@ -52,6 +53,7 @@ import za.co.polygon.model.ClaimTypeQueryModel;
 import za.co.polygon.model.ClientCommandModel;
 import za.co.polygon.model.ClientQueryModel;
 import za.co.polygon.model.ContactQueryModel;
+import za.co.polygon.model.EndorsementQueryModel;
 import za.co.polygon.model.IndemnityOptionQueryModel;
 import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
@@ -863,7 +865,7 @@ public class Mapper {
         policyResult.setCollectByDebitOrder(policyCreationCommandModel.isCollectByDebitOrder());
         LocalDateTime now = LocalDateTime.now();
         policyResult.setReference(now.getYear() + "-" + now.getMonthValue() + "" + String.format("%02d", lastPolicyNumber));
-        policyResult.setStatus(policyCreationCommandModel.getStatus());
+        policyResult.setStatus("Pending Approval");
         policyResult.setSasriaFrequency(policyCreationCommandModel.getSasriaFrequency());
         policyResult.setNotes(policyCreationCommandModel.getNotes());
         policyResult.setFrequency(policyCreationCommandModel.getFrequency());
@@ -949,6 +951,44 @@ public class Mapper {
         policy.setPolicyFee(policyQueryModel.getPolicyFee());
         policy.setInitialFee(policyQueryModel.getInitialFee());
         policy.setStatus(policyQueryModel.getStatus());
+        policy.setInceptionDate(new SimpleDateFormat("dd/MM/yyyy").parse(policyQueryModel.getInceptionDate()));
+        policy.setScheduleAttaching(policyQueryModel.getScheduleAttaching());
+        policy.setExcessSturcture(policyQueryModel.getExcessStructure());
+        policy.setConvenyances(policyQueryModel.getConveyances());
+        policy.setGeographicalDuration(policyQueryModel.getGeographicalDuration());
+        policy.setNotes(policyQueryModel.getNotes());
+
+        policy.setSubAgent(subAgent);
+
+        List<IndemnityOption> indemnityOptions = new ArrayList<IndemnityOption>();
+        int i = 0;
+        for (IndemnityOption indemnityOption : policy.getIndemnityOptions()) {
+            indemnityOption.setIndemnityItemOption(policyQueryModel.getIndemnityOption().get(i).getIndemnityItemOption());
+            indemnityOption.setIndemnityValue(policyQueryModel.getIndemnityOption().get(i).getIndemnityValue());
+            indemnityOption.setPremium(policyQueryModel.getIndemnityOption().get(i).getPremium());
+            indemnityOption.setSumInsured(policyQueryModel.getIndemnityOption().get(i).getSumInsured());
+            indemnityOptions.add(indemnityOption);
+
+            i++;
+        }
+        policy.setIndemnityOptions(indemnityOptions);
+
+        Policy updatedPolicy = policy;
+
+        return updatedPolicy;
+    }
+    
+    public static Policy toApprovePolicyCommandModel(PolicyQueryModel policyQueryModel, Policy policy, SubAgent subAgent) throws ParseException {
+
+        policy.setExclude_sasria(new Boolean(policyQueryModel.getSasriaFrequency()));
+        policy.setSasriaFrequency(policyQueryModel.getSasriaFrequency());
+        policy.setFrequency(policyQueryModel.getFrequency());
+        policy.setDevice(policyQueryModel.getDevice());
+        policy.setBrokerCommission(policyQueryModel.getBrokerCommission());
+        policy.setUmaFee(policyQueryModel.getUmaFee());
+        policy.setPolicyFee(policyQueryModel.getPolicyFee());
+        policy.setInitialFee(policyQueryModel.getInitialFee());
+        policy.setStatus("Active");
         policy.setInceptionDate(new SimpleDateFormat("dd/MM/yyyy").parse(policyQueryModel.getInceptionDate()));
         policy.setScheduleAttaching(policyQueryModel.getScheduleAttaching());
         policy.setExcessSturcture(policyQueryModel.getExcessStructure());
@@ -1312,5 +1352,84 @@ public class Mapper {
 
         return policyRequestTypeQueryModel;
     }
+    
+    public static List<PolicyRequestTypeQueryModel> toPolicyRequestTypeQueryModel(List<PolicyRequestType> policyRequestType){
+    	List<PolicyRequestTypeQueryModel> policyRequestTypeList = new ArrayList<PolicyRequestTypeQueryModel>();
+    	for(PolicyRequestType fromList:policyRequestType){
+    		policyRequestTypeList.add(toPolicyRequestTypeQueryModel(fromList));
+    	}
+    	return policyRequestTypeList;
+    }
 
+    public static Endorsement fromEndorsePolicyCommandModel(PolicyQueryModel policyQueryModel,Policy policy) throws ParseException{
+    	Endorsement endorsedPolicy = new Endorsement();
+    	endorsedPolicy.setPolicy(policy);
+    	StringBuffer resultString = new StringBuffer();
+    	
+        String formatedDate = new StringBuffer(policyQueryModel.getEndorsementDate().toString()).replace(10, 24, new String()).toString();
+        String[] dateTokens = formatedDate.split("-");
+        for (int i = dateTokens.length - 1; i >= 0; i--) {
+            resultString.append(dateTokens[i] + "/");
+        }
+
+    	endorsedPolicy.setEndorsementDate(new SimpleDateFormat("dd/MM/yyyy").parse(resultString.toString()));
+    	endorsedPolicy.setBrokerCommission(policy.getBrokerCommission());
+    	endorsedPolicy.setConvenyances(policy.getConvenyances());
+    	endorsedPolicy.setDevice(policy.getDevice());
+    	endorsedPolicy.setExcessSturcture(policy.getExcessSturcture());
+    	endorsedPolicy.setFrequency(policy.getFrequency());
+    	endorsedPolicy.setGeographicalDuration(policy.getGeographicalDuration());
+    	endorsedPolicy.setMaximumSumInsured(policy.getMaximumSumInsured());
+    	endorsedPolicy.setPremium(policy.getPremium());
+    	endorsedPolicy.setInitialFee(policy.getInitialFee());
+    	endorsedPolicy.setNotes(policy.getNotes());
+    	endorsedPolicy.setSpecialCondition(policy.getSpecialCondition());
+    	endorsedPolicy.setSasriaPremium(policy.getSasriaPremium());
+    	endorsedPolicy.setProductName(policy.getProductName());
+    	endorsedPolicy.setPolicyFee(policy.getPolicyFee());
+    	endorsedPolicy.setSubjectMatter(policy.getSubjectMatter());
+    	endorsedPolicy.setScheduleAttaching(policy.getScheduleAttaching());
+    	endorsedPolicy.setSasriaFrequency(policy.getSasriaFrequency());
+    	endorsedPolicy.setSumInsured(policy.getSumInsured());
+    	endorsedPolicy.setUmaFee(policy.getUmaFee());
+    	endorsedPolicy.setPolicyFee(policy.getPolicyFee());
+    	
+    	return endorsedPolicy;
+    }
+    public static EndorsementQueryModel toEndorsementQueryModel(Endorsement endorsement,Policy policy){
+    	EndorsementQueryModel result = new EndorsementQueryModel();
+    	result.setPolicy(toPolicyQueryModel(policy));
+    	result.setId(endorsement.getId());
+    	result.setEndorsementDate(new SimpleDateFormat("dd/MM/yyyy").format(endorsement.getEndorsementDate()));
+    	result.setBrokerCommission(endorsement.getBrokerCommission());
+    	result.setConveyances(endorsement.getConvenyances());
+    	result.setDevice(endorsement.getDevice());
+    	result.setExcessStructure(endorsement.getExcessSturcture());
+    	result.setFrequency(endorsement.getFrequency());
+    	result.setGeographicalDuration(endorsement.getGeographicalDuration());
+    	result.setMaximumSumInsured(endorsement.getMaximumSumInsured());
+    	result.setPremium(endorsement.getPremium());
+    	result.setInitialFee(endorsement.getInitialFee());
+    	result.setNotes(endorsement.getNotes());
+    	result.setSpecialCondition(endorsement.getSpecialCondition());
+    	result.setSasriaPremium(endorsement.getSasriaPremium());
+    	result.setProductName(endorsement.getProductName());
+    	result.setPolicyFee(endorsement.getPolicyFee());
+    	result.setSubjectMatter(endorsement.getSubjectMatter());
+    	result.setScheduleAttaching(endorsement.getScheduleAttaching());
+    	result.setSasriaFrequency(endorsement.getSasriaFrequency());
+    	result.setSumInsured(endorsement.getSumInsured());
+    	result.setUmaFee(endorsement.getUmaFee());
+    	result.setPolicyFee(endorsement.getPolicyFee());
+    	
+    	return result;
+    	
+    }
+    public static List<EndorsementQueryModel> toEndorsementQueryModel(List<Endorsement> endorsementList,Policy policy){
+    	List<EndorsementQueryModel> endorsements = new ArrayList<EndorsementQueryModel>();
+    	for(Endorsement endorsement:endorsementList){
+    		endorsements.add(toEndorsementQueryModel(endorsement,policy));
+    	}
+    	return endorsements;
+    }
 }
