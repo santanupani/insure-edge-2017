@@ -624,7 +624,7 @@ public class Service {
         log.info("Provisionally Approve");
         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
         claimRequest.setStatus("Provisionally Approved");
-        notificationService.sendNotificationForProvisionallyApproveClaimRequest(claimRequest);
+        notificationService.sendNotificationForProvisionallyApproveClaimRequest(claimRequest,"polygon.testing@gmail.com");
         claimRequestRepository.save(claimRequest);
         log.info("New status :" + claimRequest.getStatus());
     }

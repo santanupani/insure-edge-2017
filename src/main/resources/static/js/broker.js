@@ -18,17 +18,17 @@ broker.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/quotation-requests.html',
                     'controller': 'quotationRequestsCtrl'
                 }).when('/quotations', {
-            'templateUrl': '/html/broker-scheduler.html',
-            'controller': 'brokerSchedulerCtrl'
-        }).when('/claims', {
-            'templateUrl': '/html/approved-claims.html',
-            'controller': 'listClaimRequestCtrl'
-        }).when('/claim-requests/:claimNumber', {
-            'templateUrl': '/html/approved-claim-requests.html',
-            'controller': 'claimRequestCtrl'
-        }).otherwise({
-            redirectTo: '/quotation-requests'
-        });
+                    'templateUrl': '/html/broker-scheduler.html',
+                    'controller': 'brokerSchedulerCtrl'
+                }).when('/claims', {
+                    'templateUrl': '/html/approved-claims.html',
+                    'controller': 'listClaimRequestCtrl'
+                }).when('/claim-requests/:claimNumber', {
+                    'templateUrl': '/html/approved-claim-requests.html',
+                    'controller': 'claimRequestCtrl'
+                }).otherwise({
+                    redirectTo: '/quotation-requests'
+                });
     }]);
 
 broker.directive('modal', function () {
@@ -171,7 +171,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
 //			$scope.updateQuotation.options[i] = {};
             $scope.updateQuotation.options[i].pavement = $scope.quotationRequest.locationOptions[i].pavement;
             $scope.updateQuotation.options[i].commodity = $scope.quotationRequest.locationOptions[i].commodity;
-            $scope.updateQuotation.options[i].staticLimit = $scope.quotationRequest.locationOptions[i].staticLimit;
+            $scope.updateQuotation.options[i].staticLimit =$scope.quotationRequest.locationOptions[i].staticLimit;
             $scope.updateQuotation.options[i].duration = $scope.quotationRequest.locationOptions[i].duration;
             $scope.updateQuotation.options[i].cover = $scope.quotationRequest.locationOptions[i].cover;
             $scope.updateQuotation.options[i].excess = $scope.quotationRequest.locationOptions[i].excess;

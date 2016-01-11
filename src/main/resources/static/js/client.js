@@ -6,17 +6,17 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/products.html',
                     'controller': 'productsCtrl'
                 }).when('/products/:id/questionnaires', {
-            'templateUrl': '/html/questionnaires.html',
-            'controller': 'questionnairesCtrl'
-        }).when('/quotations/:reference', {
-            'templateUrl': '/html/quotations.html',
-            'controller': 'quotationsCtrl'
-        }).when('/quotations/:reference/application', {
-            'templateUrl': '/html/policies.html',
-            'controller': 'policyCtrl'
-        }).otherwise({
-            redirectTo: '/products'
-        });
+                    'templateUrl': '/html/questionnaires.html',
+                    'controller': 'questionnairesCtrl'
+                }).when('/quotations/:reference', {
+                    'templateUrl': '/html/quotations.html',
+                    'controller': 'quotationsCtrl'
+                }).when('/quotations/:reference/application', {
+                    'templateUrl': '/html/policies.html',
+                    'controller': 'policyCtrl'
+                }).otherwise({
+                    redirectTo: '/products'
+                });
     }]);
 
 

@@ -84,15 +84,16 @@ public class NotificationService {
         getMessageRepository().publish(notification, "q.notification");
     }
 
-    public void sendNotificationForProvisionallyApproveClaimRequest(ClaimRequest claimRequest) {
-        String to = claimRequest.getPolicy().getClient().getContacts().getEmail();
-        String subject = "Claim Request Provisionally Approved by Susan Atto";
+    public void sendNotificationForProvisionallyApproveClaimRequest(ClaimRequest claimRequest,String claimsEmail) {
+        String to = claimsEmail;
+        String subject = "Claim Request Provisionally Approved by Claim's Department";
         String message = String.format(
                 "Dear Hentie Snyder ," + "\n"
                 + "\n"
                 + "Claim request for Claim No : %s has been provisionally approved by Susan" + "\n"
                 + "\n"
-                + "Please click the link below to apply for a policy" + " \n"
+                + "Please click the link below to view the claim approved by Claim's Department" + " \n"
+                + "\n"       
                 + "http://%s:%s/polygon/broker.html#/claimRequests/%s " + " \n"
                 + "\n"
                 + "Thanks" + "\n"

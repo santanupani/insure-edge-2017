@@ -183,17 +183,6 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','21', 'Value of Cash Claimed under the policy?', 2, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','22', 'When last valued ?', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','23', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
-
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','24', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','25', 'Please upload Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','26', 'Please upload Quote', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','27', 'Please upload Photos', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','28', 'Please upload Armed Response / Alarm Report', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('1','29', 'Please upload Affidavit', 8, false);
--- 
--- 
-
-
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','24', 'Event Date and Time', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','25', 'Discovery Date and Time', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('2','26', 'Place where Loss/Damage occurred', 1, true);
@@ -225,15 +214,6 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','44', 'Value of Cash Claimed under the policy?', 2, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','45', 'When last valued ?', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','46', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
-
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','53', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','54', 'Please upload Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','55', 'Please upload Proof of pickup', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('2','56', 'Please upload Affidavit', 8, false);
-
-
-
-
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','47', 'Event Date and Time', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','48', 'Discovery Date and Time', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('3','49', 'Place where Loss/Damage occurred', 1, true);
@@ -265,16 +245,6 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','67', 'Value of Cash Claimed under the policy?', 2, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','68', 'When last valued ?', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','69', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
-
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','80', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','81', 'Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','82', 'Proof Of Pick up', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','83', 'Trans track Report', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('3','84', 'Affidavit', 8, false);
-
-
-
-
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','70', 'Event Date and Time', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','71', 'Discovery Date and Time', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number,question, claim_answer_type_id, is_required)values('4','72', 'Place where Loss/Damage occurred', 1, true);
@@ -306,13 +276,6 @@ insert into claim_questionnaires(claim_type_id, sequence_number, question, claim
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','90', 'Value of Cash Claimed under the policy? ', 2, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','91', 'When last valued ?', 6, true);
 insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','92', 'I/We hereby decrare the foregoing particulars to be true in every resperct?', 4, true);
-
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','108', 'Please upload Investigation Report ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','109', 'Please upload Confirmation Of Amount ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','110', 'Please upload Proof of Pickup', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','111', 'Please upload Actual amont banked/counted: VMS or Teller Report', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','112', 'Please upload Trans track document (if possible) ', 8, false);
--- insert into claim_questionnaires(claim_type_id, sequence_number, question, claim_answer_type_id, is_required)values('4','113', 'Please upload Affidavit', 8, false);
 
 
 insert into request_types (request_type) values('CANCELLATION');

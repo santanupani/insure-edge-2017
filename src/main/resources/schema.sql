@@ -97,7 +97,7 @@ create table location_options(
     commodity varchar(256) not null,
     from_location varchar(32) not null,
     to_location varchar(32),
-    distance varchar(32) not null,
+    distance varchar(32) null,
     max_limit double,
     static_limit double,
     static_max_amount varchar(32),

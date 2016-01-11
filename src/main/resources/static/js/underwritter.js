@@ -465,7 +465,7 @@ underwritter.controller('policyCtrl', function ($scope, $rootScope, $http, $rout
 			$scope.policy.initialFee = '0.0';
 			$scope.policy.umaFee = '0.0';
 			$scope.policy.collectByDebitOrder = true;
-			$scope.policy.brokerCommission = 12.5;
+			$scope.policy.brokerCommission = 20;
 			$scope.policy.underwritingYear = new Date().getFullYear();
 			;
 			$scope.policy.notes = $scope.wording.notes;

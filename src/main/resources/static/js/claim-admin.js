@@ -7,10 +7,10 @@ claimAdmin.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/claim-requests-list.html',
                     'controller': 'listClaimRequestCtrl'
                 }).when('/claim-requests/:claimNumber', {
-            'templateUrl': '/html/claim-requests.html',
-            'controller': 'claimRequestCtrl'
-        }).otherwise({
-            redirectTo: '/claim-requests'
+                    'templateUrl': '/html/claim-requests.html',
+                    'controller': 'claimRequestCtrl'
+                }).otherwise({
+                    redirectTo: '/claim-requests'
         });
     }]);
 
@@ -131,7 +131,7 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
 
         $scope.decline = {};
         $scope.approve = {};
-           $scope.release = {};
+        $scope.release = {};
         $scope.claimNumber = $routeParams.claimNumber;
         $scope.showModal = false;
         $scope.getAllClaimRequest();
@@ -189,21 +189,21 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
             } else if (angular.equals(questionnairre.question, 'Event Date and Time')) {
                 console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
                 $scope.lossDate = questionnairre.answer;
-            } 
+            }
         });
     };
-    
-        $scope.save = function (form) {
+
+    $scope.save = function (form) {
 
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
             $scope.release.claimNumber = $scope.claimRequest.claimNumber;
-           // $scope.release.policyNumber=$scope.claimRequest.policy.reference;
-            $scope.release.insured=$scope.claimRequest.policy.client.clientName;
-            $scope.release.lossDate= $scope.lossDate;
-            $scope.release.amountClaim= $scope.amountClaim;
-            
+            // $scope.release.policyNumber=$scope.claimRequest.policy.reference;
+            $scope.release.insured = $scope.claimRequest.policy.client.clientName;
+            $scope.release.lossDate = $scope.lossDate;
+            $scope.release.amountClaim = $scope.amountClaim;
+
             console.log($scope.release);
             $http({
                 url: '/api/releaseForm',
@@ -215,8 +215,8 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
             }).success(function (data, status) {
                 console.log('get success code :' + status);
                 if (status === 200) {
-                    console.log('All the data are saved  for release form');					
-                    $rootScope.message = "Quotation Request Accepted Successfully";			
+                    console.log('All the data are saved  for release form');
+                    $rootScope.message = "Quotation Request Accepted Successfully";
                 } else {
                     console.log('status:' + status);
                 }
