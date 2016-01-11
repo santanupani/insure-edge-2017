@@ -1,0 +1,47 @@
+<div  ng-init="init()">
+    <div class="row" style="padding: 25px;">
+        <div class="col-md-12">
+            <div class="input-group input-group-lg" style="box-shadow: 0 0 30px black;">
+                <span class="input-group-addon" id="sizing-addon1">Policies</span>
+                <input ng-model="clientPolicy" type="text" class="form-control" placeholder="Search..." aria-describedby="sizing-addon1">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 25px;" >
+        <div class="col-md-12">
+            <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+                <div class="panel-body">
+                    <div>          
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Subject Matter </th>
+                                    <th>Status</th>
+                                    <th>Policy Reference</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="policy in policies|  filter:clientPolicy">
+<!--                                <tr ng-repeat="policy in policies| offset: currentPage * itemsPerPage | limitTo: itemsPerPage | filter:clientPolicy">-->
+
+                                    <td>{{policy.client.clientName}}</td>
+                                    <td>{{policy.subjectMatter}}</td>
+                                    <td>{{policy.status}}</td>
+                                    <td><a ng-href="#/policy/{{policy.reference}}/approval"
+                                           ng-click="getPolicy(policy.reference)">{{policy.reference}}</a></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

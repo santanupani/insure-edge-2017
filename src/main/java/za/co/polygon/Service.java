@@ -4,17 +4,20 @@ import static za.co.polygon.mapper.Mapper.fromBankAccountCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClaimRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.fromClientCommandModel;
 import static za.co.polygon.mapper.Mapper.fromContactCommandModel;
+import static za.co.polygon.mapper.Mapper.fromEndorsePolicyCommandModel;
 import static za.co.polygon.mapper.Mapper.fromHistoryCommandModel;
 import static za.co.polygon.mapper.Mapper.fromLocationOptionsCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyCreationCommandModel;
 import static za.co.polygon.mapper.Mapper.fromPolicyRequestTypeCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationRequestCommandModel;
 import static za.co.polygon.mapper.Mapper.fromQuotationUpdateCommandModel;
+import static za.co.polygon.mapper.Mapper.toApprovePolicyCommandModel;
 import static za.co.polygon.mapper.Mapper.toBrokerQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimRequest;
 import static za.co.polygon.mapper.Mapper.toClaimRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimTypeQueryModel;
+import static za.co.polygon.mapper.Mapper.toClaimsAttachementsQueryModel;
 import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import static za.co.polygon.mapper.Mapper.toClientQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyQueryModel;
@@ -32,6 +35,7 @@ import static za.co.polygon.mapper.Mapper.toRequestTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
+import static za.co.polygon.mapper.Mapper.toEndorsementQueryModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -65,6 +69,7 @@ import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.ClaimType;
 import za.co.polygon.domain.Client;
 import za.co.polygon.domain.Contact;
+import za.co.polygon.domain.Endorsement;
 import za.co.polygon.domain.History;
 import za.co.polygon.domain.LocationOption;
 import za.co.polygon.domain.Policy;
@@ -80,13 +85,13 @@ import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
-import static za.co.polygon.mapper.Mapper.toClaimsAttachementsQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
 import za.co.polygon.model.ClaimRequestQueryModel;
 import za.co.polygon.model.ClaimTypeQueryModel;
 import za.co.polygon.model.ClientQueryModel;
+import za.co.polygon.model.EndorsementQueryModel;
 import za.co.polygon.model.PolicyCreationCommandModel;
 import za.co.polygon.model.PolicyQueryModel;
 import za.co.polygon.model.PolicyRequestCommandModel;
@@ -112,6 +117,7 @@ import za.co.polygon.repository.ClaimRequestRepository;
 import za.co.polygon.repository.ClaimTypeRepository;
 import za.co.polygon.repository.ClientRepository;
 import za.co.polygon.repository.ContactRepository;
+import za.co.polygon.repository.EndorsementRepository;
 import za.co.polygon.repository.HistoryRepository;
 import za.co.polygon.repository.LocationOptionRepository;
 import za.co.polygon.repository.PolicyRepository;
@@ -213,6 +219,9 @@ public class Service {
 
     @Autowired
     private RequestAnswersRepository requestAnswersRepository;
+    
+    @Autowired
+    private EndorsementRepository endorsementRepository;
 
     @Autowired
     private DocumentService documentService;
@@ -270,12 +279,43 @@ public class Service {
 
     @Transactional
     @RequestMapping(value = "api/policy-update/{reference}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updatePolicy(@PathVariable("reference") String reference, @RequestBody PolicyQueryModel PolicyQueryModel) throws ParseException {
+    public PolicyQueryModel updatePolicy(@PathVariable("reference") String reference, @RequestBody PolicyQueryModel policyQueryModel) throws ParseException {
+        log.info("Updating Policy with reference: " + reference);
+        Policy policy = policyRepository.findByReference(reference);
+        SubAgent subAgent = subAgentRepository.findOne(policyQueryModel.getSubAgent().getId());
+        log.info("Product Name: " + policy.getProductName());
+        Endorsement endorsement = endorsementRepository.save(fromEndorsePolicyCommandModel(policyQueryModel,policy));
+        log.info("Saved endorsement: "+endorsement.getId()+ "\t"+endorsement.getEndorsementDate());
+        Policy updatePolicy = policyRepository.save(toPolicyUpdateCommandModel(policyQueryModel, policy, subAgent));
+        return toPolicyQueryModel(updatePolicy);
+    }
+    
+    @Transactional
+    @RequestMapping(value = "api/policy/{reference}/approval", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PolicyQueryModel approvePolicy(@PathVariable("reference") String reference, @RequestBody PolicyQueryModel PolicyQueryModel) throws ParseException, IOException, JRException {
         log.info("Updating Policy with reference: " + reference);
         Policy policy = policyRepository.findByReference(reference);
         SubAgent subAgent = subAgentRepository.findOne(PolicyQueryModel.getSubAgent().getId());
         log.info("Product Name: " + policy.getProductName());
-        policyRepository.save(toPolicyUpdateCommandModel(PolicyQueryModel, policy, subAgent));
+        Policy updatePolicy = policyRepository.save(toApprovePolicyCommandModel(PolicyQueryModel, policy, subAgent));
+        notificationService.sendNotificationForApprovalToBroker(updatePolicy,"polygon.broker@gmail.com");
+        notificationService.sendNotificationForApprovalToUnderwritter(updatePolicy,"polygon.underwriter@gmail.com");
+        return toPolicyQueryModel(updatePolicy);
+    }
+    
+    @RequestMapping(value = "api/policy-request-approval/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String requestPolicyApproval(@PathVariable("reference") String reference) {
+        log.info("Sending email notification for policy request approval");
+        Policy policy = policyRepository.findByReference(reference);
+        notificationService.sendNotificationForRequestPolicyApproval(policy, "polygon.testing@gmail.com");
+        return "Approval Request sent successfully";
+    }
+    
+    @RequestMapping(value = "api/endorsements/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<EndorsementQueryModel> getPolicyEndorsements(@PathVariable("reference") String reference) {
+        Policy policy = policyRepository.findByReference(reference);
+        List<Endorsement> endorsementList = policy.getEndorsements();
+        return toEndorsementQueryModel(endorsementList,policy);
     }
 
     @RequestMapping(value = "api/sub-agents", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -671,5 +711,14 @@ public class Service {
 
         return toPolicyRequestTypeQueryModel(policyRequestType);
     }
+    
+    @RequestMapping(value = "api/generic-policy-requests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PolicyRequestTypeQueryModel> getGenericPolicyRequests() {
+        log.info("Find all Generic Requests");
+        List<PolicyRequestType> policyRequestTypes = policyRequestTypeRepository.findAll();
+        
+        return toPolicyRequestTypeQueryModel(policyRequestTypes);
+    }
+
 
 }

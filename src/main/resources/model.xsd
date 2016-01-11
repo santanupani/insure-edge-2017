@@ -288,6 +288,7 @@
 			<element name="device" type="string" />
 			<element name="collectByDebitOrder" type="boolean" />
 			<element name="excludeSasria" type="boolean" />
+			<element name="endorsementDate" type="string" />
 			<element name="notes" type="string" />
 			<element name="client" minOccurs="0" maxOccurs="1"
 				type="tns:ClientQueryModel" />
@@ -724,6 +725,42 @@
 					</sequence>
 				</complexType>
 			</element>
+		</sequence>
+	</complexType>
+
+	<element name="EndorsementQueryModel" type="tns:EndorsementQueryModel" />
+	<complexType name="EndorsementQueryModel">
+		<sequence>
+			<element name="id" type="long" />
+			<element name="policy" minOccurs="1" maxOccurs="1" type="tns:PolicyQueryModel" />
+			<element name="endorsementDate" type="string" />
+			<element name="inceptionDate" type="string" />
+			<element name="renewalDate" type="string" />
+			<element name="underwritingYear" type="int" />
+			<element name="productName" type="string" />
+			<element name="sasriaFrequency" type="string" />
+			<element name="device" type="string" />
+			<element name="notes" type="string"/>
+			<element name="frequency" type="string" />
+			<element name="umaFee" type="double" />
+			<element name="underwriterCommission" type="double" />
+			<element name="policyFee" type="double" />
+			<element name="initialFee" type="double" />
+			<element name="collectByDebitOrder" type="boolean" />
+			<element name="excludeSasria" type="boolean" />
+			<element name="sumInsured" type="double" />
+			<element name="maximumSumInsured" type="double" />
+			<element name="brokerCommission" type="double" />
+			<element name="premium" type="double" />
+			<element name="UACommission" type="double" />
+			<element name="sasriaPremium" type="double" />
+			<element name="scheduleAttaching" type="string" />
+			<element name="typeOfCover" type="string" />
+			<element name="subjectMatter" type="string" />
+			<element name="excessStructure" type="string" />
+			<element name="specialCondition" type="string" />
+			<element name="conveyances" type="string" />
+			<element name="geographicalDuration" type="string" />
 		</sequence>
 	</complexType>
 </schema>

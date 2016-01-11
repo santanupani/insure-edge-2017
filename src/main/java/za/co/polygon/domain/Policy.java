@@ -34,7 +34,9 @@ public class Policy {
     @JoinColumn(name = "client_id")
     private Client client;
     
-        
+    @OneToMany(mappedBy = "policy")
+    private List<Endorsement> endorsements;
+    
     @OneToMany(mappedBy = "policy")
     private List<ClaimRequest> claimRequest;
 
@@ -431,6 +433,22 @@ public class Policy {
 
 	public void setUnderwritingYear(int underwritingYear) {
 		this.underwritingYear = underwritingYear;
+	}
+
+	public List<Endorsement> getEndorsements() {
+		return endorsements;
+	}
+
+	public void setEndorsements(List<Endorsement> endorsements) {
+		this.endorsements = endorsements;
+	}
+
+	public List<PolicyRequestType> getPolicyRequestTypes() {
+		return policyRequestTypes;
+	}
+
+	public void setPolicyRequestTypes(List<PolicyRequestType> policyRequestTypes) {
+		this.policyRequestTypes = policyRequestTypes;
 	}
     
 }

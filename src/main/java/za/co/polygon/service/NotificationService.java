@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Broker;
 import za.co.polygon.domain.ClaimRequest;
 import za.co.polygon.domain.Notification;
+import za.co.polygon.domain.Policy;
 import za.co.polygon.domain.PolicyRequest;
 import za.co.polygon.domain.PolicyRequestType;
 import za.co.polygon.domain.QuotationRequest;
@@ -20,6 +22,10 @@ public class NotificationService {
 
 	@Autowired
 	private MessageRepository messageRepository;
+	
+	@Autowired
+	private DocumentService documentService;
+	
 	private Notification notification;
 
 	@Value("${polygon.application.hostname}")
@@ -162,6 +168,55 @@ public class NotificationService {
 
 		setNotification(new Notification(to, subject, message));
 		getMessageRepository().publish(getNotification(), "q.notification");  
+	}
+	
+	public void sendNotificationForRequestPolicyApproval(Policy policy, String managerEmail){
+
+		String subject = "Policy Approval Request";
+		String message = String.format("Dear Gerard,\n \n"
+				+ "You have a new policy approval request."
+				+"\nPolicy Approval request Ref No : %s\n\n click the link below to view approval request" + "\n"
+				+ "http://%s:%s/polygon/manager.html#/policy/%s/approval\n\nKind Regards,",
+				policy.getReference(),
+				hostname,
+				port,
+				policy.getReference());
+
+		setNotification(new Notification(managerEmail, subject, message));
+		getMessageRepository().publish(getNotification(), "q.notification");  
+	}
+	
+	public void sendNotificationForApprovalToUnderwritter(Policy policy,String underwritterEmail) {
+		
+		String subject = "Policy "+policy.getReference()+" Approved.";
+
+		String message = String.format("Dear Underwriter,\n \n"
+				+ "This is to notify you that policy request for temporary policy ref: %s"+
+				" has been approved and the policy is currently active.\n\n click the link below to view approved policy" + "\n"
+				+ "http://%s:%s/polygon/underwritter.html#/policy/%s/admin\n\nKind Regards,",
+				policy.getReference(),
+				hostname,
+				port,
+				policy.getReference());
+		Notification notification = new Notification(underwritterEmail, subject, message);
+		messageRepository.publish(notification, "q.notification");
+	}
+	
+	public void sendNotificationForApprovalToBroker(Policy policy, String brokerEmail) throws IOException, JRException {
+		
+		String subject = "Policy Schedule for Client "+policy.getClient().getClientName();
+		String message = String.format("Dear Broker,\n \n"
+						+ "This is to notify you that policy request for client: %s"+
+						" has been created. Attached please find the Policy Schedule for the client."
+						+ "Please note that the client can view the Policy Details by clicking on the link below" + "\n"
+						+ "http://%s:%s/polygon/client.html#/clients/%s\n\nKind Regards,",
+						policy.getClient().getClientName(),
+						hostname,
+						port,
+						policy.getClient().getId());
+		setNotification(new Notification(brokerEmail, subject, message, documentService.policyScheduleReportPDF(policy), 
+				"Policy Schedule for - "+policy.getClient().getClientName()+"-"+policy.getReference()+".pdf"));
+		getMessageRepository().publish(getNotification(), "q.notification");     
 	}
 
 	public MessageRepository getMessageRepository() {
