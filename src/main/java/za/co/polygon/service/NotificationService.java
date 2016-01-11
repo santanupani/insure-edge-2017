@@ -137,38 +137,6 @@ public class NotificationService {
 		getMessageRepository().publish(getNotification(), "q.notification");     
 	}
 
-	public void sendNotificationForNewClaimRequest(ClaimRequest claimRequest, String claimsEmail, String claimsName){
-
-		String to = claimsEmail;
-		String subject = "New Claim Request";
-		String message = String.format("Dear " + claimsName +",\n \n"
-				+ "You have a new Claim Request For Claim No : %s\n click the link below to view claim request" + "\n"
-				+ "http://%s:%s/polygon/claim-admin.html#/claim-requests/%s\n\nKind Regards,",
-				claimRequest.getClaimNumber(),
-				hostname,
-				port,
-				claimRequest.getClaimNumber());
-
-		setNotification(new Notification(to, subject, message));
-		getMessageRepository().publish(getNotification(), "q.notification");  
-	}
-	
-	public void sendNotificationForNewGenericPolicyRequest(PolicyRequestType policyRequestType, String claimsEmail){
-
-		String to = claimsEmail;
-		String subject = "New Generic Policy Request";
-		String message = String.format("Dear Underwriter,\n \n"
-				+ "You have a new POLICY "+policyRequestType.getRequestType().getRequestType()+
-				" REQUEST For Policy ["+policyRequestType.getPolicy().getReference()+"]. \nPolicy request Ref No : %s\n\n click the link below to view claim request" + "\n"
-				+ "http://%s:%s/polygon/claim-admin.html#/claim-requests/%s\n\nKind Regards,",
-				policyRequestType.getReference(),
-				hostname,
-				port,
-				policyRequestType.getReference());
-
-		setNotification(new Notification(to, subject, message));
-		getMessageRepository().publish(getNotification(), "q.notification");  
-	}
 	
 	public void sendNotificationForRequestPolicyApproval(Policy policy, String managerEmail){
 
@@ -219,19 +187,119 @@ public class NotificationService {
 		getMessageRepository().publish(getNotification(), "q.notification");     
 	}
 
-	public MessageRepository getMessageRepository() {
-		return messageRepository;
-	}
 
-	public void setMessageRepository(MessageRepository messageRepository) {
-		this.messageRepository = messageRepository;
-	}
+    public void sendNotificationForDeclineClaimRequest(ClaimRequest claimRequest, String reason) {
+        String to = claimRequest.getPolicy().getClient().getContacts().getEmail();
+        String subject = "Claim Request Declined";
+        String message = String.format(
+                "Dear %s ," + "\n"
+                + "\n"
+                + "Your request for Claim No : %s has been rejected for the following reason(s)" + "\n"
+                + "\n"
+                + "Reason(s):" + "\n"
+                + "%s" + "\n"
+                + "\n"
+                + "Thanks" + "\n"
+                + "Polygon Team",
+                claimRequest.getPolicy().getClient().getClientName(),
+                claimRequest.getClaimNumber(),
+                reason);
+        Notification notification = new Notification(to, subject, message);
+        getMessageRepository().publish(notification, "q.notification");
+    }
 
-	public Notification getNotification() {
-		return notification;
-	}
+    public void sendNotificationForProvisionallyApproveClaimRequest(ClaimRequest claimRequest) {
+        String to = claimRequest.getPolicy().getClient().getContacts().getEmail();
+        String subject = "Claim Request Provisionally Approved by Susan Atto";
+        String message = String.format(
+                "Dear Hentie Snyder ," + "\n"
+                + "\n"
+                + "Claim request for Claim No : %s has been provisionally approved by Susan" + "\n"
+                + "\n"
+                + "Please click the link below to apply for a policy" + " \n"
+                + "http://%s:%s/polygon/broker.html#/claimRequests/%s " + " \n"
+                + "\n"
+                + "Thanks" + "\n"
+                + "\n"
+                + "Susan Atto",
+                claimRequest.getClaimNumber(),
+                hostname,
+                port,
+                claimRequest.getClaimNumber());
+        Notification notification = new Notification(to, subject, message);
+        getMessageRepository().publish(notification, "q.notification");
+    }
 
-	public void setNotification(Notification notification) {
-		this.notification = notification;
-	}
+    public void sendNotificationForApproveClaimRequest(ClaimRequest claimRequest) {
+        String to = claimRequest.getPolicy().getClient().getContacts().getEmail();
+        String subject = "Claim Request Approved by Hentie Snyder";
+        String message = String.format(
+                "Dear Susan Atto ," + "\n"
+                + "\n"
+                + "Claim request for Claim No : %s has been approved by Hentie Snyder" + "\n"
+                + "\n"
+                + "Please click the link below to apply for a policy" + " \n"
+                + "http://%s:%s/polygon/broker.html#/claimRequests/%s " + " \n"
+                        + "\n"
+                + "Thanks" + "\n"
+                        + "\n"
+                + "Hentie Snyder",
+                claimRequest.getClaimNumber(),
+                hostname,
+                port,
+                claimRequest.getClaimNumber());
+        Notification notification = new Notification(to, subject, message);
+        getMessageRepository().publish(notification, "q.notification");
+    }
+
+    
+
+    public void sendNotificationForNewClaimRequest(ClaimRequest claimRequest, String claimsEmail, String claimsName) {
+
+        String to = claimsEmail;
+        String subject = "New Claim Request";
+        String message = String.format("Dear " + claimsName + ",\n \n"
+                + "You have a new Claim Request For Claim No : %s\n click the link below to view claim request" + "\n"
+                + "http://%s:%s/polygon/claim-admin.html#/claim-requests/%s\n\nKind Regards,",
+                claimRequest.getClaimNumber(),
+                hostname,
+                port,
+                claimRequest.getClaimNumber());
+
+        setNotification(new Notification(to, subject, message));
+        getMessageRepository().publish(getNotification(), "q.notification");
+    }
+
+    public void sendNotificationForNewGenericPolicyRequest(PolicyRequestType policyRequestType, String claimsEmail) {
+
+        String to = claimsEmail;
+        String subject = "New Generic Policy Request";
+        String message = String.format("Dear Underwriter,\n \n"
+                + "You have a new POLICY " + policyRequestType.getRequestType().getRequestType()
+                + " REQUEST For Policy [" + policyRequestType.getPolicy().getReference() + "]. \nPolicy request Ref No : %s\n\n click the link below to view claim request" + "\n"
+                + "http://%s:%s/polygon/claim-admin.html#/claim-requests/%s\n\nKind Regards,",
+                policyRequestType.getReference(),
+                hostname,
+                port,
+                policyRequestType.getReference());
+
+        setNotification(new Notification(to, subject, message));
+        getMessageRepository().publish(getNotification(), "q.notification");
+    }
+
+    public MessageRepository getMessageRepository() {
+        return messageRepository;
+    }
+
+    public void setMessageRepository(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+
+    public Notification getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
 }

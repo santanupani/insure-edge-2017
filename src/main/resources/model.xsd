@@ -763,4 +763,19 @@
 			<element name="geographicalDuration" type="string" />
 		</sequence>
 	</complexType>
+	
+	<element name="ReleaseFormCommandModel">
+        <complexType>
+            <sequence>
+                <element name="claimNumber" type="string"></element>
+                <element name="insured" type="string"></element>
+                <element name="amountClaim" type="double"></element>
+                <element name="lessExcess" type="string"></element>
+                <element name="totalPayable" type="double"></element>
+                <element name="goodDescription" type="string"></element>
+                <element name="lossDate" type="string"></element>
+                <element name="lossDescription" type="string"></element>
+            </sequence>
+        </complexType>
+    </element>
 </schema>

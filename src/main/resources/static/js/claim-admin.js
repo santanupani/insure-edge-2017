@@ -21,7 +21,7 @@ claimAdmin.directive('modal', function () {
                 '<div class="modal-content">' +
                 '<div class="modal-header">' +
                 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-                '<h4 class="modal-title">{{ title }}</h4>' +
+                '<h4 class="modal-title">{{ documentName }}</h4>' +
                 '</div>' +
                 '<div class="modal-body" ng-transclude></div>' +
                 '</div>' +
@@ -120,14 +120,22 @@ claimAdmin.controller('listClaimRequestCtrl', function ($scope, $http, $rootScop
 });
 
 
-claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $routeParams, $sce, $window) {
+claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $routeParams, $sce, $location) {
 
     $scope.documentName;
+    $scope.mode;
+    $scope.decline;
+    $scope.release;
+    $scope.approve;
     $scope.init = function () {
 
+        $scope.decline = {};
+        $scope.approve = {};
+           $scope.release = {};
         $scope.claimNumber = $routeParams.claimNumber;
-        $scope.getClaimRequest($routeParams.claimNumber);
         $scope.showModal = false;
+        $scope.getAllClaimRequest();
+        $scope.releaseFormInfo();
 
     };
 
@@ -138,7 +146,85 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         $scope.attachment = attachment;
         $scope.documentName = documentName;
     };
+    $scope.changeMode = function (mode) {
+        $scope.mode = mode;
+    };
 
+    $scope.declineClaimRequest = function (declineform) {
+        if (declineform.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            $scope.decline.status = "DECLINED";
+            $http({
+                url: '/api/claim-requests/' + $scope.claimNumber + "/decline",
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: $scope.decline
+            }).success(function (data, status) {
+                console.log('get success code:' + status);
+                if (status == 200) {
+                    console.log('Claim declined Reason:' + $scope.decline.reason);
+                    $scope.init();
+                    $rootScope.message = "Claim Request Declined Successfully";
+                    $scope.mode = undefined;
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+                    .error(function (error) {
+                        $rootScope.message = "";
+                        console.log(error);
+                    });
+        }
+    };
+
+
+    $scope.releaseFormInfo = function () {
+        angular.forEach($scope.questionnairres, function (questionnairre) {
+            if (angular.equals(questionnairre.question, 'Value of Cash Claimed under the policy?')) {
+                console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
+                $scope.amountClaim = questionnairre.answer;
+            } else if (angular.equals(questionnairre.question, 'Event Date and Time')) {
+                console.log('Question:' + questionnairre.question + ', answer is: ' + questionnairre.answer);
+                $scope.lossDate = questionnairre.answer;
+            } 
+        });
+    };
+    
+        $scope.save = function (form) {
+
+        if (form.$invalid) {
+            console.log("Form Validation Failure");
+        } else {
+            $scope.release.claimNumber = $scope.claimRequest.claimNumber;
+           // $scope.release.policyNumber=$scope.claimRequest.policy.reference;
+            $scope.release.insured=$scope.claimRequest.policy.client.clientName;
+            $scope.release.lossDate= $scope.lossDate;
+            $scope.release.amountClaim= $scope.amountClaim;
+            
+            console.log($scope.release);
+            $http({
+                url: '/api/releaseForm',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: $scope.release
+            }).success(function (data, status) {
+                console.log('get success code :' + status);
+                if (status === 200) {
+                    console.log('All the data are saved  for release form');					
+                    $rootScope.message = "Quotation Request Accepted Successfully";			
+                } else {
+                    console.log('status:' + status);
+                }
+            }).error(function (error) {
+                $rootScope.message = "Oops, we received your request, but there was an error processing it";
+            });
+        }
+    };
 
     $scope.getClaimRequest = function (claimNumber) {
         $http({
@@ -148,6 +234,9 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
             if (status == 200) {
                 console.log('claim Request retrived sucessfully');
                 $rootScope.claimRequest = data;
+                $scope.questionnairres = $scope.claimRequest.claimQuestionnaire;
+                $scope.getClientClaims($scope.claimRequest.policy.reference);
+                $scope.releaseFormInfo();
 
                 if ($rootScope.claimRequest.investigationReportC != null) {
                     $scope.getInvestigationReport($rootScope.claimRequest.claimNumber);
@@ -200,45 +289,74 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
 
-    $scope.downloadInvestigationReport = function () {
-        saveAs($scope.investigationReport, $scope.claimRequest.claimNumber + " - investigationReport");
-    };
-    $scope.downloadComfirmationAmount = function () {
-        saveAs($scope.comfirmationAmount, $scope.claimRequest.claimNumber + " - comfirmationAmount");
-    };
-    $scope.downloadProofOfPickup = function () {
-        saveAs($scope.proofOfPickup, $scope.claimRequest.claimNumber + " - proofOfPickup");
-    };
-    $scope.downloadAffidavit = function () {
-        saveAs($scope.affidavit, $scope.claimRequest.claimNumber + " - affidavit");
-    };
-    $scope.downloadAmountBanked = function () {
-        saveAs($scope.amountBanked, $scope.claimRequest.claimNumber + " - amountBanked");
-    };
-    $scope.downloadTransTrackDocument = function () {
-        saveAs($scope.transTrackDocument, $scope.claimRequest.claimNumber + " - transTrackDocument");
-    };
-    $scope.downloadQuote = function () {
-        saveAs($scope.quote, $scope.claimRequest.claimNumber + " - quote");
-    };
-    $scope.downloadReport = function () {
-        saveAs($scope.report, $scope.claimRequest.claimNumber + " - report");
-    };
-    $scope.downloadPhoto1 = function () {
-        saveAs($scope.photo1, $scope.claimRequest.claimNumber + " - photo1");
-    };
-    $scope.downloadPhoto2 = function () {
-        saveAs($scope.photo2, $scope.claimRequest.claimNumber + " - photo2");
-    };
-    $scope.downloadPhoto3 = function () {
-        saveAs($scope.photo3, $scope.claimRequest.claimNumber + " - photo3");
-    };
-    $scope.downloadPhoto4 = function () {
-        saveAs($scope.photo4, $scope.claimRequest.claimNumber + " - photo3");
+    $scope.getAllClaimRequest = function () {
+        $scope.request = [];
+        $http({
+            url: '/api/claim-requests',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status == 200) {
+                console.log(' all claim Request retrived sucessfully');
+                $rootScope.claimRequests = data;
+                $scope.getClaimRequest($routeParams.claimNumber);
+
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+            }
+        }).error(function (error) {
+            console.log(error);
+            $rootScope.error = error;
+        });
     };
 
+    $scope.getClientClaims = function (reference) {
+        $scope.clientClaims = [];
+        console.log("policy : " + $rootScope.claimRequests);
+        angular.forEach($rootScope.claimRequests, function (claims) {
+            if (angular.equals(claims.policy.reference, reference)) {
+                console.log("Claim obtained " + claims.policy.reference);
+                $scope.clientClaims.push(claims);
+                console.log($scope.clientClaims);
+            } else {
+                console.log("Not matched....");
+            }
+        });
+    };
+
+
+    $scope.approveClaim = function (claimNumber) {
+
+        $http({
+            url: '/api/claim-requests/' + claimNumber + "/provisionallyApprove",
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (data, status) {
+            console.log('get success code:' + status);
+            if (status == 200) {
+                console.log('Claim provisionally approved Reason:');
+                $rootScope.message = "Claim Request approved Successfully";
+                $location.path("/claim-requests");
+            } else {
+                console.log('status:' + status);
+            }
+        })
+                .error(function (error) {
+                    $rootScope.message = "";
+                    console.log(error);
+                });
+
+
+    };
+
+    $scope.download = function (attachment, claimNumber, documentName) {
+        saveAs(attachment, claimNumber + " - " + documentName);
+    };
+
+
     $scope.getInvestigationReport = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/investigationReport',
             responseType: 'arraybuffer',
@@ -253,7 +371,7 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
                 });
                 var investigationReport = new Blob([data], {type: $rootScope.claimRequest.investigationReportC.toString()});
                 var fileURL = URL.createObjectURL(investigationReport);
-                $scope.investigationReport = investigationReport
+                $scope.investigationReport = investigationReport;
                 $scope.investigationReportName = "Investigation Report";
                 $scope.investigationReportURL = $sce.trustAsResourceUrl(fileURL);
             } else {
@@ -266,7 +384,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getComfirmationAmount = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/comfirmationAmount',
             responseType: 'arraybuffer',
@@ -291,7 +408,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getProofOfPickup = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/proofOfPickup',
             responseType: 'arraybuffer',
@@ -316,7 +432,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getAffidavit = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/affidavit',
             responseType: 'arraybuffer',
@@ -341,7 +456,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getAmountBanked = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/amountBanked',
             responseType: 'arraybuffer',
@@ -366,7 +480,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getTransTrackDocument = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/transTrackDocument',
             responseType: 'arraybuffer',
@@ -391,7 +504,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getQuote = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/quote',
             responseType: 'arraybuffer',
@@ -416,7 +528,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getReport = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/report',
             responseType: 'arraybuffer',
@@ -441,7 +552,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getPhoto1 = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/photo1',
             responseType: 'arraybuffer',
@@ -466,7 +576,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getPhoto2 = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/photo2',
             responseType: 'arraybuffer',
@@ -491,7 +600,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getPhoto3 = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/photo3',
             responseType: 'arraybuffer',
@@ -516,7 +624,6 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         });
     };
     $scope.getPhoto4 = function (claimNumber) {
-        console.log('ClaimNumber: ' + claimNumber);
         $http({
             url: '/api/claim/' + claimNumber + '/photo4',
             responseType: 'arraybuffer',

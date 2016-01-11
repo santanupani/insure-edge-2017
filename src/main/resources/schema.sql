@@ -95,9 +95,9 @@ create table location_options(
     id integer auto_increment not null primary key,
     quotation_request_id integer not null,
     commodity varchar(256) not null,
-    from_location varchar(32) not null,
-    to_location varchar(32),
-    distance varchar(32) not null,
+    from_location varchar(128),
+    to_location varchar(128),
+    distance varchar(32),
     max_limit double,
     static_limit double,
     static_max_amount varchar(32),
@@ -380,7 +380,7 @@ create table claim_requests(
     policy_id integer not null,
     claim_type_id integer not null,
     create_date date not null,
-    status varchar(16) not null,
+    status varchar(32) not null,
     investigation_report longblob,
     confirmation_amount longblob,
     proof_of_pickup longblob,
@@ -419,6 +419,20 @@ create table claim_answers(
      answer varchar(512),
      attachment longblob,
      constraint claim_answer_fk1 foreign key (claim_request_id) references  claim_requests(id)
+);
+
+
+create table release_form(
+    id integer auto_increment not null primary key,
+    claim_request_id integer not null,
+    insured varchar(64) not null,
+    amount_claim double not null,
+    less_excess varchar(64) not null,
+    total_payeble double not null,
+    good_description varchar(64) not null,
+    loss_date varchar(64) not null,
+    loss_description varchar(128) not null,
+    constraint release_form_fk1 foreign key (claim_request_id) references claim_requests(id) 
 );
 
 create table request_types(

@@ -80,58 +80,56 @@
 
                                             <div class="panel-body">
                                                 <div id="accordion" class="panel-group">
-
+                                                    
                                                     <div class="panel panel-default">
 
-                                                        <div class="panel-heading">
+                                                    <div class="panel-heading">
 
-                                                            <h4 class="panel-title">
+                                                        <h4 class="panel-title">
 
-                                                                <a data-toggle="collapse" data-parent="#accordion"
-                                                                   href="/#collapse15">Claim History</a>
+                                                            <a data-toggle="collapse" data-parent="#accordion"
+                                                               href="/#collapse15">Claim History</a>
 
-                                                            </h4>
+                                                        </h4>
 
-                                                        </div>
+                                                    </div>
 
-                                                        <div id="collapse15" class="panel-collapse collapse">
+                                                    <div id="collapse15" class="panel-collapse collapse">
 
-                                                            <div class="panel-body">
+                                                        <div class="panel-body">
 
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control"
-                                                                           ng-model="clientClaim"
-                                                                           placeholder="Search client claims"> <span
-                                                                           class="input-group-btn">
-                                                                        <button type="submit" class="btn btn-default">
-                                                                            <span class="glyphicon glyphicon-search"></span>
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control"
+                                                                       ng-model="clientClaim"
+                                                                       placeholder="Search client claims"> <span
+                                                                       class="input-group-btn">
+                                                                    <button type="submit" class="btn btn-default">
+                                                                        <span class="glyphicon glyphicon-search"></span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
 
-                                                                <div>          
-                                                                    <table class="table table-striped">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>#</th>
-                                                                                <th>Claim Number</th>
-                                                                                <th>Claim Type </th>
-                                                                                <th>Status</th>
-                                                                                <th>Claim</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody ng-repeat="clientClaim in clientClaims| filter:clientClaim">
-                                                                            <tr>
-                                                                                <td>{{$index + 1}}</td>
-                                                                                <td><a role="button" ng-href="#/claim-requests/{{clientClaim.claimNumber}}">{{clientClaim.claimNumber}}</a></td>
-                                                                                <td>{{clientClaim.claimType.claimType}}</td>
-                                                                                <td>{{clientClaim.status}}</td>
-                                                                                <td ng-if="clientClaim.status == 'Pending Documets'"><a role="button" class="btn btn-info" ng-href="#/claim-requests/{{clientClaim.claimNumber}}/claim">Claim</a></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                </div>
+                                                            <div>          
+                                                                <table class="table table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>#</th>
+                                                                            <th>Claim Number</th>
+                                                                            <th>Claim Type </th>
+                                                                            <th>Status</th>
+                                                                            <th>Claim</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody ng-repeat="clientClaim in clientClaims| filter:clientClaim">
+                                                                        <tr>
+                                                                            <td>{{$index + 1}}</td>
+                                                                            <td><a role="button" ng-href="#/claim-requests/{{clientClaim.claimNumber}}">{{clientClaim.claimNumber}}</a></td>
+                                                                            <td>{{clientClaim.claimType.claimType}}</td>
+                                                                            <td>{{clientClaim.status}}</td>
+                                                                            <td ng-if="clientClaim.status == 'Pending Documets'"><a role="button" class="btn btn-info" ng-href="#/claim-requests/{{clientClaim.claimNumber}}/claim">Claim</a></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
 
                                                             </div>
 
@@ -139,8 +137,10 @@
 
                                                     </div>
 
+                                                </div>
 
-                                                    <div class="panel panel-default">
+
+                                          <div class="panel panel-default">
 
                                                         <div class="panel-heading">
 
@@ -166,7 +166,7 @@
                                                                                 <th>Download</th>
                                                                             </tr>
                                                                         </thead>
-                                                                        <tbody>
+                                                                       <tbody>
                                                                             <tr ng-if="claimRequest.investigationReportC != null">
                                                                                 <td>Investigation Report</td>
                                                                                 <td><a role="button" class="btn btn-default" ng-click="toggleModal(investigationReportURL, investigationReportName)"><span class="glyphicon glyphicon-eye-open"></span> view </a></td>
@@ -254,54 +254,54 @@
 
                                                 </div>
 
-                                                <div class="panel panel-default">
+                                                     <div class="panel panel-default">
 
-                                                    <div class="panel-heading">
+                                                        <div class="panel-heading">
 
-                                                        <h4 class="panel-title">
+                                                            <h4 class="panel-title">
 
-                                                            <a data-toggle="collapse" data-parent="#accordion"
-                                                               href="/#collapse13">Indemnity Option</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion"
+                                                                   href="/#collapse13">Indemnity Option</a>
 
-                                                        </h4>
-
-                                                    </div>
-
-                                                    <div id="collapse13" class="panel-collapse collapse in">
-
-                                                        <div class="panel-body">
-
-                                                            <div>          
-                                                                <table class="table table-striped">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Indemnity Option</th>
-                                                                            <th>Indemnity Value</th>
-                                                                            <th>Sum Insured</th>
-                                                                            <th>Premium</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr ng-repeat="indemnity in claimRequest.policy.indemnityOption">
-                                                                            <td><input type="text" class="form-control"
-                                                                                       ng-model="indemnity.indemnityItemOption"></td>
-                                                                            <td><input type="text" class="form-control"
-                                                                                       ng-model="indemnity.indemnityValue"></td>
-                                                                            <td><input type="text" class="form-control"
-                                                                                       ng-model="indemnity.sumInsured"></td>
-                                                                            <td><input type="text" class="form-control"
-                                                                                       ng-model="indemnity.premium"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-
-
-                                                            </div>
+                                                            </h4>
 
                                                         </div>
-                                                    </div>
 
-                                                </div>
+                                                        <div id="collapse13" class="panel-collapse collapse in">
+
+                                                            <div class="panel-body">
+
+                                                                <div>          
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Indemnity Option</th>
+                                                                                <th>Indemnity Value</th>
+                                                                                <th>Sum Insured</th>
+                                                                                <th>Premium</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="indemnity in claimRequest.policy.indemnityOption">
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.indemnityItemOption"></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.indemnityValue"></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.sumInsured"></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                           ng-model="indemnity.premium"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
 
                                             </div>
 
@@ -375,8 +375,7 @@
                     </div>
 
                     <div class="panel-footer text-right">
-                        <button class="btn btn-success" type="submit" ng-if="claimRequest.status == 'APPLIED'" ng-click="approveClaim(claimRequest.claimNumber)">Provisionally Approve Claim</button>
-                        <button class="btn btn-info" type="submit" ng-if="claimRequest.status == 'Approved'" ng-click="changeMode('accept')">Accept Claim Request</button>
+                        <button class="btn btn-success" type="submit" ng-click="approveClaim(claimRequest.claimNumber)">Approve Claim</button>
                         <button class="btn btn-warning" ng-click="changeMode('decline')">Decline Claim</button>
                     </div>
 
@@ -386,79 +385,6 @@
 
             </form>
         </div>
-
-
-        <form data-toggle="validator" role="form" name="releaseForm" id="releaseForm">
-            <div ng-if="mode == 'accept'" class="panel panel-default"
-                 style="box-shadow: 0 0 30px black;">
-                <div class="panel-heading">
-                    <h4>Create Release Form</h4>
-                </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="control-label" for="ClaimNumber">Claim Number</label> <input type="text" class="form-control"
-                                              ng-model="claimRequest.claimNumber" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="policyNumber">Policy Number</label>
-                        <input type="text" class="form-control"
-                               ng-model="claimRequest.policy.reference" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="insured">Insured</label>
-                        <input type="text" ng-model="claimRequest.policy.client.clientName" class="form-control" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="amountClaim">Amount Of Claim</label> <input type="text" class="form-control"
-                                        ng-model="amountClaim"
-                                             readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="lessExcess">Less Excess</label>
-                        <input type="text" class="form-control"
-                               ng-model="release.lessExcess" >
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="totalPayable">Total Payable To Insured</label> <input type="text" class="form-control"
-                                                ng-model="release.totalPayable"
-                                                >
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="goodsDescription">Description of Goods
-                           </label>
-                        <textarea class="form-control"
-                                  ng-model="release.goodDescription" required ></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="lossDate">Date Of Loss </label>
-                        <input type="text" class="form-control"
-                               ng-model="lossDate" required readonly>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="lossDescription">Description of Loss</label> <input type="text" class="form-control"
-                                                          ng-model="release.lossDescription" required >
-                    </div>
-                </div>
-
-
-                <div class="panel-footer text-right">
-                    <button  type="submit"
-                            class="btn btn-success" ng-click="save(form)">Create
-                        Release Form</button>
-                    <button class="btn btn-info" ng-readonly="releaseFormView"
-                            ng-if="isReleaseFormCreated == false"
-                            ng-click="updateReleaseForm(releaseForm)">Update/Preview Release Form</button>
-                    <button class="btn btn-warning" ng-click="changeMode(undefined)">Cancel</button>
-                    <button type="submit" class="btn btn-success"
-                            ng-click="submitQuotation()" ng-if="isReleaseFormCreated == false">Submit
-                        Release Form</button>
-
-                </div>
-            </div>
-        </form>
 
 
         <form data-toggle="validator" role="form" name="declineform"  id="declineform" >

@@ -17,9 +17,9 @@ import static za.co.polygon.mapper.Mapper.toClaimQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimRequest;
 import static za.co.polygon.mapper.Mapper.toClaimRequestQueryModel;
 import static za.co.polygon.mapper.Mapper.toClaimTypeQueryModel;
-import static za.co.polygon.mapper.Mapper.toClaimsAttachementsQueryModel;
 import static za.co.polygon.mapper.Mapper.toClientCommandModel;
 import static za.co.polygon.mapper.Mapper.toClientQueryModel;
+import static za.co.polygon.mapper.Mapper.toEndorsementQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyQueryModel;
 import static za.co.polygon.mapper.Mapper.toPolicyRequest;
 import static za.co.polygon.mapper.Mapper.toPolicyRequestQueryModel;
@@ -30,25 +30,29 @@ import static za.co.polygon.mapper.Mapper.toQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toQuotationRequest;
 import static za.co.polygon.mapper.Mapper.toQuotationRequestQueryModel;
+import static za.co.polygon.mapper.Mapper.toReleaseFormCommandModel;
 import static za.co.polygon.mapper.Mapper.toRequestQuestionnaireQueryModel;
 import static za.co.polygon.mapper.Mapper.toRequestTypeQueryModel;
 import static za.co.polygon.mapper.Mapper.toSelectedQuotationQueryModel;
 import static za.co.polygon.mapper.Mapper.toSubAgentQueryModel;
 import static za.co.polygon.mapper.Mapper.toUserQueryModel;
-import static za.co.polygon.mapper.Mapper.toEndorsementQueryModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +62,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Answer;
@@ -80,6 +86,7 @@ import za.co.polygon.domain.Questionnaire;
 import za.co.polygon.domain.Quotation;
 import za.co.polygon.domain.QuotationOption;
 import za.co.polygon.domain.QuotationRequest;
+import za.co.polygon.domain.ReleaseForm;
 import za.co.polygon.domain.RequestAnswer;
 import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
@@ -104,6 +111,7 @@ import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
 import za.co.polygon.model.QuotationRequestQueryModel;
+import za.co.polygon.model.ReleaseFormCommandModel;
 import za.co.polygon.model.RequestQuestionnaireQueryModel;
 import za.co.polygon.model.RequestTypeQueryModel;
 import za.co.polygon.model.SelectedQuotationQueryModel;
@@ -129,6 +137,7 @@ import za.co.polygon.repository.QuotationOptionRepository;
 import za.co.polygon.repository.QuotationRepository;
 import za.co.polygon.repository.QuotationRequestQuestionnaireRepository;
 import za.co.polygon.repository.QuotationRequestRepository;
+import za.co.polygon.repository.ReleaseFormRepository;
 import za.co.polygon.repository.RequestAnswersRepository;
 import za.co.polygon.repository.RequestTypeRepository;
 import za.co.polygon.repository.SubAgentRepository;
@@ -213,6 +222,9 @@ public class Service {
 
     @Autowired
     private ClaimRequestRepository claimRequestRepository;
+    
+    @Autowired	
+    private ReleaseFormRepository releaseFormRepository;
 
     @Autowired
     private ClaimRequestQuestionnaireRepository claimRequestQuestionnaireRepository;
@@ -341,14 +353,14 @@ public class Service {
         return documentService.policyScheduleReportPDF(policy);
 
     }
-    
+
     @RequestMapping(value = "api/policy-ref", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		public String getPolicyCounts() {
-			log.info("Find all policy for reference");
-			int lastPolicyNumber = policyRepository.findAll().size();
-			LocalDateTime now = LocalDateTime.now();;
-			return (now.getYear() + "-" + now.getMonthValue() + "" + String.format("%02d", lastPolicyNumber)).toString();
-		}
+    public String getPolicyCounts() {
+        log.info("Find all policy for reference");
+        int lastPolicyNumber = policyRepository.findAll().size();
+        LocalDateTime now = LocalDateTime.now();;
+        return (now.getYear() + "-" + now.getMonthValue() + "" + String.format("%02d", lastPolicyNumber)).toString();
+    }
 
     @RequestMapping(value = "api/quotation-request-pdf/{reference}", method = RequestMethod.GET, produces = "application/pdf")
     public byte[] viewQuotationPDF(@PathVariable("reference") String reference) throws JRException, IOException {
@@ -430,6 +442,17 @@ public class Service {
         quotation = quotationRepository.save(quotation);
         log.info("Quotation Command size: " + quotation.getQuotationOptions().size());
         log.info("Quotation Created Successfully !!!");
+
+    }
+    
+    @Transactional
+    @RequestMapping(value = "api/releaseForm", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createReleaseForm(@RequestBody ReleaseFormCommandModel releaseFormCommandModel){
+         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(releaseFormCommandModel.getClaimNumber());
+        claimRequest.setStatus("ACCEPTED");        
+        ReleaseForm releaseForm = toReleaseFormCommandModel(releaseFormCommandModel, claimRequest);
+        releaseFormRepository.save(releaseForm);
+        log.info("Release Form Created Successfully !!!");
 
     }
 
@@ -624,19 +647,96 @@ public class Service {
         log.info("found claim by claim number");
         return toClaimRequestQueryModel(claimRequest, claimQuestionnaires);
     }
-    
-   
-    @RequestMapping(value = "api/claim/{claimNumber}/attachments", method = RequestMethod.GET, produces = {"application/*","image/*"})
-    public List<byte[]> getAttachments(@PathVariable("claimNumber") String claimNumber) throws JRException, IOException {
-        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
-        return toClaimsAttachementsQueryModel(claimRequest);
 
-    }
-    @RequestMapping(value = "api/claim/{claimNumber}/photo4", method = RequestMethod.GET, produces = "image/*")
-    public byte[] getPhoto4(@PathVariable("claimNumber") String claimNumber) throws JRException, IOException {
+    @Transactional
+    @RequestMapping(value = "api/claim-requests/{claimNumber}/decline", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
+    public void declineClaimRequest(@PathVariable("claimNumber") String claimNumber, @RequestBody Map<String, String> reason) {
+        log.info("Declining Claim");
         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        claimRequest.setStatus("DECLINED");
+        notificationService.sendNotificationForDeclineClaimRequest(claimRequest, reason.get("reason"));
+        claimRequestRepository.save(claimRequest);
+        log.info("New status :" + claimRequest.getStatus());
+    }
     
-        return claimRequest.getPhoto4();
+    @Transactional
+    @RequestMapping(value = "api/claim-requests/{claimNumber}/provisionallyApprove", method = RequestMethod.PUT)
+    public void provisionallyApproveClaimRequest(@PathVariable("claimNumber") String claimNumber) {
+        log.info("Provisionally Approve");
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        claimRequest.setStatus("Provisionally Approved");
+        notificationService.sendNotificationForProvisionallyApproveClaimRequest(claimRequest);
+        claimRequestRepository.save(claimRequest);
+        log.info("New status :" + claimRequest.getStatus());
+    }
+    @Transactional
+    @RequestMapping(value = "api/claim-requests/{claimNumber}/approve", method = RequestMethod.PUT)
+    public void approveClaimRequest(@PathVariable("claimNumber") String claimNumber) {
+        log.info("Claim Approved");
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        claimRequest.setStatus("Approved");
+        notificationService.sendNotificationForApproveClaimRequest(claimRequest);
+        claimRequestRepository.save(claimRequest);
+        log.info("New status :" + claimRequest.getStatus());
+    }
+
+    @Transactional
+    @RequestMapping(value = "api/claim-requests/{claimNumber}/update", method = RequestMethod.PUT)
+    public void createClaimRequest(@PathVariable("claimNumber") String claimNumber, @RequestPart(value = "investigationReport", required = false) MultipartFile investigationReport, @RequestPart(value = "comfirmationAmount", required = false) MultipartFile comfirmationAmount,
+            @RequestPart(value = "proofOfPickup", required = false) MultipartFile proofOfPickup, @RequestPart(value = "transTrackDocument", required = false) MultipartFile transTrackDocument, @RequestPart(value = "quote", required = false) MultipartFile quote,
+            @RequestPart(value = "report", required = false) MultipartFile report, @RequestPart(value = "affidavit", required = false) MultipartFile affidavit,
+            @RequestPart(value = "photo1", required = false) MultipartFile photo1, @RequestPart(value = "photo2", required = false) MultipartFile photo2,
+            @RequestPart(value = "photo3", required = false) MultipartFile photo3, @RequestPart(value = "photo4", required = false) MultipartFile photo4,
+            @RequestPart(value = "amountBanked", required = false) MultipartFile amountBanked, @RequestPart(value = "proofOfPayment", required = false) MultipartFile proofOfPayment) throws IOException {
+
+        log.info("updating Claim");
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        claimRequest.setStatus("APPLIED");
+
+        if (affidavit != null) {
+            claimRequest.setAffidavit(affidavit.getBytes());
+            claimRequest.setAffidavitC(affidavit.getContentType());
+        }
+        if (report != null) {
+            claimRequest.setReport(report.getBytes());
+            claimRequest.setReportC(report.getContentType());
+        }
+        if (proofOfPickup != null) {
+            claimRequest.setProofOfPickup(proofOfPickup.getBytes());
+            claimRequest.setProofOfPickupC(proofOfPickup.getContentType());
+        }
+        if (transTrackDocument != null) {
+            claimRequest.setTransTrackDocument(transTrackDocument.getBytes());
+            claimRequest.setTransTrackDocumentC(transTrackDocument.getContentType());
+        }
+        if (amountBanked != null) {
+            claimRequest.setAmountBanked(amountBanked.getBytes());
+            claimRequest.setAmountBankedC(amountBanked.getContentType());
+        }
+        if (comfirmationAmount != null) {
+            claimRequest.setComfirmationAmount(comfirmationAmount.getBytes());
+            claimRequest.setComfirmationAmountC(comfirmationAmount.getContentType());
+        }
+        if (investigationReport != null) {
+            claimRequest.setInvestigationReport(investigationReport.getBytes());
+            claimRequest.setInvestigationReportC(investigationReport.getContentType());
+        }
+        if (photo1 != null) {
+            claimRequest.setPhoto1(photo1.getBytes());
+            claimRequest.setPhoto1C(photo1.getContentType());
+        }
+        if (photo2 != null) {
+            claimRequest.setPhoto2(photo2.getBytes());
+            claimRequest.setPhoto2C(photo2.getContentType());
+        }
+        if (photo3 != null) {
+            claimRequest.setPhoto3(photo3.getBytes());
+            claimRequest.setPhoto3C(photo3.getContentType());
+        }
+        if (photo4 != null) {
+            claimRequest.setPhoto4(photo4.getBytes());
+            claimRequest.setPhoto4C(photo4.getContentType());
+        }
 
     }
 
@@ -689,10 +789,10 @@ public class Service {
     @Transactional
     @RequestMapping(value = "api/generic-policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String createGenericPolicyRequest(@RequestBody PolicyRequestTypeCommandModel policyRequestTypeCommandModel) throws ParseException {
-    	int genericPolicyRequests = policyRequestTypeRepository.findAll().size();
+        int genericPolicyRequests = policyRequestTypeRepository.findAll().size();
         Policy policy = policyRepository.findByReference(policyRequestTypeCommandModel.getPolicyNo());
         RequestType requestType = requestTypeRepository.findOne(policyRequestTypeCommandModel.getRequestTypeId());
-        PolicyRequestType policyRequestType = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policy, requestType,genericPolicyRequests);
+        PolicyRequestType policyRequestType = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policy, requestType, genericPolicyRequests);
         PolicyRequestType savePolicyRequestType = policyRequestTypeRepository.save(policyRequestType);
 
         List<RequestAnswer> requestAnswers = fromPolicyRequestTypeCommandModel(policyRequestTypeCommandModel, policyRequestType);
@@ -720,5 +820,20 @@ public class Service {
         return toPolicyRequestTypeQueryModel(policyRequestTypes);
     }
 
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver() {
+            @Override
+            public boolean isMultipart(HttpServletRequest request) {
+                String method = request.getMethod().toLowerCase();
+                if (!Arrays.asList("put", "post").contains(method)) {
+                    return false;
+                }
+                String contentType = request.getContentType();
+                return (contentType != null && contentType.toLowerCase().startsWith("multipart/"));
+            }
+        };
+    }
 
 }
