@@ -1,0 +1,38 @@
+<div class="row" style="padding: 25px;" ng-init="init()">
+	<div class="col-md-12">
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>Generic Policy Requests</h4>
+			</div>
+			<div class="table-stripped">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Policy Number</th>
+							<th>Request Date</th>
+							<th>Description</th>
+							<th>Ref number</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="policyRequests in genericPolicyRequests">
+						<tr>
+							<td>{{$index + 1}}</td>
+							<td id="q_{{index}}">{{policyRequests.policy.reference}}</td>
+							<td id="q_{{index}}">{{policyRequests.createdDate}}</td>
+							<td id="q_{{index}}">{{policyRequests.reason}}</td>
+							<td id="q_{{index}}"><a
+								ng-href="#/policy-requests/{{policyRequests.reference}}"
+								ng-click="getPolicyRequest(policyRequests.quotation.quotationRequest.reference)">{{policyRequests.reference}}</a></td>
+							<td><a href="" role="button" class="btn btn-warning">Process</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+

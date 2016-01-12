@@ -6,17 +6,17 @@ clientAdmin.config(['$routeProvider', function ($routeProvider) {
                     'templateUrl': '/html/client-admin.html',
                     'controller': 'clientAdminCtrl'
                 }).when('/policy-request/:reference', {
-            'templateUrl': '/html/generic-policy-requests.html',
-            'controller': 'genericPolicyRequestsCtrl'
-        }).when('/claims/:reference', {
-            'templateUrl': '/html/claim.html',
-            'controller': 'claimCtrl'
-        }).when('/claim-requests/:claimNumber/claim', {
-            'templateUrl': '/html/update-claim.html',
-            'controller': 'updateClaimCtrl'
-        }).otherwise({
-            redirectTo: '/clients'
-        });
+                    'templateUrl': '/html/generic-policy-requests.html',
+                    'controller': 'genericPolicyRequestsCtrl'
+                }).when('/claims/:reference', {
+                    'templateUrl': '/html/claim.html',
+                    'controller': 'claimCtrl'
+                }).when('/claim-requests/:claimNumber/claim', {
+                    'templateUrl': '/html/update-claim.html',
+                    'controller': 'updateClaimCtrl'
+                }).otherwise({
+                    redirectTo: '/clients'
+                });
     }]);
 
 

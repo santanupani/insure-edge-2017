@@ -1,199 +1,216 @@
 <div class="row" style="padding: 25px;" ng-init="init()">
 
-    <div class="alert alert-success alert-dismissible" role="alert" ng-if="error">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Sorry ! </strong>{{error}}
-    </div>
+	<div class="alert alert-success alert-dismissible" role="alert"
+		ng-if="error">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close" ng-click="closeNotification()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Sorry ! </strong>{{error}}
+	</div>
 
-    <div class="alert alert-success alert-dismissible" role="alert" ng-if="message">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeNotification()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Success ! </strong>{{message}}
-    </div>
-
-
-    <div class="col-md-12">
-
-
-        <div class="panel panel-default" style="box-shadow: 0 0 30px black;">
-            <div class="panel-heading">
-                <h4><b>Client Details</b></h4>
-
-            </div>
-            <div class="panel-body">
-                <form role="form" name="form" id="form">
-                    <div class="row">
-                        <div class="col-md-6">
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4><b>Client Information</b></h4>
-                                </div>
-                                <div class="panel-body">
-
-                                    <div class="form-group">
-                                        <label>Company Name</label> <input type="text"
-                                                                           class="form-control" ng-model="client.clientName"
-                                                                           ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Reg no</label> <input type="text" class="form-control"
-                                                                     ng-model="client.regNumber" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Vat No</label> <input type="text" class="form-control"
-                                                                     ng-model="client.vatNumber" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Designation</label> <input type="text" class="form-control"
-                                                                          ng-model="client.designation" ng-readonly="is_readonly" />
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <div class="panel panel-default" style="height: 390px">
-                                <div class="panel-heading">
-                                    <h4><b>Client Policy List</b></h4>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control"
-                                               ng-model="clientPolicy"
-                                               placeholder="Search client Policy"> <span
-                                               class="input-group-btn">
-                                            <button type="submit" class="btn btn-default">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-
-                                    <div>          
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Policy Reference</th>
-                                                    <th>Subject Matter </th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody ng-repeat="clientPolicy in clientPolicies| filter:clientPolicy">
-                                                <tr>
-                                                    <td>{{$index + 1}}</td>
-                                                    <td id="q_{{index}}"><a role="button" ng-href="#/policy/{{clientPolicy.reference}}">{{clientPolicy.reference}}</a></td>
-                                                    <td id="q_{{index}}">{{clientPolicy.subjectMatter}}</td>
-                                                    <td id="q_{{index}}">{{clientPolicy.status}}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+	<div class="alert alert-success alert-dismissible" role="alert"
+		ng-if="message">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close" ng-click="closeNotification()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Success ! </strong>{{message}}
+	</div>
 
 
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4><b>Contact Details</b></h4>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label>Email</label> <input type="text" class="form-control"
-                                                                    ng-model="client.contact.email" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Contact Person </label> <input type="text"
-                                                                              class="form-control" ng-model="client.contact.contactPerson"
-                                                                              ng-readonly="is_readonly" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Street </label> <input type="text" class="form-control"
-                                                                      ng-model="client.contact.street" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Suburb</label> <input type="text" class="form-control"
-                                                                     ng-model="client.contact.suburb" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Code</label> <input type="text" class="form-control"
-                                                                   ng-model="client.contact.code" ng-readonly="is_readonly" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <div class="panel panel-default" style="height: 460px">
-                                <div class="panel-heading">
-                                    <h4><b>Bank Account</b></h4>
-                                </div>
-                                <div class="panel-body">
-
-                                    <div class="form-group">
-                                        <label>Account No </label> <input type="text"
-                                                                          class="form-control"
-                                                                          ng-model="client.bankAccounts.accountNumber"
-                                                                          ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Account Name</label> <input type="text"
-                                                                           class="form-control"
-                                                                           ng-model="client.bankAccounts.accountName" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Branch </label> <input type="text" class="form-control"
-                                                                      ng-model="client.bankAccounts.branch" ng-readonly="is_readonly" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Bank Name</label> <input type="text"
-                                                                        class="form-control" ng-model="client.bankAccounts.bankName"
-                                                                        ng-readonly="is_readonly" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="panel-footer text-right">
-                <p>
-
-                    <a class="btn btn-info" ng-href="#/clients" role="button">Back</a>
-                    <button type="submit" class="btn btn-info" form="form"  ng-click="updateClient()">Update</button>
-                    <button type="submit" class="btn btn-info" form="form"  ng-disabled="isDisabled" ng-click="edit(false, true)">Edit</button>
-                </p>
-            </div>
-        </div>
+	<div class="col-md-12">
 
 
+		<div class="panel panel-default" style="box-shadow: 0 0 30px black;">
+			<div class="panel-heading">
+				<h4>
+					<b>Client Details</b>
+				</h4>
 
-    </div>
+			</div>
+			<div class="panel-body">
+				<form role="form" name="form" id="form">
+					<div class="row">
+						<div class="col-md-6">
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4>
+										<b>Client Information</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+
+									<div class="form-group">
+										<label>Company Name</label> <input type="text"
+											class="form-control" ng-model="client.clientName"
+											ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Reg no</label> <input type="text" class="form-control"
+											ng-model="client.regNumber" ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Vat No</label> <input type="text" class="form-control"
+											ng-model="client.vatNumber" ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Designation</label> <input type="text"
+											class="form-control" ng-model="client.designation"
+											ng-readonly="is_readonly" />
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-md-6">
+
+							<div class="panel panel-default" style="height: 390px">
+								<div class="panel-heading">
+									<h4>
+										<b>Client Policy List</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+									<div class="input-group">
+										<input type="text" class="form-control"
+											ng-model="clientPolicy" placeholder="Search client Policy">
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-default">
+												<span class="glyphicon glyphicon-search"></span>
+											</button>
+										</span>
+									</div>
+
+									<div>
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Policy Reference</th>
+													<th>Subject Matter</th>
+													<th>Status</th>
+												</tr>
+											</thead>
+											<tbody
+												ng-repeat="clientPolicy in clientPolicies| filter:clientPolicy">
+												<tr>
+													<td>{{$index + 1}}</td>
+													<td id="q_{{index}}"><a
+														ng-href="#/policy/{{clientPolicy.reference}}"
+														ng-click="getPolicy(clientPolicy.reference)" role="link">{{clientPolicy.reference}}</a>
+													</td>
+													<td id="q_{{index}}">{{clientPolicy.subjectMatter}}</td>
+													<td id="q_{{index}}">{{clientPolicy.status}}</td>
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+							</div>
+						</div>
 
 
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4>
+										<b>Contact Details</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<label>Email</label> <input type="text" class="form-control"
+											ng-model="client.contact.email" ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Contact Person </label> <input type="text"
+											class="form-control" ng-model="client.contact.contactPerson"
+											ng-readonly="is_readonly" />
+									</div>
+									<div class="form-group">
+										<label>Street </label> <input type="text" class="form-control"
+											ng-model="client.contact.street" ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Suburb</label> <input type="text" class="form-control"
+											ng-model="client.contact.suburb" ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Code</label> <input type="text" class="form-control"
+											ng-model="client.contact.code" ng-readonly="is_readonly" />
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-6">
+
+							<div class="panel panel-default" style="height: 460px">
+								<div class="panel-heading">
+									<h4>
+										<b>Bank Account</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+
+									<div class="form-group">
+										<label>Account No </label> <input type="text"
+											class="form-control"
+											ng-model="client.bankAccounts.accountNumber"
+											ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Account Name</label> <input type="text"
+											class="form-control"
+											ng-model="client.bankAccounts.accountName"
+											ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Branch </label> <input type="text" class="form-control"
+											ng-model="client.bankAccounts.branch"
+											ng-readonly="is_readonly" />
+									</div>
+
+									<div class="form-group">
+										<label>Bank Name</label> <input type="text"
+											class="form-control" ng-model="client.bankAccounts.bankName"
+											ng-readonly="is_readonly" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="panel-footer text-right">
+				<p>
+
+					<a class="btn btn-info" ng-href="#/clients" role="button">Back</a>
+					<button type="submit" class="btn btn-info" form="form"
+						ng-click="updateClient()">Update</button>
+					<button type="submit" class="btn btn-info" form="form"
+						ng-disabled="isDisabled" ng-click="edit(false, true)">Edit</button>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
 
 

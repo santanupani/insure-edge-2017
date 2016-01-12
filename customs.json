@@ -1,8 +1,13 @@
 {
-    "elements": {},
+    "elements": {
+        "modal": {}
+    },
     "attributes": {
         "rel": {
             "context": "script"
+        },
+        "file-model": {
+            "context": "input"
         }
     }
 }
