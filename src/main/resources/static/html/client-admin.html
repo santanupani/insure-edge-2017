@@ -176,7 +176,7 @@
                                                     <td><a role="button" ng-href="#/claim-requests/{{clientClaim.claimNumber}}">{{clientClaim.claimNumber}}</a></td>
                                                     <td>{{clientClaim.claimType.claimType}}</td>
                                                     <td>{{clientClaim.status}}</td>
-                                                    <td ng-if="clientClaim.status == 'Pending Documets'"><a role="button" class="btn btn-info" ng-href="#/claim-requests/{{clientClaim.claimNumber}}/claim">Claim</a></td>
+                                                    <td ng-if="clientClaim.status == 'Pending Documets' || clientClaim.status == 'Pending Documents Requested'"><a role="button" class="btn btn-info" ng-href="#/claim-requests/{{clientClaim.claimNumber}}/claim">Claim</a></td>
                                                  </tr>
                                             </tbody>
                                         </table>

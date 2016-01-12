@@ -665,10 +665,22 @@ public class Service {
         log.info("Provisionally Approve");
         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
         claimRequest.setStatus("Provisionally Approved");
-        notificationService.sendNotificationForProvisionallyApproveClaimRequest(claimRequest,"polygon.testing@gmail.com");
+        notificationService.sendNotificationForProvisionallyApproveClaimRequest(claimRequest);
         claimRequestRepository.save(claimRequest);
         log.info("New status :" + claimRequest.getStatus());
     }
+    
+    @Transactional
+    @RequestMapping(value = "api/claim-requests/{claimNumber}/pendingDocuments", method = RequestMethod.PUT)
+    public void requestForPendingDocuments(@PathVariable("claimNumber") String claimNumber) {
+        log.info("request for pending documents");
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        claimRequest.setStatus("Pending Documents Requested");
+        notificationService.sendNotificationForRequestingPendingDocuments(claimRequest);
+        claimRequestRepository.save(claimRequest);
+        log.info("New status :" + claimRequest.getStatus());
+    }
+    
     @Transactional
     @RequestMapping(value = "api/claim-requests/{claimNumber}/approve", method = RequestMethod.PUT)
     public void approveClaimRequest(@PathVariable("claimNumber") String claimNumber) {

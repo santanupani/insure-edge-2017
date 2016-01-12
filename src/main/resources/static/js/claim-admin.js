@@ -350,6 +350,31 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
 
 
     };
+    $scope.requestForPendingDocuments = function (claimNumber) {
+
+        $http({
+            url: '/api/claim-requests/' + claimNumber + "/pendingDocuments",
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (data, status) {
+            console.log('get success code:' + status);
+            if (status == 200) {
+                console.log('Requested For Pending Documents');
+                $rootScope.message = "Request for pending documents Successfull";
+                $location.path("/claim-requests");
+            } else {
+                console.log('status:' + status);
+            }
+        })
+                .error(function (error) {
+                    $rootScope.message = "";
+                    console.log(error);
+                });
+
+
+    };
 
     $scope.download = function (attachment, claimNumber, documentName) {
         saveAs(attachment, claimNumber + " - " + documentName);
