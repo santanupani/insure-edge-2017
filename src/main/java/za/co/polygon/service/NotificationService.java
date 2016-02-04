@@ -208,9 +208,9 @@ public class NotificationService {
         getMessageRepository().publish(notification, "q.notification");
     }
 
-    public void sendNotificationForProvisionallyApproveClaimRequest(ClaimRequest claimRequest) {
+    public void sendNotificationForRequestApprovalForClaimRequest(ClaimRequest claimRequest) {
         String to = "polygon.broker@gmail.com";
-        String subject = "Claim Request Provisionally Approved by Susan Atto";
+        String subject = "Request Claim Request Approval by Susan Atto";
         String message = String.format(
                 "Dear Hentie Snyder ," + "\n"
                 + "\n"
@@ -266,6 +266,27 @@ public class NotificationService {
                 + "Thanks" + "\n"
                         + "\n"
                 + "Hentie Snyder",
+                claimRequest.getClaimNumber(),
+                hostname,
+                port,
+                claimRequest.getClaimNumber());
+        Notification notification = new Notification(to, subject, message);
+        getMessageRepository().publish(notification, "q.notification");
+    }
+    public void sendNotificationForAcceptedClaimRequest(ClaimRequest claimRequest) {
+        String to = claimRequest.getPolicy().getClient().getContacts().getEmail();
+        String subject = "Claim Request Approved by Gerard";
+        String message = String.format(
+                "Dear Susan Atto ," + "\n"
+                + "\n"
+                + "Claim request for Claim No : %s has been approved by Gerard" + "\n"
+                + "\n"
+                + "Please click the link below to apply for a policy" + " \n"
+                + "http://%s:%s/polygon/manager.html#/claimRequests/%s " + " \n"
+                        + "\n"
+                + "Thanks" + "\n"
+                        + "\n"
+                + "Gerard",
                 claimRequest.getClaimNumber(),
                 hostname,
                 port,

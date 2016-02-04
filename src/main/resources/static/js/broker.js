@@ -759,7 +759,7 @@ broker.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $rout
 		}).success(function (data, status) {
 			console.log('get success code:' + status);
 			if (status == 200) {
-				console.log('Claim approved Reason');
+				console.log('Claim approved');
 				$rootScope.message = "Claim Request approved Successfully";
 				$location.path("/claims");
 			} else {

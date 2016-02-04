@@ -357,9 +357,9 @@
 
                                 </div>
                                             <div class="panel-footer text-right">
-                        <button class="btn btn-success" type="submit" ng-if="claimRequest.status == 'APPLIED'" ng-click="approveClaim(claimRequest.claimNumber)">Provisionally Approve Claim</button>
+                        <button class="btn btn-info" type="submit" ng-if="claimRequest.status == 'APPLIED'" ng-click="approveClaim(claimRequest.claimNumber)">Request For Approval</button>
                         <button class="btn btn-info" type="submit" ng-if="claimRequest.status == 'Pending Documets'" ng-click="requestForPendingDocuments(claimRequest.claimNumber)">Request For Pending Documents</button>
-                        <button class="btn btn-info" type="submit" ng-if="claimRequest.status == 'Approved'" ng-click="changeMode('accept')">Accept Claim Request</button>
+                        <button class="btn btn-info" type="submit" ng-if="claimRequest.status == 'Accepted'" ng-click="changeMode('accept')">Accept Claim Request</button>
                         <button class="btn btn-warning" ng-click="changeMode('decline')">Decline Claim</button>
                     </div>
                             </div>
