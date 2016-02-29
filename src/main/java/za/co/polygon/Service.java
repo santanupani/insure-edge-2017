@@ -664,12 +664,12 @@ public class Service {
     }
     
     @Transactional
-    @RequestMapping(value = "api/claim-requests/{claimNumber}/provisionallyApprove", method = RequestMethod.PUT)
+    @RequestMapping(value = "api/claim-requests/{claimNumber}/request-approval", method = RequestMethod.PUT)
     public void provisionallyApproveClaimRequest(@PathVariable("claimNumber") String claimNumber) {
-        log.info("Provisionally Approve");
+        log.info("Request approval");
         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
-        claimRequest.setStatus("Provisionally Approved");
-        notificationService.sendNotificationForProvisionallyApproveClaimRequest(claimRequest);
+        claimRequest.setStatus("ApprovalRequest");
+        notificationService.sendNotificationForRequestApprovalForClaimRequest(claimRequest);
         claimRequestRepository.save(claimRequest);
         log.info("New status :" + claimRequest.getStatus());
     }
@@ -692,6 +692,17 @@ public class Service {
         ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
         claimRequest.setStatus("Approved");
         notificationService.sendNotificationForApproveClaimRequest(claimRequest);
+        claimRequestRepository.save(claimRequest);
+        log.info("New status :" + claimRequest.getStatus());
+    }
+    
+    @Transactional
+    @RequestMapping(value = "api/claim-requests/{claimNumber}/accept", method = RequestMethod.PUT)
+    public void acceptClaimRequest(@PathVariable("claimNumber") String claimNumber) {
+        log.info("Claim accepted");
+        ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(claimNumber);
+        claimRequest.setStatus("Accepted");
+        notificationService.sendNotificationForAcceptedClaimRequest(claimRequest);
         claimRequestRepository.save(claimRequest);
         log.info("New status :" + claimRequest.getStatus());
     }
@@ -791,6 +802,7 @@ public class Service {
 
         return toRequestTypeQueryModel(requestType);
     }
+    
 
     @RequestMapping(value = "api/request-type/{requestTypeId}/request-questionnaire", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RequestQuestionnaireQueryModel> findRequestTypeQuestionnaires(@PathVariable("requestTypeId") Long requestTypeId) {
@@ -801,6 +813,7 @@ public class Service {
 
         return toRequestQuestionnaireQueryModel(requestQuestionnaire);
     }
+    
 
     @Transactional
     @RequestMapping(value = "api/generic-policy-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

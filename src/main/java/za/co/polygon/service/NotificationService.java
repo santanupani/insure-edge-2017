@@ -315,13 +315,12 @@ public class NotificationService {
         getMessageRepository().publish(notification, "q.notification");
     }
 
-    public void sendNotificationForProvisionallyApproveClaimRequest(ClaimRequest claimRequest) {
-//        String to = "quotes@polygongroup.co.za";
+
+    public void sendNotificationForRequestApprovalForClaimRequest(ClaimRequest claimRequest) {
         String to = "polygon.broker@gmail.com";
 //        String cc = "obertvdw@gmail.com";
-        String cc = "binod.sethi@gmail.com";
-        String subject = "Claim Request Provisionally Approved by Susan Atto";
-
+        String cc = "binod.sethi@gmail.com"; 
+        String subject = "Claim Request Provisionally Approval by Susan Atto";
         String message = String.format(
                 "Dear Hentie Snyder ," + "<br>"
                 + "<br>"
@@ -393,6 +392,39 @@ public class NotificationService {
         String message = String.format(
                 "Dear Susan Atto ," + "<br>"
                 + "<br>"
+                + "Claim request for Claim No : %s has been approved by Hentie Snyder" + "<br>"
+                + "<br>"
+                + "Please click the link below to apply for a policy" + " <br>"
+                + "http://%s:%s/polygon/broker.html#/claimRequests/%s " + " <br>"
+                + "<br>"
+                + "Hentie Synder"
+                + "Trust you find the above in order." + "<br>" 
+                + "Kind Regards," + "<br>"
+                + "On behalf of Polygon Underwriting Agency (Pty) Ltd" + "<br>"
+                + "<br>" 
+                + "<br>"
+                + "<img src=\"cid:image\">" + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                + "<br>",
+                claimRequest.getClaimNumber(),
+                hostname,
+                port,
+                claimRequest.getClaimNumber());
+        Notification notification = new Notification(to, cc, subject, message);
+        getMessageRepository().publish(notification, "q.notification");
+    }
+    
+    public void sendNotificationForAcceptedClaimRequest(ClaimRequest claimRequest) {
+        String to = claimRequest.getPolicy().getClient().getContacts().getEmail();
+//        String cc = "obertvdw@gmail.com";
+        String cc = "binod.sethi@gmail.com";
+        String subject = "Claim Request Approved by Gerard";
+        String message = String.format(
+                "Dear Susan Atto ," + "<br>"
+               + "<br>"
                 + "Claim request for Claim No : %s has been approved by Hentie Snyder" + "<br>"
                 + "<br>"
                 + "Please click the link below to apply for a policy" + " <br>"

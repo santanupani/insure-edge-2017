@@ -328,7 +328,7 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
     $scope.approveClaim = function (claimNumber) {
 
         $http({
-            url: '/api/claim-requests/' + claimNumber + "/provisionallyApprove",
+            url: '/api/claim-requests/' + claimNumber + "/request-approval",
             method: 'put',
             headers: {
                 'Content-Type': 'application/json'
@@ -336,8 +336,8 @@ claimAdmin.controller('claimRequestCtrl', function ($scope, $rootScope, $http, $
         }).success(function (data, status) {
             console.log('get success code:' + status);
             if (status == 200) {
-                console.log('Claim provisionally approved Reason:');
-                $rootScope.message = "Claim Request approved Successfully";
+                console.log('Claim Approval Requested');
+                $rootScope.message = "Claim Approval Requested Successfully";
                 $location.path("/claim-requests");
             } else {
                 console.log('status:' + status);
