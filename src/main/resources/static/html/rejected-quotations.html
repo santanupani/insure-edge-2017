@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="input-group input-group-lg" style="box-shadow: 0 0 30px black;">
                 <span class="input-group-addon" id="sizing-addon1">Quotations</span>
-                <input ng-model="rejectedQuotationRequest" type="text" class="form-control" placeholder="Search..." aria-describedby="sizing-addon1">
+                <input ng-model="quotationRequest" type="text" class="form-control" placeholder="Search..." aria-describedby="sizing-addon1">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">
                         <span class="glyphicon glyphicon-search"></span>
@@ -22,16 +22,16 @@
                                 <tr>
                                     <th>Company Name</th>
                                     <th>Contact Person</th>
-                                    <th>Email</th>
-                                    <th>Details</th>
+                                    <th>Status</th>
+                                    <th>Reference</th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="quotationRequest in rejectedQuotationRequests| filter:rejectedQuotationRequest">
-                                <tr>
+                            <tbody ng-repeat="quotationRequest in quotationRequests | filter:quotationRequest">
+                                <tr ng-if="quotationRequest.status == 'REJECTED'">
                                     <td>{{quotationRequest.companyName}}</td>
                                     <td>{{quotationRequest.applicantName}}</td>
-                                    <td>{{quotationRequest.applicantEmail}}</td>
-                                    <td><a class="btn btn-info" ng-href="#/quotation-requests/{{quotationRequest.reference}}">View Quote</a></td>
+                                    <td>{{quotationRequest.status}}</td>
+                                    <td><a style="color: #C50000" ng-href="#/quotation-requests/{{quotationRequest.reference}}">{{quotationRequest.reference}}</a></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -137,6 +137,7 @@
 		<sequence>
 			<element name="quotationId" type="long" />
 			<element name="createdDate" type="string" />
+                        <element name="note" type="string" />
 			<element name="quotationRequest" minOccurs="0" maxOccurs="1"
 				type="tns:QuotationRequestQueryModel" />
 			<element name="option" minOccurs="0" maxOccurs="unbounded">
@@ -327,6 +328,7 @@
 			<element name="premium" type="double" />
 			<element name="pavement" type="double" />
 			<element name="staticLimit" type="double" />
+                        <element name="note" type="string" />
 		</sequence>
 	</complexType>
 

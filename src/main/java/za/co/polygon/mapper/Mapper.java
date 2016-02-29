@@ -438,6 +438,7 @@ public class Mapper {
     public static Quotation fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel, QuotationRequest quotationRequest) {
         Quotation quotation = new Quotation();
         quotation.setCreatedDate(new Date());
+//        quotation.setNote();
         quotation.setQuotationRequest(quotationRequest);
 
         List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();

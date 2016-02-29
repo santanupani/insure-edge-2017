@@ -3,6 +3,9 @@ package za.co.polygon.repository;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.activation.URLDataSource;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -56,18 +59,38 @@ public class MailRepository {
     }
 
     public void send(Notification notification) throws AddressException, MessagingException {
+        
+        
+        
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(getUsername()));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(notification.getTo()));
+        message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(notification.getCc()));
         message.setSubject(notification.getSubject());
-        message.setText(notification.getMessage());
+        
+        Multipart mp = new MimeMultipart();
+        BodyPart bodyPart = new MimeBodyPart();
+        bodyPart.setContent(notification.getMessage(), "text/html");
+        mp.addBodyPart(bodyPart);
+        message.setContent(mp);
+        
+        bodyPart = new MimeBodyPart();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        if (classLoader == null){
+            classLoader = this.getClass().getClassLoader();
+        }
+        DataSource fds = new URLDataSource(classLoader.getResource("\\static\\img\\products\\signature.gif"));
+        bodyPart.setDataHandler(new DataHandler(fds));
+        bodyPart.setDisposition(MimeBodyPart.INLINE);
+        bodyPart.setHeader("Content-ID", "<image>");
+          
+        mp.addBodyPart(bodyPart);
+        
+        message.setContent(mp);
+
+
 
        if (notification.getAttachment() != null) {
-            Multipart mp = new MimeMultipart();
-            BodyPart textPart = new MimeBodyPart();
-            textPart.setText(notification.getMessage());
-            mp.addBodyPart(textPart);
-
             MimeBodyPart attachment = new MimeBodyPart();
             attachment.setHeader("Content-Type", "application/pdf");
 
@@ -82,12 +105,12 @@ public class MailRepository {
         Transport.send(message);
     }
 
-	public String getUsername() {
+    public String getUsername() {
 		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 }

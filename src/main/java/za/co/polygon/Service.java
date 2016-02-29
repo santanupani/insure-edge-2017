@@ -310,6 +310,8 @@ public class Service {
         SubAgent subAgent = subAgentRepository.findOne(PolicyQueryModel.getSubAgent().getId());
         log.info("Product Name: " + policy.getProductName());
         Policy updatePolicy = policyRepository.save(toApprovePolicyCommandModel(PolicyQueryModel, policy, subAgent));
+//        notificationService.sendNotificationForApprovalToBroker(updatePolicy,"quotes@polygongroup.co.za");
+//        notificationService.sendNotificationForApprovalToUnderwritter(updatePolicy,"eric@polygongroup.co.za ");
         notificationService.sendNotificationForApprovalToBroker(updatePolicy,"polygon.broker@gmail.com");
         notificationService.sendNotificationForApprovalToUnderwritter(updatePolicy,"polygon.underwriter@gmail.com");
         return toPolicyQueryModel(updatePolicy);
@@ -319,6 +321,7 @@ public class Service {
     public String requestPolicyApproval(@PathVariable("reference") String reference) {
         log.info("Sending email notification for policy request approval");
         Policy policy = policyRepository.findByReference(reference);
+//        notificationService.sendNotificationForRequestPolicyApproval(policy, "gerhard@polygongroup.co.za");
         notificationService.sendNotificationForRequestPolicyApproval(policy, "polygon.testing@gmail.com");
         return "Approval Request sent successfully";
     }
@@ -533,7 +536,8 @@ public class Service {
         log.info("saved all the values");
         log.info("Policy Request Object :" + policyRequest.toString());
 
-        notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "polygon.underwriter@gmail.com", "Polygon Underwritter");
+//        notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "eric@polygongroup.co.za ", "Polygon UnderwriterAdmin");
+        notificationService.sendNotificationForNewPolicyRequest(policyRequest, file, "polygon.underwriter@gmail.com", "Polygon UnderwriterAdmin");
     }
 
     @RequestMapping(value = "api/policy-requests/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -774,7 +778,7 @@ public class Service {
 
         claimRequestQuestionnaireRepository.save(claimRequestQuestionnaires);
 
-        notificationService.sendNotificationForNewClaimRequest(claimRequest, "polygon.testing@gmail.com", "Polygon Claims Department");
+        notificationService.sendNotificationForNewClaimRequest(claimRequest, "claims@polygongroup.co.za", "Polygon Claims Department");
 
         return claimRequest.getClaimNumber();
     }
@@ -811,7 +815,8 @@ public class Service {
 
         requestAnswersRepository.save(requestAnswers);
 
-        notificationService.sendNotificationForNewGenericPolicyRequest(savePolicyRequestType, "polygon.testing@gmail.com");
+//        notificationService.sendNotificationForNewGenericPolicyRequest(savePolicyRequestType, "eric@polygongroup.co.za ");
+        notificationService.sendNotificationForNewGenericPolicyRequest(savePolicyRequestType, "polygon.underwriter@gmail.com");
         log.info("Generic policy request created Successfully !!!");
         return savePolicyRequestType.getReference();
     }

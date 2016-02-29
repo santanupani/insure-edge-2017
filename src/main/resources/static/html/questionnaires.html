@@ -151,20 +151,19 @@
 
 											<div class="form-group"
 												ng-if="option.isGoodsMoved == false && productId != 4">
-												<label class="control-label" for="commodity">What is
-													the total full value of the goods being moved?</label> <input
-													type="text"
-													placeholder="100 000 000 or differs from day to day"
-													class="form-control" ng-model="option.totalValue">
+												<label class="control-label" for="commodity">Description and full value 
+													 of the goods being moved?</label> 
+                                                                                                <textarea class="form-control"  placeholder="100 000 000 or differs from day to day" 
+                                                                                                          ng-model="option.totalValue" maxlength="256" required></textarea>
 											</div>
 
 											<div class="form-group"
 												ng-if="option.isGoodsMovedStatic == false && productId == 4">
-												<label class="control-label" for="commodity">What is
-													the total full value of the goods being moved in Cash in
-													transit ?</label> <input type="text"
+												<label class="control-label" for="commodity">Description and full value 
+													 of the goods being moved in Cash in
+													transit ?</label> <textarea
 													placeholder="100 000 000 or differs from day to day"
-													class="form-control" ng-model="option.transitTotalValue">
+													class="form-control" ng-model="option.transitTotalValue" maxlength="256"></textarea>
 											</div>
 
 											<div>
@@ -205,13 +204,23 @@
 													required>
 													<option value="" disabled selected>Select your
 														professional carrier</option>
-													<option value="Protea Coin Service">Protea Coin
-														Service</option>
-													<option value="G4S Service">G4S Service</option>
-													<option value="Fidelity Service">Fidelity Service</option>
-													<option value="Imperial Logistics">Imperial
-														Logistics</option>
+													<option value="Fidelity Security Solutions">G4S Security Solutions</option>
+													<option value="Fidelity Security Solutions">Fidelity Security Solutions</option>
+                                                                                                        <option value="SBV Security Solutions">SBV Services</option>
+													<option value="Imperial Logistics">Imperial Logistics</option>
+                                                                                                        <option value="Izikathi">Izikathi</option>
+                                                                                                        <option value="Quiniseka">Quiniseka</option>
+                                                                                                        <option value="Transcash">Transcash</option>
+                                                                                                        <option value="Braziers">Braziers</option>
+                                                                                                        <option value="Rens Kontant in transito">Rens Kontant In Transito</option>
+                                                                                                        <option value="Gold Kid">Gold Kid</option>
+                                                                                                        <option value="Other">Other</option>
 												</select>
+                                                                                            <div ng-if="option.professionalCarriers =='Other'" class="form-group">
+                                                                                                <label class="control-label">What is the name of your Professional Valuable Carriers?</label>
+                                                                                                <input type="text" class="form-control"
+                                                                                                       ng-model="option.otherProfessionalCarriers" required>
+                                                                                            </div>
 											</div>
 
 											<div class="form-group"
@@ -286,25 +295,24 @@
 											<div class="form-group" ng-if="productId == 4">
 												<label><input type="checkbox"
 													ng-model="option.isGoodsMoved" /> Is the above amount the
-													total full value of the goods being stored in static ?</label>
+													total full value of the goods being statically stored ?</label>
 											</div>
 
 											<div class="form-group"
 												ng-if="option.isGoodsMoved == false && productId == 4">
-												<label class="control-label" for="commodity">What is
-													the total full value of the goods being stored in static?</label> <input
-													type="text" class="form-control"
+												<label class="control-label" for="commodity">Description and full value 
+													 of the goods being statically stored?</label> <textarea class="form-control"
 													placeholder="100 000 000 or differs from day to day"
-													ng-model="option.staticMaxAmount">
+                                                                                                        ng-model="option.staticMaxAmount" maxlength="256"></textarea>
 											</div>
 
 											<div class="form-group"
 												ng-if="productId == 2 || productId == 4">
 												<label class="control-label" for="commodity">Please
-													give a full description of the goods to be insured?</label> <input
-													type="text" class="form-control"
+													give a full description of the goods to be insured?</label>
+                                                                                                    <textarea class="form-control"
 													placeholder="Description of the Goods"
-													ng-model="option.goodsDescription">
+                                                                                                        ng-model="option.goodsDescription" maxlength="256"></textarea>
 											</div>
 											<div class="form-group"
 												ng-if="productId == 2 || productId == 4">
@@ -416,17 +424,18 @@
 									<td><select class="form-control"
 										ng-model="history.eventDate" required>
 											<option value="" disabled selected>Select the year</option>
-											<option value="2009">2009</option>
-											<option value="2010">2010</option>
 											<option value="2011">2011</option>
 											<option value="2012">2012</option>
 											<option value="2013">2013</option>
 											<option value="2014">2014</option>
 											<option value="2015">2015</option>
+                                                                                        <option value="2016">2016</option>
 									</select></td>
-									<td><input type="text" class="form-control"
-										placeholder="R 100,000,00," pattern="[0-9]+([\.,][0-9]+)*"
-										format ng-model="history.lossValue" required></td>
+                                                                        <td width="300px"><div class="input-group"><span class="input-group-addon">R</span> <input type="text"
+														class="form-control" ng-model="history.lossValue"
+														placeholder="1 000 000" pattern="[0-9]+([\.,][0-9]+)*"
+														format min="5000.00" max="1000000.00" required>
+												</div></td>
 									<td><input type="text" class="form-control"
 										ng-model="history.typeOfLoss" placeholder="Eg. Robbery"
 										required></td>

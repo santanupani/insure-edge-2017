@@ -25,6 +25,15 @@ create table jasper_images(
     image varchar(128) 
 );
 
+
+/* table : device */
+create table devices(
+     id integer auto_increment not null primary key,
+     name varchar(256) not null
+     
+);
+
+
 /* table: answer_types */
 create table answer_types(
     id integer auto_increment not null primary key,
@@ -69,7 +78,7 @@ create table quotation_requests(
     id integer auto_increment not null primary key,
     reference varchar(64) not null,
     applicant_name varchar(32) not null,
-    company_name varchar(32) not null,
+    company_name varchar(64) not null,
     applicant_email varchar(64) not null,
     broker_id integer not null,
     product_id integer not null,
@@ -96,31 +105,31 @@ create table location_options(
     quotation_request_id integer not null,
     commodity varchar(256) not null,
     from_location varchar(128),
-    to_location varchar(128),
-    distance varchar(32),
+    to_location varchar(256),
+    distance varchar(64),
     max_limit double,
     static_limit double,
     static_max_amount varchar(32),
     sabs_category varchar(32),
-    total_value varchar(64),
-    transit_total_value varchar(64),
-    total_value_static varchar(64),
-    professional_carriers varchar(32),
+    total_value varchar(256),
+    transit_total_value varchar(256),
+    total_value_static varchar(256),
+    professional_carriers varchar(64),
     duration varchar(32) not null,
     is_first_loss_cover boolean,
     is_goods_moved boolean,
     is_goods_moved_static boolean,
     is_service_carrier boolean not null,
-    carrier_name varchar(32),
-    specific_carrier varchar(32),
-    goods_description varchar(64),
+    carrier_name varchar(64),
+    specific_carrier varchar(64),
+    goods_description varchar(256),
     is_store_vault boolean,
     is_concrete_secured boolean,
     is_seismic_detector boolean,
     is_cctv boolean,
     is_alarmed boolean,
-    storage_type varchar(32),
-    vault_address varchar(128),
+    storage_type varchar(64),
+    vault_address varchar(256),
     other_secure_means varchar(256),
     constraint location_options_fk1 foreign key (quotation_request_id) references quotation_requests (id)   
 );
@@ -141,6 +150,7 @@ create table quotations(
     quotation_request_id integer not null,
     created_date date not null,
     expired_date date null,
+    note varchar(256) null,
     constraint quotations_fk1 foreign key (quotation_request_id) references quotation_requests (id)
 );
 

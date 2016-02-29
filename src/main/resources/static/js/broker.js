@@ -7,11 +7,11 @@ broker.config(['$routeProvider', function ($routeProvider) {
                     'controller': 'listQuotationRequestCtrl'
                 })
                 .when('/approved-quotation-requests', {
-                    'templateUrl': '/html/rejected-quotations.html',
+                    'templateUrl': '/html/approved-quotations.html',
                     'controller': 'approvedQuotationRequestCtrl'
                 })
                 .when('/rejected-quotation-requests', {
-                    'templateUrl': '/html/approved-quotations.html',
+                    'templateUrl': '/html/rejected-quotations.html',
                     'controller': 'rejectedQuotationRequestCtrl'
                 })
                 .when('/quotation-requests/:reference', {
@@ -524,7 +524,6 @@ broker.controller('rejectedQuotationRequestCtrl', function ($scope, $rootScope, 
 		$scope.getAllQuotations();
 	};
 
-
 	$scope.getAllQuotations = function () {
 		console.log('get all quotations');
 		$http({
@@ -534,9 +533,6 @@ broker.controller('rejectedQuotationRequestCtrl', function ($scope, $rootScope, 
 			if (status === 200) {
 				console.log('retrived successfully');
 				$scope.quotationRequests = data;
-				if ($scope.quotationRequests.status == 'REJECTED') {
-					$scope.rejectQuotationRequests = $scope.quotationRequests;
-				}
 			} else {
 				console.log('status:' + status);
 				$rootScope.error = "error status code : " + status;
@@ -561,7 +557,6 @@ broker.controller('approvedQuotationRequestCtrl', function ($scope, $rootScope, 
 		$scope.getAllQuotations();
 	};
 
-
 	$scope.getAllQuotations = function () {
 		console.log('get all quotations');
 		$http({
@@ -571,9 +566,6 @@ broker.controller('approvedQuotationRequestCtrl', function ($scope, $rootScope, 
 			if (status === 200) {
 				console.log('retrived successfully');
 				$scope.quotationRequests = data;
-				if ($scope.quotationRequests.status == 'ACCEPTED') {
-					$scope.acceptedQuotationRequests = $scope.quotationRequests;
-				}
 			} else {
 				console.log('status:' + status);
 				$rootScope.error = "error status code : " + status;
@@ -583,6 +575,11 @@ broker.controller('approvedQuotationRequestCtrl', function ($scope, $rootScope, 
 			$rootScope.message = "Oops, we received your request, but there was an error processing it";
 		});
 	};
+
+	$scope.closeNotification = function () {
+		$rootScope.message = undefined;
+	};
+
 
 	$scope.closeNotification = function () {
 		$rootScope.message = undefined;

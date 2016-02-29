@@ -441,7 +441,7 @@ polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routePara
 		}else{
 			$scope.quotation = $rootScope.quotations;
 		}
-		$scope.debitOrderDate = ['5th', '7th'];
+		$scope.debitOrderDate = ['1st', '7th'];
 		$scope.accounttype = ['Current', 'Savings', 'Transmition'];
 
 	};

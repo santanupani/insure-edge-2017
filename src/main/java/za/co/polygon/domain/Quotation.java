@@ -35,6 +35,9 @@ public class Quotation {
     
     @Column(name = "expired_date")
     private Date expiredDate;
+    
+    @Column(name = "note")
+    private String note;
 
     @OneToMany(mappedBy = "quotation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<QuotationOption> quotationOptions;
@@ -69,6 +72,14 @@ public class Quotation {
 
     public void setExpired(Date expiredDate) {
         this.expiredDate = expiredDate;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
     
     public List<QuotationOption> getQuotationOptions() {

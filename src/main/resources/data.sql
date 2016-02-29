@@ -3,7 +3,7 @@
 /*login*/
 insert into login (user_name, password, first_name, last_name, enabled, role) values('admin', 'secret', 'admin','admin', true, 'ROLE_ADMIN');
 insert into login (user_name, password, first_name, last_name, enabled, role) values('broker', 'secret', 'Hentie','Snyder', true, 'BROKER');
-insert into login (user_name, password, first_name, last_name, enabled, role) values('underwritter', 'secret', 'Eric','Lehmann', true, 'UNDERWRITTER');
+insert into login (user_name, password, first_name, last_name, enabled, role) values('underwriter', 'secret', 'Eric','Lehmann', true, 'UNDERWRITTER');
 insert into login (user_name, password, first_name, last_name, enabled, role) values('claimadmin', 'secret', 'Susan','Otto', true, 'ClAIMADMIN');
 insert into login (user_name, password, first_name, last_name, enabled, role) values('manager', 'secret', 'Gerard','The CEO', true, 'MANAGER');
 
@@ -20,16 +20,7 @@ insert into jasper_images(name, image) values('polygon-sched', 'reports/polygon-
 
 /*broker*/
 insert into brokers(code, name, email) values ('00001', 'Blue Quanta', 'polygon.broker@gmail.com');
-insert into brokers(code, name, email) values ('00002', 'Admin Focus (Pty) Ltd', 'thabo.thulare@reverside.co.za');
-insert into brokers(code, name, email) values ('00003', 'Optimum Financial Services Group', 'lesetja.konaite@reverside.co.za');
-insert into brokers(code, name, email) values ('00004', 'Status Insurance Brokers (Pty) Ltd', 'info@statusib.co.za');
-insert into brokers(code, name, email) values ('00005', 'Van Zyl Conradie Makelaars', 'elana@vzcon.co.za');
-insert into brokers(code, name, email) values ('00006', 'Safari & Tourism Insurance Brokers (Pty) Ltd', 'yvonne@satib.co.za');
-insert into brokers(code, name, email) values ('00007', 'Rens Kontant in Transito', 'renscit@vodamail.co.za');
-insert into brokers(code, name, email) values ('00008', 'Multi Risk Admin (Pty) Ltd', 'queries@multirisk.co.za');
-insert into brokers(code, name, email) values ('00009', 'Lazarus Dash and Associates (Pty) Ltd', 'Brian@lazdash.co.za');
-insert into brokers(code, name, email) values ('00010', 'Willem Jacobus Nienaber', 'wjnienaber@telkomsa.net');
-insert into brokers(code, name, email) values ('00011', 'Deposita Systems (Pty) Ltd', 'lizaan.botha@reverside.co.za');
+
 
 /*answer_type*/
 insert into answer_types(answer_type) values('text');
@@ -98,43 +89,11 @@ insert into questionnaires(product_id, sequence_number, question, answer_type_id
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '31', 'Please provide details of your previous insurance company :'                     ,                    1,    6,  'true', 'true');
 insert into questionnaires(product_id, sequence_number, question, answer_type_id, depends_on, on_answer, is_required)  values('4', '32', 'Do you require SASRIA cover ?',                 4,  null,    null, 'false');
 
-insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Hentie','Hentie','Synder','hentie.synder@polygongroup.co.za');
-insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Susan','Susan','Otto','susan.otto@polygongroup.co.za');
+insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Hentie','Hentie','Synder','hentie@polygongroup.co.za');
+insert into sub_agents(broker_id,first_name,middle_name,last_name,email) values(1,'Susan','Susan','Otto','susan@polygongroup.co.za');
 
-insert into underwriters(first_name,middle_name,last_name,email) values('Lessely','Lessley','Kruger','lessely.kruger@genric.co.za');
-insert into underwriters(first_name,middle_name,last_name,email) values('Marissa','Marissa','Lehman','marissa@lehman@genric.co.za');
-
-
-insert into bank_accounts(account_number, account_name, branch, bank_name, account_type)values('236777262','Thabo','5678','Standard Bank', 'Savings');
-insert into bank_accounts(account_number, account_name, branch, bank_name, account_type)values('3425672872','Lenox','6756','ABSA', 'Transmission');
-insert into bank_accounts(account_number, account_name, branch, bank_name, account_type)values('234565656','Binod','7889','FNB', 'Savings');
-
-
-insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('121 Fire Street','8909','Midrand','011 991 0000','086 575 7876','thabo@gmail.com','Thabo Thulare');
-insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('Pretoria Main Road','6765','Oliven','015 787 9788','086 671 7887','Lenox@reverside.co.za','Lenox');
-insert into contacts(street, code, suburb, work_tel_number, fax_number, email, contact_person) values('Marshall Street','9866','Johanesburg CDB','012 876 7876','012 655 8987','binod@gmail.com','Binod Sethi');
-
-insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, designation, vat_number) values('1','1','Satyam Solutions','5TTDTWPY','234599','Owner','CAFRWHYAQ');
-insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, designation, vat_number) values('2','2','Pinacle Soluitons','567DC18BS','2345678','Proprieter','VAGFTEEEI');
-insert into clients(bank_account_id, contact_id, company_name,reg_no, income_tax_number, designation, vat_number) values('3','3','Discovery Health','GFTER456DS','234599','Insurer','VAGFTWRDA');
-
-insert into policies(underwriter_commission,uma_fee,policy_fee,initial_fee,reference,anniversary_date,sub_agent_id,client_id,underwriter_id,policy_inception_date,product_name,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,collect_by_debit_order,exclude_sasria,sum_insured,max_sum_insured,broker_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration,notes) 
-values(12.5,0.0,0.0,0.0,'2015-1202','2015-09-17',1,1,2,'2015-09-17','Cash and Valuables in Transit','2015-09-17','2015-09-17',2015,'Active','Monthly','N/A','Nedbank Cameo',true,false,35000,45000,0.00,350.00,0.00,'1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS\n2) POLYGON GENERAL COMPUTER NUCLEAR EXCEPTIONS\n3) POLYGON CASH AND VALUABLES IN TRANSIT WORDING\n4) VAULT AND STATIC RISK COVER WORDING','Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured.','Cash','By product','As discussed','Voltage','Discussion Value','This policy has qualified for cover, but pending documentation');
-
-insert into policies(underwriter_commission,uma_fee,policy_fee,initial_fee,reference,anniversary_date,sub_agent_id,client_id,underwriter_id,policy_inception_date,product_name,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,collect_by_debit_order,exclude_sasria,sum_insured,max_sum_insured,broker_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration,notes) 
-values(12.5,0.0,0.0,0.0,'2015-1203','2015-09-17',2,1,1,'2015-09-17','Cash and Valuables in Transit','2015-09-18','2015-09-18',2015,'Acive','Annually','N/A','Nedbank Cameo',false,false,55000,65000,0.00,450.00,0.00,'1) SPECIALISED VALUABLES INSURANCE POLICY \n2) WORDING-GENERAL TERMS AND CONDITIONS','Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured.','Art','By Artery','As discussed','Limit','Discussion Value','This policy has qualified for cover, await approval from Manager');
-
-insert into policies(underwriter_commission,uma_fee,policy_fee,initial_fee,reference,anniversary_date,sub_agent_id,client_id,underwriter_id,policy_inception_date,product_name,inception_date,renewal_date,underwriting_year,status,frequency,sasria_frequency,device,collect_by_debit_order,exclude_sasria,sum_insured,max_sum_insured,broker_commission,premium,sasria_premium,schedule_attaching,type_of_cover,subject_matter,excess_structure,special_condition,conveyances,geographical_duration,notes) 
-values(12.5,0.0,0.0,0.0,'2015-1204','2015-09-17',1,1,1,'2015-09-17','Cash and Valuables in Transit','2015-09-19','2015-09-19',2015,'Acive','Declaration','N/A','Nedbank Cameo',false,false,65000,75000,0.00,550.00,0.00,'1) SPECIALISED VALUABLES INSURANCE POLICY WORDING-GENERAL TERMS AND CONDITIONS','Theft, armed robbery, hijacking and accidental damage or damage as a result of any attempt theft of cash insured.','Art','By Artery','As discussed','Limit','Discussion Value','This policy has qualified for cover, await approval from Manager');
-
-insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium,pavement,static_limit)
-values(1,'Policy Vault','Per vehicle per transit (6* weekly)',650000,2310,0,2019000);
-
-insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium,pavement,static_limit)
-values(2,'Policy Vault','Per vehicle(3* weekly)',750000,3070,0,2019000);
-
-insert into indemnity_options(policy_id,indemity_item_option,indemnity_value,sum_insured,premium,pavement,static_limit)
-values(1,'Policy Limit','Per Cash per transit (4* weekly)',120000,4050,0,0);
+insert into underwriters(first_name,middle_name,last_name,email) values('Lessely','Lessley','Kruger','lesley@polygongroup.co.za');
+insert into underwriters(first_name,middle_name,last_name,email) values('Marissa','Marissa','Lehman','marissa@genric.co.za');
 
 
 insert into claim_types (claim_type) values('ONSITE ROBBERY');
@@ -295,4 +254,6 @@ insert into request_answer_types(request_answer_type) values('blob');
 insert into request_questionnaires(request_type_id, sequence_number,question, request_answer_type_id, is_required)values('1','1', 'Reason For Cancellation', 1, true);
 insert into request_questionnaires(request_type_id, sequence_number,question, request_answer_type_id, is_required)values('1','2', 'Effective Date', 6, true);
 
+insert into request_questionnaires(request_type_id, sequence_number,question, request_answer_type_id, is_required)values('3','1', 'Reason For Termination', 1, true);
+insert into request_questionnaires(request_type_id, sequence_number,question, request_answer_type_id, is_required)values('3','2', 'Effective Date', 6, true);
 
