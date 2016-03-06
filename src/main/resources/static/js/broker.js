@@ -261,6 +261,7 @@ broker.controller('quotationRequestsCtrl', function ($scope, $routeParams, $http
             console.log("Form Validation Failure");
         } else {
             $scope.quotation.reference = $scope.reference;
+            $scope.quotation.note = $scope.quotationRequest.note;
 
             console.log("Ref Test : " + $scope.reference);
             for (var i = 0; i < $scope.quotationRequest.locationOptions.length; i++) {

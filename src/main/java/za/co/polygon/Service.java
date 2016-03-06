@@ -69,6 +69,7 @@ import net.sf.jasperreports.engine.JRException;
 import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.Carrier;
 import za.co.polygon.domain.ClaimAnswer;
 import za.co.polygon.domain.ClaimQuestionnaire;
 import za.co.polygon.domain.ClaimRequest;
@@ -92,7 +93,11 @@ import za.co.polygon.domain.RequestQuestionnaire;
 import za.co.polygon.domain.RequestType;
 import za.co.polygon.domain.SubAgent;
 import za.co.polygon.domain.Underwriter;
+import static za.co.polygon.mapper.Mapper.fromCarrierCommandModel;
+import static za.co.polygon.mapper.Mapper.toCarrierQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.CarrierCommandModel;
+import za.co.polygon.model.CarrierQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
 import za.co.polygon.model.ClaimRequestQueryModel;
@@ -110,6 +115,7 @@ import za.co.polygon.model.QuestionnaireQuery;
 import za.co.polygon.model.QuotationCommandModel;
 import za.co.polygon.model.QuotationQueryModel;
 import za.co.polygon.model.QuotationRequestCommandModel;
+import za.co.polygon.model.QuotationRequestCommandModel.LocationOptions;
 import za.co.polygon.model.QuotationRequestQueryModel;
 import za.co.polygon.model.ReleaseFormCommandModel;
 import za.co.polygon.model.RequestQuestionnaireQueryModel;
@@ -119,6 +125,7 @@ import za.co.polygon.model.SubAgentQueryModel;
 import za.co.polygon.model.UserQueryModel;
 import za.co.polygon.repository.BankAccountRepository;
 import za.co.polygon.repository.BrokerRepository;
+import za.co.polygon.repository.CarrierRepository;
 import za.co.polygon.repository.ClaimQuestionnaireRepository;
 import za.co.polygon.repository.ClaimRequestQuestionnaireRepository;
 import za.co.polygon.repository.ClaimRequestRepository;
@@ -153,6 +160,9 @@ public class Service {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private CarrierRepository carrierRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -395,6 +405,14 @@ public class Service {
         log.info("found all products - size:{}", brokers.size());
         return toBrokerQueryModel(brokers);
     }
+    
+    @RequestMapping(value = "api/professionalCarriers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CarrierQueryModel> findAllCarriers() {
+        log.info("find all Professional Va;luable cariers");
+        List<Carrier> carriers = carrierRepository.findAll();
+        log.info("found all carriers - size:{}", carriers.size());
+        return toCarrierQueryModel(carriers);
+    }
 
     @Transactional
     @RequestMapping(value = "api/quotation-requests", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/html")
@@ -402,6 +420,8 @@ public class Service {
         Broker broker = brokerRepository.findOne(quotationRequestCommandModel.getBrokerId());
 
         Product product = productRepository.findOne(quotationRequestCommandModel.getProductId());
+        
+        
 
         QuotationRequest quotationRequest = toQuotationRequest(quotationRequestCommandModel, broker, product, quotationRequestRepository.findAll().size());
         quotationRequest = quotationRequestRepository.save(quotationRequest);
@@ -449,6 +469,16 @@ public class Service {
     }
     
     @Transactional
+    @RequestMapping(value = "api/professionalCarriers", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createNewCarrier(@RequestBody CarrierCommandModel carrierCommandModel) throws Exception{
+        Carrier carrier = fromCarrierCommandModel(carrierCommandModel);
+        if(carrierRepository.findByDescription(carrierCommandModel.getDescription()) != null) {
+            throw new Exception("duplicate description found");
+        }
+        Carrier result =  carrierRepository.save(carrier);
+    }
+    
+    @Transactional
     @RequestMapping(value = "api/releaseForm", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createReleaseForm(@RequestBody ReleaseFormCommandModel releaseFormCommandModel){
          ClaimRequest claimRequest = claimRequestRepository.findByClaimNumber(releaseFormCommandModel.getClaimNumber());
@@ -480,6 +510,25 @@ public class Service {
         notificationService.sendNotificationForAcceptQuotationRequest(quotationRequest, data);
 
         log.info("Quotation Created Successfully !!!");
+    }
+    
+    
+    @RequestMapping(value = "api/requotation-submit/{reference}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void submitExitingQuotation(@PathVariable("reference") String reference, @RequestBody List<LocationOptions> locationOptions) throws IOException{
+        
+        for(int i=0; i< locationOptions.size();i++) {
+             LocationOption locationOption = locationOptionRepository.findById(locationOptions.get(i).getId());
+             locationOption.setLimit(locationOptions.get(i).getLimit());
+             locationOption = locationOptionRepository.save(locationOption);
+
+        }
+        
+        QuotationRequest quotationRequest = quotationRequestRepository.findByReference(reference);
+        Broker broker = quotationRequest.getBroker();
+        quotationRequest.setStatus("APPLIED");
+        quotationRequest = quotationRequestRepository.save(quotationRequest);
+        notificationService.sendNotificationForOldQuotationRequest(quotationRequest,broker);
+   
     }
 
     @RequestMapping(value = "api/quotations/{reference}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

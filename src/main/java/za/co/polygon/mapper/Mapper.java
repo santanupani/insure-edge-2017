@@ -16,6 +16,7 @@ import za.co.polygon.domain.Answer;
 import za.co.polygon.domain.AnswerValue;
 import za.co.polygon.domain.BankAccount;
 import za.co.polygon.domain.Broker;
+import za.co.polygon.domain.Carrier;
 import za.co.polygon.domain.ClaimAnswer;
 import za.co.polygon.domain.ClaimAnswerValue;
 import za.co.polygon.domain.ClaimQuestionnaire;
@@ -45,6 +46,8 @@ import za.co.polygon.domain.Underwriter;
 import za.co.polygon.domain.User;
 import za.co.polygon.model.BankAccountQueryModel;
 import za.co.polygon.model.BrokerQueryModel;
+import za.co.polygon.model.CarrierCommandModel;
+import za.co.polygon.model.CarrierQueryModel;
 import za.co.polygon.model.ClaimQuestionnaireQuery;
 import za.co.polygon.model.ClaimRequestCommandModel;
 import za.co.polygon.model.ClaimRequestCommandModel.ClaimQuestionnaires;
@@ -98,6 +101,23 @@ public class Mapper {
         }
         return userList;
     }
+    
+    
+     public static CarrierQueryModel toCarrierQueryModel(Carrier from) {
+        CarrierQueryModel carrier = new CarrierQueryModel();
+        carrier.setId(from.getId());
+        carrier.setDescription(from.getDescription());
+        return carrier;
+    }
+     
+    public static List<CarrierQueryModel> toCarrierQueryModel(List<Carrier> fromList) {
+        List<CarrierQueryModel> carrierList = new ArrayList<CarrierQueryModel>();
+        for (Carrier carrier : fromList) {
+            carrierList.add(toCarrierQueryModel(carrier));
+        }
+        return carrierList;
+    } 
+    
 
     public static ProductQueryModel toProductQueryModel(Product from) {
         ProductQueryModel productQueryModel = new ProductQueryModel();
@@ -158,6 +178,14 @@ public class Mapper {
         }
         return brokerQueryModels;
     }
+    
+    public static Carrier fromCarrierCommandModel(CarrierCommandModel carrierCommandModel) {
+        
+        Carrier carrier = new Carrier();
+        carrier.setDescription(carrierCommandModel.getDescription());
+         return carrier;
+        
+    }
 
     public static QuotationRequest toQuotationRequest(QuotationRequestCommandModel quotationRequestCommandModel, Broker broker, Product product, int count) {
         QuotationRequest quotationRequest = new QuotationRequest();
@@ -197,7 +225,8 @@ public class Mapper {
 
         for (LocationOptions locationOption : quotationRequestCommandModel.getLocationOptions()) {
             LocationOption location = new LocationOption();
-
+            
+            location.setId(locationOption.getId());
             location.setAlarmed(locationOption.isIsAlarmed());
             location.setCctv(locationOption.isIsCctv());
             location.setCarrierName(locationOption.getCarrierName());
@@ -438,7 +467,7 @@ public class Mapper {
     public static Quotation fromQuotationRequestCommandModel(QuotationCommandModel quotationCommandModel, QuotationRequest quotationRequest) {
         Quotation quotation = new Quotation();
         quotation.setCreatedDate(new Date());
-//        quotation.setNote();
+        quotation.setNote(quotationCommandModel.getNote());
         quotation.setQuotationRequest(quotationRequest);
 
         List<QuotationOption> quotationOptionList = new ArrayList<QuotationOption>();

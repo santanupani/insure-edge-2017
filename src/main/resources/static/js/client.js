@@ -1,3 +1,5 @@
+/* global input */
+
 var polygon = angular.module('polygon', ['ngRoute']);
 
 polygon.config(['$routeProvider', function ($routeProvider) {
@@ -14,6 +16,9 @@ polygon.config(['$routeProvider', function ($routeProvider) {
                 }).when('/quotations/:reference/application', {
                     'templateUrl': '/html/policies.html',
                     'controller': 'policyCtrl'
+                }).when('/quotation-requests/:reference', {
+                    'templateUrl': '/html/reapply-quotation.html',
+                    'controller': 'requoteCtrl'
                 }).otherwise({
                     redirectTo: '/products'
                 });
@@ -141,6 +146,7 @@ polygon.directive('fileModel', ['$parse', function ($parse) {
         };
     }]);
 
+
 polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 
     $scope.init = function () {
@@ -165,7 +171,8 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
             $rootScope.message = "Oops, we received your request, but there was an error processing it";
         });
     };
-
+    
+    
     $scope.closeNotification = function () {
         $rootScope.message = undefined;
     };
@@ -176,6 +183,7 @@ polygon.controller('productsCtrl', function ($scope, $rootScope, $http) {
 polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $routeParams, $location, $filter) {
 
     $scope.product;
+    $scope.carriers;
     $scope.numberOfDecimals = 2;
     $scope.histories = [];
     $scope.questionnaires = [];
@@ -183,10 +191,15 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     $scope.location;
     $scope.quotationRequest = {};
     $scope.productId;
-
     $scope.models = {};
+    
+
+    
+    
 
     $scope.init = function () {
+        
+        $scope.getCarriers();
         $scope.isHistory = false;
           if ($rootScope.products == undefined) {
             $scope.getProducts();
@@ -197,6 +210,28 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             $scope.location = {"options": []};
             $scope.add();
         }
+    };
+              
+    
+    $scope.getCarriers = function () {
+        console.log('get carriers');
+        $http({
+            url: '/api/professionalCarriers',
+            method: 'get'
+        }).success(function (data, status) {
+            if (status === 200) {
+                console.log('retrived successfully');
+                $rootScope.carriers = data;
+                $rootScope.defaultOption = {"id":null,"description":"Other"};
+                $rootScope.carriers.push($rootScope.defaultOption);
+            } else {
+                console.log('status:' + status);
+                $rootScope.error = "error status code : " + status;
+                ;
+            }
+        }).error(function (error) {
+            $rootScope.message = "Oops, we received your request, but there was an error processing it";
+        });
     };
 
           $scope.dateOptions = {
@@ -226,17 +261,10 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     };
 
     $scope.add = function () {
-        var model = {};
-        model = {
-            cash: false,
-            bullion: false,
-            preciousStone: false,
-            other: false,
-            diamonds: false,
-            otherExtra: false
-        };
+
 
         var option = {};
+       
         option.isGoodsMoved = false;
         option.isGoodsMovedStatic = false;
         option.isServiceCarrier = false;
@@ -321,7 +349,38 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         });
     };
 
+    $scope.submitProfessionalCarriers = function (value) {
+        
+        var otherProfessionalRequest = {};
+        otherProfessionalRequest.description = value;
+        console.log(otherProfessionalRequest)
+         if (value === undefined || value.trim().length == 0) {
+            $rootScope.message="Please Fill the Carrier Name"
+        } else {
+               $http({
+                url: '/api/professionalCarriers',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: otherProfessionalRequest
+            }).success(function (data, status) {
+                if (status == 200) {
+                    console.log('Professional Saved Succefully');
+                    $scope.getCarriers();
+                } else {
+                    console.log('status:' + status);
+                }
+            }).error(function (error) {
+                console.log(error);
+                $rootScope.error=error.message;
+            });
+      }
+    };
+
     $scope.submitQuotationRequest = function (form) {
+        
+        
 
         if (form.$invalid) {
             console.log("Form Validation Failure");
@@ -331,7 +390,7 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
             var commodity = '';
             var commodities = $scope.models.cash + $scope.models.bullion + $scope.models.diamonds + $scope.models.preciousStone + $scope.models.otherExtra;
             angular.forEach(commodities.split("undefined"), function (token) {
-                if (token != '') {
+                if (token !== '') {
                     commodity = token + '/' + commodity;
                 }
             });
@@ -426,6 +485,109 @@ polygon.controller('quotationsCtrl', function ($scope, $rootScope, $http, $route
             $rootScope.error = error;
         });
     };
+});
+
+polygon.controller('requoteCtrl', function ($scope, $rootScope, $http, $routeParams) {
+
+
+    $scope.reference;
+    $scope.quotationRequest;
+    $scope.quotation;
+    $scope.isDisabled = false;
+    $scope.is_readonly = true;
+    $scope.questionnairres = [];
+
+
+
+    $scope.init = function () {
+        $scope.reference = $routeParams.reference;
+        $scope.isQuotationCreated = true;
+        $scope.quotation = {
+            "options": []
+        };
+        $scope.getQuotationRequest($scope.reference);
+
+    };
+    
+    $scope.edit = function (isReadonly, isDisabled) {
+
+        $scope.is_readonly = isReadonly;
+        $scope.isDisabled = isDisabled;
+    };
+    
+    $scope.updateLimitAmount = function (value) {
+        console.log(JSON.stringify($scope.quotationRequest.locationOptions, null, 2));
+
+
+        var updateLimitAmountRequest = [];
+        
+        for (var i = 0; i < $scope.quotationRequest.locationOptions.length; i++) {
+            var locationOptions = {};
+            locationOptions.id = $scope.quotationRequest.locationOptions[i].id;
+            locationOptions.limit = $scope.quotationRequest.locationOptions[i].limit;
+            updateLimitAmountRequest.push(locationOptions);
+        }
+        console.log(JSON.stringify(updateLimitAmountRequest, null, 2));
+
+        $http({
+            url: '/api/requotation-submit/' + $scope.reference,
+            method: 'post',
+            headers: {
+                    'Content-Type': 'application/json',
+                },
+                
+            data: updateLimitAmountRequest
+        }).success(function (data, status) {
+            console.log('get success code::' + status);
+            if (status == 200) {
+                $scope.quotationRequest.status = "APPLIED";
+                console.log('status:' + status);
+            } else {
+                console.log($scope.quotationRequest.locationOptions[i].limit);
+            }
+        })
+                .error(function (error) {
+                    console.log(error);
+                });
+    };
+
+    $scope.getQuotationRequest = function () {
+        $http({
+            url: '/api/quotation-requests/' + $scope.reference,
+            method: 'get'
+        }).
+                success(function (data, status) {
+                    console.log('get success code::' + status);
+                    if (status == 200) {
+                        $scope.quotationRequest = data;
+                        $scope.questionnairres = $scope.quotationRequest.questionnaire;
+
+                        for (var i = 0; i < $scope.quotationRequest.questionnaire.length; i++) {
+
+                            if (angular.equals($scope.quotationRequest.questionnaire[i].answer, 'true')) {
+                                $scope.quotationRequest.questionnaire[i].answer = 'Yes';
+                                console.log($scope.quotationRequest.questionnaire[i].answer);
+                            } else if (angular.equals($scope.quotationRequest.questionnaire[i].answer, 'false')) {
+                                $scope.quotationRequest.questionnaire[i].answer = 'No';
+                                console.log($scope.quotationRequest.questionnaire[i].answer);
+                            }
+                        }
+
+                        angular.forEach($scope.quotationRequest.locationOptions, function (locationOption) {
+                            locationOption.cover = 'Fire, Accidental damage, Hijacking, Theft & Armed Robbery - as per standard policy wording.';
+                            locationOption.excess = 'R Nil';
+                        });
+                        console.log('Quotation Request Detail::' + $scope.quotationRequest);
+                        console.log('Questionairres Detail::' + $scope.questionnairres);
+                    } else {
+                        console.log('status:' + status);
+                    }
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+    };
+    
 });
 
 polygon.controller('policyCtrl', function ($scope, $rootScope, $http, $routeParams, $location) {

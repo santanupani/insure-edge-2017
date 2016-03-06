@@ -13,6 +13,23 @@
 			</sequence>
 		</complexType>
 	</element>
+        
+        <element name="CarrierQueryModel">
+		<complexType>
+			<sequence>
+				<element name="id" type="long"></element>
+				<element name="description" type="string"></element>
+			</sequence>
+		</complexType>
+	</element>
+        
+        <element name="CarrierCommandModel">
+		<complexType>
+			<sequence>
+				<element name="description" type="string"></element>
+			</sequence>
+		</complexType>
+	</element>
 
 	<element name="ProductQueryModel" type="tns:ProductQueryModel" />
 	<complexType name="ProductQueryModel">
@@ -381,6 +398,7 @@
 				<element name="locationOptions" minOccurs="0" maxOccurs="unbounded">
 					<complexType>
 						<sequence>
+                                                        <element name="id" type="long"></element>
 							<element name="commodity" type="string" />
 							<element name="distance" type="string" />
 							<element name="fromLocation" type="string" />
@@ -421,6 +439,7 @@
 		<complexType>
 			<sequence>
 				<element name="reference" type="string" />
+                                <element name="note" type="string" />
 				<element name="options" minOccurs="0" maxOccurs="unbounded">
 					<complexType>
 						<sequence>

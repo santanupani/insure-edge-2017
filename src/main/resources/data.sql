@@ -12,6 +12,21 @@ insert into products(name, description, image) values('Cash and Valuables in Tra
 insert into products(name, description, image) values('Static Cover Cash and Valuables', 'All risk cover for your cash and valuables whilst static/on-site in vault or safe.','/img/products/Static Cover Cash and Valuables1.jpg');
 insert into products(name, description, image) values('Fine Art and Collectables', 'Tailored cover for your treasured possessions.', '/img/products/Fine Art and Collectables.jpg');
 insert into products(name, description, image) values('Static and In Transit Cover Cash and Valuables', 'All risk cover for cash/valuables whilst in transit and static/on-site in vault or safe.', '/img/products/Static and In Transit Cover Cash and Valuables1.jpeg');
+
+/*carriers*/
+insert into carriers(description) values('G4S Security Solutions');
+insert into carriers(description) values('Fidelity Security Solutions');
+insert into carriers(description) values('SBV Services');
+insert into carriers(description) values('Imperial Logistics');
+insert into carriers(description) values('Izikathi');
+insert into carriers(description) values('Quiniseka');
+insert into carriers(description) values('Transcash');
+insert into carriers(description) values('Braziers');
+insert into carriers(description) values('Rens Kontant In Transito');
+insert into carriers(description) values('Gold Kid');
+
+
+
 /*jaspers*/
 insert into jasper_images(name, image) values('polygon-logo', 'reports/polygon-logo.jpg');
 insert into jasper_images(name, image) values('polygon-footer','reports/polygon-footer.png');

@@ -10,6 +10,15 @@ create table login (
     role varchar(16) not null
 );
 
+
+/* table : carriers */
+create table carriers (
+    id integer auto_increment not null primary key,
+    description varchar(64) not null 
+);
+
+
+
 /* table : product */
 create table products(
     id integer auto_increment not null primary key, 
@@ -77,8 +86,8 @@ create table brokers(
 create table quotation_requests(
     id integer auto_increment not null primary key,
     reference varchar(64) not null,
-    applicant_name varchar(32) not null,
-    company_name varchar(64) not null,
+    applicant_name varchar(64) not null,
+    company_name varchar(256) not null,
     applicant_email varchar(64) not null,
     broker_id integer not null,
     product_id integer not null,
@@ -150,8 +159,8 @@ create table quotations(
     quotation_request_id integer not null,
     created_date date not null,
     expired_date date null,
-    note varchar(256) null,
-    constraint quotations_fk1 foreign key (quotation_request_id) references quotation_requests (id)
+    note varchar(256) null, 
+   constraint quotations_fk1 foreign key (quotation_request_id) references quotation_requests (id)
 );
 
 /* table : quotation_options  */

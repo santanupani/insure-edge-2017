@@ -80,8 +80,8 @@
 											<div class="panel-body">
 												<div class="form-group">
 													<label class="control-label" for="limit">Cover
-														Limits</label> <input type="text" class="form-control"
-														ng-model="option.limit" readonly>
+														Limits</label><div class="input-group"><span class="input-group-addon" style="background: #E3E3E3; color: #767676">R</span> <input type="text" class="form-control"
+                                                                                                                                                                                                        ng-model="option.limit" readonly></div>
 												</div>
 												<div class="form-group">
 													<label class="control-label" for="commodity">Commodity</label>
@@ -97,9 +97,9 @@
 												<div class="form-group"
 													ng-if="quotationRequest.product.id == 4">
 													<label class="control-label" for="staticLimit">Static
-														Limit</label> <input type="text" class="form-control"
+														Limit</label><div class="input-group"><span class="input-group-addon" style="background: #E3E3E3; color: #767676">R</span><input type="text" class="form-control"
 														placeholder="static limit" ng-model="option.staticLimit"
-														readonly>
+                                                                                                                readonly></div>
 												</div>
 
 												<div class="form-group">
@@ -117,18 +117,18 @@
 													<label class="control-label" for="excess">Excess
 														Amount</label>
 													<textarea class="form-control" placeholder="Excess"
-														ng-model="option.excess" readonly></textarea>
+                                                                                                                                                                                                        ng-model="option.excess" readonly></textarea>
 												</div>
 												<div class="form-group">
 													<label class="control-label" for="premium">Premium</label>
-													<textarea class="form-control" ng-model="option.premium"
-														readonly></textarea>
+													<div class="input-group"><span class="input-group-addon" style="background: #E3E3E3; color: #767676">R</span><input type="text" class="form-control" ng-model="option.premium"
+                                                                                                                                                                                                        readonly/></div>
 												</div>
 												<div class="form-group">
 													<label class="control-label" for="crossPavement">Cross
 														Pavement</label>
-													<textarea class="form-control" placeholder="Cross Pavement"
-														ng-model="option.pavement" readonly></textarea>
+													<div class="input-group"><span class="input-group-addon" style="background: #E3E3E3; color: #767676">R</span><input type="text" class="form-control" placeholder="Cross Pavement"
+                                                                                                                                                                                                        ng-model="option.pavement" readonly/></div>
 												</div>
 											</div>
 										</div>
@@ -142,7 +142,12 @@
 			</div>
 
 			<div class="panel-footer text-right">
-				<p>
+                            
+                                <p>
+					<a class="btn btn-warning"
+						ng-href="#/quotation-requests/{{quotation.quotationRequest.reference}}"
+						role="button">Re-Apply For Quotation</a>
+				
 					<a class="btn btn-info"
 						ng-href="#/quotations/{{quotation.quotationRequest.reference}}/application"
 						role="button">Apply For Policy</a>

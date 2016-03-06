@@ -50,10 +50,47 @@ public class NotificationService {
                                                 + "<br>" 
                                                 + "<br>"
                                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                                + "<br>",    
+						quotationRequest.getReference(),
+						hostname,
+						port,
+						quotationRequest.getReference());
+		Notification notification = new Notification(to, cc, subject, message);
+		messageRepository.publish(notification, "q.notification");
+	}
+        
+        public void sendNotificationForOldQuotationRequest(QuotationRequest quotationRequest, Broker broker) {
+		String to = broker.getEmail();
+//                String cc = "obertvdw@gmail.com";
+                String cc = "binod.sethi@gmail.com";
+		String subject = "New Quotation Request";
+
+		String message = String.format(
+				"Ref : %s" + "<br>"
+						+ "Click the link below to view Updated quotation request : " + "<br>"
+						+ "http://%s:%s/polygon/broker.html#/requotation-requests/%s" + "<br>"
+                                                + "Trust you find the above in order." + "<br>" 
+                                                + "Kind Regards," + "<br>"
+                                                + "On behalf of Polygon Underwriting Agency (Pty) Ltd" + "<br>"
+                                                + "<br>" 
+                                                + "<br>"
+                                                + "<img src=\"cid:image\">" + "<br><br>"
+                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                                                 + "<br>",    
 						quotationRequest.getReference(),
 						hostname,
@@ -71,7 +108,7 @@ public class NotificationService {
 		String message = String.format(
 				"Dear %s ," +"<br>"
 						+ "<br>"
-						+"Your request for quotation Ref : %s has been rejected for the following reason(s)" + "\n"
+						+"Your request for quotation Ref : %s has been rejected for the following reason(s)" + "<br>"
 						+ "<br>"
 						+"Reason(s):" + "<br>"
 						+ "%s" + "<br>"
@@ -81,11 +118,15 @@ public class NotificationService {
                                                 + "<br>" 
                                                 + "<br>"
                                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
-						+ "<br>"
+                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                                + "<br>"
                                                 + "<br>",
 						quotationRequest.getApplicantName(),
 						quotationRequest.getReference(),
@@ -112,10 +153,14 @@ public class NotificationService {
                                                 + "<br>" 
                                                 + "<br>"
                                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                                                 + "<br>",
 						policyRequest.getQuotation().getQuotationRequest().getApplicantName(),
 						policyRequest.getQuotation().getQuotationRequest().getReference(),
@@ -144,10 +189,14 @@ public class NotificationService {
                                                 + "<br>" 
                                                 + "<br>"
                                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                                                 + "<br>",   
 						quotationRequest.getApplicantName(),
 						quotationRequest.getReference(),
@@ -176,10 +225,14 @@ public class NotificationService {
                                                 + "<br>" 
                                                 + "<br>"
                                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                                                 + "<br>",
 						policyRequest.getQuotation().getQuotationRequest().getReference(),
 						hostname,
@@ -202,7 +255,7 @@ public class NotificationService {
 //                String cc = "obertvdw@gmail.com";
                 String cc = "binod.sethi@gmail.com";
 		String message = String.format("Dear Gerard,<br> <br>"
-				+ "You have a new policy approval request."
+				+ "You have a new policy approval request." + "<br>"
 				+"<br>Policy Approval request Ref No : %s\n\n click the link below to view approval request" + "<br>"
 				+ "http://%s:%s/polygon/manager.html#/policy/%s/approval"
                                 + "Trust you find the above in order." + "<br>" 
@@ -211,10 +264,14 @@ public class NotificationService {
                                 + "<br>" 
                                 + "<br>"
                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                                 + "<br>",
 				policy.getReference(),
 				hostname,
@@ -232,7 +289,7 @@ public class NotificationService {
 		String subject = "Policy "+policy.getReference()+" Approved.";
 
 		String message = String.format("Dear Underwriter,<br> <br>"
-				+ "This is to notify you that policy request for temporary policy ref: %s"+
+				+ "This is to notify you that policy request for temporary policy ref: %s" + 
 				" has been approved and the policy is currently active.<br><br> click the link below to view approved policy" + "<br>"
 				+ "http://%s:%s/polygon/underwritter.html#/policy/%s/admin<br>"
                                 + "Trust you find the above in order." + "<br>" 
@@ -241,10 +298,14 @@ public class NotificationService {
                                 + "<br>" 
                                 + "<br>"
                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                                 + "<br>",
 				policy.getReference(),
 				hostname,
@@ -270,10 +331,14 @@ public class NotificationService {
                                                 + "<br>" 
                                                 + "<br>"
                                                 + "<img src=\"cid:image\">" + "<br><br>"
-                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                                                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                                                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                                                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                                                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                                                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                                                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                                                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                                                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                                                 + "<br>",
 						policy.getClient().getClientName(),
 						hostname,
@@ -303,10 +368,14 @@ public class NotificationService {
                 + "<br>" 
                 + "<br>"
                 + "<img src=\"cid:image\">" + "<br><br>"
-                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                 + "<br>",
                 claimRequest.getPolicy().getClient().getClientName(),
                 claimRequest.getClaimNumber(),
@@ -337,10 +406,14 @@ public class NotificationService {
                 + "<br>" 
                 + "<br>"
                 + "<img src=\"cid:image\">" + "<br>"
-                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                 + "<br>",
                 claimRequest.getClaimNumber(),
                 hostname,
@@ -370,10 +443,14 @@ public class NotificationService {
                 + "<br>" 
                 + "<br>"
                 + "<img src=\"cid:image\">" + "<br>"
-                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                 + "<br>",
                 claimRequest.getPolicy().getClient().getClientName(),
                 claimRequest.getClaimNumber(),
@@ -404,10 +481,14 @@ public class NotificationService {
                 + "<br>" 
                 + "<br>"
                 + "<img src=\"cid:image\">" + "<br>"
-                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                 + "<br>",
                 claimRequest.getClaimNumber(),
                 hostname,
@@ -437,10 +518,14 @@ public class NotificationService {
                 + "<br>" 
                 + "<br>"
                 + "<img src=\"cid:image\">" + "<br>"
-                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                 + "<br>",
                 claimRequest.getClaimNumber(),
                 hostname,
@@ -468,10 +553,14 @@ public class NotificationService {
                 + "<br>" 
                 + "<br>"
                 + "<img src=\"cid:image\">" + "<br>"
-                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                 + "<br>",
                 claimRequest.getClaimNumber(),
                 hostname,
@@ -499,10 +588,14 @@ public class NotificationService {
                 + "<br>" 
                 + "<br>"
                 + "<img src=\"cid:image\">" + "<br>"
-                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose. If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
-                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
-                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
-                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein. Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
+                +"NOTE: This e-mail message and all attachments thereto contain confidential information intended for a specific addressee and purpose." + "<br>"
+                + " If you are not the addressee (a) you may not disclose, copy, distribute or take any action based on the contents hereof; (b) kindly inform the sender" + "<br>"
+                +"immediately and destroy all copies thereof. Any copying, publication or disclosure of this message, or part thereof, in any form whatsoever, "+ "<br>"
+                + "without the sender's express written consent, is prohibited. No opinion expressed or implied by the sender necessarily constitutes the opinion of Polygon" + "<br>"
+                +"Underwriting Agency (Pty) Ltd. The views and/or representations contained in this e-mail and/or attachment(s), whether expressed or implied, "+ "<br>"
+                + "are those of the sender only, unless the sender expressly states them to be the views and/or representations of Polygon Underwriting Agency (Pty) Ltd," + "<br>"
+                +"who the sender shall state to represent. This message does not constitute a guarantee or proof of the facts mentioned therein." + "<br>"
+                + " Polygon Underwriting Agency (Pty) Ltd is a authorised Financial Service Provider." + "<br>"
                 + "<br>",
                 policyRequestType.getReference(),
                 hostname,
