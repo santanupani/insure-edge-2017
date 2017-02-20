@@ -22,11 +22,10 @@
             <div class="panel-heading">
                 <h4>Insurer</h4>
             </div>
-            <div class="panel-body" align="center" style="height: 300px;">
-                <img class="img-responsive" ng-src="/img/products/genric.jpg"><br>
-                <span>GENRIC Insurance Company Limited is licensed to underwrite the following insurance categories: Accident and Health, Transportation, Motor, Liability, Guarantee and Property.<br> <b>GENRIC Insurance is an Authorised Financial 
-                        Service Provider<br> 
-                        (FSP No: 43638)</b>
+            <div class="panel-body" align="justify" style="height: 200px;">
+                <!-- <img class="img-responsive" ng-src="/img/products/revrside-insurer.png"><br> -->
+                <span><b>REVERSIDE</b> is licensed to underwrite the following insurance categories: Accident and Health, Transportation, Motor, Liability, Guarantee and Property.<br><br> <b>REVERSIDE</b> is an Authorised Financial 
+                        Service Provider. <b>(FSP No: 00000)</b>
 
                 </span>
 
@@ -87,7 +86,7 @@
                                 <div class="form-group">
                                     <label class="control-label">What do you wish to insure?</label>
 
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-10" ng-if="productId != 5">
                                         <label class="checkbox-inline"> <input
                                                 ng-true-value="'Cash'" ng-false-value="''"
                                                 ng-model="models.cash" type="checkbox" ng-checked="model1 == '11'" ng-click="model1 = '11'" name="radio">
@@ -109,17 +108,236 @@
                                                 ng-checked="model1 == '15'" ng-click="model1 = '15'" name="radio"> Other
                                         </label>
                                     </div>
+                                    <div class="col-lg-10" ng-if="productId == 5">
+                                        <label class="checkbox-inline"> <input
+                                                ng-true-value="'Liability'" ng-false-value="''"
+                                                ng-model="quotationRequest.commodity" type="checkbox" ng-checked="model1 == '11'" ng-click="model1 = '11'" name="radio">
+                                            Liability
+                                        </label> <label class="checkbox-inline"> <input
+                                                ng-true-value="'Collision'" ng-false-value="''"
+                                                ng-model="quotationRequest.commodity" type="checkbox" ng-checked="model1 == '12'" ng-click="model1 = '12'" name="radio">
+                                            Collision
+                                        </label> <label class="checkbox-inline"> <input
+                                                ng-true-value="'Comprehensive'" ng-false-value="''"
+                                                ng-model="quotationRequest.commodity" type="checkbox" ng-checked="model1 == '13'" ng-click="model1 = '13'" name="radio">
+                                            Comprehensive
+                                        </label> <label class="checkbox-inline"> <input
+                                                ng-true-value="'Medical Payment'" ng-false-value="''"
+                                                ng-model="quotationRequest.commodity" type="checkbox" ng-checked="model1 == '14'" ng-click="model1 = '14'" namee="radio">
+                                            Medical Payment
+                                        </label> <label class="checkbox-inline"> <input
+                                                ng-model="models.other" type="checkbox" ng-false-value="''"
+                                                ng-checked="model1 == '15'" ng-click="model1 = '15'" name="radio">
+                                             Other
+                                        </label>
+                                    </div>
                                     <div ng-if="models.other == true" class="form-group">
                                         <label class="control-label">Please specify for other?</label>
                                         <input type="text" class="form-control"
-                                               ng-model="models.otherExtra" required>
+                                               ng-model="quotationRequest.commodity" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
             </div>
-            <div ng-repeat="option in location.options">
+            <div class="panel-body" align="left" ng-if = "productId ==5">
+                <form data-toggle="validator" role="form" name="form" id="form">
+                    <div class="panel panel-default">
+                    	<div class="panel-heading">
+                			<h4>Vehicles Details</h4>
+            			</div>
+                        <div class="panel-body">
+                        	<div class="form-group">
+                        		<table class="table table-boarded">
+									<thead>
+										<tr>
+											<th>Type</th>
+											<th>Make Model</th>
+											<th>Class Of Use</th>
+											<th>Year of Manufacture</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>											
+												<select  class = "form-control"  ng-change="onSelect(vehicleType)" ng-model="vehicleType">												
+													<option value="" disabled selected>Select</option>
+													<option value="car" selected>Cars</option>
+													<option value="motorcycle">Motorcycles</option>
+												</select>
+											</td>											
+											<td >
+												<select class = "form-control" ng-model="quotationRequest.makeModel">
+													<option ng-repeat = "size in sizes" value = "{{size.name}}">{{size.name}}</option>
+												</select>
+											</td>
+											<td>
+												<select  class = "form-control"  ng-model="quotationRequest.classOfuse">
+													<option value="" disabled selected>Select</option>
+													<option value="private">Private</option>
+													<option value="business">Limited Business Use</option>
+												</select>
+											</td>
+											<td>
+												<select  class = "form-control"  ng-model="quotationRequest.yearOfManufacture">
+													<option value="" disabled selected>Select</option>
+													<option value="2012">2012</option>
+													<option value="2013">2013</option>
+													<option value="2014">2014</option>
+													<option value="2015">2015</option>
+													<option value="2016">2016</option>
+												</select>
+											</td>
+										</tr>
+									</tbody>
+								</table>               
+                                                            
+                       	 </div>
+                    </div>
+             	</div>
+            </div>
+            <div class="panel-body" align="left" ng-if="productId == 5">
+            	<div class="row">
+            		<div class="col-md-12">
+            			<div class="panel panel-default">
+            				<div class="panel-heading">
+								<h4>Cover Terms</h4>            	
+            				</div>
+            				<div class="panel-body">
+            					<div class="row">
+            						<div class="col-md-3">            		           
+            							<div class="form-group">
+											<label class="control-label">Maximum amount of cover</label>
+												<div class="input-group">
+													<span class="input-group-addon">R</span>
+														<input type="number" placeholder="100 000 000" class="form-control"
+													 	ng-model="quotationRequest.coverAmount" required>
+												</div>
+										</div>  
+            							<div class="form-group">
+											<label class="control-label">Agreed Value Flag</label>
+												<div class="input-group">													
+													<select class="form-control" ng-model="quotationRequest.agreedFlag" required>
+														<option value="yes">Yes</option>
+														<option value="no">No</option>														
+													</select>
+												</div>
+										</div>
+										<div class="form-group" ng-if="changeModeOfCoverage == true">
+											<label class="control-label">Policy End Date</label>																								
+											<input type="text" class="form-control" ng-model= "policyEndDate" readonly/>													
+										</div>
+            			      		</div>
+            			      		<div class="col-md-3">            		           
+            							<div class="form-group">
+											<label class="control-label">Type of Cover</label>
+												<div class="input-group">													
+													<select class="form-control" ng-model="quotationRequest.coverType" required>
+														<option value="" disabled selected>Select</option>
+														<option value="comprehensive">Comprehensive</option>
+														<option value="thirdparty">Third Party</option>														
+													</select>
+												</div>
+										</div>  
+            							<div class="form-group">
+											<label class="control-label">Registration Number</label>
+												<div class="input-group">													
+														<input type="text" class="form-control" ng-model="quotationRequest.regdNumber" required>
+												</div>
+										</div>
+            			      		</div>
+            			      		<div class="col-md-3">            		           
+            							<div class="form-group">
+											<label class="control-label">Overnight Parking</label>
+												<div class="input-group">													
+													<select class="form-control" ng-model="quotationRequest.overnightParking" required>
+														<option value="" disabled selected>Select</option>
+														<option value="garage">Secure Parking Garage</option>
+														<option value="carport">Carport</option>														
+													</select>
+												</div>
+										</div>  
+            							<div class="form-group">
+											<label class="control-label">Pensioner Status of Insured</label>
+												<div class="input-group">													
+													<select class="form-control" ng-model="quotationRequest.pensionerStatus" required>
+														<option value="" disabled selected>Select</option>
+														<option value="pensioner">Pensioner</option>
+														<option value="nonpensioner">Not Pensioner</option>														
+													</select>
+												</div>
+										</div>
+            			      		</div>
+            			      		<div class="col-md-3">            		           
+            							<div class="form-group">
+											<label class="control-label">Policy Inception Date</label>																							
+													<!-- <input datetime-picker type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" ng-model="quotationRequest.policyInceptionDate" required/> -->
+													<input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-valid-pattern ng-touched"
+													ng-model="quotationRequest.policyInceptionDate" placeholder="dd/MM/yyyy" required/>
+													
+												
+										</div>  
+            							<div class="form-group">
+											<label class="control-label">Mode of Coverage</label>																								
+													<select class="form-control" ng-change="onChangeCoverage(quotationRequest.modeOfCoverage)" ng-model="quotationRequest.modeOfCoverage" required>
+														<option value="" disabled selected>Select</option>
+														<option value="monthly">Monthly</option>
+														<option value="annual">Annually</option>														
+													</select>												
+										</div>										
+            			      		</div>
+            			       </div>   	
+            				</div>           
+            			</div>  
+            		</div>
+            	</div>              
+            </div>
+            <div class="panel-body" align="left" ng-if="productId == 5">
+            	<div class="panel panel-default">
+            		<div class="panel-heading">
+            			<h4>Accident History</h4>
+            		</div>            		
+            		<div class="panel-body">        
+            			<div class="form-group">
+							<label class="control-label">Have you suffered any accident over the last 5 years?</label>
+							<div class="input-group">													
+								<select class="form-control" ng-model="quotationRequest.accidentInfo" required>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>														
+								</select>
+							</div>
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="panel-body" align="left" ng-if="productId == 5">
+				<div class="form-group">
+					<div class="input-group">
+						<label class="control-label">Are you currently Insured?</label>
+						<div class="input-group">
+							<select class="form-control" ng-model="quotationRequest.insuredStatus" required>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+							</select>
+						</div>
+					</div>			
+				</div>			
+			</div>
+			<div class="panel-body" align="left" ng-if="productId == 5">
+				<div class="form-group">
+					<div class="input-group">
+						<label class="control-label">Do you require SASRIA?</label>
+						<div class="input-group">
+							<select class="form-control" ng-model="quotationRequest.sasria">
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+							</select>
+						</div>
+					</div>			
+				</div>			
+			</div>
+            <div ng-repeat="option in location.options" ng-if="productId != 5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -406,7 +624,7 @@
             </div>
 
             
-            <div class="form-group">
+            <div class="form-group" ng-if="productId != 5">
 
                 <label><input type="checkbox"
                               ng-click="addRemoveLocation(isMoreCovers)"
@@ -424,12 +642,12 @@
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group" ng-if="productId !=5">
                 <label><input type="checkbox"
                               ng-click="addRemoveHistory()" ng-model="isHistory" /> Have you
                     suffered any losses of valuable goods over the past 5 years –
                     both insured and uninsured?</label>
-            </div>
+            
 
             <div class="form-group" ng-if="isHistory == true">
                 <table class="table table-bordered">
@@ -448,7 +666,7 @@
                                     <option value="2011">2011</option>
                                     <option value="2012">2012</option>
                                     <option value="2013">2013</option>
-                                    <option value="2014">2014</option>
+                                    <option value="2014">2014</option> 
                                     <option value="2015">2015</option>
                                     <option value="2016">2016</option>
                                 </select></td>
@@ -480,6 +698,7 @@
                         </tr>
                     </tfoot>
                 </table>
+            </div>
             </div>
 
             <div ng-repeat="questionnaire in questionnaires">
@@ -547,24 +766,25 @@
                 </div>
 
             </div>
-            <div class="panel panel-default">
-                <div class="panel-body" align="left">
-                    <h4>SASRIA (South African Special Risks Insurance
-                        Association)</h4>
+            <div class="panel-body" align="left" >
+            	<div class="panel panel-default">
+                	<div class="panel-body" align="left">
+                    	<h4>SASRIA (South African Special Risks Insurance
+                        	Association)</h4>
 
-                    <span>It is state-owned underwriter established to provide
+                    	<span>It is state-owned underwriter established to provide
                         business with an insurance safety net for political and
                         non-political riot, labour unrest, terrorism and related
                         risk.Claims arising from these occurrence are excluded in terms
                         of our policy wording and should you not purchase this cover
                         additionally, you will not have a valid claim in the
                         circumstances described above. </span><br>
-                    <hr style="color: #F87431; height: 1px" />
-                    <span> I hereby acknowledge that I have read and
+                    	<hr style="color: #F87431; height: 1px" />
+                    	<span> I hereby acknowledge that I have read and
                         understood the policy wording. The wording is also available by
-                        visiting <a href="http://www.polygongroup.co.za">www.polygongroup.co.za</a>
+                        visiting <a href="http://www.reverside.co.za">www.reverside.co.za</a>
                         or by sending an email to <a
-                            href="mailto:info@polygongroup.co.za">info@polygongroup.co.za</a>.
+                            href="mailto:info@reverside.co.za">info@reverside.co.za</a>.
                         <br> <br>I understand that this policy is not in place
                         until confirmation is received from the insurer. <br> <br>I
                         am aware of the fact that insurance premiums are payable in
@@ -580,12 +800,15 @@
                             a material fact is any fact which influences the acceptance of
                             risk or conditions and premiums on which it is accepted. This
                             proposal must therefore be fully/accurately completed.</em>
-                    </span><br> <br> <input type="checkbox"
-                                            ng-model="quotationRequest.acceptedQuote" required> <label>I
-                        declare that the answers given above are true and correct</label>
-                </div>
+                    	</span>
+                	</div>
+            	</div>
             </div>
-            <div class="panel-footer text-right">
+            <div class="panel-body" align="left">
+            	<input type="checkbox" ng-model="quotationRequest.acceptedQuote" required>
+            	 	<label>I declare that the answers given above are true and correct</label>
+            </div>   
+             <div class="panel-footer text-right">
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary" form="form"
                             ng-click="submitQuotationRequest(form)">Request Quote</button>

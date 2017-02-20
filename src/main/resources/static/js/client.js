@@ -1,6 +1,6 @@
 /* global input */
 
-var polygon = angular.module('polygon', ['ngRoute']);
+var polygon = angular.module('polygon', ['ngRoute', 'angularjs-datetime-picker']);
 
 polygon.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
@@ -192,8 +192,10 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
     $scope.quotationRequest = {};
     $scope.productId;
     $scope.models = {};
+    $scope.changeModeOfCoverage = false;
+    $scope.policyInceptionDate;
+    $scope.policyEndDate;
     
-
     
     
 
@@ -212,6 +214,47 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         }
     };
               
+    
+    $scope.onSelect = function (vehicleType) {
+    	console.log("in update");
+    	console.log(vehicleType);
+    	
+    	if(vehicleType=="car")    		
+    		$scope.sizes = [ {name: 'Audi A1'}, {name: 'BMW S1'}, {name: 'Lexus L'}];
+    	
+    	else if(vehicleType=="motorcycle")    		
+    		$scope.sizes = [ {name: 'Honda 257'}, {name: 'Yamah 234'}, {name: 'Harley Davidson 228'}];
+    	
+    };
+    
+    $scope.onChangeCoverage = function(modeOfCoverage){
+    	console.log("Coverage on Mode :"+modeOfCoverage);
+    	console.log("Policy Inception Date :"+$scope.quotationRequest.policyInceptionDate);
+    	
+    	$scope.changeModeOfCoverage = true;
+    	
+    
+    	//Start calculate policy end date        
+       
+           if(modeOfCoverage == "annual" ){      	
+        	$scope.policyInceptionDate = $scope.quotationRequest.policyInceptionDate;
+          	var d1=$scope.policyInceptionDate.split("/");
+        	var myDate=new Date(d1[2],d1[1]-1,d1[0]-1);
+        	myDate.setMonth(myDate.getMonth()+12);
+       	    $scope.policyEndDate = myDate.getDate() + "/" + (myDate.getMonth()+1) + "/" + myDate.getFullYear()        
+       	    console.log('Policy End Date for Annually :'+$scope.policyEndDate);
+        }                    
+           else if(modeOfCoverage == "monthly" ){                       	
+           $scope.policyInceptionDate = $scope.quotationRequest.policyInceptionDate;
+           var d1=$scope.policyInceptionDate.split("/");
+           var myDate=new Date(d1[2],d1[1]-1,d1[0]-1);
+           myDate.setMonth(myDate.getMonth()+1);
+           $scope.policyEndDate = myDate.getDate() + "/" + (myDate.getMonth()+1) + "/" + myDate.getFullYear()        
+           console.log('Policy End Date for Monthly :'+$scope.policyEndDate);                        	
+       }
+        //End calculate policy end date
+    	
+    };
     
     $scope.getCarriers = function () {
         console.log('get carriers');
@@ -385,16 +428,31 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
         if (form.$invalid) {
             console.log("Form Validation Failure");
         } else {
-            console.log("Form Validation Success");
+        	if ($scope.productId != 5){
+        		
+        	 console.log("Form Validation Success");
             $scope.quotationRequest.locationOptions = [];
             var commodity = '';
-            var commodities = $scope.models.cash + $scope.models.bullion + $scope.models.diamonds + $scope.models.preciousStone + $scope.models.otherExtra;
-            angular.forEach(commodities.split("undefined"), function (token) {
-                if (token !== '') {
-                    commodity = token + '/' + commodity;
-                }
-            });
+            var commodities = $scope.models.cash + $scope.models.bullion + $scope.models.diamonds + $scope.models.preciousStone + $scope.models.otherExtra; 
+            /*var commoditiesAuto = $scope.models.liability + $scope.models.collision + $scope.models.comprehensive + $scope.models.medicalPayment + $scope.models.otherExtra;
+            
+            if ($scope.productId == 5){            
+            	angular.forEach(commoditiesAuto.split("undefined"), function (token) {
+            		if (token !== '') {
+            			commodity = token + '/' + commodity;
+                				}
+            				});            
+            				} 
+            else {*/            
+            	angular.forEach(commodities.split("undefined"), function (token) {
+                    if (token !== '') {
+                    	commodity = token + '/' + commodity;
+                    	}
+                	});         	
+            
+            
             commodity = commodity.substring(0, commodity.length - 1);
+            
             for (var i = 0; i < $scope.location.options.length; i++) {
                 $scope.location.options[i].commodity = commodity;
                 console.log($scope.location.options[i].commodity);
@@ -439,6 +497,39 @@ polygon.controller('questionnairesCtrl', function ($scope, $rootScope, $http, $r
                 console.log(error);
                 $rootScope.message = error;
             });
+        
+        	}
+        	else{
+        			console.log("Form Validation Success - Auto"); 
+        			
+        			$scope.quotationRequest.brokerId = 1;
+        			$scope.quotationRequest.policyEndDate = $scope.policyEndDate;
+        			
+        			console.log($scope.quotationRequest);
+        			
+        			
+        			$http({
+        				url: '/api/quotation-requests/auto',
+        				method: 'post',
+        				headers: {
+        					'Content-Type': 'application/json',
+        					},
+        				data: $scope.quotationRequest
+        				}).success(function (data, status){
+        					if(status == 200) {
+        						console.log('All the Auto quotation information saved successfully');
+        						$rootScope.message = "Reference Number : " + data;
+        						$location.path("/products");
+        						
+        					} else {
+        						
+        						console.log('status' + status)
+        					}        					
+        				}).error(function (error) {
+        					console.log(error);
+        					$rootScope.message = error;        					
+        				})        	
+        		}
         }
 
     };
